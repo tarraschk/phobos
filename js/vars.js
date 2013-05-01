@@ -1,3 +1,8 @@
+/*
+Ficher des variables globales accessibles à l'ensemble du projet.
+*/
+
+//liste des code de touche clavier
 var KEY = {
 		LEFT: 37,
 		UP: 38,
@@ -18,6 +23,8 @@ var KEY = {
 		"8": 104,
 		"9": 105
 	},
+	//objet mouse contenant les variables de déplacement de la souris
+	// Déjà pris en charge avec easelJS ?
 	mouse = {
 		x: 0,
 		y: 0,
@@ -28,11 +35,5 @@ var KEY = {
 		up: true,
 		down: false
 	},
-	dt = 0,
 	screenWidth = 960,
-	screenHeight = 540,
-	scene = null,
-	background = "#699bff",
-	world = null,
-	screenTimer = null,
-	engine = null;
+	screenHeight = 540;
