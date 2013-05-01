@@ -1,4 +1,4 @@
 phobos
 ======
 
-Repo du projet Phobos
+Projet temps réel du très célèbre jeu Phobos
