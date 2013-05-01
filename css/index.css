@@ -1,0 +1,13 @@
+/*rgb(249, 48, 42);*/
+/* line 38, index.scss */
+#debug {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: whitesmoke;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 600px;
+  width: 160px;
+  border: 1px solid black;
+  overflow: auto;
+  padding: 5px; }

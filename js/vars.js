@@ -37,3 +37,4 @@ var KEY = {
 	},
 	screenWidth = 960,
 	screenHeight = 540;
+	
