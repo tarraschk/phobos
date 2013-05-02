@@ -1,9 +1,15 @@
+jQuery(document).ready(function($) {
+	
+});
+
+
+
 $(document).on('mousemove', function(e){
 	e.preventDefault();
 	var x = e.clientX;
 	var y = e.clientY;
-	mouse.dx = Math.abs(x - mouse.ox);
-	mouse.dy = Math.abs(y - mouse.oy);
+	mouse.dx = x - mouse.ox;
+	mouse.dy = y - mouse.oy;
 	mouse.x = e.clientX;
 	mouse.y = e.clientY;
 	mouse.ox = x;
