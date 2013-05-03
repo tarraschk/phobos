@@ -36,24 +36,16 @@ $popup: #58595d; //champs de redaction des popups
 $popupName: #141517; // cartouche du nom des invit popup
 
 
-#container{
-	width: 100%;
-	height: 100%;
-	margin: auto;
-	position: relative;
-	canvas{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
-	#hud{
-		position: absolute;
-		width: 100%;
-		height: 100%;
-	}
+canvas{
+	position: absolute;
+	top: 0;
+	left: 0;
 }
-
-
+#hud{
+	position: absolute;
+	top: 0;
+	left: 0;
+}
 #debug{
 	background-color: rgba(0,0,0,0.5);
 	color: $blancf;
