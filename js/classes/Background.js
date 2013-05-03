@@ -1,38 +1,33 @@
 (function (window) {
 
-	function Background() {
-		this.initialize();
+	Background = function(){
+		this._path = 'img/backgrounds/';
+		this._stage = new _.Stage('background');
+		this._image;
+		this._stage.scaleX = 1;
+		this._stage.scaleY = 1;
+		this._stage.width = 1;
+		this._stage.height = 1;
+		return this;
 	}
 
-	var bg = Background.prototype = new _.Bitmap();
-
-// static public properties:
-	Background.path = 'img/backgrounds/';
-
-// public properties:
-// constructor:
-	bg.Container_initialize = bg.initialize;	//unique to avoid overiding base class
-
-	bg.initialize = function () {
-		bg.stage = new createjs.Stage("background");
-	}
-
-// public methods:
-
-	bg.tick = function (event) {
-	}
-	bg.load = function(src){
-		console.log('loading background');
-		var src = Background.path+src;
-		bg.image = new Image().src = src ;
-		bg.stage.addChild(bg.image);
-		bg.stage.update();
+	Background.prototype.load = function(src){
+		var src = this._path+src;
+		console.log('loading background', src);
+		this._imgTmp = new Image();
+		this._imgTmp.src = src;
+		that = this;
+		this._imgTmp.onload = function(){
+			that._image  = new _.Bitmap(this)
+			that._stage.addChild(that._image);
+			that._stage.update();
+		}
 		console.log('loaded');
 	}
-	window.Background = Background;
 
+	Background.prototype.tick = function(){
+		
+	}
+	window.Background = Background;
 }(window));
 
-Background = function(){
-	this._path = 'img/backgrounds/';
-}

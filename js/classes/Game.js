@@ -14,8 +14,7 @@
 
 	Game.prototype.initialize = function () {
 		resize();
-		background = new Background();
-		background.load("void/secteur7.jpg");
+		background = new Background().load("void/secteur7.jpg");
 	}
 
 // public methods:
