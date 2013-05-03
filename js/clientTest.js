@@ -37,10 +37,10 @@
 	imgShip.src = "img/ship/spriteShip.png";
 	backgroundSrc = "img/backgrounds/secteur7.jpg";
 	//imgShip.src = "img/ship.png";
-	var canvas = document.getElementById("gameCanvas"); 
+	var canvas = document.getElementById("playground"); 
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;
-	var stage = new createjs.Stage("gameCanvas");
+	var stage = new createjs.Stage("playground");
 	var globalSpaceData = [] ; 
 	var spaceObjects = [] ; 
 	var gameBackground;

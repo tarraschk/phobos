@@ -36,5 +36,8 @@ var KEY = {
 		down: false
 	},
 	screenWidth = 960,
-	screenHeight = 540;
+	screenHeight = 540,
+	game = null;
+	background = null;
+	window._ = window.createjs;
 	

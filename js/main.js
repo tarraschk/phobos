@@ -1,8 +1,13 @@
 jQuery(document).ready(function($) {
-	
+	game = new Game()
 });
 
-
+function resize(){
+	$('#container').css({
+		'height': $(window).height(),
+		'width': $(window).width()
+	});
+}
 
 $(document).on('mousemove', function(e){
 	e.preventDefault();
@@ -29,4 +34,11 @@ $(document).on('mousedown', function(e){
 	mouse.y = e.clientY;
 	mouse.down = false;
 	mouse.up = true;
+});
+$(window).on('resize', function(){
+	resize();
+});
+$(document).on('click', function(e){
+	e.preventDefault();
+	return false;
 });
