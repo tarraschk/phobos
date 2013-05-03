@@ -38,6 +38,6 @@ var KEY = {
 	screenWidth = 960,
 	screenHeight = 540,
 	game = null;
-	background = null;
+	background = new createjs.Stage("background");
 	window._ = window.createjs;
 	
