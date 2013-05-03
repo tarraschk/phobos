@@ -15,6 +15,12 @@
 	Game.prototype.initialize = function () {
 		resize();
 		background = new Background().load("void/secteur7.jpg");
+		var s = new Station({
+			src: 'stationIso.png',
+			name: 'Station spatiale internationale',
+			x: 0,
+			y: 0
+		});
 	}
 
 // public methods:

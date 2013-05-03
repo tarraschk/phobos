@@ -4,10 +4,15 @@ jQuery(document).ready(function($) {
 
 function resize(){
 
-
-	var canvas = document.getElementById("background"); 
+	$('canvas').each(function(){
+		this.width = window.innerWidth;
+		this.height = window.innerHeight;
+	});
+	/*$('canvas').width(window.innerWidth);
+	$('canvas').height(window.innerHeight);*/
+	/*var canvas = document.getElementById("background"); 
 	canvas.width  = window.innerWidth;
-	canvas.height = window.innerHeight;
+	canvas.height = window.innerHeight;*/
 
 }
 
