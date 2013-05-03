@@ -3,10 +3,12 @@ jQuery(document).ready(function($) {
 });
 
 function resize(){
-	$('#container').css({
-		'height': $(window).height(),
-		'width': $(window).width()
-	});
+
+
+	var canvas = document.getElementById("background"); 
+	canvas.width  = window.innerWidth;
+	canvas.height = window.innerHeight;
+
 }
 
 $(document).on('mousemove', function(e){
@@ -36,7 +38,7 @@ $(document).on('mousedown', function(e){
 	mouse.up = true;
 });
 $(window).on('resize', function(){
-	resize();
+	//resize();
 });
 $(document).on('click', function(e){
 	e.preventDefault();
