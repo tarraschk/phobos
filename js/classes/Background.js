@@ -1,3 +1,5 @@
+stage = new createjs.Stage("background");
+
 (function (window) {
 
 	function Background() {
@@ -14,25 +16,38 @@
 	bg.Container_initialize = bg.initialize;	//unique to avoid overiding base class
 
 	bg.initialize = function () {
-		bg.stage = new createjs.Stage("background");
+
 	}
 
 // public methods:
 
 	bg.tick = function (event) {
 	}
+
+	bg.setBackgroundSrc = function(newSrc) {
+
+	}
+
 	bg.load = function(src){
 		console.log('loading background');
 		var src = Background.path+src;
-		bg.image = new Image().src = src ;
-		bg.stage.addChild(bg.image);
-		bg.stage.update();
+		bg.image = new Image() ;
+		bg.image.src = src; 
+		bg.scaleX = 1 ; 
+		bg.scaleY = 1 ; 
+		bg.width = 1800 ; 
+		bg.height = 1000 ;
+		bg.stage = new createjs.Stage("background"); 
+		bg.image.onload = function() {
+			console.log("enculé"); 
+
+			bg.stage.addChild(bg);
+			bg.stage.update();
+		}
+
+
 		console.log('loaded');
 	}
 	window.Background = Background;
 
 }(window));
-
-Background = function(){
-	this._path = 'img/backgrounds/';
-}
