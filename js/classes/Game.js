@@ -16,6 +16,12 @@
 		resize();
 		background = new Background().load("void/secteur7.jpg");
 		ship = new Ship({id:1, x:155,y:35});
+		var s = new Station({
+			src: 'stationIso.png',
+			name: 'Station spatiale internationale',
+			x: 0,
+			y: 0
+		});
 	}
 
 // public methods:

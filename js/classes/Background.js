@@ -27,7 +27,6 @@
 	}
 
 	bg.load = function(src){
-		console.log('loading background');
 		var src = Background.path+src;
 		bg.image = new Image() ;
 		bg.image.src = src; 
@@ -40,9 +39,6 @@
 			bg.stage.addChild(bg);
 			bg.stage.update();
 		}
-
-
-		console.log('loaded');
 	}
 	window.Background = Background;
 
