@@ -1,5 +1,3 @@
-stage = new createjs.Stage("background");
-
 (function (window) {
 
 	Background = function(){
@@ -39,8 +37,6 @@ stage = new createjs.Stage("background");
 		bg.height = 1000 ;
 		bg.stage = new createjs.Stage("background"); 
 		bg.image.onload = function() {
-			console.log("enculé"); 
-
 			bg.stage.addChild(bg);
 			bg.stage.update();
 		}

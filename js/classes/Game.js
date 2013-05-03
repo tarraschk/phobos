@@ -15,6 +15,7 @@
 	Game.prototype.initialize = function () {
 		resize();
 		background = new Background().load("void/secteur7.jpg");
+		ship = new Ship({id:1, x:155,y:35});
 	}
 
 // public methods:
