@@ -1,5 +1,3 @@
-stage = new createjs.Stage("background");
-
 (function (window) {
 
 	Background = function(){
