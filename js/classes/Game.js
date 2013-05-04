@@ -21,7 +21,7 @@
 			x: 0,
 			y: 0
 		});
-		ship = new Ship({id:1, x:155,y:35});
+		ship = new Ship({src: 'spriteShip.png', id:1, x:850,y:435});
 	}
 
 // public methods:

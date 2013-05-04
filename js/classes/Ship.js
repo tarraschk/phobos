@@ -1,30 +1,50 @@
 (function (window) {
 
-	Ship = function(){
-		console.log();
-		this.initialize();
+	Ship = function(shipData){
+		this.initialize(shipData);
 	}
 
 
 	var ship = Ship.prototype = new _.BitmapAnimation();
 
 // static public properties:
-	Ship.path = 'img/ships/';
+	Ship.path = 'img/ship/';
 
 // public properties:
-	this.mapX = 0;
-	this.mapY = 0;
+	ship.id = null;
+	ship.name = "caca";
+	ship.mapX = 0;
+	ship.mapY = 0;
+	ship.speed = {x:0, y:0};
+	ship.limitSpeed = 0;
+	ship.rotation = 0;		
+	ship.rotationSpeed = 0;
+	ship.destination = null;		
+
 
 // constructor:
 ship.Container_initialize = ship.initialize;
-	ship.initialize = function () {
+	ship.initialize = function (shipData) {
+		this.load(shipData);
+	}
 
-		shipData = {id:1, x:0,y:35};
-		console.log(shipData);
+// public methods:
+	ship.moveTo = function(destination) {
+
+	}
+	ship.stop = function() {
+
+	}
+	ship.rotate = function(params) {
+
+	}
+	ship.tick = function (event) {
+	}
+
+	ship.load = function(shipData){
 		var imgShip = new Image(); 
 		//imgShip.src = "img/ship/Image_01.jpge39bff3d-384c-49fe-8b2c-45f2a5d42192Large-1.jpg";
-		imgShip.src = "img/ship/spriteShip.png";
-
+		imgShip.src = Ship.path + shipData.src;
 		var that = this;
 		imgShip.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
@@ -37,29 +57,18 @@ ship.Container_initialize = ship.initialize;
 				}
 			});
 			ship.index = shipData.id; 
-			//this.shipImg = new createjs.Shape();
 			ship.spriteSheet = shipSpriteSheet;
 			ship.gotoAndStop("walk");
-			//this.shipImg.graphics.beginFill("red").drawRect(-15, -15, 30, 30);
-			//Set position of Shape instance.
 			ship.mapX = shipData.x;
 			ship.mapY = shipData.y;
-			ship.x = 350;
-			ship.y = 350;
+			ship.x = shipData.x;
+			ship.y = shipData.y;
 			ship.name = shipData.name; 
 			console.log(ship);
 			playground.addChild(ship);
 			playground.update();
 			console.log("new ship");
-		}	
-	}
-
-// public methods:
-
-	ship.tick = function (event) {
-	}
-
-	ship.load = function(src){
+		}
 	}
 	window.Ship = Ship;
 
