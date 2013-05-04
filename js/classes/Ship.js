@@ -1,84 +1,64 @@
 (function (window) {
 
-	Ship = function(shipData){
-		this.initialize(shipData);
+	Ship = function(params){
+		this.initialize(params);
 	}
 
-
-	var ship = Ship.prototype = new _.BitmapAnimation();
+	var s = Ship.prototype = new _.BitmapAnimation();
 
 // static public properties:
 	Ship.path = 'img/ship/';
-
+	
 // public properties:
-	ship.id = null;
-	ship.name = "caca";
-	ship.mapX = 0;
-	ship.mapY = 0;
-	ship.speed = {x:0, y:0};
-	ship.limitSpeed = 0;
-	ship.rotation = 0;		
-	ship.rotationSpeed = 0;
-	ship.destination = null;		
-
-
+	s.mapX;
+	s.mapY;
+	s.name;
 // constructor:
-	ship.initialize = function (shipData) {
-		console.log("init");
-		this.load(shipData);
+	s.initialize = function (params) {
+		this.name = params.name;
+		this.setMapCoords({x: params.x, y: params.y});
+		this.load(params);
 	}
 
 // public methods:
-	ship.moveTo = function(destination) {
+	s.setMapCoords = function(params){
+		this.mapX = params.x;
+		this.mapY = params.y;
+	}
+	s.tick = function (event) {
 
 	}
-	ship.stop = function() {
 
-	}
-	ship.rotate = function(rotation) {
-	}
-
-	ship.throttle = function (speed) {
-	}
-
-	ship.tick = function (event) {
-		ship.mapX += 1;
-		console.log(ship);
-	}
-
-	ship.draw = function (event) {
-	}
-
-	ship.load = function(shipData){
+	s.load = function(shipData){
 		console.log(shipData);
 		var imgShip = new Image(); 
-		//imgShip.src = "img/ship/Image_01.jpge39bff3d-384c-49fe-8b2c-45f2a5d42192Large-1.jpg";
 		imgShip.src = Ship.path + shipData.src;
-
 		var that = this;
 		imgShip.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
 				// image to use
 				images: [imgShip], 
-				// width, height & registration point of each sprite
 				frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+				// width, height & registration point of each sprite
 				animations: {    
 					walk: [0, 30, "walk"]
 				}
 			});
-			ship.index = shipData.id; 
-			ship.spriteSheet = shipSpriteSheet;
-			ship.gotoAndStop("walk");
-			ship.mapX = shipData.x;
-			ship.mapY = shipData.y;
-			ship.x = 50//shipData.x;
-			ship.y = 70//shipData.y;
-			ship.name = shipData.name; 
-			console.log(ship);
-			cPlayground.addChild(ship);
+			s.index = shipData.id; 
+			s.image = imgShip;
+			s.spriteSheet = shipSpriteSheet;
+			s.gotoAndStop("walk");
+			s.mapX = shipData.x;
+			s.mapY = shipData.y;
+			s.x = shipData.x;
+			s.y = shipData.y;
+			s.name = shipData.name; 
+			console.log(s);
+			cPlayground.addChild(s);
 			cPlayground.update();//Create a Shape DisplayObject.
-			console.log("new ship");
+			console.log("new ship")
 		}
 	}
 	window.Ship = Ship;
+
 }(window));
