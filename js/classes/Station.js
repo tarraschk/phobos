@@ -8,11 +8,13 @@
 
 // static public properties:
 	Station.path = 'img/objects/stations/';
-
+	
 // public properties:
 	s.mapX;
 	s.mapY;
 	s.name;
+	s.fucused = false;
+	s.scannable;
 // constructor:
 	s.initialize = function (params) {
 		this.name = params.name;
@@ -26,6 +28,7 @@
 		this.mapY = params.y;
 	}
 	s.tick = function (event) {
+
 	}
 
 	s.setBackgroundSrc = function(newSrc) {
@@ -36,33 +39,23 @@
 		var src = Station.path+src;
 		s.image = new Image();
 		s.image.src = src; 
-		s.stage = new _.Stage("playground");
 		var that = this;
 		s.image.onload = function() {
 			s.x = 350;//window.clientWidth /2;
 			s.y = 235;
-			s.stage.addChild(s);
+			playground.addChild(s);
+			s.addEventListener("mouseover", function(e) {
+				debug(that.width);
+				debug(that.x);
+			});
+
+			s.addEventListener("mouseout", function(e) {
+				debug('out of '+that.name);
+			});
 			s.addEventListener("click", function(){
-				console.log("click");
+				debug('click on '+that.name)
 			}); 
-			s.addEventListener("dblclick", function(){
-
-			});
-			s.addEventListener("onmousehover", function(){
-
-			}); 
-			s.addEventListener("mousehover", function(){
-
-			}); 
-			s.addEventListener("mouseover", function(){
-				console.log("over");
-
-			}); 
-			s.addEventListener("mouseout", function(){
-				console.log("out");
-
-			});
-			s.stage.update();
+			playground.update();
 		}
 		
 	}

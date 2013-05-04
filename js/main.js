@@ -1,7 +1,9 @@
 jQuery(document).ready(function($) {
 	game = new Game()
 });
-
+function debug(data){
+	$('<div>').html(data+'<br/>').prependTo($('#debug'));
+}
 function resize(){
 
 	$('canvas').each(function(){
