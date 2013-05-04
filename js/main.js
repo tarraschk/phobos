@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
-	game = new Game()
+	game = new Game();
+	game.launchTicker();
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));
@@ -16,6 +17,14 @@ function resize(){
 	canvas.width  = window.innerWidth;
 	canvas.height = window.innerHeight;*/
 
+}
+
+function handleTick() {
+}
+
+function renderCanvas() {
+	cBackground.update();
+	cPlayground.update();
 }
 
 $(document).on('mousemove', function(e){

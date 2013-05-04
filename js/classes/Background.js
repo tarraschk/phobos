@@ -34,10 +34,9 @@
 		bg.scaleY = 1 ; 
 		bg.width = 1800 ; 
 		bg.height = 1000 ;
-		bg.stage = new createjs.Stage("background"); 
 		bg.image.onload = function() {
-			bg.stage.addChild(bg);
-			bg.stage.update();
+			cBackground.addChild(bg);
+			cBackground.update();
 		}
 	}
 	window.Background = Background;

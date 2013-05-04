@@ -43,7 +43,7 @@
 		s.image.onload = function() {
 			s.x = 350;//window.clientWidth /2;
 			s.y = 235;
-			playground.addChild(s);
+			cPlayground.addChild(s);
 			s.addEventListener("mouseover", function(e) {
 				debug(that.width);
 				debug(that.x);
@@ -55,7 +55,7 @@
 			s.addEventListener("click", function(){
 				debug('click on '+that.name)
 			}); 
-			playground.update();
+			cPlayground.update();
 		}
 		
 	}

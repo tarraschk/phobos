@@ -39,9 +39,9 @@ var mouse = {
 var screenWidth = 960;
 var screenHeight = 540;
 var game = null;
-var playground = new _.Stage("playground");
-	playground.enableMouseOver(10);
-	playground.mouseMoveOutside = true;
-var background = new _.Stage("background");
+var cPlayground = new _.Stage("playground");
+	cPlayground.enableMouseOver(10);
+	cPlayground.mouseMoveOutside = true;
+var cBackground = new _.Stage("background");
 	
 	

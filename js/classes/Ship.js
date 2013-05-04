@@ -23,8 +23,8 @@
 
 
 // constructor:
-ship.Container_initialize = ship.initialize;
 	ship.initialize = function (shipData) {
+		console.log("init");
 		this.load(shipData);
 	}
 
@@ -35,16 +35,26 @@ ship.Container_initialize = ship.initialize;
 	ship.stop = function() {
 
 	}
-	ship.rotate = function(params) {
-
+	ship.rotate = function(rotation) {
 	}
+
+	ship.throttle = function (speed) {
+	}
+
 	ship.tick = function (event) {
+		ship.mapX += 1;
+		console.log(ship);
+	}
+
+	ship.draw = function (event) {
 	}
 
 	ship.load = function(shipData){
+		console.log(shipData);
 		var imgShip = new Image(); 
 		//imgShip.src = "img/ship/Image_01.jpge39bff3d-384c-49fe-8b2c-45f2a5d42192Large-1.jpg";
 		imgShip.src = Ship.path + shipData.src;
+
 		var that = this;
 		imgShip.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
@@ -61,15 +71,14 @@ ship.Container_initialize = ship.initialize;
 			ship.gotoAndStop("walk");
 			ship.mapX = shipData.x;
 			ship.mapY = shipData.y;
-			ship.x = shipData.x;
-			ship.y = shipData.y;
+			ship.x = 50//shipData.x;
+			ship.y = 70//shipData.y;
 			ship.name = shipData.name; 
 			console.log(ship);
-			playground.addChild(ship);
-			playground.update();
+			cPlayground.addChild(ship);
+			cPlayground.update();//Create a Shape DisplayObject.
 			console.log("new ship");
 		}
 	}
 	window.Ship = Ship;
-
 }(window));
