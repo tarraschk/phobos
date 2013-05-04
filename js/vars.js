@@ -43,5 +43,5 @@ var playground = new _.Stage("playground");
 	playground.enableMouseOver(10);
 	playground.mouseMoveOutside = true;
 var background = new _.Stage("background");
-	
+var camera = null;
 	

@@ -34,7 +34,12 @@
 	s.setBackgroundSrc = function(newSrc) {
 
 	}
-
+	s.onOver = function(){
+		//display name
+	}
+	s.onClick = function(){
+		//gerer le clic
+	}
 	s.load = function(src){
 		var src = Station.path+src;
 		s.image = new Image();
@@ -43,21 +48,18 @@
 		s.image.onload = function() {
 			s.x = 350;//window.clientWidth /2;
 			s.y = 235;
-			playground.addChild(s);
+			playground.addChild(that);
 			s.addEventListener("mouseover", function(e) {
-				debug(that.width);
-				debug(that.x);
+				debug('over '+that.name);
 			});
-
 			s.addEventListener("mouseout", function(e) {
 				debug('out of '+that.name);
 			});
 			s.addEventListener("click", function(){
-				debug('click on '+that.name)
+				debug('click on '+that.name);
 			}); 
 			playground.update();
 		}
-		
 	}
 	window.Station = Station;
 

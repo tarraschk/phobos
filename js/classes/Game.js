@@ -15,6 +15,7 @@
 	Game.prototype.initialize = function () {
 		resize();
 		background = new Background().load("void/secteur7.jpg");
+		camera = new Camera();
 		var s = new Station({
 			src: 'stationIso.png',
 			name: 'Station spatiale internationale',
