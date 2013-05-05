@@ -15,7 +15,7 @@
 	g.initialize = function () {
 		resize();
 		var backgroundGame = new Background().load("void/secteur7.jpg");
-		camera = new Camera();
+		g._camera = new Camera();
 		var s = new Station({
 			src: 'stationIso.png',
 			name: 'Station spatiale internationale',
@@ -40,6 +40,7 @@
 
 	g.tick = function (event) {
 		g._playerShip.tick();
+		g._camera.tick();
 		renderCanvas();
 	}
 	window.Game = Game;
