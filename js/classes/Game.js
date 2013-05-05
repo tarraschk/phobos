@@ -1,8 +1,6 @@
 (function (window) {
 
-	
 	function Game() {
-
 		this.initialize();
 	}
 	var g = Game.prototype ;
@@ -31,7 +29,7 @@
 			src:"spriteShip.png",
 		});
 	}
-	
+
 	g.launchTicker = function() {
 		_.Ticker.addListener(window);
 		_.Ticker.useRAF = true;
