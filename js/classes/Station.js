@@ -16,9 +16,10 @@
 	s._name;
 	s.fucused = false;
 	s.scannable;
-	s._id = utils.generateId();
+	s._id;
 // constructor:
 	s.initialize = function (params) {
+		this._id = utils.generateId();
 		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params.src);
