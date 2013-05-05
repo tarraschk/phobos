@@ -110,9 +110,22 @@
 		this.position.y += Math.cos((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
 	}
 
+	s.rotationFrame = function() {
+		this.gotoAndPlay("walk");
+		this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
+
+	}
+
+	s.isometricConversion = function() {
+		this.x = (Math.sqrt(2) / 2) * ( this.x - this.y);
+		this.y = 1/(Math.sqrt(6)) * (this.x + this.y);
+	}
+
 	s.drawRender = function () {
+		s.rotationFrame();
 		s.x = this.position.x - game._camera.x();
 		s.y = this.position.y - game._camera.y();
+		//s.isometricConversion(); 
 		//s.x = this.position.x - game._camera.x();
 		//s.y = this.position.y - game._camera.y();
 	}

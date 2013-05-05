@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 (function(window){
 	Utils = function(){
 
@@ -15,4 +16,38 @@
 		
 		return id;
 	}
+
+	/* Geometric functions */
+
+	/* Switch from one vector space to another */
+
+	u.absoluteToCamera = function(position, camera) {
+		return ({
+			x : position.x + camera.x,
+			y : position.y + camera.y,
+		});
+	}
+
+	u.StdToIsometricScreen = function(position) {
+		return ({
+			x : (Math.sqrt(2) / 2) * ( position.x - position.y),
+			y : 1/(Math.sqrt(6)) * (position.x + position.y),
+		});
+	}
+
+	u.isometricScreenToStd = function(position) {
+		return ({
+			x : (Math.sqrt(2) / 2) * ( position.x - position.y),
+			y : 1/(Math.sqrt(6)) * (position.x + position.y),
+		});
+	}
+
+	u.cameraToAbsolute = function(position, camera) {
+		return ({
+			x : position.x - camera.x,
+			y : position.y - camera.y,
+		});
+	}
 }(window));
+=======
+>>>>>>> e995ae553bef147c26da4b0f21523cddf2803be4
