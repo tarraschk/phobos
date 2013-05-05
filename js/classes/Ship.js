@@ -48,9 +48,15 @@
 	}
 
 	s.setDestination = function (newDestination) {
+		console.log (newDestination.x);
+		console.log (newDestination.y);  
 		s.destination.x = newDestination.x;
 		s.destination.y = newDestination.y;
+		var diffPosDest = this.getDiffDestinationPosition(); 
+		s.destination.rotation = this.getDiffAngle(diffPosDest); 
 		s.hasDestination = true; 
+		s.position.rotation = s.destination.rotation - 90;
+		s.currentSpeed = 1 ; 
 	}
 
 	s.setRotationSpeed = function (newRotationSpeed) {
@@ -67,18 +73,21 @@
 	}
 
 	s.getDiffDestinationPosition = function() {
-		return ({dX : (s.position.x - destination.x), dY : (s.position.y - destination.y)});
+		return ({dX : (s.destination.x - s.position.x), dY : (s.destination.y - s.position.y)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
-		console.log (diffPosDest.x);
-		console.log (diffPosDest.y);  
+		console.log(diffPosDest);
+		var dX = diffPosDest.dX;
+		var dY = diffPosDest.dY;
+		var diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI); ; 
+
+		console.log(diffAngle);
+		return diffAngle;
 	}
 
 	s.behavior = function () {
 		if (s.hasDestination) {
-			var diffPosDest = this.getDiffDestinationPosition(); 
-			var destinationAngle = this.getDiffAngle(diffPosDest); 
 		}
 		else {
 
