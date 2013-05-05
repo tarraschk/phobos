@@ -35,7 +35,7 @@
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
-			g._playerShip.setDestination({x:e.clientX+Math.abs(g._camera.x()), y:e.clientY+Math.abs(g._camera.y())});
+			g._playerShip.setDestination({x:e.clientX+g._camera.x(), y:e.clientY+g._camera.y()});
 		});
 	}
 
