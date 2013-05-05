@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 (function(window){
 	Utils = function(){
 
@@ -49,5 +48,3 @@
 		});
 	}
 }(window));
-=======
->>>>>>> e995ae553bef147c26da4b0f21523cddf2803be4
