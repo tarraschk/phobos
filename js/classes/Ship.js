@@ -10,9 +10,9 @@
 	Ship.path = 'img/ship/';
 	
 // public properties:
-	s.position = {x:null, y:null, rotation: 45};
+	s.position = {x:null, y:null, rotation: 0};
 	s.destination = {x:null, y:null};
-	s.limitSpeed;
+	s.limitSpeed = 3;
 	s.limitRotation;
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed;
@@ -40,7 +40,9 @@
 	}
 
 	s.stop = function () {
-
+		s.currentSpeed = 0 ; 
+		s.destination = null ; 
+		s.setHasDestination(false);
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
@@ -50,13 +52,18 @@
 	s.setDestination = function (newDestination) {
 		console.log (newDestination.x);
 		console.log (newDestination.y);  
-		s.destination.x = newDestination.x;
-		s.destination.y = newDestination.y;
+		s.destination = {
+			x: newDestination.x,
+			y: newDestination.y
+		}
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
-		s.hasDestination = true; 
-		s.position.rotation = s.destination.rotation - 90;
-		s.currentSpeed = 1 ; 
+		s.position.rotation = s.destination.rotation;
+		s.setHasDestination(true); 
+		s.currentSpeed = s.limitSpeed ; 
+	}
+	s.setHasDestination = function (newSetHasDestination) {
+		s.hasDestination = newSetHasDestination; 
 	}
 
 	s.setRotationSpeed = function (newRotationSpeed) {
@@ -80,14 +87,21 @@
 		console.log(diffPosDest);
 		var dX = diffPosDest.dX;
 		var dY = diffPosDest.dY;
-		var diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI); ; 
-
+		var diffAngle ; 
+		var offset = 90 ; 
+		if (dX > 0) 
+			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
+		else if (dX <= 0) 
+			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
 		console.log(diffAngle);
 		return diffAngle;
 	}
 
 	s.behavior = function () {
 		if (s.hasDestination) {
+			var diffPosDest = this.getDiffDestinationPosition();
+			if (Math.abs(diffPosDest.dX) < 1 && Math.abs(diffPosDest.dY) < 1) 
+				s.stop() ; 
 		}
 		else {
 
