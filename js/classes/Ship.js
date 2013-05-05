@@ -10,8 +10,12 @@
 	Ship.path = 'img/ship/';
 	
 // public properties:
-	s.mapX;
-	s.mapY;
+	s.position = {x:null, y:null};
+	s.destination = {x:null, y:null};
+	s.limitSpeed;
+	s.limitRotation;
+	s.rotation;
+	s.rotationSpeed;
 	s.name;
 // constructor:
 	s.initialize = function (params) {
@@ -21,10 +25,44 @@
 	}
 
 // public methods:
-	s.setMapCoords = function(params){
-		this.mapX = params.x;
-		this.mapY = params.y;
+	
+	s.moveTo = function (destination) {
+
 	}
+
+	s.rotate = function (rotation) {
+
+	}
+
+	s.throttleBrake = function (speed) {
+
+	}
+
+	s.stop = function () {
+
+	}
+
+	s.setLimitSpeed = function (newLimitSpeed) {
+
+	}
+
+	s.setDestination = function (newDestination) {
+
+	}
+
+	s.setRotationSpeed = function (newRotationSpeed) {
+
+	}
+
+	s.setName = function (newName) {
+
+	}
+
+	s.setMapCoords = function(newMapCoo){
+		this.position.x = newMapCoo.x;
+		this.position.y = newMapCoo.y;
+	}
+
 	s.tick = function (event) {
 		s.x += 5;
 	}
@@ -49,8 +87,7 @@
 			s.image = imgShip;
 			s.spriteSheet = shipSpriteSheet;
 			s.gotoAndStop("walk");
-			s.mapX = shipData.x;
-			s.mapY = shipData.y;
+			s.setMapCoords(shipData);
 			s.x = shipData.x;
 			s.y = shipData.y;
 			s.name = shipData.name; 
