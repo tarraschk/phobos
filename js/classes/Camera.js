@@ -108,7 +108,7 @@
 				this._position.y -= this._SPEED;
 				break;
 			case 'DOWN':
-				this._position.y -= this._SPEED;
+				this._position.y += this._SPEED;
 				break;
 		}
 		console.log(this._position);
