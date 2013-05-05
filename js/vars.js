@@ -4,6 +4,7 @@ Ficher des variables globales accessibles à l'ensemble du projet.
 
 //liste des code de touche clavier
 window._ = window.createjs;
+var utils = new Utils();
 var KEY = {
 		LEFT: 37,
 		UP: 38,

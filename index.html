@@ -7,7 +7,8 @@
 	<meta name="generator" content="Sublime Text 2" />
 	<link rel="stylesheet" media="screen" type="text/css" title="index" href="css/reset.css" />
 	<link rel="stylesheet" media="screen" type="text/css" title="index" href="css/index.css" />
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+	<!-- // <script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script> -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
 	<script type="text/javascript" src="js/lib/easelJS/easeljs-0.6.0.min.js"></script>
@@ -21,7 +22,7 @@
 		<div id="debug"></div>
 
 		<script type="text/html" id="tpl_entity_info_container">
-			<div class="entity_info_container">
+			<div class="entity_info_container" id="{{id}}">
 				<div class="name">{{name}}</div>
 				<div class="actions_list">
 					<div class="action">
@@ -34,7 +35,9 @@
 
 		<script type="text/javascript" src="http://localhost:1337/socket.io/socket.io.js"></script>
 		<!-- // <script type="text/javascript" src="js/clientTest.js"></script> -->
+		<script type="text/javascript" src="js/utils.js"></script>
 		<script type="text/javascript" src="js/vars.js"></script>
+		
 		<script type="text/javascript" src="js/classes/Background.js"></script>
 		<script type="text/javascript" src="js/classes/Ship.js"></script>
 		<script type="text/javascript" src="js/classes/Station.js"></script>
