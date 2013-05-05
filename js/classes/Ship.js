@@ -10,12 +10,13 @@
 	Ship.path = 'img/ship/';
 	
 // public properties:
-	s.position = {x:null, y:null};
+	s.position = {x:null, y:null, rotation: 45};
 	s.destination = {x:null, y:null};
 	s.limitSpeed;
 	s.limitRotation;
-	s.rotation;
+	s.currentSpeed = 0 ; 
 	s.rotationSpeed;
+	s.hasDestination = false;
 	s.name;
 // constructor:
 	s.initialize = function (params) {
@@ -47,15 +48,17 @@
 	}
 
 	s.setDestination = function (newDestination) {
-
+		s.destination.x = newDestination.x;
+		s.destination.y = newDestination.y;
+		s.hasDestination = true; 
 	}
 
 	s.setRotationSpeed = function (newRotationSpeed) {
-
+		s.rotationSpeed = newRotationSpeed;
 	}
 
 	s.setName = function (newName) {
-
+		s.name = newName;
 	}
 
 	s.setMapCoords = function(newMapCoo){
@@ -63,8 +66,42 @@
 		this.position.y = newMapCoo.y;
 	}
 
+	s.getDiffDestinationPosition = function() {
+		return ({dX : (s.position.x - destination.x), dY : (s.position.y - destination.y)});
+	}
+
+	s.getDiffAngle = function(diffPosDest) {
+		console.log (diffPosDest.x);
+		console.log (diffPosDest.y);  
+	}
+
+	s.behavior = function () {
+		if (s.hasDestination) {
+			var diffPosDest = this.getDiffDestinationPosition(); 
+			var destinationAngle = this.getDiffAngle(diffPosDest); 
+		}
+		else {
+
+		}
+	}
+
+	s.tickMovement = function () {
+		//Throttle. 
+		this.position.x += Math.sin((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
+		this.position.y += Math.cos((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
+	}
+
+	s.drawRender = function () {
+		s.x = this.position.x;
+		s.y = this.position.y;
+		//s.x = this.position.x - game._camera.x();
+		//s.y = this.position.y - game._camera.y();
+	}
+
 	s.tick = function (event) {
-		s.x += 5;
+		this.behavior();
+		this.tickMovement(); 
+		this.drawRender();
 	}
 
 	s.load = function(shipData){
