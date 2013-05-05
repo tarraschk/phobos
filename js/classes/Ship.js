@@ -71,8 +71,8 @@
 			ship.gotoAndStop("walk");
 			ship.mapX = shipData.x;
 			ship.mapY = shipData.y;
-			ship.x = 50//shipData.x;
-			ship.y = 70//shipData.y;
+			ship.x = 250//shipData.x;
+			ship.y = 270//shipData.y;
 			ship.name = shipData.name; 
 			console.log(ship);
 			cPlayground.addChild(ship);
