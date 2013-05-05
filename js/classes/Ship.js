@@ -100,7 +100,7 @@
 	s.behavior = function () {
 		if (s.hasDestination) {
 			var diffPosDest = this.getDiffDestinationPosition();
-			if (Math.abs(diffPosDest.dX) < 1 && Math.abs(diffPosDest.dY) < 1) 
+			if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
 				s.stop() ; 
 		}
 		else {
