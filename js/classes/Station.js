@@ -10,26 +10,26 @@
 	Station.path = 'img/objects/stations/';
 	
 // public properties:
-	s.mapX;
-	s.mapY;
-	s.name;
+	s._mapX;
+	s._mapY;
+	s._name;
 	s.fucused = false;
 	s.scannable;
 // constructor:
 	s.initialize = function (params) {
-		this.name = params.name;
+		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params.src);
 	}
 
 // public methods:
 	s.setMapCoords = function(params){
-		this.mapX = params.x;
-		this.mapY = params.y;
+		this._mapX = params.x;
+		this._mapY = params.y;
 	}
 	s.tick = function (event) {
-		s.x = this.mapX - game._camera.x();
-		s.y = this.mapY - game._camera.y();
+		this.x = this._mapX - game._camera.x();
+		this.y = this._mapY - game._camera.y();
 	}
 
 	s.setBackgroundSrc = function(newSrc) {
@@ -43,23 +43,38 @@
 	}
 	s.load = function(src){
 		var src = Station.path+src;
-		s.image = new Image();
-		s.image.src = src; 
+		this.image = new Image();
+		this.image.src = src; 
 		var that = this;
-		s.image.onload = function() {
+		this.image.onload = function() {
 			//s.x = 350;//window.clientWidth /2;
 			//s.y = 235;
-			cPlayground.addChild(s);
-			s.addEventListener("mouseover", function(e) {
-				debug('over '+that.name);
+			cPlayground.addChild(that);
+			that.addEventListener("mouseover", function(e) {
+				debug('over '+that._name);
 			});
-			s.addEventListener("mouseout", function(e) {
-				debug('out of '+that.name);
+			that.addEventListener("mouseout", function(e) {
+				debug('out of '+that._name);
 			});
-			s.addEventListener("click", function(){
-				debug('click on '+that.name);
+			that.addEventListener("click", function(e){
+				console.log('click listener', e);
+				debug('click on '+that._name);
+				that.manageClick();
 			}); 
 		}
+	}
+	s.name = function(name){
+		if(name != undefined){
+			this._name = name;
+			return this;
+		}
+		else{
+			return this._name;
+		}
+	}
+	s.manageClick = function(){
+		var n = this.name();
+		debug('click on '+n);
 	}
 	window.Station = Station;
 
