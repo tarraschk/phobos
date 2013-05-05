@@ -47,7 +47,6 @@
 		this.image.src = Station.path+src; 
 		var that = this;
 		this.image.onload = function() {
-			
 			that.addEventListener("mouseover", function(e) {
 				debug('over '+that._name);
 				that.manageMouseOver();
@@ -60,6 +59,7 @@
 				that.manageClick();
 			});
 			cPlayground.addChild(that);
+
 		}
 	}
 	s.name = function(name){
