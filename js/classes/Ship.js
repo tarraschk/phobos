@@ -26,7 +26,7 @@
 		this.mapY = params.y;
 	}
 	s.tick = function (event) {
-
+		s.x += 5;
 	}
 
 	s.load = function(shipData){

@@ -35,7 +35,7 @@
 		_.Ticker.addListener(window);
 		_.Ticker.useRAF = true;
 		_.Ticker.setFPS(60);
-		//_.Ticker.addEventListener("tick", this.tick);
+		_.Ticker.addEventListener("tick", this.tick);
 	}
 // public methods:
 
