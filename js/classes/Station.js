@@ -50,17 +50,17 @@
 			//s.x = 350;//window.clientWidth /2;
 			//s.y = 235;
 			cPlayground.addChild(that);
+			that.addEventListener("click", function(e){
+				console.log('click listener', e);
+				debug('click on '+that._name);
+				that.manageClick();
+			}); 
 			that.addEventListener("mouseover", function(e) {
 				debug('over '+that._name);
 			});
 			that.addEventListener("mouseout", function(e) {
 				debug('out of '+that._name);
 			});
-			that.addEventListener("click", function(e){
-				console.log('click listener', e);
-				debug('click on '+that._name);
-				that.manageClick();
-			}); 
 		}
 	}
 	s.name = function(name){

@@ -10,7 +10,8 @@ function resize(){
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
 	});
-	$('#hud').width(window.innerWidth).height(window.innerHeight);
+	//Prevents click. Hud won't be resized ? 
+	//$('#hud').width(window.innerWidth).height(window.innerHeight);
 }
 
 function handleTick() {

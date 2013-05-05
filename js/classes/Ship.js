@@ -49,9 +49,7 @@
 
 	}
 
-	s.setDestination = function (newDestination) {
-		console.log (newDestination.x);
-		console.log (newDestination.y);  
+	s.setDestination = function (newDestination) { 
 		s.destination = {
 			x: newDestination.x,
 			y: newDestination.y
@@ -84,7 +82,6 @@
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
-		console.log(diffPosDest);
 		var dX = diffPosDest.dX;
 		var dY = diffPosDest.dY;
 		var diffAngle ; 
@@ -93,7 +90,6 @@
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
-		console.log(diffAngle);
 		return diffAngle;
 	}
 
