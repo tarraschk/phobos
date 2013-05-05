@@ -36,7 +36,7 @@
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
-			var cooClick = stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
+			var cooClick = Utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
 			console.log(cooClick);
 			g._playerShip.setDestination({x:e.clientX+g._camera.x(), y:e.clientY+g._camera.y()});
 		});

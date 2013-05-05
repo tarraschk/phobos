@@ -16,6 +16,7 @@
 	s._name;
 	s.fucused = false;
 	s.scannable;
+	s._id = utils.generateId();
 // constructor:
 	s.initialize = function (params) {
 		this._name = params.name;
@@ -41,6 +42,15 @@
 	}
 	s.onClick = function(){
 		//gerer le clic
+	}
+	s.id = function(id){
+		if(id != undefined){
+			this._id = id;
+			return this;
+		}
+		else{
+			return this._id;
+		}
 	}
 	s.load = function(src){
 		this.image = new Image();
@@ -78,7 +88,7 @@
 		ui.openEntityInfos(this);
 	}
 	s.manageMouseOut = function(){
-		
+		ui.closeEntityInfos(this);
 	}
 	s.isInspected = function(is){
 		if(is != undefined){
