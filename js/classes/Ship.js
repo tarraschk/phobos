@@ -64,7 +64,7 @@
 	}
 
 	s.tick = function (event) {
-		s.x += 5;
+		//s.x += 5;
 	}
 
 	s.load = function(shipData){

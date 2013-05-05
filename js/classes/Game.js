@@ -28,6 +28,9 @@
 			y:35,
 			src:"spriteShip.png",
 		});
+		$(document).on('click', function(e){
+			g._playerShip.setDestination({x:e.clientX, y:e.clientY});
+		});
 	}
 
 	g.launchTicker = function() {
