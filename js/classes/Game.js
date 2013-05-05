@@ -16,6 +16,7 @@
 		resize();
 		var backgroundGame = new Background().load("void/secteur7.jpg");
 		g._camera = new Camera();
+		ui = new UI();
 		g._station1 = new Station({
 			src: 'stationIso.png',
 			name: 'Station spatiale internationale',

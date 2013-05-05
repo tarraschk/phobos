@@ -45,7 +45,27 @@ canvas{
 	position: absolute;
 	top: 0;
 	left: 0;
-	
+	.entity_info_container{
+		display: none;
+		border: 4px solid $gris;
+		background-color: rgba(0,0,0,0.5);
+		color: $vert;
+		font-family: 'serif';
+		font-size: 0.8em;
+		.name{
+			
+		}
+		.actions_list{
+			.action{
+				i{
+
+				}
+				span{
+
+				}
+			}
+		}
+	}
 }
 #debug{
 	background-color: rgba(0,0,0,0.5);

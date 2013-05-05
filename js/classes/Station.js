@@ -10,6 +10,7 @@
 	Station.path = 'img/objects/stations/';
 	
 // public properties:
+	s._isInspected;
 	s._mapX;
 	s._mapY;
 	s._name;
@@ -42,25 +43,23 @@
 		//gerer le clic
 	}
 	s.load = function(src){
-		var src = Station.path+src;
 		this.image = new Image();
-		this.image.src = src; 
+		this.image.src = Station.path+src; 
 		var that = this;
 		this.image.onload = function() {
-			//s.x = 350;//window.clientWidth /2;
-			//s.y = 235;
-			cPlayground.addChild(that);
+			
 			that.addEventListener("mouseover", function(e) {
 				debug('over '+that._name);
+				that.manageMouseOver();
 			});
 			that.addEventListener("mouseout", function(e) {
 				debug('out of '+that._name);
+				that.manageMouseOut();
 			});
 			that.addEventListener("click", function(e){
-				console.log('click listener', e);
-				debug('click on '+that._name);
 				that.manageClick();
-			}); 
+			});
+			cPlayground.addChild(that);
 		}
 	}
 	s.name = function(name){
@@ -73,8 +72,22 @@
 		}
 	}
 	s.manageClick = function(){
-		var n = this.name();
-		debug('click on '+n);
+		
+	}
+	s.manageMouseOver = function(){
+		ui.openEntityInfos(this);
+	}
+	s.manageMouseOut = function(){
+		
+	}
+	s.isInspected = function(is){
+		if(is != undefined){
+			this._isInspected = is;
+			return this;
+		}
+		else{
+			return this._isInspected;
+		}
 	}
 	window.Station = Station;
 

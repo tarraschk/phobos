@@ -44,4 +44,5 @@ var cPlayground = new _.Stage("playground");
 	cPlayground.mouseMoveOutside = true;
 var cBackground = new _.Stage("background");
 var camera = null;
+var ui;
 	

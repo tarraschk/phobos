@@ -32,9 +32,9 @@
 			if(code == KEY.LEFT) that._keyIsLeft = false;
 			if(code == KEY.RIGHT) that._keyIsRight = false;
 		});
-		$(document).on('mousemove', function(e){
+		/*$(document).on('mousemove', function(e){
 			that.checkMoving(e);
-		});
+		});*/
 	};
 	Camera.prototype.x = function(x) {
 		if(x != undefined){

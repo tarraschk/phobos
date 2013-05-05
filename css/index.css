@@ -10,8 +10,16 @@ canvas {
   position: absolute;
   top: 0;
   left: 0; }
+  /* line 48, index.scss */
+  #hud .entity_info_container {
+    display: none;
+    border: 4px solid #d0d2d3;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #67a54b;
+    font-family: 'serif';
+    font-size: 0.8em; }
 
-/* line 50, index.scss */
+/* line 70, index.scss */
 #debug {
   background-color: rgba(0, 0, 0, 0.5);
   color: whitesmoke;

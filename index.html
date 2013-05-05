@@ -11,14 +11,27 @@
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
 	<script type="text/javascript" src="js/lib/easelJS/easeljs-0.6.0.min.js"></script>
+	<script type="text/javascript" src="js/lib/moustache.js"></script>
 <title>Phobos Prototype 1</title>
 
 </head>
 	<body id="body">
 		<canvas width="1800" height="1000" id="background"></canvas>
 		<canvas width="1800" height="1000" id="playground"></canvas>
-		<div id="hud"></div>
 		<div id="debug"></div>
+
+		<script type="text/html" id="tpl_entity_info_container">
+			<div class="entity_info_container">
+				<div class="name">{{name}}</div>
+				<div class="actions_list">
+					<div class="action">
+						<i class="ico-im"></i>
+						<span class="action_name">amarrer</span>
+					</div>
+				</div>
+			</div>
+		</script>
+
 		<script type="text/javascript" src="http://localhost:1337/socket.io/socket.io.js"></script>
 		<!-- // <script type="text/javascript" src="js/clientTest.js"></script> -->
 		<script type="text/javascript" src="js/vars.js"></script>
@@ -26,6 +39,7 @@
 		<script type="text/javascript" src="js/classes/Ship.js"></script>
 		<script type="text/javascript" src="js/classes/Station.js"></script>
 		<script type="text/javascript" src="js/classes/Camera.js"></script>
+		<script type="text/javascript" src="js/classes/UI.js"></script>
 		<script type="text/javascript" src="js/classes/Game.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>
