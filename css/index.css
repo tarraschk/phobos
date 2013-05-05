@@ -1,3 +1,5 @@
+/*rgb(249, 48, 42);*/
+/* line 39, index.scss */
 canvas {
   position: absolute;
   top: 0;
@@ -8,6 +10,8 @@ canvas {
   position: absolute;
   top: 0;
   left: 0; }
+
+/* line 50, index.scss */
 #debug {
   background-color: rgba(0, 0, 0, 0.5);
   color: whitesmoke;
