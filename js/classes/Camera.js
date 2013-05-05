@@ -2,26 +2,35 @@
 
 	function Camera(position) {
 		this._position = null;
-		this._moving = false;
-		this._move = '';
 		this._borderWidth = 6;
-		this._SPEED = 1;
+		this._SPEED = 3;
 		this.initialize();
+		this._keyIsLeft = false;
+		this._mouseIsLeft;
+		this._keyIsRight = false;
+		this._mouseIsRight;
+		this._keyIsUp = false;
+		this._mouseIsUp;
+		this._keyIsDown = false;
+		this._mouseIsDown;
 	};
 
 	Camera.prototype.initialize = function (position) {
 		var that = this;
 		this._position = (position == undefined) ? {x:0,y:0} : position;
 		$(document).on('keydown', function(e){
-			that.checkMoving(e);
+			var code = (e.keyCode ? e.keyCode : e.which);
+			if(code == KEY.UP) that._keyIsUp = true;
+			if(code == KEY.DOWN) that._keyIsDown = true;
+			if(code == KEY.LEFT) that._keyIsLeft = true;
+			if(code == KEY.RIGHT) that._keyIsRight = true;
 		});
 		$(document).on('keyup', function(e){
 			var code = (e.keyCode ? e.keyCode : e.which);
-			if(code == KEY.UP ||
-				code == KEY.LEFT ||
-				code == KEY.DOWN ||
-				code == KEY.RIGHT)
-				that._moving = false;
+			if(code == KEY.UP) that._keyIsUp = false;
+			if(code == KEY.DOWN) that._keyIsDown = false;
+			if(code == KEY.LEFT) that._keyIsLeft = false;
+			if(code == KEY.RIGHT) that._keyIsRight = false;
 		});
 		$(document).on('mousemove', function(e){
 			that.checkMoving(e);
@@ -47,76 +56,36 @@
 	};
 	// public methods:
 	Camera.prototype.checkMoving = function(e) {
-		switch(e.type){
-			case 'keydown':
-				var code = (e.keyCode ? e.keyCode : e.which);
-				switch(code){
-					case KEY.UP:
-						this._move = 'UP';
-						this._moving = true;
-						break;
-					case KEY.LEFT:
-						this._move = 'LEFT';
-						this._moving = true;
-						break;
-					case KEY.DOWN:
-						this._move = 'DOWN';
-						this._moving = true;
-						break;
-					case KEY.RIGHT:
-						this._move = 'RIGHT';
-						this._moving = true;
-						break;
-				}
-				break;
-			case 'mousemove': 
-				if(mouse.x <= this._borderWidth){
-					this._move = 'LEFT';
-					this._moving = true;
-				}
-				if(mouse.x >= window.innerWidth - this._borderWidth){
-					this._move = 'RIGHT';
-					this._moving = true;
-				}
-				if(mouse.y <= this._borderWidth + 4){
-					this._move = 'UP';
-					this._moving = true;
-				}
-				if(mouse.y >= window.innerHeight - this._borderWidth){
-					this._move = 'DOWN';
-					this._moving = true;
-				}
-				if(mouse.x > this._borderWidth &&
-					mouse.x < window.innerWidth - this._borderWidth &&
-					mouse.y > this._borderWidth &&
-					mouse.y < window.innerHeight - this._borderWidth){
-					this._moving = false;
-				}
-				break;
+		if(mouse.x <= this._borderWidth){
+			this._mouseIsLeft = true;
 		}
-	};
-	Camera.prototype.move = function(dir) {
-		//debug('camera '+dir);
-		switch(dir){
-			case 'LEFT':
-				this._position.x -= this._SPEED;
-				break;
-			case 'RIGHT':
-				this._position.x += this._SPEED;
-				break;
-			case 'UP':
-				this._position.y -= this._SPEED;
-				break;
-			case 'DOWN':
-				this._position.y += this._SPEED;
-				break;
+		if(mouse.x > this._borderWidth){
+			this._mouseIsLeft = false;
 		}
-		console.log(this._position);
+		if(mouse.x >= window.innerWidth - this._borderWidth){
+			this._mouseIsRight = true;
+		}
+		if(mouse.x < window.innerWidth - this._borderWidth){
+			this._mouseIsRight = false;
+		}
+		if(mouse.y <= this._borderWidth + 4){
+			this._mouseIsUp = true;
+		}
+		if(mouse.y > this._borderWidth + 4){
+			this._mouseIsUp = false;
+		}
+		if(mouse.y >= window.innerHeight - this._borderWidth){
+			this._mouseIsDown = true;
+		}
+		if(mouse.y < window.innerHeight - this._borderWidth){
+			this._mouseIsDown = false;
+		}
 	};
 	Camera.prototype.tick = function (event) {
-		if(this._moving){
-			this.move(this._move);
-		}
+		if(this._keyIsRight || this._mouseIsRight) this._position.x += this._SPEED;
+		if(this._keyIsLeft || this._mouseIsLeft) this._position.x -= this._SPEED;
+		if(this._keyIsUp || this._mouseIsUp) this._position.y -= this._SPEED;
+		if(this._keyIsDown || this._mouseIsDown) this._position.y += this._SPEED;
 	};
 
 	window.Camera = Camera;

@@ -28,7 +28,8 @@
 		this.mapY = params.y;
 	}
 	s.tick = function (event) {
-
+		s.x = this.mapX - game._camera.x();
+		s.y = this.mapY - game._camera.y();
 	}
 
 	s.setBackgroundSrc = function(newSrc) {
@@ -46,11 +47,9 @@
 		s.image.src = src; 
 		var that = this;
 		s.image.onload = function() {
-			s.x = 350;//window.clientWidth /2;
-			s.y = 235;
-
+			//s.x = 350;//window.clientWidth /2;
+			//s.y = 235;
 			cPlayground.addChild(s);
-			
 			s.addEventListener("mouseover", function(e) {
 				debug('over '+that.name);
 			});
@@ -60,7 +59,6 @@
 			s.addEventListener("click", function(){
 				debug('click on '+that.name);
 			}); 
-			cPlayground.update();
 		}
 	}
 	window.Station = Station;
