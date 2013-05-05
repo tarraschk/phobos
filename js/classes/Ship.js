@@ -115,8 +115,8 @@
 	}
 
 	s.drawRender = function () {
-		s.x = this.position.x;
-		s.y = this.position.y;
+		s.x = this.position.x - game._camera.x();
+		s.y = this.position.y - game._camera.y();
 		//s.x = this.position.x - game._camera.x();
 		//s.y = this.position.y - game._camera.y();
 	}
