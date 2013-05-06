@@ -3,7 +3,7 @@
 	function Camera(position) {
 		this._position = null;
 		this._borderWidth = 6;
-		this._SPEED = 3;
+		this._SPEED = 30;
 		this.initialize();
 		this._keyIsLeft = false;
 		this._mouseIsLeft;
@@ -86,6 +86,12 @@
 		if(this._keyIsLeft || this._mouseIsLeft) this._position.x -= this._SPEED;
 		if(this._keyIsUp || this._mouseIsUp) this._position.y -= this._SPEED;
 		if(this._keyIsDown || this._mouseIsDown) this._position.y += this._SPEED;
+
+
+		//Vibration de la mort que personne ne comprend
+		/*var newCoo = utils.stdToIsometricScreen(this._position);
+		this._position.x = newCoo.x ; 
+		this._position.y = newCoo.y ; */
 	};
 
 	window.Camera = Camera;
