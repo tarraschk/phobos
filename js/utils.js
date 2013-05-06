@@ -24,8 +24,8 @@
 
 	u.absoluteToCamera = function(position, camera) {
 		return ({
-			x : position.x + camera.x,
-			y : position.y + camera.y,
+			x : position.x - camera.x,
+			y : position.y - camera.y,
 		});
 	}
 
@@ -38,22 +38,22 @@
 
 	u.isometricScreenToStd = function(position) {
 		return ({
-			x : (1/Math.sqrt(2)) * position.x - (Math.sqrt(6)/2) * position.y,
-			y : - ((Math.sqrt(6) / 2) * position.y - ( 1 / Math.sqrt(2) ) * position.x),
+			x : (1/Math.sqrt(2)) * position.x + (Math.sqrt(6)/2) * position.y,
+			y : ((Math.sqrt(6) / 2) * position.y - ( 1 / Math.sqrt(2) ) * position.x),
 		});
 	}
 
 	u.cameraToAbsolute = function(position, camera) {
 		return ({
-			x : position.x - camera.x,
-			y : position.y - camera.y,
+			x : position.x + camera.x,
+			y : position.y + camera.y,
 		});
 	}
 	u.absoluteToStd = function(position, camera) {
-		return (stdToIsometricScreen(absoluteToCamera(position, camera)));
+		return ((this.absoluteToCamera(this.stdToIsometricScreen(position), camera)));
 	}
 	u.stdToAbsolute = function (position, camera) {
-		return (cameraToAbsolute(stdToIsometricScreen (position), camera));
+		return (this.isometricScreenToStd (this.cameraToAbsolute(position, camera)));
 	}
 
 }(window));
