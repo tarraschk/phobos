@@ -31,17 +31,15 @@
 		});
 		g._playerShip = new Ship({
 			id:1, 
-			x:100,
-			y:30,
+			x:600,
+			y:350,
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-			console.log("Click sur : ");console.log({	x:e.clientX, y:e.clientY});
-			console.log("Camera : ");console.log(cooClick);
+			
 			var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-			console.log("iso : ");
-			console.log(cooClick2);
+			
 			g._playerShip.setDestination({x:cooClick2.x, y:cooClick2.y});
 		});
 	}
