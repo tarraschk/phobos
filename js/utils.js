@@ -12,7 +12,7 @@
 		for(var i = 0 ; i < (l - 1) ; i++){
 			id += abc[Math.floor(Math.random()*61)];
 		}
-		
+
 		return id;
 	}
 
@@ -20,7 +20,7 @@
 
 	/* Switch from one vector space to another */
 
-	
+
 
 	u.absoluteToCamera = function(position, camera) {
 		return ({
