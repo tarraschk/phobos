@@ -14,7 +14,7 @@
 	s.destination = {x:null, y:null};
 	s.limitSpeed = 3;
 	s.limitRotation;
-	s.currentSpeed = 0 ; 
+	s.currentSpeed = 1 ; 
 	s.rotationSpeed;
 	s.hasDestination = false;
 	s.name;
@@ -43,6 +43,8 @@
 		s.currentSpeed = 0 ; 
 		s.destination = null ; 
 		s.setHasDestination(false);
+		console.log("stop pos") ; 
+		console.log(s.x + " ; " + s.y)
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
@@ -50,6 +52,7 @@
 	}
 
 	s.setDestination = function (newDestination) { 
+		debug ("New destination :  " + newDestination.x + " ; " + newDestination.y)
 		s.destination = {
 			x: newDestination.x,
 			y: newDestination.y
@@ -116,15 +119,13 @@
 
 	}
 
-	s.isometricConversion = function() {
-		this.x = (Math.sqrt(2) / 2) * ( this.x - this.y);
-		this.y = 1/(Math.sqrt(6)) * (this.x + this.y);
-	}
-
 	s.drawRender = function () {
 		s.rotationFrame();
-		s.x = this.position.x - game._camera.x();
-		s.y = this.position.y - game._camera.y();
+		//s.x = this.position.x - game._camera.x();
+		//s.y = this.position.y - game._camera.y();
+		var renderCoo = utils.absoluteToStd(this.position, game._camera._position);
+		s.x = renderCoo.x;
+		s.y = renderCoo.y;
 		//s.isometricConversion(); 
 		//s.x = this.position.x - game._camera.x();
 		//s.y = this.position.y - game._camera.y();
@@ -159,6 +160,8 @@
 			s.setMapCoords(shipData);
 			s.x = shipData.x;
 			s.y = shipData.y;
+			s.scaleX = 0.4;
+			s.scaleY = 0.4; 
 			s.name = shipData.name; 
 			console.log(s);
 			cPlayground.addChild(s);
