@@ -10,11 +10,11 @@
 	Ship.path = 'img/ship/';
 	
 // public properties:
-	s.position = {x:null, y:null, rotation: 0};
+	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
 	s.limitSpeed = 3;
 	s.limitRotation;
-	s.currentSpeed = 0 ; 
+	s.currentSpeed = 1 ; 
 	s.rotationSpeed;
 	s.hasDestination = false;
 	s.name;
@@ -50,13 +50,15 @@
 	}
 
 	s.setDestination = function (newDestination) { 
+		debug ("New destination :  " + newDestination.x + " ; " + newDestination.y)
 		s.destination = {
 			x: newDestination.x,
 			y: newDestination.y
 		}
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
-		s.position.rotation = s.destination.rotation;
+		console.log(s.destination.rotation);
+		s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
 	}
@@ -90,6 +92,11 @@
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
+		console.log("diff Angle : ");
+		//if (diffAngle < 0) diffAngle = - diffAngle ; 
+		//else diffAngle += 180 ; 
+		console.log(diffAngle);
+
 		return diffAngle;
 	}
 
@@ -106,25 +113,28 @@
 
 	s.tickMovement = function () {
 		//Throttle. 
+		//s.position.rotation += 1 ;
 		this.position.x += Math.sin((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
 		this.position.y += Math.cos((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
 	}
 
 	s.rotationFrame = function() {
 		this.gotoAndPlay("walk");
-		this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
+		console.log(this.position.rotation % 360 ); 
+		if (this.position.rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
+		else
+			this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
 
-	}
-
-	s.isometricConversion = function() {
-		this.x = (Math.sqrt(2) / 2) * ( this.x - this.y);
-		this.y = 1/(Math.sqrt(6)) * (this.x + this.y);
 	}
 
 	s.drawRender = function () {
 		s.rotationFrame();
-		s.x = this.position.x - game._camera.x();
-		s.y = this.position.y - game._camera.y();
+		//s.x = this.position.x - game._camera.x();
+		//s.y = this.position.y - game._camera.y();
+		var renderCoo = utils.absoluteToStd(this.position, game._camera._position);
+		s.x = renderCoo.x;
+		s.y = renderCoo.y;
 		//s.isometricConversion(); 
 		//s.x = this.position.x - game._camera.x();
 		//s.y = this.position.y - game._camera.y();
@@ -159,6 +169,8 @@
 			s.setMapCoords(shipData);
 			s.x = shipData.x;
 			s.y = shipData.y;
+			s.scaleX = 0.4;
+			s.scaleY = 0.4; 
 			s.name = shipData.name; 
 			console.log(s);
 			cPlayground.addChild(s);

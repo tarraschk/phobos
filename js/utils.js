@@ -12,7 +12,7 @@
 		for(var i = 0 ; i < (l - 1) ; i++){
 			id += abc[Math.floor(Math.random()*61)];
 		}
-		
+
 		return id;
 	}
 
@@ -20,12 +20,12 @@
 
 	/* Switch from one vector space to another */
 
-	
+
 
 	u.absoluteToCamera = function(position, camera) {
 		return ({
-			x : position.x + camera.x,
-			y : position.y + camera.y,
+			x : position.x - camera.x,
+			y : position.y - camera.y,
 		});
 	}
 
@@ -38,22 +38,31 @@
 
 	u.isometricScreenToStd = function(position) {
 		return ({
-			x : (1/Math.sqrt(2)) * position.x - (Math.sqrt(6)/2) * position.y,
-			y : - ((Math.sqrt(6) / 2) * position.y - ( 1 / Math.sqrt(2) ) * position.x),
+			x : (1/Math.sqrt(2)) * position.x + (Math.sqrt(6)/2) * position.y,
+			y : ((Math.sqrt(6) / 2) * position.y - ( 1 / Math.sqrt(2) ) * position.x),
 		});
 	}
 
 	u.cameraToAbsolute = function(position, camera) {
 		return ({
-			x : position.x - camera.x,
-			y : position.y - camera.y,
+			x : position.x + camera.x,
+			y : position.y + camera.y,
 		});
 	}
 	u.absoluteToStd = function(position, camera) {
+
+		return ((this.absoluteToCamera(this.stdToIsometricScreen(position), camera)));
+	}
+	u.stdToAbsolute = function (position, camera) {
+		return (this.isometricScreenToStd (this.cameraToAbsolute(position, camera)));
+// >>>>>>> 4bb7b64b24499ebc44500deae86bf578b0349d60
+	}
+
+}(window));
+
+/*<<<<<<< HEAD
 		return (this.stdToIsometricScreen(this.absoluteToCamera(position, camera)));
 	}
 	u.stdToAbsolute = function (position, camera) {
 		return (this.cameraToAbsolute(this.stdToIsometricScreen (position), camera));
-	}
-
-}(window));
+=======*/

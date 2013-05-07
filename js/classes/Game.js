@@ -33,14 +33,22 @@
 		});
 		g._playerShip = new Ship({
 			id:1, 
-			x:355,
-			y:235,
+			x:600,
+			y:350,
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
-			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
-			console.log(cooClick);
-			g._playerShip.setDestination({x:e.clientX+g._camera.x(), y:e.clientY+g._camera.y()});
+// <<<<<<< HEAD
+// 			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
+// 			console.log(cooClick);
+// 			g._playerShip.setDestination({x:e.clientX+g._camera.x(), y:e.clientY+g._camera.y()});
+// =======
+			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+			
+			var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+			
+			g._playerShip.setDestination({x:cooClick2.x, y:cooClick2.y});
+// >>>>>>> 4bb7b64b24499ebc44500deae86bf578b0349d60
 		});
 	}
 
