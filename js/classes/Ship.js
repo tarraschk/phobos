@@ -15,7 +15,7 @@
 	s.limitSpeed = 3;
 	s.limitRotation;
 	s.currentSpeed = 1 ; 
-	s.rotationSpeed;
+	s.rotationSpeed = 1;
 	s.hasDestination = false;
 	s.name;
 // constructor:
@@ -32,7 +32,8 @@
 	}
 
 	s.rotate = function (rotation) {
-
+		console.log(rotation);
+		s.position.rotation += rotation;
 	}
 
 	s.throttleBrake = function (speed) {
@@ -80,7 +81,7 @@
 	}
 
 	s.getDiffDestinationPosition = function() {
-		return ({dX : (s.destination.x - s.position.x), dY : (s.destination.y - s.position.y)});
+		return ({dX : (s.destination.x - s.position.x), dY : (s.destination.y - s.position.y), dRotation: (s.destination.rotation - s.position.rotation)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
@@ -92,10 +93,8 @@
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
-		console.log("diff Angle : ");
 		//if (diffAngle < 0) diffAngle = - diffAngle ; 
 		//else diffAngle += 180 ; 
-		console.log(diffAngle);
 
 		return diffAngle;
 	}
@@ -103,6 +102,8 @@
 	s.behavior = function () {
 		if (s.hasDestination) {
 			var diffPosDest = this.getDiffDestinationPosition();
+			//if (Math.abs(diffPosDest.dRotation) > 2) 
+				//this.rotate(this.rotationSpeed);
 			if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
 				s.stop() ; 
 		}
