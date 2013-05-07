@@ -50,10 +50,19 @@
 		});
 	}
 	u.absoluteToStd = function(position, camera) {
+
 		return ((this.absoluteToCamera(this.stdToIsometricScreen(position), camera)));
 	}
 	u.stdToAbsolute = function (position, camera) {
 		return (this.isometricScreenToStd (this.cameraToAbsolute(position, camera)));
+// >>>>>>> 4bb7b64b24499ebc44500deae86bf578b0349d60
 	}
 
 }(window));
+
+/*<<<<<<< HEAD
+		return (this.stdToIsometricScreen(this.absoluteToCamera(position, camera)));
+	}
+	u.stdToAbsolute = function (position, camera) {
+		return (this.cameraToAbsolute(this.stdToIsometricScreen (position), camera));
+=======*/

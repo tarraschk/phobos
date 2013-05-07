@@ -10,6 +10,10 @@
 	Station.path = 'img/objects/stations/';
 	
 // public properties:
+	s._damages = 200 // dommages que la station peut causer quand elle attaque;
+	s._life; // vie totale de la station
+	s._lifeLeft; // vie restante a la station
+	s._target;
 	s._isInspected;
 	s._mapX;
 	s._mapY;
@@ -23,9 +27,13 @@
 		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params.src);
+		this._life = this._lifeLeft = params.life;
 	}
 
 // public methods:
+	s.getLifeInPercent = function(){
+		return this._lifeLeft*100/this._life;
+	}
 	s.setMapCoords = function(params){
 		this._mapX = params.x;
 		this._mapY = params.y;
@@ -34,7 +42,18 @@
 		this.x = this._mapX - game._camera.x();
 		this.y = this._mapY - game._camera.y();
 	}
+	s.shoot = function(target){
+		if(utils.range(target, this) < 200){// si la cible est assez près on lui tire dessus
 
+		}
+		else{
+			this._target = null;
+		}
+	}
+	s.takeDamage = function(shooter, d){
+		this._target = shooter;
+		this._lifeLeft -= d;
+	}
 	s.setBackgroundSrc = function(newSrc) {
 
 	}
@@ -83,13 +102,15 @@
 		}
 	}
 	s.manageClick = function(){
-		
+		//afficher dans le hud en tant que cible potentielle
 	}
+	//Affiche le nom et la barre de vie de la station
 	s.manageMouseOver = function(){
-		ui.openEntityInfos(this);
+		ui.showEntityInfos(this);
 	}
+	//cache le nom et la barre de vie de la station
 	s.manageMouseOut = function(){
-		ui.closeEntityInfos(this);
+		ui.hideEntityInfos(this);
 	}
 	s.isInspected = function(is){
 		if(is != undefined){

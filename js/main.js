@@ -1,4 +1,6 @@
 jQuery(document).ready(function($) {
+	ui = new UI();
+	net = new Net();
 	game = new Game();
 	game.launchTicker();
 });

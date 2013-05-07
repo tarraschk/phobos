@@ -21,9 +21,21 @@ canvas {
   font-size: 0.8em;
   width: 200px;
   max-height: 400px;
-  position: absolute; }
+  position: absolute;
+  padding: 4px; }
+  /* line 61, index.scss */
+  .entity_info_container .name {
+    text-align: center;
+    border-bottom: 1px solid #d0d2d3; }
+  /* line 65, index.scss */
+  .entity_info_container .actions_list {
+    padding: 10px 4px; }
+    /* line 68, index.scss */
+    .entity_info_container .actions_list .action:hover {
+      cursor: pointer;
+      color: whitesmoke; }
 
-/* line 74, index.scss */
+/* line 81, index.scss */
 #debug {
   background-color: rgba(0, 0, 0, 0.5);
   color: whitesmoke;
