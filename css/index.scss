@@ -57,11 +57,18 @@ canvas{
 	width: 200px;
 	max-height: 400px;
 	position: absolute;
+	padding: 4px;
 	.name{
-		
+		text-align: center;
+		border-bottom: 1px solid $gris;
 	}
 	.actions_list{
+		padding: 10px 4px;
 		.action{
+			&:hover{
+				cursor: pointer;
+				color: $blancf;
+			}
 			i{
 
 			}

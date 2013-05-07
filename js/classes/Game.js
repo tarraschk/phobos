@@ -16,18 +16,20 @@
 		resize();
 		var backgroundGame = new Background().load("void/secteur7.jpg");
 		g._camera = new Camera();
-		ui = new UI();
+		
 		g._station1 = new Station({
 			src: 'stationIso.png',
 			name: 'Station spatiale internationale',
 			x: 0,
-			y: 0
+			y: 0,
+			life: 150000
 		});
 		g._station2 = new Station({
 			src: 'stationIso.png',
 			name: 'Station MIR',
 			x: 600,
-			y: 300
+			y: 300,
+			life: 150000
 		});
 		g._playerShip = new Ship({
 			id:1, 
@@ -36,7 +38,7 @@
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
-			var cooClick = Utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
+			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
 			console.log(cooClick);
 			g._playerShip.setDestination({x:e.clientX+g._camera.x(), y:e.clientY+g._camera.y()});
 		});

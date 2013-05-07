@@ -50,10 +50,10 @@
 		});
 	}
 	u.absoluteToStd = function(position, camera) {
-		return (stdToIsometricScreen(absoluteToCamera(position, camera)));
+		return (this.stdToIsometricScreen(this.absoluteToCamera(position, camera)));
 	}
 	u.stdToAbsolute = function (position, camera) {
-		return (cameraToAbsolute(stdToIsometricScreen (position), camera));
+		return (this.cameraToAbsolute(this.stdToIsometricScreen (position), camera));
 	}
 
 }(window));

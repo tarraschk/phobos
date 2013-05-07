@@ -10,8 +10,8 @@
 
 	}
 
-	ui.openEntityInfos = function(entity){
-		console.log(entity);
+	ui.showEntityInfos = function(entity){
+		
 		var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
 			name: entity.name(),
 			id: entity.id()
@@ -21,7 +21,7 @@
 			top: mouse.y
 		}).slideDown(300);
 	}
-	ui.closeEntityInfos = function(entity){
+	ui.hideEntityInfos = function(entity){
 		$("#"+entity.id()).slideUp(100, function(){
 			$(this).remove();
 		});
