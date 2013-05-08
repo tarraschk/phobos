@@ -15,7 +15,7 @@
 	s.limitSpeed = 3;
 	s.limitRotation;
 	s.currentSpeed = 1 ; 
-	s.rotationSpeed = 1;
+	s.rotationSpeed = 2;
 	s.hasDestination = false;
 	s.name;
 // constructor:
@@ -59,7 +59,7 @@
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
 		console.log(s.destination.rotation);
-		s.position.rotation = s.destination.rotation ;
+		//s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
 	}
@@ -99,11 +99,24 @@
 		return diffAngle;
 	}
 
+	s.rotateToDestination = function(diffPosDest) {
+		console.log(diffPosDest);
+		if (diffPosDest.dRotation > 0) {
+			s.rotate(s.rotationSpeed);
+		}
+		else {
+			s.rotate(-s.rotationSpeed)
+		}
+	}
+
 	s.behavior = function () {
 		if (s.hasDestination) {
 			var diffPosDest = this.getDiffDestinationPosition();
-			//if (Math.abs(diffPosDest.dRotation) > 2) 
-				//this.rotate(this.rotationSpeed);
+			s.destination.rotation = this.getDiffAngle(diffPosDest); 
+			console.log(diffPosDest.dRotation);
+			if (Math.abs(diffPosDest.dRotation) > 2) 
+				this.rotateToDestination(diffPosDest);
+			else this.position.rotation = this.destination.rotation ; 
 			if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
 				s.stop() ; 
 		}
@@ -121,7 +134,6 @@
 
 	s.rotationFrame = function() {
 		this.gotoAndPlay("walk");
-		console.log(this.position.rotation % 360 ); 
 		if (this.position.rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
 		else
