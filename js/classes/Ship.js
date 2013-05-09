@@ -110,14 +110,12 @@
 	s.rotateToDestination = function(diffPosDest) {
 		if (diffPosDest.dRotation > 0) {
 			if (Math.abs(diffPosDest.dRotation) > 180) {
-			console.log("TOO MUCH"); 
 				s.rotate(-s.rotationSpeed);
 			}
 			else s.rotate(s.rotationSpeed);
 		}
 		else {
 			if (Math.abs(diffPosDest.dRotation) > 180) {
-			console.log("TOO MUCH"); 
 				s.rotate(s.rotationSpeed);
 			}
 			else s.rotate(-s.rotationSpeed);
@@ -131,7 +129,6 @@
 	s.moveToDestinationBehavior = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
-		console.log("diff " + diffPosDest.dRotation); 
 		if (Math.abs(diffPosDest.dRotation) > 2) {
 			this.rotateToDestination(diffPosDest);
 			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
@@ -197,7 +194,6 @@
 	}
 
 	s.load = function(shipData){
-		console.log(shipData);
 		var imgShip = new Image(); 
 		imgShip.src = Ship.path + shipData.src;
 		var that = this;
@@ -222,10 +218,8 @@
 			s.scaleX = 0.4;
 			s.scaleY = 0.4; 
 			s.name = shipData.name; 
-			console.log(s);
 			cPlayground.addChild(s);
 			cPlayground.update();//Create a Shape DisplayObject.
-			console.log("new ship")
 		}
 	}
 	window.Ship = Ship;
