@@ -12,10 +12,11 @@
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 3;
+	s.limitSpeed = 4;
+	s.acceleration = 0.01 ; 
 	s.limitRotation;
-	s.currentSpeed = 1 ; 
-	s.rotationSpeed = 2;
+	s.currentSpeed = 0 ; 
+	s.rotationSpeed = 4	;
 	s.hasDestination = false;
 	s.name;
 // constructor:
@@ -32,22 +33,30 @@
 	}
 
 	s.rotate = function (rotation) {
-		console.log(rotation);
 		s.position.rotation += rotation;
 	}
 
 	s.throttleBrake = function (speed) {
-
+		if (speed < 0) 
+		{
+			//Brake
+			this.currentSpeed = ((this.currentSpeed + speed < 0) ? 0 : this.currentSpeed + speed) ; 
+		}
+		else 
+		{
+			//Throttle
+			this.currentSpeed = ((this.currentSpeed + speed > this.limitSpeed) ? this.limitSpeed : this.currentSpeed + speed) ; 
+		}
 	}
 
 	s.stop = function () {
-		s.currentSpeed = 0 ; 
-		s.destination = null ; 
-		s.setHasDestination(false);
+		this.currentSpeed = 0 ; 
+		this.destination = null ; 
+		this.setHasDestination(false);
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
-
+		this.limitSpeed = newLimitSpeed ; 
 	}
 
 	s.setDestination = function (newDestination) { 
@@ -58,7 +67,6 @@
 		}
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
-		console.log(s.destination.rotation);
 		//s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
@@ -100,7 +108,6 @@
 	}
 
 	s.rotateToDestination = function(diffPosDest) {
-		console.log(diffPosDest);
 		if (diffPosDest.dRotation > 0) {
 			s.rotate(s.rotationSpeed);
 		}
@@ -113,15 +120,26 @@
 		if (s.hasDestination) {
 			var diffPosDest = this.getDiffDestinationPosition();
 			s.destination.rotation = this.getDiffAngle(diffPosDest); 
-			console.log(diffPosDest.dRotation);
-			if (Math.abs(diffPosDest.dRotation) > 2) 
+			if (Math.abs(diffPosDest.dRotation) > 2) {
 				this.rotateToDestination(diffPosDest);
-			else this.position.rotation = this.destination.rotation ; 
+				if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
+					this.throttleBrake(-this.acceleration) ; 
+				else 
+					this.throttleBrake(this.acceleration); 
+			}
+			else {
+				if (this.currentSpeed < this.limitSpeed)
+				{
+					this.throttleBrake(this.acceleration) ; 
+				}
+				this.position.rotation = this.destination.rotation ; 
+			}
 			if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
 				s.stop() ; 
 		}
 		else {
-
+			this.currentSpeed = 0 ; 
+			s.stop() ; 
 		}
 	}
 
