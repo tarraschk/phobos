@@ -68,6 +68,8 @@
 		}
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
+		// console.log(s.destination.rotation);
+		s.position.rotation = s.destination.rotation ;
 		//s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
@@ -102,6 +104,10 @@
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
+		// console.log("diff Angle : ");
+		//if (diffAngle < 0) diffAngle = - diffAngle ; 
+		//else diffAngle += 180 ; 
+		// console.log(diffAngle);
 		//if (diffAngle < 0) diffAngle = - diffAngle ; 
 		//else diffAngle += 180 ; 
 
