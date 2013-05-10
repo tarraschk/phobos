@@ -1,11 +1,10 @@
 (function (window) {
 
 	Bot = function(params){
-		this.initialize(params); 
 	}
 
-	var b = Bot.prototype = window.Ship.prototype;
-
+	var b = Bot.prototype = new Ship(params);
+	
 // static public properties:
 	Bot.path = 'img/ship/';
 

@@ -54,13 +54,19 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+		g._bot = new Bot({
+			name:"Testeur",
+			id:1, 
+			x:900,
+			y:350,
+			src:"spriteShip.png",
+		});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
 			var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
 			g._playerShip.setDestination({x:cooClick2.x, y:cooClick2.y});
-			g._playerShip2.setDestination({x:cooClick2.x /2, y:cooClick2.y / 2});
 		});
 	}
 
@@ -75,7 +81,6 @@
 	g.tick = function (event) {
 		g._playerShip.tick();
 		g._playerShip2.tick();
-		// g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();

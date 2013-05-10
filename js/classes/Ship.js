@@ -27,7 +27,7 @@
 		this.position = {x:null, y:null, rotation: 90};
 		this.setMapCoords({x: params.x, y: params.y});
 		this.destination = {x:null, y:null};
-		this.limitSpeed = 1.5;
+		this.limitSpeed = 3.5;
 		this.acceleration = 0.06 ; 
 		this.limitRotation;
 		this.currentSpeed = 0 ; 
@@ -80,7 +80,6 @@
 		this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		//s.position.rotation = s.destination.rotation ;
 		this.setHasDestination(true); 
-		this.currentSpeed = this.limitSpeed ; 
 	}
 	s.setHasDestination = function (newSetHasDestination) {
 		this.hasDestination = newSetHasDestination; 
