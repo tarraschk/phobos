@@ -12,12 +12,23 @@
 		
 	}
 // public methods:
+	//récupère les infos de la map a 2k pixels autours de la caméra
 	m.serverToMap = function(){
 
 	}
-	
+
+	//mets a jours les donées locales de la map
+	m.updateMap = function(){
+
+	}
+
+	// dessine la map a l'écran
+	m.draw = function(){
+
+	}
+
 	m.tick = function (event) {
-		
+		this.draw();
 	}
 	window.Game = Game;
 

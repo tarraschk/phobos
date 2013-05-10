@@ -47,6 +47,13 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+		g._playerShip2 = new Ship({
+			name:"Testeur2",
+			id:1, 
+			x:300,
+			y:150,
+			src:"spriteShip.png",
+		});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -65,7 +72,6 @@
 // public methods:
 
 	g.tick = function (event) {
-		g._playerShip.tick();
 		// g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
@@ -73,6 +79,8 @@
 		for (var k = 0 ; k < g._tilesMap.length ; k++) {
 			g._tilesMap[k].tick();
 		}
+		g._playerShip.tick();
+		g._playerShip2.tick();
 		renderCanvas();
 	}
 	window.Game = Game;
