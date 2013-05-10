@@ -1,7 +1,7 @@
 (function (window) {
 
 	Bot = function(params){
-		//this.initialize(params);
+
 	}
 
 	var b = Bot.prototype = new Ship();
