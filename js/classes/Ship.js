@@ -57,7 +57,7 @@
 		}
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
-		console.log(s.destination.rotation);
+		// console.log(s.destination.rotation);
 		s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
@@ -92,10 +92,10 @@
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
-		console.log("diff Angle : ");
+		// console.log("diff Angle : ");
 		//if (diffAngle < 0) diffAngle = - diffAngle ; 
 		//else diffAngle += 180 ; 
-		console.log(diffAngle);
+		// console.log(diffAngle);
 
 		return diffAngle;
 	}
@@ -120,7 +120,7 @@
 
 	s.rotationFrame = function() {
 		this.gotoAndPlay("walk");
-		console.log(this.position.rotation % 360 ); 
+		// console.log(this.position.rotation % 360 ); 
 		if (this.position.rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
 		else
@@ -147,7 +147,7 @@
 	}
 
 	s.load = function(shipData){
-		console.log(shipData);
+		// console.log(shipData);
 		var imgShip = new Image(); 
 		imgShip.src = Ship.path + shipData.src;
 		var that = this;
@@ -172,10 +172,10 @@
 			s.scaleX = 0.4;
 			s.scaleY = 0.4; 
 			s.name = shipData.name; 
-			console.log(s);
+			// console.log(s);
 			cPlayground.addChild(s);
 			cPlayground.update();//Create a Shape DisplayObject.
-			console.log("new ship")
+			// console.log("new ship")
 		}
 	}
 	window.Ship = Ship;
