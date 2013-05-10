@@ -1,7 +1,7 @@
 (function (window) {
 
 	Bot = function(params){
-		this.initialize(params);
+		//this.initialize(params);
 	}
 
 	var b = Bot.prototype = new Ship();
@@ -20,8 +20,7 @@
 	b.hasDestination = false;
 	b.name;
 // constructor:
-	b.initialize = function (params) {
-	}
+
 
 // public methods:
 	window.Bot = Bot;
