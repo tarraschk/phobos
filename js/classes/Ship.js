@@ -207,7 +207,7 @@
 					walk: [0, 30, "walk"]
 				}
 			});
-
+			console.log(that) ;
 			that.index = shipData.id; 
 			that.image = this;
 			that.spriteSheet = shipSpriteSheet;
