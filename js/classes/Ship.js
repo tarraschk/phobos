@@ -12,8 +12,8 @@
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 5.5;
-	s.acceleration = 0.08 ; 
+	s.limitSpeed = 1.5;
+	s.acceleration = 0.06 ; 
 	s.limitRotation;
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed = 3;
@@ -218,8 +218,10 @@
 			s.scaleX = 0.4;
 			s.scaleY = 0.4; 
 			s.name = shipData.name; 
+			console.log(that); 
 			cPlayground.addChild(s);
 			cPlayground.update();//Create a Shape DisplayObject.
+			console.log("Loaded : " + shipData.name); 
 		}
 	}
 	window.Ship = Ship;

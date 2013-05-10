@@ -47,14 +47,6 @@
 			y:350,
 			src:"spriteShip.png",
 		});
-
-		g._Bot = new Bot({
-			name:"Testeur",
-			id:1, 
-			x:600,
-			y:350,
-			src:"spriteShip.png",
-		});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -74,6 +66,7 @@
 
 	g.tick = function (event) {
 		g._playerShip.tick();
+		// g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
