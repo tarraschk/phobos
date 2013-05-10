@@ -43,7 +43,6 @@
 		var that = this;
 		this.image.onload = function() {
 			cPlayground.addChild(that);
-
 		}
 	}
 	window.Tile = Tile;
