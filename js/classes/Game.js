@@ -17,6 +17,14 @@
 		resize();
 		var backgroundGame = new Background().load("void/secteur7.jpg");
 		g._camera = new Camera();
+		for (var j = 0 ; j < 2000 ; j++) {
+			g._tilesMap[j] = new Tile({
+				id:1,
+				x:Math.random() * 4000,
+				y:Math.random() * 4000,
+				src:"iso-02-04.png",
+			});
+		}
 		
 		g._station1 = new Station({
 			src: 'stationIso.png',
@@ -33,20 +41,20 @@
 			life: 150000
 		});
 		g._playerShip = new Ship({
+			name:"Testeur",
 			id:1, 
 			x:600,
 			y:350,
 			src:"spriteShip.png",
 		});
 
-		for (var j = 0 ; j < 2000 ; j++) {
-			g._tilesMap[j] = new Tile({
-				id:1,
-				x:Math.random() * 4000,
-				y:Math.random() * 4000,
-				src:"iso-02-04.png",
-			});
-		}
+		g._Bot = new Bot({
+			name:"Testeur",
+			id:1, 
+			x:600,
+			y:350,
+			src:"spriteShip.png",
+		});
 		$(document).on('click', function(e){
 // <<<<<<< HEAD
 // 			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
