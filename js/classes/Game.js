@@ -8,6 +8,7 @@
 	g._started = false;
 	g._engine = null;
 	g._playerShip = null;
+	g._tilesMap = []; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -37,6 +38,15 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+
+		for (var j = 0 ; j < 2000 ; j++) {
+			g._tilesMap[j] = new Tile({
+				id:1,
+				x:Math.random() * 4000,
+				y:Math.random() * 4000,
+				src:"iso-02-04.png",
+			});
+		}
 		$(document).on('click', function(e){
 // <<<<<<< HEAD
 // 			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);
@@ -65,6 +75,9 @@
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
+		for (var k = 0 ; k < g._tilesMap.length ; k++) {
+			g._tilesMap[k].tick();
+		}
 		renderCanvas();
 	}
 	window.Game = Game;

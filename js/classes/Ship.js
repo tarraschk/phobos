@@ -12,10 +12,11 @@
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 3;
+	s.limitSpeed = 4;
+	s.acceleration = 0.05 ; 
 	s.limitRotation;
-	s.currentSpeed = 1 ; 
-	s.rotationSpeed;
+	s.currentSpeed = 0 ; 
+	s.rotationSpeed = 3;
 	s.hasDestination = false;
 	s.name;
 // constructor:
@@ -32,21 +33,30 @@
 	}
 
 	s.rotate = function (rotation) {
-
+		s.position.rotation += rotation;
 	}
 
 	s.throttleBrake = function (speed) {
-
+		if (speed < 0) 
+		{
+			//Brake
+			this.currentSpeed = ((this.currentSpeed + speed < 0) ? 0 : this.currentSpeed + speed) ; 
+		}
+		else 
+		{
+			//Throttle
+			this.currentSpeed = ((this.currentSpeed + speed > this.limitSpeed) ? this.limitSpeed : this.currentSpeed + speed) ; 
+		}
 	}
 
 	s.stop = function () {
-		s.currentSpeed = 0 ; 
-		s.destination = null ; 
-		s.setHasDestination(false);
+		this.currentSpeed = 0 ; 
+		this.destination = null ; 
+		this.setHasDestination(false);
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
-
+		this.limitSpeed = newLimitSpeed ; 
 	}
 
 	s.setDestination = function (newDestination) { 
@@ -59,6 +69,7 @@
 		s.destination.rotation = this.getDiffAngle(diffPosDest); 
 		// console.log(s.destination.rotation);
 		s.position.rotation = s.destination.rotation ;
+		//s.position.rotation = s.destination.rotation ;
 		s.setHasDestination(true); 
 		s.currentSpeed = s.limitSpeed ; 
 	}
@@ -80,7 +91,7 @@
 	}
 
 	s.getDiffDestinationPosition = function() {
-		return ({dX : (s.destination.x - s.position.x), dY : (s.destination.y - s.position.y)});
+		return ({dX : (s.destination.x - s.position.x), dY : (s.destination.y - s.position.y), dRotation: (s.destination.rotation % 360 - s.position.rotation % 360)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
@@ -96,31 +107,73 @@
 		//if (diffAngle < 0) diffAngle = - diffAngle ; 
 		//else diffAngle += 180 ; 
 		// console.log(diffAngle);
+		//if (diffAngle < 0) diffAngle = - diffAngle ; 
+		//else diffAngle += 180 ; 
 
 		return diffAngle;
 	}
 
-	s.behavior = function () {
-		if (s.hasDestination) {
-			var diffPosDest = this.getDiffDestinationPosition();
-			if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
-				s.stop() ; 
+	s.rotateToDestination = function(diffPosDest) {
+		if (diffPosDest.dRotation > 0) {
+			if (Math.abs(diffPosDest.dRotation) > 180) {
+				s.rotate(-s.rotationSpeed);
+			}
+			else s.rotate(s.rotationSpeed);
 		}
 		else {
+			if (Math.abs(diffPosDest.dRotation) > 180) {
+				s.rotate(s.rotationSpeed);
+			}
+			else s.rotate(-s.rotationSpeed);
+		}
+	}
 
+	s.idleBehavior = function() {
+		this.currentSpeed = 0 ; 
+	}
+
+	s.moveToDestinationBehavior = function() {
+		var diffPosDest = this.getDiffDestinationPosition();
+		s.destination.rotation = this.getDiffAngle(diffPosDest); 
+		if (Math.abs(diffPosDest.dRotation) > 2) {
+			this.rotateToDestination(diffPosDest);
+			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
+				this.throttleBrake(-this.acceleration) ; 
+			else 
+				this.throttleBrake(this.acceleration); 
+		}
+		else {
+			if (this.currentSpeed < this.limitSpeed)
+			{
+				this.throttleBrake(this.acceleration) ; 
+			}
+			this.position.rotation = this.destination.rotation ; 
+		}
+		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
+			s.stop() ; 
+	}
+
+	s.behavior = function () {
+		if (s.hasDestination) {
+			this.moveToDestinationBehavior();
+		}
+		else {
+			this.idleBehavior() ; 
 		}
 	}
 
 	s.tickMovement = function () {
 		//Throttle. 
 		//s.position.rotation += 1 ;
+		if (s.position.rotation >= 180) s.position.rotation = -180 + s.position.rotation % 180 ;
+		if (s.position.rotation <= -180) s.position.rotation = 180 - s.position.rotation % 180 ;  
+		//s.position.rotation = s.position.rotation % 360 ; 
 		this.position.x += Math.sin((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
 		this.position.y += Math.cos((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
 	}
 
 	s.rotationFrame = function() {
 		this.gotoAndPlay("walk");
-		// console.log(this.position.rotation % 360 ); 
 		if (this.position.rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
 		else
@@ -147,7 +200,6 @@
 	}
 
 	s.load = function(shipData){
-		// console.log(shipData);
 		var imgShip = new Image(); 
 		imgShip.src = Ship.path + shipData.src;
 		var that = this;
@@ -172,10 +224,8 @@
 			s.scaleX = 0.4;
 			s.scaleY = 0.4; 
 			s.name = shipData.name; 
-			// console.log(s);
 			cPlayground.addChild(s);
 			cPlayground.update();//Create a Shape DisplayObject.
-			// console.log("new ship")
 		}
 	}
 	window.Ship = Ship;
