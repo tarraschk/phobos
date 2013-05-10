@@ -1,9 +1,14 @@
 (function (window) {
 
 	Bot = function(params){
+		console.log(Bot); 
+
+		console.log(Bot.prototype); 
+		this.initialize() ; 
 	}
 
 	var b = Bot.prototype = new Ship();
+	console.log(Bot.prototype); 
 
 // static public properties:
 	Bot.path = 'img/ship/';
@@ -19,8 +24,6 @@
 	b.hasDestination = false;
 	b.name;
 // constructor:
-	b.initialize = function (params) {
-	}
 
 // public methods:
 	window.Bot = Bot;
