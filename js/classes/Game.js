@@ -47,6 +47,28 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+		new Ship({
+			name:"Testeur",
+			id:4, 
+			x:600,
+			y:550,
+			src:"spriteShip.png",
+		});
+		new Ship({
+			name:"Testeur",
+			id:2, 
+			x:300,
+			y:350,
+			src:"spriteShip.png",
+		});
+
+		g._Bot = new Ship({
+			name:"BotTest",
+			id:12, 
+			x:800,
+			y:350,
+			src:"spriteShip.png",
+		});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -66,7 +88,7 @@
 
 	g.tick = function (event) {
 		g._playerShip.tick();
-		// g._Bot.tick(); 
+		g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
