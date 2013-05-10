@@ -47,26 +47,11 @@
 			y:350,
 			src:"spriteShip.png",
 		});
-		new Ship({
-			name:"Testeur",
-			id:4, 
-			x:600,
-			y:550,
-			src:"spriteShip.png",
-		});
-		new Ship({
-			name:"Testeur",
-			id:2, 
+		g._playerShip2 = new Ship({
+			name:"Testeur2",
+			id:1, 
 			x:300,
-			y:350,
-			src:"spriteShip.png",
-		});
-
-		g._Bot = new Ship({
-			name:"BotTest",
-			id:12, 
-			x:800,
-			y:350,
+			y:150,
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
@@ -89,12 +74,15 @@
 	g.tick = function (event) {
 		g._playerShip.tick();
 		g._Bot.tick(); 
+		// g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
 		for (var k = 0 ; k < g._tilesMap.length ; k++) {
 			g._tilesMap[k].tick();
 		}
+		g._playerShip.tick();
+		g._playerShip2.tick();
 		renderCanvas();
 	}
 	window.Game = Game;
