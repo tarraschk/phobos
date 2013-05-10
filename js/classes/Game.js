@@ -41,12 +41,20 @@
 			life: 150000
 		});
 		g._playerShip = new Ship({
+			name:"Testeur",
 			id:1, 
 			x:600,
 			y:350,
 			src:"spriteShip.png",
 		});
 
+		g._Bot = new Bot({
+			name:"Testeur",
+			id:1, 
+			x:600,
+			y:350,
+			src:"spriteShip.png",
+		});
 		$(document).on('click', function(e){
 // <<<<<<< HEAD
 // 			var cooClick = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera);

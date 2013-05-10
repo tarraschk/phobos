@@ -12,8 +12,8 @@
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 4;
-	s.acceleration = 0.05 ; 
+	s.limitSpeed = 5.5;
+	s.acceleration = 0.08 ; 
 	s.limitRotation;
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed = 3;
@@ -21,6 +21,7 @@
 	s.name;
 // constructor:
 	s.initialize = function (params) {
+		console.log("init"); 
 		this.name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params);
