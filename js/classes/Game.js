@@ -48,10 +48,10 @@
 			src:"spriteShip.png",
 		});
 		g._playerShip2 = new Ship({
-			name:"Testeur2",
+			name:"Testeur",
 			id:1, 
-			x:300,
-			y:150,
+			x:600,
+			y:350,
 			src:"spriteShip.png",
 		});
 		$(document).on('click', function(e){
@@ -60,6 +60,7 @@
 			var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
 			g._playerShip.setDestination({x:cooClick2.x, y:cooClick2.y});
+			g._playerShip2.setDestination({x:cooClick2.x /2, y:cooClick2.y / 2});
 		});
 	}
 
@@ -73,7 +74,7 @@
 
 	g.tick = function (event) {
 		g._playerShip.tick();
-		g._Bot.tick(); 
+		g._playerShip2.tick();
 		// g._Bot.tick(); 
 		g._camera.tick();
 		g._station1.tick();
@@ -81,8 +82,6 @@
 		for (var k = 0 ; k < g._tilesMap.length ; k++) {
 			g._tilesMap[k].tick();
 		}
-		g._playerShip.tick();
-		g._playerShip2.tick();
 		renderCanvas();
 	}
 	window.Game = Game;
