@@ -167,11 +167,11 @@
 	}
 
 	s.rotationFrame = function() {
-		s.gotoAndPlay("walk");
+		this.gotoAndPlay("walk");
 		if (this.position.rotation % 360 > 0) 
-			s.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
 		else
-			s.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
 
 	}
 
@@ -200,7 +200,7 @@
 		imgShip.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
 				// image to use
-				images: [imgShip], 
+				images: [this], 
 				frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
 				// width, height & registration point of each sprite
 				animations: {    
@@ -209,7 +209,7 @@
 			});
 
 			that.index = shipData.id; 
-			that.image = this;
+			//that.image = this;
 			that.spriteSheet = shipSpriteSheet;
 			that.gotoAndStop("walk");
 			that.setMapCoords(shipData);

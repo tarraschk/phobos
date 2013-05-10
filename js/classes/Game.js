@@ -49,11 +49,12 @@
 		});
 		g._playerShip2 = new Ship({
 			name:"Testeur2",
-			id:1, 
+			id:2, 
 			x:300,
 			y:150,
 			src:"spriteShip.png",
 		});
+		g._playerShip2.setDestination({x: 800, y:500});
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
