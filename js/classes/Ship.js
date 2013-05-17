@@ -12,7 +12,7 @@
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 1.5;
+	s.limitSpeed = 2.5;
 	s.acceleration = 0.06 ; 
 	s.limitRotation;
 	s.currentSpeed = 0 ; 
@@ -183,6 +183,18 @@
 		else
 			this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
 
+	}
+
+	s.getCloseEnnemy = function() {
+		var minDistance = 999999999999999;
+		var closeEnnemyKey = null;
+		for (var j = 0 ; j < game._shipsList.length ; j++) {
+			if (utils.distance(game._shipsList[j], this) < minDistance && game._shipsList[j] != this) {
+				minDistance = utils.distance(game._shipsList[j], this);
+				closeEnnemyKey = j;
+			}
+		}
+		return game._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {

@@ -9,6 +9,7 @@
 	g._engine = null;
 	g._playerShip = null;
 	g._tilesMap = []; 
+	g._shipsList = [];
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -47,13 +48,14 @@
 			y:550,
 			src:"spriteShip.png",
 		});
-		g._playerShip2 = new Ship({
+		g._shipsList[0] = new Ship({
 			name:"Testeur2",
 			id:1, 
 			x:600,
 			y:350,
 			src:"spriteShip.png",
 		});
+		g._shipsList[1] = g._playerShip;
 		g._bot = new Bot({
 			name:"Bot",
 			id:1, 
@@ -61,6 +63,7 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+		g._shipsList[2] = g._bot;
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -79,9 +82,9 @@
 // public methods:
 
 	g.tick = function (event) {
-		g._playerShip.tick();
-		g._playerShip2.tick();
-		g._bot.tick();
+		for (var k = 0 ; k < g._shipsList.length ; k++) {
+			g._shipsList[k].tick();
+		}
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
@@ -89,6 +92,7 @@
 			g._tilesMap[k].tick();
 		}
 		renderCanvas();
+		if (Math.random() < 0.1) console.clear();
 	}
 	window.Game = Game;
 
