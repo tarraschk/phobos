@@ -48,14 +48,14 @@
 			src:"spriteShip.png",
 		});
 		g._playerShip2 = new Ship({
-			name:"Testeur",
+			name:"Testeur2",
 			id:1, 
 			x:600,
 			y:350,
 			src:"spriteShip.png",
 		});
 		g._bot = new Bot({
-			name:"Testeur",
+			name:"Bot",
 			id:1, 
 			x:900,
 			y:350,
@@ -81,6 +81,7 @@
 	g.tick = function (event) {
 		g._playerShip.tick();
 		g._playerShip2.tick();
+		// g._bot.tick();
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
