@@ -141,11 +141,11 @@ this.phobos = this.phobos || {};
 		}
 	}
 
-	s.idleBehavior = function() {
+	s.idleMovement = function() {
 		this.currentSpeed = 0 ; 
 	}
 
-	s.moveToDestinationBehavior = function() {
+	s.moveToDestinationMovement = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
 		this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		if (Math.abs(diffPosDest.dRotation) > 2) {
@@ -168,10 +168,10 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		if (this.hasDestination) {
-			this.moveToDestinationBehavior();
+			this.moveToDestinationMovement();
 		}
 		else {
-			this.idleBehavior() ; 
+			this.idleMovement() ; 
 		}
 	}
 
