@@ -43,8 +43,8 @@
 		g._playerShip = new Ship({
 			name:"Testeur",
 			id:1, 
-			x:600,
-			y:350,
+			x:200,
+			y:550,
 			src:"spriteShip.png",
 		});
 		g._playerShip2 = new Ship({
@@ -81,7 +81,7 @@
 	g.tick = function (event) {
 		g._playerShip.tick();
 		g._playerShip2.tick();
-		// g._bot.tick();
+		g._bot.tick();
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
