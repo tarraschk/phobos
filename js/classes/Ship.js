@@ -38,6 +38,8 @@ this.phobos = this.phobos || {};
 			this.rotationSpeed = 3;
 			this.hasDestination = false;
 			this.name = params.name;
+			console.log("init : ");
+			console.log(params);
 			this.load(params);
 		}
 	}

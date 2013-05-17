@@ -64,6 +64,7 @@
 			src:"spriteShip.png",
 		});
 		g._shipsList[2] = g._bot;
+		console.log(g._shipsList);
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -76,7 +77,7 @@
 	g.launchTicker = function() {
 		_.Ticker.addListener(window);
 		_.Ticker.useRAF = true;
-		_.Ticker.setFPS(30);
+		_.Ticker.setFPS(60);
 		_.Ticker.addEventListener("tick", this.tick);
 	}
 // public methods:
@@ -92,7 +93,7 @@
 			g._tilesMap[k].tick();
 		}
 		renderCanvas();
-		// if (Math.random() < 0.01) console.clear();
+		if (Math.random() < 0.01) console.clear();
 	}
 	window.Game = Game;
 
