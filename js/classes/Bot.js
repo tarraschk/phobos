@@ -1,10 +1,14 @@
-(function (window) {
+this.phobos = this.phobos || {};
+(function () {
 
-	Bot = function(params){
+	var Bo = function(params){
+		console.log("caca");
 		this.initialize(params);
 	}
+		console.log(phobos);
+		console.log(_);
 
-	var b = Bot.prototype = window.Ship.prototype;
+	var b = Bo.prototype = new phobos.Ship();
 	
 // static public properties:
 	Bot.path = 'img/ship/';
@@ -17,17 +21,20 @@
 
 
 // public methods:
-
-	b.botTick = function() {
+	b.Ship_initialize = b.initialize;
+	b.initialize = function(params) {
+		this.Ship_initialize();
+		console.log("init bot");
 	}
 
 	b.botTick = b.tick;
 	b.tick = function() {
+		console.log("bot tick");
+		console.log(this);
 		this.botTick();
 		switch(this.IA) {
 			case "wait":
 				var closeTarget = this.getCloseEnnemy();
-				console.log("d=" + utils.distance(closeTarget, this));
 				if (closeTarget) {
 					if (utils.distance(closeTarget, this) < this.IARange) {
 
@@ -39,6 +46,6 @@
 		}
 	}
 
-	window.Bot = Bot;
+	phobos.Bot = Bo;
 
-}(window));
+}());

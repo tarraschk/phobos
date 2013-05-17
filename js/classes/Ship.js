@@ -1,13 +1,16 @@
-(function (window) {
 
-	Ship = function(params){
+this.phobos = this.phobos || {};
+
+(function () {
+
+	var Sh = function(params){
 		this.initialize(params);
 	}
 
-	var s = Ship.prototype = new _.BitmapAnimation();
+	var s = Sh.prototype = new _.BitmapAnimation();
 
 // static public properties:
-	Ship.path = 'img/ship/';
+	Sh.path = 'img/ship/';
 	
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
@@ -22,19 +25,21 @@
 // constructor:
 	s.BitmapAnimation_initialize = s.initialize;
 	s.initialize = function (params) {
-		this.BitmapAnimation_initialize(); 
+		if (params) {
+			this.BitmapAnimation_initialize(); 
 
-		this.position = {x:null, y:null, rotation: 90};
-		this.setMapCoords({x: params.x, y: params.y});
-		this.destination = {x:null, y:null};
-		this.limitSpeed = 3.5;
-		this.acceleration = 0.06 ; 
-		this.limitRotation;
-		this.currentSpeed = 0 ; 
-		this.rotationSpeed = 3;
-		this.hasDestination = false;
-		this.name = params.name;
-		this.load(params);
+			this.position = {x:null, y:null, rotation: 90};
+			this.setMapCoords({x: params.x, y: params.y});
+			this.destination = {x:null, y:null};
+			this.limitSpeed = 3.5;
+			this.acceleration = 0.06 ; 
+			this.limitRotation;
+			this.currentSpeed = 0 ; 
+			this.rotationSpeed = 3;
+			this.hasDestination = false;
+			this.name = params.name;
+			this.load(params);
+		}
 	}
 
 // public methods:
@@ -194,6 +199,7 @@
 				closeEnnemyKey = j;
 			}
 		}
+		console.log(closeEnnemyKey);
 		return game._shipsList[closeEnnemyKey];
 	}
 
@@ -217,7 +223,7 @@
 
 	s.load = function(shipData){
 		var imgShip = new Image(); 
-		imgShip.src = Ship.path + shipData.src;
+		imgShip.src = Sh.path + shipData.src;
 		var that = this;
 		imgShip.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
@@ -246,6 +252,5 @@
 			console.log("Loaded : " + shipData.name); 
 		}
 	}
-	window.Ship = Ship;
-
-}(window));
+    phobos.Ship = Sh
+}());

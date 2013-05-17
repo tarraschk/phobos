@@ -41,22 +41,22 @@
 			y: 300,
 			life: 150000
 		});
-		g._playerShip = new Ship({
+		g._playerShip = new phobos.Ship({
 			name:"Testeur",
 			id:1, 
 			x:200,
 			y:550,
 			src:"spriteShip.png",
 		});
-		g._shipsList[0] = new Ship({
+		g._shipsList[0] = new phobos.Ship({
 			name:"Testeur2",
 			id:1, 
-			x:600,
+			x:100,
 			y:350,
 			src:"spriteShip.png",
 		});
 		g._shipsList[1] = g._playerShip;
-		g._bot = new Bot({
+		g._bot = new phobos.Bot({
 			name:"Bot",
 			id:1, 
 			x:900,
@@ -76,7 +76,7 @@
 	g.launchTicker = function() {
 		_.Ticker.addListener(window);
 		_.Ticker.useRAF = true;
-		_.Ticker.setFPS(60);
+		_.Ticker.setFPS(30);
 		_.Ticker.addEventListener("tick", this.tick);
 	}
 // public methods:
@@ -92,7 +92,7 @@
 			g._tilesMap[k].tick();
 		}
 		renderCanvas();
-		if (Math.random() < 0.1) console.clear();
+		// if (Math.random() < 0.01) console.clear();
 	}
 	window.Game = Game;
 
