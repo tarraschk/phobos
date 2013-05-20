@@ -43,27 +43,27 @@
 		});
 		g._playerShip = new phobos.Ship({
 			name:"Testeur",
-			id:1, 
+			id:2, 
 			x:200,
 			y:550,
 			src:"spriteShip.png",
 		});
-		g._shipsList[0] = new phobos.Ship({
+		g._shipsList[1] = new phobos.Ship({
 			name:"Testeur2",
 			id:1, 
 			x:100,
 			y:350,
 			src:"spriteShip.png",
 		});
-		g._shipsList[1] = g._playerShip;
+		g._shipsList[2] = g._playerShip;
 		g._bot = new phobos.Bot({
 			name:"Bot",
-			id:1, 
+			id:0, 
 			x:900,
 			y:350,
 			src:"spriteShip.png",
 		});
-		g._shipsList[2] = g._bot;
+		g._shipsList[0] = g._bot;
 		console.log(g._shipsList);
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);

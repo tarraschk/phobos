@@ -15,11 +15,15 @@ this.phobos = this.phobos || {};
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
+	s.targetId = null;
 	s.limitSpeed = 2.5;
 	s.acceleration = 0.06 ; 
 	s.limitRotation;
+	s.energy = 100;
 	s.currentSpeed = 0 ; 
+	s.weapons = new Weapon();
 	s.rotationSpeed = 3;
+	s.hasTarget = false ; 
 	s.hasDestination = false;
 	s.name;
 // constructor:
@@ -38,6 +42,7 @@ this.phobos = this.phobos || {};
 			this.rotationSpeed = 3;
 			this.hasDestination = false;
 			this.name = params.name;
+			this.id = params.id;
 			console.log("init : ");
 			console.log(params);
 			this.load(params);
@@ -164,13 +169,44 @@ this.phobos = this.phobos || {};
 			this.stop() ; 
 	}
 
+	s.setEnergy = function(newEnergy) {
+		this.energy = newEnergy;
+	}
+
+	s.receiveDamage = function (power) {
+		this.setEnergy(this.energy - power);
+		if (this.energy <= 0) {
+			alert("DEAD !");
+		}
+		else debug("bang ! "+ this.energy);
+	}
+
+	s.shootAt = function(target, weapon) {
+		weapon.setReady(false);
+		target.receiveDamage(weapon._power);
+	}
+
 	s.behavior = function () {
+		if (this.hasTarget) {
+			var target = g._shipsList[this.targetId];
+			var targetRange = utils.distance(target, this);
+			this.setDestination(target.position.x, target.position.y);
+			if (targetRange <= this.weapons.range) {
+				if (this.weapons[0].isReady()) {
+					s.shootAt(target, this.weapons[0]); 
+				}
+			}
+		}
 		if (this.hasDestination) {
 			this.moveToDestinationBehavior();
 		}
 		else {
 			this.idleBehavior() ; 
 		}
+	}
+
+	s.tickWeapons = function() {
+		this.weapons[0].tick();
 	}
 
 	s.tickMovement = function () {

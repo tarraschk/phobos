@@ -21,6 +21,10 @@ this.phobos = this.phobos || {};
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed = 3;
 	s.hasDestination = false;
+	s.weapons = new Weapon();
+	s.hasTarget = false ; 
+	s.energy = 100;
+	s.targetId = null;
 	s.AI = "wait";
 	s.AIRange = 500;
 	s.name;
@@ -38,6 +42,7 @@ this.phobos = this.phobos || {};
 			this.limitRotation;
 			this.currentSpeed = 0 ; 
 			this.rotationSpeed = 3;
+			this.id = params.id;
 			this.hasDestination = false;
 			this.name = params.name;
 			console.log("init : ");
@@ -80,7 +85,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.setDestination = function (newDestination) { 
-		debug ("New destination :  " + newDestination.x + " ; " + newDestination.y)
 		this.destination = {
 			x: newDestination.x,
 			y: newDestination.y
@@ -144,6 +148,13 @@ this.phobos = this.phobos || {};
 	s.idleMovement = function() {
 		this.currentSpeed = 0 ; 
 	}
+	
+	s.setHasTarget = function(newHasTarget) {
+		this.hasTarget = newHasTarget;
+	}
+	s.setTargetId = function(newTargetId) {
+		this.targetId = newTargetId;
+	}
 
 	s.moveToDestinationMovement = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
@@ -166,12 +177,59 @@ this.phobos = this.phobos || {};
 			this.stop() ; 
 	}
 
+	s.shootAt = function(target, weapon) {
+		weapon.setReady(false);
+		target.receiveDamage(weapon._power);
+	}
+
 	s.behavior = function () {
+		var that = this ; 
+		if (this.hasTarget) {
+			console.log(this.targetId);
+			var currentTarget = game._shipsList[this.targetId];
+			this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
+			var targetRange = utils.distance(currentTarget, this);
+			console.log("range : " + targetRange + " - " + this.weapons.getRange());
+			if (targetRange <= this.weapons.getRange()) {
+				if (this.weapons.isReady()) {
+					this.shootAt(currentTarget, this.weapons); 
+				}
+			}
+		}
 		if (this.hasDestination) {
 			this.moveToDestinationMovement();
 		}
 		else {
 			this.idleMovement() ; 
+		}
+	}
+	
+	s.setAI = function(newAI) {
+		this.AI = newAI;
+	}
+	
+	s.botBehavior = function() {
+		switch(this.AI) {
+			case "wait":
+			var closeTarget = this.getCloseEnnemy();
+			console.log(closeTarget);
+			if (closeTarget) {
+				if (utils.distance(closeTarget, this) < this.AIRange && !this.hasTarget) {
+					console.log(closeTarget);
+					this.setTargetId(closeTarget.id);
+					this.setHasTarget(true);
+					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
+					this.setAI("attack");
+				}
+			}
+			break;
+			case "attack":
+				if (this.hasTarget) {
+				}
+				else this.setAI("wait");
+			break;
+			default:
+			break;
 		}
 	}
 
@@ -217,24 +275,14 @@ this.phobos = this.phobos || {};
 		//s.x = this.position.x - game._camera.x();
 		//s.y = this.position.y - game._camera.y();
 	}
-	s.botBehavior = function() {
-		switch(this.AI) {
-			case "wait":
-			var closeTarget = this.getCloseEnnemy();
-			if (closeTarget) {
-				console.log(utils.distance(closeTarget, this));
-				console.log(this.AIRange);
-				if (utils.distance(closeTarget, this) < this.AIRange) {
-					console.log("do this");
-					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
-				}
-			}
-			break;
-			default:
-			break;
-		}
+	
+	
+	s.weaponsTick = function() {
+		this.weapons.tick();
 	}
+	
 	s.tick = function (event) {
+		this.weaponsTick() ; 
 		this.botBehavior();
 		this.behavior();
 		this.tickMovement(); 
