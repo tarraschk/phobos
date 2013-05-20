@@ -26,6 +26,7 @@ this.phobos = this.phobos || {};
 	s.energy = 100;
 	s.targetId = null;
 	s.AI = "wait";
+	s.AIStopRange = 600 ; 
 	s.AIRange = 500;
 	s.name;
 // constructor:
@@ -187,12 +188,15 @@ this.phobos = this.phobos || {};
 		var that = this ; 
 		if (this.hasTarget) {
 			var currentTarget = game._shipsList[this.targetId];
-			this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
 				if (this.weapons.isReady()) {
+					this.stop();
 					this.shootAt(currentTarget, this.weapons); 
 				}
+			}
+			else {
+				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			}
 		}
 		if (this.hasDestination) {
@@ -222,6 +226,13 @@ this.phobos = this.phobos || {};
 			break;
 			case "attack":
 				if (this.hasTarget) {
+					var currentTarget = game._shipsList[this.targetId];
+					var targetRange = utils.distance(currentTarget, this);
+					if (targetRange >= this.AIStopRange) {
+						this.setTargetId(null);
+						this.setHasTarget(false);
+						this.setAI("wait");
+					}
 				}
 				else this.setAI("wait");
 			break;
