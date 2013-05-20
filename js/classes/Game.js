@@ -10,6 +10,7 @@
 	g._playerShip = null;
 	g._tilesMap = []; 
 	g._shipsList = [];
+	g._gameGraphics = null ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -26,7 +27,8 @@
 				src:"iso-02-04.png",
 			});
 		}
-		
+		g._gameGraphics = new GameGraphics();
+
 		g._station1 = new Station({
 			src: 'stationIso.png',
 			name: 'Station spatiale internationale',
@@ -86,6 +88,7 @@
 		for (var k = 0 ; k < g._shipsList.length ; k++) {
 			g._shipsList[k].tick();
 		}
+		g._gameGraphics.tick();
 		g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();

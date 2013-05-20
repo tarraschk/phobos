@@ -15,7 +15,7 @@ this.phobos = this.phobos || {};
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 2.5;
+	s.limitSpeed = 1.5;
 	s.acceleration = 0.06 ; 
 	s.limitRotation;
 	s.currentSpeed = 0 ; 
@@ -180,16 +180,15 @@ this.phobos = this.phobos || {};
 	s.shootAt = function(target, weapon) {
 		weapon.setReady(false);
 		target.receiveDamage(weapon._power);
+		game._gameGraphics.drawLaser(this, target);
 	}
 
 	s.behavior = function () {
 		var that = this ; 
 		if (this.hasTarget) {
-			console.log(this.targetId);
 			var currentTarget = game._shipsList[this.targetId];
 			this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			var targetRange = utils.distance(currentTarget, this);
-			console.log("range : " + targetRange + " - " + this.weapons.getRange());
 			if (targetRange <= this.weapons.getRange()) {
 				if (this.weapons.isReady()) {
 					this.shootAt(currentTarget, this.weapons); 
@@ -212,10 +211,8 @@ this.phobos = this.phobos || {};
 		switch(this.AI) {
 			case "wait":
 			var closeTarget = this.getCloseEnnemy();
-			console.log(closeTarget);
 			if (closeTarget) {
 				if (utils.distance(closeTarget, this) < this.AIRange && !this.hasTarget) {
-					console.log(closeTarget);
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
 					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );

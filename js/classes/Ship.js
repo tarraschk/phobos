@@ -176,7 +176,7 @@ this.phobos = this.phobos || {};
 	s.receiveDamage = function (power) {
 		this.setEnergy(this.energy - power);
 		if (this.energy <= 0) {
-			alert("DEAD !");
+			debug("dead");
 		}
 		else debug("bang ! "+ this.energy);
 	}
