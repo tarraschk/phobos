@@ -88,8 +88,9 @@ this.phobos = this.phobos || {};
 	s.setDestination = function (newDestination) { 
 		this.destination = {
 			x: newDestination.x,
-			y: newDestination.y
+			y: newDestination.y,
 		}
+		if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
 		var diffPosDest = this.getDiffDestinationPosition(); 
 		this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		//s.position.rotation = s.destination.rotation ;
@@ -112,8 +113,9 @@ this.phobos = this.phobos || {};
 		this.position.y = newMapCoo.y;
 	}
 
-	s.getDiffDestinationPosition = function() {
-		return ({dX : (this.destination.x - this.position.x), dY : (this.destination.y - this.position.y), dRotation: (this.destination.rotation % 360 - this.position.rotation % 360)});
+	s.getDiffDestinationPosition = function(destination) {
+		if (!destination) destination = this.destination ; 
+		return ({dX : (destination.x - this.position.x), dY : (destination.y - this.position.y), dRotation: (destination.rotation % 360 - this.position.rotation % 360)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
@@ -125,9 +127,6 @@ this.phobos = this.phobos || {};
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
-		//if (diffAngle < 0) diffAngle = - diffAngle ; 
-		//else diffAngle += 180 ; 
-
 		return diffAngle;
 	}
 
@@ -178,6 +177,13 @@ this.phobos = this.phobos || {};
 			this.stop() ; 
 	}
 
+	s.lookAt = function (coo) {
+		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
+		var destRotation = this.getDiffAngle(diffPosDest); 
+		console.log({ x:this.position.x, y:this.position.y, rotation: destRotation });
+		this.setDestination({ x:this.position.x + 0.1, y:this.position.y, rotation: destRotation } );
+	}
+
 	s.shootAt = function(target, weapon) {
 		weapon.setReady(false);
 		target.receiveDamage(weapon._power);
@@ -192,6 +198,7 @@ this.phobos = this.phobos || {};
 			if (targetRange <= this.weapons.getRange()) {
 				if (this.weapons.isReady()) {
 					this.stop();
+					this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 					this.shootAt(currentTarget, this.weapons); 
 				}
 			}
@@ -200,6 +207,7 @@ this.phobos = this.phobos || {};
 			}
 		}
 		if (this.hasDestination) {
+			console.log(this.destination);
 			this.moveToDestinationMovement();
 		}
 		else {
@@ -219,6 +227,7 @@ this.phobos = this.phobos || {};
 				if (utils.distance(closeTarget, this) < this.AIRange && !this.hasTarget) {
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
+					console.log({ x:closeTarget.position.x, y:closeTarget.position.y});
 					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
 					this.setAI("attack");
 				}

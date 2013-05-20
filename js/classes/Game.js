@@ -96,7 +96,7 @@
 			g._tilesMap[k].tick();
 		}
 		renderCanvas();
-		if (Math.random() < 0.01) console.clear();
+		// if (Math.random() < 0.01) console.clear();
 	}
 	window.Game = Game;
 
