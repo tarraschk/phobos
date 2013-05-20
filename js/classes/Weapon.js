@@ -22,7 +22,7 @@
 
 // public methods:
 	w.tick = function (event) {
-		if (Math.random() < 0.01) this._ready = true;
+		if (Math.random() < 0.05) this._ready = true;
 		else this._ready = false ; 
 	}
 	

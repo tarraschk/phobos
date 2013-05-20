@@ -24,14 +24,21 @@
 
 		g.beginStroke(_.Graphics.getRGB(200,66,10));
 		g.setStrokeStyle(5,10,10);
-		g.moveTo(o1.x,o1.y)
-		.lineTo(o2.x,o2.y).endStroke();
+		var startPoint = {x: o1.x + game._camera.x(), y: o1.y + game._camera.y()};
+		var endPoint = {x: o2.x + game._camera.x(), y: o2.y + game._camera.y()};
+		g.moveTo(startPoint.x,startPoint.y)
+		.lineTo(endPoint.x,endPoint.y).endStroke();
 
 		var s = new _.Shape(g);
 		this._container.addChild(s);
 	}
 
+	g.emptyGraphics = function(){
+		this._container.removeAllChildren();
+	}
+
 	g.tick = function() {
+		if (Math.random() < 0.5) this.emptyGraphics(); 
 		this._container.x = this._containerX - game._camera.x();
 		this._container.y = this._containerY - game._camera.y();
 	}
