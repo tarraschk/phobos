@@ -14,10 +14,12 @@
 	w._id = null;
 	w._range = 350 ; 
 	w._ready = false;
+	w._cooldown = null;
 // constructor:
 	w.initialize = function () {
 		this._id = utils.generateId();
 		this._power = 20;
+		this._cooldown = new Cooldown();
 	}
 
 // public methods:
