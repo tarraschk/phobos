@@ -24,8 +24,15 @@
 
 // public methods:
 	w.tick = function (event) {
-		if (Math.random() < 0.05) this._ready = true;
-		else this._ready = false ; 
+		this._cooldown.try();
+		this.setReady(this._cooldown._ready);
+		// if (Math.random() < 0.05) this._ready = true;
+		// else this._ready = false ; 
+	}
+
+	w.doShoot = function() {
+		this._ready = false ; 
+		this._cooldown.start();
 	}
 	
 	w.getRange = function() {

@@ -12,7 +12,7 @@
 // constructor:
 
 	c.initialize = function () {
-		this._time = 5000;
+		this._time = 1;
 		this._date = new Date();
 		this._ready = false ; 
 	}
@@ -23,13 +23,14 @@
 		var current = new Date();
 		var interval = new Date();
 		interval.setTime(current.getTime() - this._date.getTime()); 
-		if (interval.getMilliseconds() >= this._time) {
+		console.log(interval.getSeconds());
+		if (interval.getSeconds() >= this._time) {
 			this._ready = true ; 
 		}
 	}
 
 	c.start = function() {
-		c._date = new Date();
+		this._date = new Date();
 		this._ready = false ; 
 	}
 

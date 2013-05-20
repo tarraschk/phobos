@@ -38,9 +38,9 @@
 	}
 
 	g.tick = function() {
-		if (Math.random() < 0.5) this.emptyGraphics(); 
 		this._container.x = this._containerX - game._camera.x();
 		this._container.y = this._containerY - game._camera.y();
+		if (Math.random() < 0.1) this.emptyGraphics(); 
 	}
 
 	window.GameGraphics = GameGraphics;

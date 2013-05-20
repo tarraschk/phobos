@@ -185,7 +185,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		weapon.setReady(false);
+		weapon.doShoot();
 		target.receiveDamage(weapon._power);
 		game._gameGraphics.drawLaser(this, target);
 	}
