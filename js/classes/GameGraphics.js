@@ -17,8 +17,6 @@
 // public methods:
 
 	g.drawLaser = function(o1, o2) {
-		console.log(o1);
-		console.log(o2);
 
 		var g = new _.Graphics();
 

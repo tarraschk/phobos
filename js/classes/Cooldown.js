@@ -23,7 +23,6 @@
 		var current = new Date();
 		var interval = new Date();
 		interval.setTime(current.getTime() - this._date.getTime()); 
-		console.log(interval.getSeconds());
 		if (interval.getSeconds() >= this._time) {
 			this._ready = true ; 
 		}
