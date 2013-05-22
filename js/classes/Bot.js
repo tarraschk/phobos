@@ -164,8 +164,9 @@ this.phobos = this.phobos || {};
 	}
 
 	s.moveToDestinationMovement = function() {
-		console.log(this.destination);
+		console.log("avant:" + this.position.rotation);
 		var diffPosDest = this.getDiffDestinationPosition();
+		console.log((diffPosDest.dRotation))
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
 			this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		} 
@@ -181,12 +182,12 @@ this.phobos = this.phobos || {};
 			{
 				this.throttleBrake(this.acceleration) ; 
 			}
-			this.position.rotation = this.destination.rotation ; 
+			// this.position.rotation = this.destination.rotation ; 
 		}
-		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) < 0.5) {
+		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
-			this.setHasDestination(false);
 		}
+		console.log("apres:" + this.position.rotation);
 	}
 
 	s.lookAt = function (coo) {
