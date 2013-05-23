@@ -219,7 +219,7 @@ this.phobos = this.phobos || {};
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
 				if (this.weapons.isReady()) {
-					//this.shootAt(currentTarget, this.weapons); 
+					this.shootAt(currentTarget, this.weapons); 
 				}
 			}
 			else {
