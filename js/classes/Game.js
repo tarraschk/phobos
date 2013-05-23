@@ -66,13 +66,14 @@
 			src:"spriteShip.png",
 		});
 		g._shipsList[0] = g._bot;
-		console.log(g._shipsList);
 		$(document).on('click', function(e){
-			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-			
-			var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-			
-			g._playerShip.setDestination({x:cooClick2.x, y:cooClick2.y});
+			if (allowMoveClick) {
+				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+				
+				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+				
+				g._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+			}
 		});
 	}
 
@@ -85,6 +86,7 @@
 // public methods:
 
 	g.tick = function (event) {
+		allowMoveClick = true ; 
 		for (var k = 0 ; k < g._shipsList.length ; k++) {
 			g._shipsList[k].tick();
 		}

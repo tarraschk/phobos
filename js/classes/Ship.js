@@ -15,16 +15,16 @@ this.phobos = this.phobos || {};
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.targetId = null;
-	s.limitSpeed = 2.5;
+	s.limitSpeed = 1.5;
 	s.acceleration = 0.06 ; 
 	s.limitRotation;
-	s.energy = 100;
 	s.currentSpeed = 0 ; 
-	s.weapons = new Weapon();
 	s.rotationSpeed = 3;
-	s.hasTarget = false ; 
 	s.hasDestination = false;
+	s.weapons = new Weapon();
+	s.hasTarget = false ; 
+	s.energy = 100;
+	s.targetId = null;
 	s.name;
 // constructor:
 	s.BitmapAnimation_initialize = s.initialize;
@@ -52,7 +52,8 @@ this.phobos = this.phobos || {};
 // public methods:
 	
 	s.moveTo = function (destination) {
-
+		this.setHasTarget(false);
+		this.setDestination({x:destination.x, y:destination.y});
 	}
 
 	s.rotate = function (rotation) {
@@ -74,8 +75,8 @@ this.phobos = this.phobos || {};
 
 	s.stop = function () {
 		this.currentSpeed = 0 ; 
-		this.destination = null ; 
-		this.setHasDestination(false);
+		this.destination.x = this.position.x ; 
+		this.destination.y = this.position.y;
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
@@ -83,16 +84,22 @@ this.phobos = this.phobos || {};
 	}
 
 	s.setDestination = function (newDestination) { 
-		debug ("New destination :  " + newDestination.x + " ; " + newDestination.y)
-		this.destination = {
-			x: newDestination.x,
-			y: newDestination.y
+		if (newDestination.x != this.position.x && newDestination.y != this.position.y) {
+			this.destination.x = newDestination.x;
+			this.destination.y = newDestination.y;
+			if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
+			var diffPosDest = this.getDiffDestinationPosition(); 
+			this.destination.rotation = this.getDiffAngle(diffPosDest); 
+			//s.position.rotation = s.destination.rotation ;
+			this.setHasDestination(true); 
 		}
-		var diffPosDest = this.getDiffDestinationPosition(); 
-		this.destination.rotation = this.getDiffAngle(diffPosDest); 
-		//s.position.rotation = s.destination.rotation ;
-		this.setHasDestination(true); 
+		else {
+			if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
+			this.setHasDestination(true); 
+
+		}
 	}
+
 	s.setHasDestination = function (newSetHasDestination) {
 		this.hasDestination = newSetHasDestination; 
 	}
@@ -110,8 +117,9 @@ this.phobos = this.phobos || {};
 		this.position.y = newMapCoo.y;
 	}
 
-	s.getDiffDestinationPosition = function() {
-		return ({dX : (this.destination.x - this.position.x), dY : (this.destination.y - this.position.y), dRotation: (this.destination.rotation % 360 - this.position.rotation % 360)});
+	s.getDiffDestinationPosition = function(destination) {
+		if (!destination) destination = this.destination ; 
+		return ({dX : (destination.x - this.position.x), dY : (destination.y - this.position.y), dRotation: (destination.rotation % 360 - this.position.rotation % 360)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
@@ -123,9 +131,6 @@ this.phobos = this.phobos || {};
 			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
-		//if (diffAngle < 0) diffAngle = - diffAngle ; 
-		//else diffAngle += 180 ; 
-
 		return diffAngle;
 	}
 
@@ -148,9 +153,11 @@ this.phobos = this.phobos || {};
 		this.currentSpeed = 0 ; 
 	}
 
-	s.moveToDestinationBehavior = function() {
+	s.moveToDestinationMovement = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
-		this.destination.rotation = this.getDiffAngle(diffPosDest); 
+		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
+			this.destination.rotation = this.getDiffAngle(diffPosDest); 
+		} 
 		if (Math.abs(diffPosDest.dRotation) > 2) {
 			this.rotateToDestination(diffPosDest);
 			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
@@ -165,8 +172,16 @@ this.phobos = this.phobos || {};
 			}
 			this.position.rotation = this.destination.rotation ; 
 		}
-		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5) 
+		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
+		}
+	}
+	
+	s.setHasTarget = function(newHasTarget) {
+		this.hasTarget = newHasTarget;
+	}
+	s.setTargetId = function(newTargetId) {
+		this.targetId = newTargetId;
 	}
 
 	s.setEnergy = function(newEnergy) {
@@ -181,32 +196,44 @@ this.phobos = this.phobos || {};
 		else debug("bang ! "+ this.energy);
 	}
 
+	s.lookAt = function (coo) {
+		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
+		var destRotation = this.getDiffAngle(diffPosDest); 
+		this.setDestination({ x:this.position.x, y:this.position.y, rotation: destRotation } );
+	}
+
 	s.shootAt = function(target, weapon) {
-		weapon.setReady(false);
+		weapon.doShoot();
 		target.receiveDamage(weapon._power);
+		game._gameGraphics.drawLaser(this, target);
 	}
 
 	s.behavior = function () {
 		if (this.hasTarget) {
-			var target = g._shipsList[this.targetId];
-			var targetRange = utils.distance(target, this);
-			this.setDestination(target.position.x, target.position.y);
-			if (targetRange <= this.weapons.range) {
-				if (this.weapons[0].isReady()) {
-					s.shootAt(target, this.weapons[0]); 
+			var currentTarget = game._shipsList[this.targetId];
+			var targetRange = utils.distance(currentTarget, this);
+			if (targetRange <= this.weapons.getRange()) {
+				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.stop();
+				console.log(this.weapons.isReady())
+				if (this.weapons.isReady()) {
+					this.shootAt(currentTarget, this.weapons); 
 				}
+			}
+			else {
+				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			}
 		}
 		if (this.hasDestination) {
-			this.moveToDestinationBehavior();
+			this.moveToDestinationMovement();
 		}
 		else {
 			this.idleBehavior() ; 
 		}
 	}
 
-	s.tickWeapons = function() {
-		this.weapons[0].tick();
+	s.weaponsTick = function() {
+		this.weapons.tick();
 	}
 
 	s.tickMovement = function () {
@@ -237,23 +264,18 @@ this.phobos = this.phobos || {};
 				closeEnnemyKey = j;
 			}
 		}
-		console.log(closeEnnemyKey);
 		return game._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		//s.x = this.position.x - game._camera.x();
-		//s.y = this.position.y - game._camera.y();
 		var renderCoo = utils.absoluteToStd(this.position, game._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
-		//s.isometricConversion(); 
-		//s.x = this.position.x - game._camera.x();
-		//s.y = this.position.y - game._camera.y();
 	}
 
 	s.tick = function (event) {
+		this.weaponsTick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		this.drawRender();
@@ -273,7 +295,6 @@ this.phobos = this.phobos || {};
 					walk: [0, 30, "walk"]
 				}
 			});
-			console.log(that) ;
 			that.index = shipData.id; 
 			//that.image = this;
 			that.spriteSheet = shipSpriteSheet;

@@ -186,10 +186,21 @@ this.phobos = this.phobos || {};
 		}
 	}
 
+	s.setEnergy = function(newEnergy) {
+		this.energy = newEnergy;
+	}
+
+	s.receiveDamage = function (power) {
+		this.setEnergy(this.energy - power);
+		if (this.energy <= 0) {
+			debug("dead");
+		}
+		else debug("bang ! "+ this.energy);
+	}
+
 	s.lookAt = function (coo) {
 		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
 		var destRotation = this.getDiffAngle(diffPosDest); 
-		console.log({ x:this.position.x, y:this.position.y, rotation: destRotation });
 		this.setDestination({ x:this.position.x, y:this.position.y, rotation: destRotation } );
 	}
 
@@ -208,7 +219,7 @@ this.phobos = this.phobos || {};
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
 				if (this.weapons.isReady()) {
-					this.shootAt(currentTarget, this.weapons); 
+					//this.shootAt(currentTarget, this.weapons); 
 				}
 			}
 			else {
@@ -313,6 +324,13 @@ this.phobos = this.phobos || {};
 		this.drawRender();
 	}
 
+	s.manageClick = function() {
+		allowMoveClick = false ; 
+		game._playerShip.setTargetId(this.id);
+		game._playerShip.setHasTarget(true);
+		game._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
+	}
+
 	s.load = function(shipData){
 		var imgShip = new Image(); 
 		imgShip.src = Sh.path + shipData.src;
@@ -342,6 +360,17 @@ this.phobos = this.phobos || {};
 			cPlayground.addChild(that);
 			cPlayground.update();//Create a Shape DisplayObject.
 			console.log("Loaded : " + shipData.name); 
+			that.addEventListener("mouseover", function(e) {
+				debug('over '+that.id);
+				that.manageMouseOver();
+			});
+			that.addEventListener("mouseout", function(e) {
+				debug('out of '+that.id);
+				that.manageMouseOut();
+			});
+			that.addEventListener("click", function(e){
+				that.manageClick();
+			});
 		}
 	}
     phobos.Bot = Sh
