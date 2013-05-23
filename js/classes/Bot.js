@@ -21,7 +21,7 @@ this.phobos = this.phobos || {};
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed = 3;
 	s.hasDestination = false;
-	s.weapons = new Weapon();
+	s.weapons = null;
 	s.hasTarget = false ; 
 	s.energy = 100;
 	s.targetId = null;
@@ -41,6 +41,7 @@ this.phobos = this.phobos || {};
 			this.limitSpeed = 3.5;
 			this.acceleration = 0.06 ; 
 			this.limitRotation;
+			this.weapons = new Weapon(this, 2);
 			this.currentSpeed = 0 ; 
 			this.rotationSpeed = 3;
 			this.id = params.id;
@@ -205,9 +206,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		weapon.doShoot();
+		weapon.doShoot(target);
 		target.receiveDamage(weapon._power);
-		game._gameGraphics.drawLaser(this, target);
 	}
 
 	s.behavior = function () {
@@ -345,7 +345,6 @@ this.phobos = this.phobos || {};
 					walk: [0, 30, "walk"]
 				}
 			});
-			console.log(that) ;
 			that.index = shipData.id; 
 			//that.image = this;
 			that.spriteSheet = shipSpriteSheet;
@@ -356,10 +355,8 @@ this.phobos = this.phobos || {};
 			that.scaleX = 0.4;
 			that.scaleY = 0.4; 
 			that.name = shipData.name; 
-			console.log(that); 
 			cPlayground.addChild(that);
 			cPlayground.update();//Create a Shape DisplayObject.
-			console.log("Loaded : " + shipData.name); 
 			that.addEventListener("mouseover", function(e) {
 				debug('over '+that.id);
 				that.manageMouseOver();

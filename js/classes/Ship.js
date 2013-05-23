@@ -21,7 +21,7 @@ this.phobos = this.phobos || {};
 	s.currentSpeed = 0 ; 
 	s.rotationSpeed = 3;
 	s.hasDestination = false;
-	s.weapons = new Weapon();
+	s.weapons = null;
 	s.hasTarget = false ; 
 	s.energy = 100;
 	s.targetId = null;
@@ -38,13 +38,12 @@ this.phobos = this.phobos || {};
 			this.limitSpeed = 3.5;
 			this.acceleration = 0.06 ; 
 			this.limitRotation;
+			this.weapons = new Weapon(this, 1);
 			this.currentSpeed = 0 ; 
 			this.rotationSpeed = 3;
 			this.hasDestination = false;
 			this.name = params.name;
 			this.id = params.id;
-			console.log("init : ");
-			console.log(params);
 			this.load(params);
 		}
 	}
@@ -203,9 +202,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		weapon.doShoot();
+		weapon.doShoot(target);
 		target.receiveDamage(weapon._power);
-		game._gameGraphics.drawLaser(this, target);
 	}
 
 	s.behavior = function () {
@@ -215,7 +213,6 @@ this.phobos = this.phobos || {};
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
-				console.log(this.weapons.isReady())
 				if (this.weapons.isReady()) {
 					this.shootAt(currentTarget, this.weapons); 
 				}
@@ -305,10 +302,8 @@ this.phobos = this.phobos || {};
 			that.scaleX = 0.4;
 			that.scaleY = 0.4; 
 			that.name = shipData.name; 
-			console.log(that); 
 			cPlayground.addChild(that);
 			cPlayground.update();//Create a Shape DisplayObject.
-			console.log("Loaded : " + shipData.name); 
 		}
 	}
     phobos.Ship = Sh

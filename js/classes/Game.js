@@ -65,6 +65,13 @@
 			y:350,
 			src:"spriteShip.png",
 		});
+		g._shipsList[3] = new phobos.Bot({
+			name:"Bot2",
+			id:3, 
+			x:1500,
+			y:-350,
+			src:"spriteShip.png",
+		});
 		g._shipsList[0] = g._bot;
 		$(document).on('click', function(e){
 			if (allowMoveClick) {

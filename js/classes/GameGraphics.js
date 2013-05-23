@@ -16,11 +16,13 @@
 
 // public methods:
 
-	g.drawLaser = function(o1, o2) {
+	g.drawLaser = function(o1, o2, weaponId) {
 
 		var g = new _.Graphics();
-
-		g.beginStroke(_.Graphics.getRGB(200,66,10));
+		if (weaponId == 1)
+			g.beginStroke(_.Graphics.getRGB(200,66,10));
+		else 
+			g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
 		var startPoint = {x: o1.x + game._camera.x(), y: o1.y + game._camera.y()};
 		var endPoint = {x: o2.x + game._camera.x(), y: o2.y + game._camera.y()};
@@ -38,7 +40,7 @@
 	g.tick = function() {
 		this._container.x = this._containerX - game._camera.x();
 		this._container.y = this._containerY - game._camera.y();
-		if (Math.random() < 0.1) this.emptyGraphics(); 
+		if (Math.random() < 0.5) this.emptyGraphics(); 
 	}
 
 	window.GameGraphics = GameGraphics;
