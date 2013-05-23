@@ -156,7 +156,6 @@ this.phobos = this.phobos || {};
 			this.setHasDestination(true); 
 		}
 		else {
-			console.log(newDestination);
 			if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
 			this.setHasDestination(true); 
 
@@ -164,9 +163,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.moveToDestinationMovement = function() {
-		console.log("avant:" + this.position.rotation);
 		var diffPosDest = this.getDiffDestinationPosition();
-		console.log((diffPosDest.dRotation))
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
 			this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		} 
@@ -187,7 +184,6 @@ this.phobos = this.phobos || {};
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}
-		console.log("apres:" + this.position.rotation);
 	}
 
 	s.lookAt = function (coo) {
@@ -209,9 +205,9 @@ this.phobos = this.phobos || {};
 			var currentTarget = game._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
+				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.stop();
 				if (this.weapons.isReady()) {
-					this.stop();
-					this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 					this.shootAt(currentTarget, this.weapons); 
 				}
 			}
@@ -219,7 +215,6 @@ this.phobos = this.phobos || {};
 				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			}
 		}
-		console.log(this.hasDestination);
 		if (this.hasDestination) {
 			this.moveToDestinationMovement();
 		}

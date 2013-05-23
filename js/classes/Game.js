@@ -79,7 +79,7 @@
 	g.launchTicker = function() {
 		_.Ticker.addListener(window);
 		_.Ticker.useRAF = true;
-		_.Ticker.setFPS(30);
+		_.Ticker.setFPS(60);
 		_.Ticker.addEventListener("tick", this.tick);
 	}
 // public methods:
