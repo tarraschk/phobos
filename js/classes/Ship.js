@@ -224,8 +224,10 @@ this.phobos = this.phobos || {};
 	s.dockingMovement = function() {
 		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
 		console.log(utils.distance(dockPosition, this));
-		if (utils.distance(dockPosition, this) < 250) {
-			debug("dock !");
+		var that = this ; 
+		if (utils.distance(dockPosition, this) < 100) {
+			game.switchPlayerToStation(that);
+			that.visible = false;
 		}
 	}
 

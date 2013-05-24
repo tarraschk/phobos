@@ -44,6 +44,7 @@
 		this.y = renderCoo.y;
 	}
 	s.tick = function (event) {
+		this._mapX++;
 		this.drawRender();
 	}
 	s.shoot = function(target){

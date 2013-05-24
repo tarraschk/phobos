@@ -9,6 +9,7 @@
 	g._engine = null;
 	g._playerShip = null;
 	g._tilesMap = []; 
+	g._dockedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
 
@@ -108,6 +109,12 @@
 		}
 		renderCanvas();
 		// if (Math.random() < 0.01) console.clear();
+	}
+
+	g.switchPlayerToStation = function (player) {
+		g._dockedShipsList[player.id] = player;
+		g._shipsList.splice(player.id, 1); 
+
 	}
 	window.Game = Game;
 
