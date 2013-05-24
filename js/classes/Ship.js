@@ -186,6 +186,7 @@ this.phobos = this.phobos || {};
 			}
 			this.position.rotation = this.destination.rotation ; 
 		}
+		console.log(diffPosDest);
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}

@@ -58,7 +58,8 @@ this.phobos = this.phobos || {};
 // public methods:
 	
 	s.moveTo = function (destination) {
-
+		this.setHasTarget(false);
+		this.setDestination({x:destination.x, y:destination.y});
 	}
 
 	s.rotate = function (rotation) {
@@ -182,8 +183,9 @@ this.phobos = this.phobos || {};
 			{
 				this.throttleBrake(this.acceleration) ; 
 			}
-			// this.position.rotation = this.destination.rotation ; 
+			this.position.rotation = this.destination.rotation ; 
 		}
+		console.log(diffPosDest);
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}
@@ -261,14 +263,18 @@ this.phobos = this.phobos || {};
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);
 						this.setHasTarget(false);
-						this.setAI("backToPosition");
+						this.setAI("backToPositionTrigger");
 					}
 				}
-				else this.setAI("backToPosition");
+				else this.setAI("backToPositionTrigger");
+			break;
+			case "backToPositionTrigger":
+				console.log(this.initPosition);
+				this.moveTo({x:this.initPosition.x,y:this.initPosition.y} );
+				this.setAI("backToPosition")
 			break;
 			case "backToPosition":
-			console.log(this.initPosition);
-				this.setDestination({x:this.initPosition.x,y:this.initPosition.y} );
+				//Trigger, all is ok.
 			break;
 			default:
 			break;
