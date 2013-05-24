@@ -233,16 +233,15 @@ this.phobos = this.phobos || {};
 
 	s.dockingMovement = function() {
 		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
-		var that = this ; 
 		if (utils.distance(dockPosition, this) < 100) {
 			this.doDock();
 		}
 	}
 
 	s.doDock = function() {
-		that.position.z = that.dockingTarget._mapZ;
-		game.switchPlayerToStation(that);
-		that.visible = false;
+		this.position.z = this.dockingTarget._mapZ;
+		game.switchPlayerToStation(this);
+		this.visible = false;
 	}
 
 	s.behavior = function () {
