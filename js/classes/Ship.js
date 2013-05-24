@@ -23,7 +23,7 @@ this.phobos = this.phobos || {};
 	s.hasDestination = false;
 	s.weapons = null;
 	s.hasTarget = false ; 
-	s.energy = 100;
+	s.energy ;
 	s.targetId = null;
 	s.dockingTarget = null ;
 	s.name;
@@ -39,6 +39,7 @@ this.phobos = this.phobos || {};
 			this.limitSpeed = 3.5;
 			this.acceleration = 0.06 ; 
 			this.limitRotation;
+			this.setEnergy(500);
 			this.weapons = new Weapon(this, 1);
 			this.currentSpeed = 0 ; 
 			this.rotationSpeed = 3;
@@ -57,7 +58,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.dockTo = function(dockStation) {
-		console.log(dockStation);
 		// var newDestination = {
 		// 	x: dockStation._mapX + dockStation.image.width / 2, 
 		// 	y: dockStation._mapY + dockStation.image.height / 2
@@ -186,11 +186,11 @@ this.phobos = this.phobos || {};
 			}
 			this.position.rotation = this.destination.rotation ; 
 		}
-		console.log(diffPosDest);
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}
 	}
+	
 	
 	s.setHasTarget = function(newHasTarget) {
 		this.hasTarget = newHasTarget;
@@ -203,12 +203,20 @@ this.phobos = this.phobos || {};
 		this.energy = newEnergy;
 	}
 
+	s.die = function() {
+		debug("dead");
+		this.position.z = -1;
+		game.switchPlayerToKilled(this);
+		this.visible = false;
+		return -1;
+	}
+
 	s.receiveDamage = function (power) {
 		this.setEnergy(this.energy - power);
 		if (this.energy <= 0) {
-			debug("dead");
+			return this.die(); 
 		}
-		else debug("bang ! "+ this.energy);
+		else return this.energy;
 	}
 
 	s.lookAt = function (coo) {
@@ -219,18 +227,22 @@ this.phobos = this.phobos || {};
 
 	s.shootAt = function(target, weapon) {
 		weapon.doShoot(target);
-		target.receiveDamage(weapon._power);
+		var attackResult = target.receiveDamage(weapon._power);
+		return attackResult;
 	}
 
 	s.dockingMovement = function() {
 		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
-		console.log(utils.distance(dockPosition, this));
 		var that = this ; 
 		if (utils.distance(dockPosition, this) < 100) {
-			that.position.z = that.dockingTarget._mapZ;
-			game.switchPlayerToStation(that);
-			that.visible = false;
+			this.doDock();
 		}
+	}
+
+	s.doDock = function() {
+		that.position.z = that.dockingTarget._mapZ;
+		game.switchPlayerToStation(that);
+		that.visible = false;
 	}
 
 	s.behavior = function () {
@@ -241,7 +253,14 @@ this.phobos = this.phobos || {};
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
 				if (this.weapons.isReady()) {
-					this.shootAt(currentTarget, this.weapons); 
+					var attackResult = this.shootAt(currentTarget, this.weapons); 
+					if (attackResult == -1) {
+						debug("You killed it ! ");
+						this.setHasTarget(false) ;
+						this.setTargetId (null) ;  
+						this.stop();
+					}
+					else debug ("Energy left " + attackResult);
 				}
 			}
 			else {

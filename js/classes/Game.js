@@ -10,6 +10,7 @@
 	g._playerShip = null;
 	g._tilesMap = []; 
 	g._dockedShipsList = [] ; 
+	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
 
@@ -109,6 +110,12 @@
 		}
 		renderCanvas();
 		// if (Math.random() < 0.01) console.clear();
+	}
+
+	g.switchPlayerToKilled = function (player) {
+		g._killedShipsList[player.id] = player;
+		g._shipsList.splice(player.id, 1); 
+
 	}
 
 	g.switchPlayerToStation = function (player) {

@@ -185,7 +185,6 @@ this.phobos = this.phobos || {};
 			}
 			this.position.rotation = this.destination.rotation ; 
 		}
-		console.log(diffPosDest);
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}
@@ -195,12 +194,20 @@ this.phobos = this.phobos || {};
 		this.energy = newEnergy;
 	}
 
+	s.die = function() {
+		debug("dead");
+		this.position.z = -1;
+		game.switchPlayerToKilled(this);
+		this.visible = false;
+		return -1;
+	}
+
 	s.receiveDamage = function (power) {
 		this.setEnergy(this.energy - power);
 		if (this.energy <= 0) {
-			debug("dead");
+			return this.die(); 
 		}
-		else debug("bang ! "+ this.energy);
+		else return this.energy;
 	}
 
 	s.lookAt = function (coo) {
@@ -211,7 +218,8 @@ this.phobos = this.phobos || {};
 
 	s.shootAt = function(target, weapon) {
 		weapon.doShoot(target);
-		target.receiveDamage(weapon._power);
+		var attackResult = target.receiveDamage(weapon._power);
+		return attackResult;
 	}
 
 	s.behavior = function () {
@@ -243,7 +251,6 @@ this.phobos = this.phobos || {};
 	}
 	
 	s.botBehavior = function() {
-		console.log(this.AI);
 		switch(this.AI) {
 			case "wait":
 			var closeTarget = this.getCloseEnnemy();
@@ -269,7 +276,6 @@ this.phobos = this.phobos || {};
 				else this.setAI("backToPositionTrigger");
 			break;
 			case "backToPositionTrigger":
-				console.log(this.initPosition);
 				this.moveTo({x:this.initPosition.x,y:this.initPosition.y} );
 				this.setAI("backToPosition")
 			break;
