@@ -38,9 +38,13 @@
 		this._mapX = params.x;
 		this._mapY = params.y;
 	}
+	s.drawRender = function() {
+		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, game._camera._position);
+		this.x = renderCoo.x;
+		this.y = renderCoo.y;
+	}
 	s.tick = function (event) {
-		this.x = this._mapX - game._camera.x();
-		this.y = this._mapY - game._camera.y();
+		this.drawRender();
 	}
 	s.shoot = function(target){
 		if(utils.range(target, this) < 200){// si la cible est assez près on lui tire dessus
@@ -102,6 +106,9 @@
 		}
 	}
 	s.manageClick = function(){
+		allowMoveClick = false ; 
+		debug('arrimage '+this._name);
+		game._playerShip.dockTo(this);
 		//afficher dans le hud en tant que cible potentielle
 	}
 	//Affiche le nom et la barre de vie de la station

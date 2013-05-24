@@ -25,6 +25,7 @@ this.phobos = this.phobos || {};
 	s.hasTarget = false ; 
 	s.energy = 100;
 	s.targetId = null;
+	s.dockingTarget = null ;
 	s.name;
 // constructor:
 	s.BitmapAnimation_initialize = s.initialize;
@@ -53,6 +54,20 @@ this.phobos = this.phobos || {};
 	s.moveTo = function (destination) {
 		this.setHasTarget(false);
 		this.setDestination({x:destination.x, y:destination.y});
+	}
+
+	s.dockTo = function(dockStation) {
+		console.log(dockStation);
+		// var newDestination = {
+		// 	x: dockStation._mapX + dockStation.image.width / 2, 
+		// 	y: dockStation._mapY + dockStation.image.height / 2
+		// }
+		var newDestination = {
+			x: dockStation._mapX + 150, 
+			y: dockStation._mapY - 70
+		}
+		this.moveTo(newDestination);
+		this.dockingTarget = dockStation;
 	}
 
 	s.rotate = function (rotation) {
@@ -206,6 +221,14 @@ this.phobos = this.phobos || {};
 		target.receiveDamage(weapon._power);
 	}
 
+	s.dockingMovement = function() {
+		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
+		console.log(utils.distance(dockPosition, this));
+		if (utils.distance(dockPosition, this) < 250) {
+			debug("dock !");
+		}
+	}
+
 	s.behavior = function () {
 		if (this.hasTarget) {
 			var currentTarget = game._shipsList[this.targetId];
@@ -220,6 +243,9 @@ this.phobos = this.phobos || {};
 			else {
 				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			}
+		}
+		if (this.dockingTarget) {
+			this.dockingMovement();
 		}
 		if (this.hasDestination) {
 			this.moveToDestinationMovement();

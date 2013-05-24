@@ -94,8 +94,10 @@
 
 	g.tick = function (event) {
 		allowMoveClick = true ; 
-		for (var k = 0 ; k < g._shipsList.length ; k++) {
-			g._shipsList[k].tick();
+		for (key in g._shipsList) {
+			if (String(Number(key)) === key && g._shipsList.hasOwnProperty(key)) {
+				if (g._shipsList[key].index == g._shipsList[key].id) g._shipsList[key].tick();
+			}
 		}
 		g._gameGraphics.tick();
 		g._camera.tick();
