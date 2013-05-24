@@ -233,7 +233,7 @@ this.phobos = this.phobos || {};
 
 	s.dockingMovement = function() {
 		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
-		if (utils.distance(dockPosition, this) < 100) {
+		if (utils.distance(dockPosition, this) < 200) {
 			this.doDock();
 		}
 	}
@@ -242,6 +242,7 @@ this.phobos = this.phobos || {};
 		this.position.z = this.dockingTarget._mapZ;
 		game.switchPlayerToStation(this);
 		this.visible = false;
+		debug("Docked !");
 	}
 
 	s.behavior = function () {
