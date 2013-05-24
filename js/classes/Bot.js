@@ -14,6 +14,7 @@ this.phobos = this.phobos || {};
 	
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
+	s.initPosition = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
 	s.limitSpeed = 1.5;
 	s.acceleration = 0.06 ; 
@@ -35,8 +36,9 @@ this.phobos = this.phobos || {};
 		if (params) {
 			this.BitmapAnimation_initialize(); 
 
-			this.position = {x:null, y:null, rotation: 90};
+			this.position = {x:null, y:null, z:1, rotation: 90};
 			this.setMapCoords({x: params.x, y: params.y});
+			this.initPosition = {x:this.position.x, y:this.position.y};
 			this.destination = {x:null, y:null};
 			this.limitSpeed = 3.5;
 			this.acceleration = 0.06 ; 
@@ -239,6 +241,7 @@ this.phobos = this.phobos || {};
 	}
 	
 	s.botBehavior = function() {
+		console.log(this.AI);
 		switch(this.AI) {
 			case "wait":
 			var closeTarget = this.getCloseEnnemy();
@@ -255,13 +258,17 @@ this.phobos = this.phobos || {};
 				if (this.hasTarget) {
 					var currentTarget = game._shipsList[this.targetId];
 					var targetRange = utils.distance(currentTarget, this);
-					if (targetRange >= this.AIStopRange) {
+					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);
 						this.setHasTarget(false);
-						this.setAI("wait");
+						this.setAI("backToPosition");
 					}
 				}
-				else this.setAI("wait");
+				else this.setAI("backToPosition");
+			break;
+			case "backToPosition":
+			console.log(this.initPosition);
+				this.setDestination({x:this.initPosition.x,y:this.initPosition.y} );
 			break;
 			default:
 			break;

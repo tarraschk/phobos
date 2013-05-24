@@ -33,7 +33,7 @@ this.phobos = this.phobos || {};
 		if (params) {
 			this.BitmapAnimation_initialize(); 
 
-			this.position = {x:null, y:null, rotation: 90};
+			this.position = {x:null, y:null, z: 1, rotation: 90};
 			this.setMapCoords({x: params.x, y: params.y});
 			this.destination = {x:null, y:null};
 			this.limitSpeed = 3.5;
@@ -226,6 +226,7 @@ this.phobos = this.phobos || {};
 		console.log(utils.distance(dockPosition, this));
 		var that = this ; 
 		if (utils.distance(dockPosition, this) < 100) {
+			that.position.z = that.dockingTarget._mapZ;
 			game.switchPlayerToStation(that);
 			that.visible = false;
 		}

@@ -57,6 +57,10 @@
 		return (this.isometricScreenToStd (this.cameraToAbsolute(position, camera)));
 	}
 
+	u.isSameZ = function (o1,o2) {
+		return (o1.position.z == o2.position.z);
+	}
+
 	u.distance = function (o1, o2) {
 		return (Math.sqrt(Math.pow((o2.position.x - o1.position.x), 2) + Math.pow((o2.position.y - o1.position.y), 2)));
 	}

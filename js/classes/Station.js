@@ -15,8 +15,10 @@
 	s._lifeLeft; // vie restante a la station
 	s._target;
 	s._isInspected;
+	s._targetZ;
 	s._mapX;
 	s._mapY;
+	s._mapZ;
 	s._name;
 	s.fucused = false;
 	s.scannable;
@@ -24,6 +26,7 @@
 // constructor:
 	s.initialize = function (params) {
 		this._id = utils.generateId();
+		this._targetZ = this._id;
 		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params.src);
