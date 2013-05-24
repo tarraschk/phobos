@@ -17,7 +17,6 @@
 // public methods:
 
 	g.drawLaser = function(o1, o2, weaponId) {
-
 		var g = new _.Graphics();
 		if (weaponId == 1)
 			g.beginStroke(_.Graphics.getRGB(200,66,10));
@@ -40,7 +39,7 @@
 	g.tick = function() {
 		this._container.x = this._containerX - game._camera.x();
 		this._container.y = this._containerY - game._camera.y();
-		if (Math.random() < 0.5) this.emptyGraphics(); 
+		if (Math.random() < 0.2) this.emptyGraphics(); 
 	}
 
 	window.GameGraphics = GameGraphics;
