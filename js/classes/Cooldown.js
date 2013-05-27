@@ -12,7 +12,7 @@
 // constructor:
 
 	c.initialize = function () {
-		this._time = 1;
+		this._time = 0.05;
 		this._date = new Date();
 		this._ready = false ; 
 	}

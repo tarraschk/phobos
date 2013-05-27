@@ -226,6 +226,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
+		console.log("shoot at " + target.name);
 		weapon.doShoot(target);
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;

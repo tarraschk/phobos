@@ -217,6 +217,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
+		console.log("shoot at " + target.name);
 		weapon.doShoot(target);
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
@@ -256,16 +257,21 @@ this.phobos = this.phobos || {};
 			var closeTarget = this.getCloseEnnemy();
 			if (closeTarget) {
 				if (utils.distance(closeTarget, this) < this.AIRange && !this.hasTarget) {
+					alert(closeTarget.name);
+					alert(closeTarget.id);
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
 					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
 					this.setAI("attack");
+					alert(game._shipsList[this.targetId].name);
 				}
 			}
 			break;
 			case "attack":
 				if (this.hasTarget) {
+					console.log(game._shipsList);
 					var currentTarget = game._shipsList[this.targetId];
+					console.log("target " + currentTarget.name);
 					var targetRange = utils.distance(currentTarget, this);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);
