@@ -114,9 +114,9 @@
 
 	g.switchPlayerToKilled = function (player) {
 		console.log("Before kill");
-		console.log(g._shipsList);
+		console.log(player.name);
 		g._killedShipsList[player.id] = player;
-		g._shipsList.splice(player.id, 1); 
+		//g._shipsList.splice(player.id, 1); 
 		console.log("after kill");
 		console.log(g._shipsList);
 
