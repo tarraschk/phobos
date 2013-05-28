@@ -19,7 +19,7 @@
 
 	g.initialize = function () {
 		resize();
-		backgroundGame = new Background("void/secteur7.jpg");
+		backgroundGame = new Background("void/space-art-hd-473771.jpg");
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		g._camera = new Camera();
