@@ -22,7 +22,7 @@
 // constructor:
 	s.Container_initialize = s.initialize;
 	s.initialize = function (params) {
-		this.Container_initialize(); 
+		this.Container_initialize(params); 
 
 		this.position = {x:null, y:null, rotation: 90};
 		this.setMapCoords({x: params.x, y: params.y});

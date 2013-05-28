@@ -17,23 +17,16 @@
 		resize();
 		var backgroundGame = new Background().load("void/secteur7.jpg");
 		g._camera = new Camera();
-		for (var j = 0 ; j < 2000 ; j++) {
-			g._tilesMap[j] = new Tile({
-				id:1,
-				x:Math.random() * 4000,
-				y:Math.random() * 4000,
-				src:"iso-02-04.png",
-			});
-		}
+		g._map = new Map();
 		
-		g._station1 = new Station({
-			src: 'stationIso.png',
-			name: 'Station spatiale internationale',
-			x: 0,
-			y: 0,
-			life: 150000
+		g._bot = new Bot({
+			name:"Bot",
+			id:1, 
+			x:400,
+			y:350,
+			src:"spriteShip.png",
 		});
-		g._station2 = new Station({
+		g._station = new Station({
 			src: 'stationIso.png',
 			name: 'Station MIR',
 			x: 600,
@@ -47,20 +40,8 @@
 			y:350,
 			src:"spriteShip.png",
 		});
-		g._playerShip2 = new Ship({
-			name:"Testeur",
-			id:1, 
-			x:600,
-			y:350,
-			src:"spriteShip.png",
-		});
-		g._bot = new Bot({
-			name:"Testeur",
-			id:1, 
-			x:900,
-			y:350,
-			src:"spriteShip.png",
-		});
+		
+		
 		$(document).on('click', function(e){
 			var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 			
@@ -79,14 +60,11 @@
 // public methods:
 
 	g.tick = function (event) {
-		g._playerShip.tick();
-		g._playerShip2.tick();
 		g._camera.tick();
-		g._station1.tick();
-		g._station2.tick();
-		for (var k = 0 ; k < g._tilesMap.length ; k++) {
-			g._tilesMap[k].tick();
-		}
+		g._map.tick();
+		g._station.tick();
+		g._playerShip.tick();
+		g._bot.tick();
 		renderCanvas();
 	}
 	window.Game = Game;
