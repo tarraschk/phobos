@@ -55,14 +55,14 @@
 	}
 	u.stdToAbsolute = function (position, camera) {
 		return (this.isometricScreenToStd (this.cameraToAbsolute(position, camera)));
-// >>>>>>> 4bb7b64b24499ebc44500deae86bf578b0349d60
+	}
+
+	u.isSameZ = function (o1,o2) {
+		return (o1.position.z == o2.position.z);
+	}
+
+	u.distance = function (o1, o2) {
+		return (Math.sqrt(Math.pow((o2.position.x - o1.position.x), 2) + Math.pow((o2.position.y - o1.position.y), 2)));
 	}
 
 }(window));
-
-/*<<<<<<< HEAD
-		return (this.stdToIsometricScreen(this.absoluteToCamera(position, camera)));
-	}
-	u.stdToAbsolute = function (position, camera) {
-		return (this.cameraToAbsolute(this.stdToIsometricScreen (position), camera));
-=======*/

@@ -38,6 +38,7 @@ var mouse = {
 	up: true,
 	down: false
 };
+var allowMoveClick = true ;
 var screenWidth = 960;
 var screenHeight = 540;
 var game = null;

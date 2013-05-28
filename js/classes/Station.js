@@ -15,8 +15,10 @@
 	s._lifeLeft; // vie restante a la station
 	s._target;
 	s._isInspected;
+	s._targetZ;
 	s._mapX;
 	s._mapY;
+	s._mapZ;
 	s._name;
 	s.fucused = false;
 	s.scannable;
@@ -24,6 +26,7 @@
 // constructor:
 	s.initialize = function (params) {
 		this._id = utils.generateId();
+		this._targetZ = this._id;
 		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
 		this.load(params.src);
@@ -38,9 +41,14 @@
 		this._mapX = params.x;
 		this._mapY = params.y;
 	}
+	s.drawRender = function() {
+		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, game._camera._position);
+		this.x = renderCoo.x;
+		this.y = renderCoo.y;
+	}
 	s.tick = function (event) {
-		this.x = this._mapX - game._camera.x();
-		this.y = this._mapY - game._camera.y();
+		this._mapX = this._mapX + 0.001;
+		this.drawRender();
 	}
 	s.shoot = function(target){
 		if(utils.range(target, this) < 200){// si la cible est assez près on lui tire dessus
@@ -102,6 +110,9 @@
 		}
 	}
 	s.manageClick = function(){
+		allowMoveClick = false ; 
+		debug('arrimage '+this._name);
+		game._playerShip.dockTo(this);
 		//afficher dans le hud en tant que cible potentielle
 	}
 	//Affiche le nom et la barre de vie de la station
