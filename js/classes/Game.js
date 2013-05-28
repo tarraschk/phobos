@@ -80,9 +80,9 @@
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-				
+
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
-				
+
 				g._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 			}
 		});
