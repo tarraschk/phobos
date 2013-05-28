@@ -1,7 +1,7 @@
 (function (window) {
 
-	Background = function(){
-		this.initialize();
+	Background = function(src, scale){
+		this.initialize(src, scale);
 	}
 
 	var bg = Background.prototype = new _.Bitmap();
@@ -13,29 +13,35 @@
 // constructor:
 	bg.Container_initialize = bg.initialize;	//unique to avoid overiding base class
 
-	bg.initialize = function () {
-
+	bg.initialize = function (src, scale) {
+		this.posXinit = 0;
+		this.posYinit = 0;
+		this.scaleFactor = scale;
+		this.load(src);
 	}
 
 // public methods:
 
 	bg.tick = function (event) {
+		this.x = this.posXinit - game._camera._position.x / this.scaleFactor + screenWidth / 2 - this.width / 2;
+		this.y = this.posYinit - game._camera._position.y / this.scaleFactor - this.height / 4 ;
 	}
 
 	bg.setBackgroundSrc = function(newSrc) {
 
 	}
 
-	bg.load = function(src){
+	bg.load = function(src, scale){
 		var src = Background.path+src;
-		bg.image = new Image() ;
-		bg.image.src = src; 
-		bg.scaleX = 1 ; 
-		bg.scaleY = 1 ; 
-		bg.width = 1800 ; 
-		bg.height = 1000 ;
-		bg.image.onload = function() {
-			cBackground.addChild(bg);
+		this.image = new Image() ;
+		this.image.src = src; 
+		this.scaleX = 1 ; 
+		this.scaleY = 1 ; 
+		this.width = 1800 ; 
+		this.height = 1000 ;
+		var that = this
+		this.image.onload = function() {
+			cBackground.addChild(that);
 			cBackground.update();
 		}
 	}

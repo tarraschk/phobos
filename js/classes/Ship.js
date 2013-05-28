@@ -15,11 +15,11 @@ this.phobos = this.phobos || {};
 // public properties:
 	s.position = {x:null, y:null, rotation: 90};
 	s.destination = {x:null, y:null};
-	s.limitSpeed = 1.5;
-	s.acceleration = 0.06 ; 
+	s.limitSpeed ;
+	s.acceleration ; 
 	s.limitRotation;
-	s.currentSpeed = 0 ; 
-	s.rotationSpeed = 3;
+	s.currentSpeed ; 
+	s.rotationSpeed ;
 	s.hasDestination = false;
 	s.weapons = null;
 	s.hasTarget = false ; 
@@ -42,7 +42,7 @@ this.phobos = this.phobos || {};
 			this.setEnergy(500);
 			this.weapons = new Weapon(this, 1);
 			this.currentSpeed = 0 ; 
-			this.rotationSpeed = 3;
+			this.rotationSpeed = 6;
 			this.hasDestination = false;
 			this.name = params.name;
 			this.id = params.id;
@@ -172,7 +172,7 @@ this.phobos = this.phobos || {};
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
 			this.destination.rotation = this.getDiffAngle(diffPosDest); 
 		} 
-		if (Math.abs(diffPosDest.dRotation) > 2) {
+		if (Math.abs(diffPosDest.dRotation) > 3) {
 			this.rotateToDestination(diffPosDest);
 			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
 				this.throttleBrake(-this.acceleration) ; 
@@ -244,6 +244,7 @@ this.phobos = this.phobos || {};
 		game.switchPlayerToStation(this);
 		this.visible = false;
 		debug("Docked !");
+		ui.newStationElement();
 	}
 
 	s.behavior = function () {

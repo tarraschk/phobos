@@ -19,13 +19,15 @@
 
 	g.initialize = function () {
 		resize();
-		var backgroundGame = new Background().load("void/secteur7.jpg");
+		backgroundGame = new Background("void/secteur7.jpg");
+		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
+		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		g._camera = new Camera();
-		for (var j = 0 ; j < 2000 ; j++) {
+		for (var j = 0 ; j < 700 ; j++) {
 			g._tilesMap[j] = new Tile({
 				id:1,
-				x:Math.random() * 4000,
-				y:Math.random() * 4000,
+				x:Math.random() * 2500,
+				y:Math.random() * 2500,
 				src:"iso-02-04.png",
 			});
 		}
@@ -48,30 +50,30 @@
 		g._playerShip = new phobos.Ship({
 			name:"Testeur",
 			id:2, 
-			x:200,
-			y:550,
+			x:1500,
+			y:1050,
 			src:"spriteShip.png",
 		});
 		g._shipsList[1] = new phobos.Ship({
 			name:"Testeur2",
 			id:1, 
-			x:100,
-			y:350,
+			x:2000,
+			y:1350,
 			src:"spriteShip.png",
 		});
 		g._shipsList[2] = g._playerShip;
 		g._bot = new phobos.Bot({
 			name:"Bot",
 			id:0, 
-			x:900,
-			y:350,
+			x:1900,
+			y:1350,
 			src:"spriteShip.png",
 		});
 		g._shipsList[3] = new phobos.Bot({
 			name:"Bot2",
 			id:3, 
 			x:1500,
-			y:-350,
+			y:3350,
 			src:"spriteShip.png",
 		});
 		g._shipsList[0] = g._bot;
@@ -109,6 +111,9 @@
 			g._tilesMap[k].tick();
 		}
 		renderCanvas();
+		backgroundGame.tick();
+		backgroundGame2.tick();
+		backgroundGame3.tick();
 		// if (Math.random() < 0.01) console.clear();
 	}
 

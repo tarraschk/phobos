@@ -257,13 +257,10 @@ this.phobos = this.phobos || {};
 			var closeTarget = this.getCloseEnnemy();
 			if (closeTarget) {
 				if (utils.distance(closeTarget, this) < this.AIRange && !this.hasTarget) {
-					alert(closeTarget.name);
-					alert(closeTarget.id);
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
 					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
 					this.setAI("attack");
-					alert(game._shipsList[this.targetId].name);
 				}
 			}
 			break;
