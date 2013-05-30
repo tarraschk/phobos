@@ -13,7 +13,6 @@ for (var k = 0 ; k < 1000 ; k ++) {
 	}
 }
 
-
 httpServer = http.createServer(function(req, res) {
 	res.end("HelloWorld") ; 
 }); 
