@@ -1,66 +1,45 @@
-var http = require('http'); 
-var players = []; 
-var playersCount = 0;
-var asteroidImg = "img/tiles/iso-02-00.png";
-var spaceData = [{x:15, y:15, z:1, imgSrc:"img/tiles/iso-02-00.png"}, {x:215, y:215, z: 1, imgSrc:"" + asteroidImg + ""}];
-var spaceObjects = [{x:255, y:15, z:1, imgSrc:"img/objects/stationIso.png"}];
+/*  Copyright (c) 2013 Raphaël Sfeir
+    
+    written by : http://raphaelsfeir.fr
+    written for : http://phobosproject.com
 
-for (var k = 0 ; k < 1000 ; k ++) {
-	spaceData[k] = {
-		x:Math.random() * 3500 - 1500,
-		y:Math.random() * 3500 - 1500,
-		imgSrc:asteroidImg,
-	}
-}
+    Usage : node app.js
+*/
 
-httpServer = http.createServer(function(req, res) {
-	res.end("HelloWorld") ; 
-}); 
+var http = require('http'),
+	express = require('express');
+    io              = require('socket.io'),
+    UUID            = require('node-uuid'),
 
-var io = require('socket.io').listen(httpServer);
+    gameport        = process.env.PORT || 4112;
 
-httpServer.listen(1337); 
-
-function spawnPlayer(userName) {
-	var newPlayer = {
-		name: userName,
-		x: Math.random() * 250 + 150,
-		y: Math.random() * 250 + 100, 
-		o: 0,
-		id: playersCount 
-	}
-	console.log('new player spawned : ');
-	console.log(newPlayer);
-	return newPlayer;
-}
+app = express();
 
 
-io.sockets.on('connection', function(socket) {
-	console.log('Nouveau utilisateur') ; 
+/* Express server set up. */
 
-	socket.on('playerData', function (playerData) {
-		console.log("Player data received");
-		console.log(playerData);
-		socket.broadcast.emit('getInfoFromServer', playerData);
-	})
 
-	socket.on('loadPlayers', function() {
-		socket.emit('playersLoaded', players);
-	});
-	socket.on('playerLogin', function(user) {
-		var newPlayer = spawnPlayer(user); 
-		console.log('new player: ');
-		console.log(spaceData); 
-		socket.emit('loadSpace', spaceData);
-		socket.emit('loadObjects', spaceObjects); 
-		socket.emit('playerLogged', newPlayer, players); 
-		socket.broadcast.emit('newPlayer', newPlayer);
-		players[playersCount] = newPlayer;
-		playersCount++;
-	}); 
-	
-	socket.on('tickPlayer', function(user) {
-		players[user.index] = user;
-	}); 
-	
-}); 
+        //Tell the server to listen for incoming connections
+    app.listen( gameport );
+    console.log('\t :: Express :: Listening on port ' + gameport );
+
+    app.get( '/', function( req, res ){
+        res.sendfile( __dirname + '/index.html' );
+    });
+
+
+        //This handler will listen for requests on /*, any file from the root of our server.
+        //See expressjs documentation for more info on routing.
+
+    app.get( '/*' , function( req, res, next ) {
+
+            //This is the current file they have requested
+        var file = req.params[0];
+
+            //For debugging, we can track what files are requested.
+        console.log('\t :: Express :: file requested : ' + file);
+
+            //Send the requesting client the file.
+        res.sendfile( __dirname + '/' + file );
+
+    }); //app.get *
