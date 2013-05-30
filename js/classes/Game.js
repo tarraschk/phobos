@@ -1,4 +1,9 @@
-(function (window) {
+var
+        game_server = module.exports = { games : {}, game_count:0 },
+        UUID        = require('node-uuid'),
+        verbose     = true;
+phobos = this.phobos || {};
+(function (phobos) {
 
 	function Game() {
 		this.initialize();
@@ -18,78 +23,79 @@
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
 
 	g.initialize = function () {
-		resize();
-		backgroundGame = new Background("void/space-art-hd-473771.jpg");
-		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
-		backgroundGame3 = new Background("void/nebulalayer.png", 25);
-		g._camera = new Camera();
-		for (var j = 0 ; j < 700 ; j++) {
-			g._tilesMap[j] = new Tile({
-				id:1,
-				x:Math.random() * 2500,
-				y:Math.random() * 2500,
-				src:"iso-02-04.png",
-			});
-		}
-		g._gameGraphics = new GameGraphics();
+		// resize();
+		// backgroundGame = new Background("void/space-art-hd-473771.jpg");
+		// backgroundGame2 = new Background("void/asteroidlayer.png", 15);
+		// backgroundGame3 = new Background("void/nebulalayer.png", 25);
+		// g._camera = new Camera();
+		// for (var j = 0 ; j < 700 ; j++) {
+		// 	g._tilesMap[j] = new Tile({
+		// 		id:1,
+		// 		x:Math.random() * 2500,
+		// 		y:Math.random() * 2500,
+		// 		src:"iso-02-04.png",
+		// 	});
+		// }
+		// g._gameGraphics = new GameGraphics();
 
-		g._station1 = new Station({
-			src: 'stationIso.png',
-			name: 'Station spatiale internationale',
-			x: 0,
-			y: 0,
-			life: 150000
-		});
-		g._station2 = new Station({
-			src: 'stationIso.png',
-			name: 'Station MIR',
-			x: 600,
-			y: 300,
-			life: 150000
-		});
-		g._playerShip = new phobos.Ship({
-			name:"Testeur",
-			id:2, 
-			x:1500,
-			y:1050,
-			src:"spriteShip.png",
-		});
-		g._shipsList[1] = new phobos.Ship({
-			name:"Testeur2",
-			id:1, 
-			x:2000,
-			y:1350,
-			src:"spriteShip.png",
-		});
-		g._shipsList[2] = g._playerShip;
-		g._bot = new phobos.Bot({
-			name:"Bot",
-			id:0, 
-			x:1900,
-			y:1350,
-			src:"spriteShip.png",
-		});
-		g._shipsList[3] = new phobos.Bot({
-			name:"Bot2",
-			id:3, 
-			x:1500,
-			y:3350,
-			src:"spriteShip.png",
-		});
-		g._shipsList[0] = g._bot;
-		$(document).on('click', function(e){
-			if (allowMoveClick) {
-				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+		// g._station1 = new Station({
+		// 	src: 'stationIso.png',
+		// 	name: 'Station spatiale internationale',
+		// 	x: 0,
+		// 	y: 0,
+		// 	life: 150000
+		// });
+		// g._station2 = new Station({
+		// 	src: 'stationIso.png',
+		// 	name: 'Station MIR',
+		// 	x: 600,
+		// 	y: 300,
+		// 	life: 150000
+		// });
+		// g._playerShip = new phobos.Ship({
+		// 	name:"Testeur",
+		// 	id:2, 
+		// 	x:1500,
+		// 	y:1050,
+		// 	src:"spriteShip.png",
+		// });
+		// g._shipsList[1] = new phobos.Ship({
+		// 	name:"Testeur2",
+		// 	id:1, 
+		// 	x:2000,
+		// 	y:1350,
+		// 	src:"spriteShip.png",
+		// });
+		// g._shipsList[2] = g._playerShip;
+		// g._bot = new phobos.Bot({
+		// 	name:"Bot",
+		// 	id:0, 
+		// 	x:1900,
+		// 	y:1350,
+		// 	src:"spriteShip.png",
+		// });
+		// g._shipsList[3] = new phobos.Bot({
+		// 	name:"Bot2",
+		// 	id:3, 
+		// 	x:1500,
+		// 	y:3350,
+		// 	src:"spriteShip.png",
+		// });
+		// g._shipsList[0] = g._bot;
+		// $(document).on('click', function(e){
+		// 	if (allowMoveClick) {
+		// 		var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 
-				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
+		// 		var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, g._camera._position);
 
-				g._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
-			}
-		});
+		// 		g._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+		// 	}
+		// });
+		console.log("coucou!");
 	}
 
 	g.launchTicker = function() {
-		_.Ticker.addListener(window);
+		_.Ticker.addListener(phobos);
 		_.Ticker.useRAF = true;
 		_.Ticker.setFPS(60);
 		_.Ticker.addEventListener("tick", this.tick);
@@ -132,6 +138,6 @@
 		g._shipsList.splice(player.id, 1); 
 
 	}
-	window.Game = Game;
+	phobos.Game = Game;
 
-}(window));
+}(phobos));

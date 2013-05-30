@@ -43,3 +43,7 @@ app = express();
         res.sendfile( __dirname + '/' + file );
 
     }); //app.get *
+
+    game_server = require('./js/classes/Game.js');
+    game = new phobos.Game();
+    console.log(phobos);
