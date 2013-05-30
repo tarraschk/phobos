@@ -91,7 +91,7 @@ phobos = this.phobos || {};
 		// 		g._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 		// 	}
 		// });
-		console.log("coucou!");
+		console.log("server launched");
 	}
 
 	g.launchTicker = function() {

@@ -10,7 +10,7 @@ var http = require('http'),
 	express = require('express');
     io              = require('socket.io'),
     UUID            = require('node-uuid'),
-
+	routes = require("./routes"),
     gameport        = process.env.PORT || 4112;
 
 app = express();
