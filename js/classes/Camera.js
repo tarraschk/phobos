@@ -1,4 +1,6 @@
-(function(window){
+phobos = this.phobos || {};
+
+(function(phobos){
 
 	function Camera(position) {
 		this._position = null;
@@ -94,5 +96,5 @@
 		this._position.y = newCoo.y ; */
 	};
 
-	window.Camera = Camera;
-}(window));
+	phobos.Camera = Camera;
+}(phobos));

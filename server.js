@@ -10,7 +10,6 @@ var http = require('http'),
 	express = require('express');
     io              = require('socket.io'),
     UUID            = require('node-uuid'),
-	routes = require("./routes"),
     gameport        = process.env.PORT || 4112;
 
 app = express();
@@ -43,7 +42,15 @@ app = express();
         res.sendfile( __dirname + '/' + file );
 
     }); //app.get *
-
     game_server = require('./js/classes/Game.js');
+    require('./js/utils.js');
+    require('./js/vars.js');
+    require('./js/lib/easelJS/easeljs-0.6.0.min.js');
+
+    require('./js/classes/Background.js');
+    require('./js/classes/Bot.js');
+    require('./js/classes/Camera.js');
+    require('./js/classes/Cooldown.js');
+    require('./js/classes/GameGraphics.js');
     game = new phobos.Game();
     console.log(phobos);

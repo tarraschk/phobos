@@ -1,4 +1,5 @@
-(function(window){
+phobos = this.phobos || {};
+(function(phobos){
 	Utils = function(){
 
 	}
@@ -65,4 +66,4 @@
 		return (Math.sqrt(Math.pow((o2.position.x - o1.position.x), 2) + Math.pow((o2.position.y - o1.position.y), 2)));
 	}
 
-}(window));
+}(phobos));

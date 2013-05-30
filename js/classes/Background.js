@@ -1,4 +1,5 @@
-(function (window) {
+phobos = this.phobos || {};
+(function (phobos) {
 
 	Background = function(src, scale){
 		this.initialize(src, scale);
@@ -45,6 +46,6 @@
 			cBackground.update();
 		}
 	}
-	window.Background = Background;
+	phobos.Background = Background;
 
-}(window));
+}(phobos));

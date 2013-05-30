@@ -3,7 +3,7 @@ Ficher des variables globales accessibles à l'ensemble du projet.
 */
 
 //liste des code de touche clavier
-window._ = window.createjs;
+_ = this.createjs;
 var utils = new Utils();
 var net;
 var KEY = {
@@ -42,10 +42,10 @@ var allowMoveClick = true ;
 var screenWidth = 960;
 var screenHeight = 540;
 var game = null;
-var cPlayground = new _.Stage("playground");
-	cPlayground.enableMouseOver(10);
-	cPlayground.mouseMoveOutside = true;
-var cBackground = new _.Stage("background");
+// var cPlayground = new _.Stage("playground");
+// 	cPlayground.enableMouseOver(10);
+// 	cPlayground.mouseMoveOutside = true;
+// var cBackground = new _.Stage("background");
 var camera = null;
 var ui;
 	

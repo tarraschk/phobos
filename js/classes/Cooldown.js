@@ -1,4 +1,5 @@
-(function (window) {
+this.phobos = this.phobos || {};
+(function (phobos) {
 
 	function Cooldown() {
 		this.initialize();
@@ -39,6 +40,6 @@
 		}
 	}
 
-	window.Cooldown = Cooldown;
+	phobos.Cooldown = Cooldown;
 
-}(window));
+}(phobos));
