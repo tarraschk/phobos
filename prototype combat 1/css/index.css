@@ -1,0 +1,49 @@
+/*rgb(249, 48, 42);*/
+/* line 39, index.scss */
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+/* line 44, index.scss */
+#hud {
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+/* line 50, index.scss */
+.entity_info_container {
+  display: none;
+  border: 4px solid #d0d2d3;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #67a54b;
+  font-family: 'serif';
+  font-size: 0.8em;
+  width: 200px;
+  max-height: 400px;
+  position: absolute;
+  padding: 4px; }
+  /* line 61, index.scss */
+  .entity_info_container .name {
+    text-align: center;
+    border-bottom: 1px solid #d0d2d3; }
+  /* line 65, index.scss */
+  .entity_info_container .actions_list {
+    padding: 10px 4px; }
+    /* line 68, index.scss */
+    .entity_info_container .actions_list .action:hover {
+      cursor: pointer;
+      color: whitesmoke; }
+
+/* line 81, index.scss */
+#debug {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: whitesmoke;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 400px;
+  width: 160px;
+  border: 1px solid black;
+  overflow: auto;
+  padding: 5px; }

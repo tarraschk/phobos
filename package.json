@@ -1,10 +1,10 @@
 {
-  "name": "Phobos",
-  "description": "Phobos",
-  "version": "0.0.1",
-  "private": true,
+  "name": "realtime-multiplayer-in-html5",
+  "author" : "Sven Bergström",
+  "description": "An article and demo explaining how multiplayer games work, with a demo in HTML5 using socket.io, node.js and canvas.",
+  "license": "MIT",
+  "version": "1.0.0",
   "dependencies": {
-    "express": "3.x",
     "socket.io": "0.9.x",
     "node-uuid": "1.3.3"
   }
