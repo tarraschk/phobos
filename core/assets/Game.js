@@ -89,6 +89,7 @@ phobos = this.phobos || {};
 		// g._camera.tick();
 		g._station1.tick();
 		g._station2.tick();
+		g._shipsList[3].moveTo({x:-150,y:-200});
 		for (var k = 0 ; k < g._tilesMap.length ; k++) {
 			g._tilesMap[k].tick();
 		}

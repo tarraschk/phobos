@@ -6,6 +6,8 @@ function loadGameCore() {
 function loadGameAssets() {
 	console.log("::Loading game Assets... ::");
 	var gameAssetsDir = "./" + coreDir + dirSep + assetsDir + dirSep;
+	var serverAssetsDir = "./" + serverDir + dirSep ;
+	require(serverAssetsDir + "Server.js");
 	require(gameAssetsDir + "Game.js");
 	require(gameAssetsDir + "Ship.js");
 	require(gameAssetsDir + "Bot.js");
@@ -24,6 +26,7 @@ var http = require('http'),
 	coreDir = "core",
 	dirSep = "/",
 	utilsDir = "utils",
+	serverDir = "server",
 	assetsDir = "assets";
 
 httpServer = http.createServer(function(req, res) {
@@ -37,8 +40,8 @@ loadGameCore();
 
 
 utils = new phobos.Utils();
-game = new phobos.Game();
 
+game = new phobos.Game();
 io.sockets.on('connection', function(socket) {
 
 	socket.on('playerData', function (playerData) {
