@@ -28,7 +28,8 @@ var http = require('http'),
 	utilsDir = "utils",
 	serverDir = "server",
 	assetsDir = "assets";
-
+	phobos = {};
+	
 httpServer = http.createServer(function(req, res) {
 	res.end("HelloWorld") ; 
 }); 

@@ -32,6 +32,9 @@ s.messages = [];
 	s.onInput = function() {
 		
 	}
+	s.generateUniverse = function(universeToken) {
+		
+	}
 	s.startUniverse = function(universe) {
 		
 	}

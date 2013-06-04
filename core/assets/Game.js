@@ -1,4 +1,3 @@
-phobos = this.phobos || {};
 
 (function () {
 

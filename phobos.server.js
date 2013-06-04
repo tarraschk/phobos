@@ -2,5 +2,6 @@
 
 utils = new phobos.Utils();
 
-game = new phobos.Game();
+server = new phobos.Server();
 
+server.generateUniverse
