@@ -195,7 +195,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.position.z = -1;
-		game.switchPlayerToKilled(this);
+		server.universe.switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -224,7 +224,7 @@ this.phobos = this.phobos || {};
 	s.behavior = function () {
 		var that = this ; 
 		if (this.hasTarget) {
-			var currentTarget = game._shipsList[this.targetId];
+			var currentTarget = server.universe._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -264,8 +264,8 @@ this.phobos = this.phobos || {};
 			break;
 			case "attack":
 				if (this.hasTarget) {
-					console.log(game._shipsList);
-					var currentTarget = game._shipsList[this.targetId];
+					console.log(server.universe._shipsList);
+					var currentTarget = server.universe._shipsList[this.targetId];
 					console.log("target " + currentTarget.name);
 					var targetRange = utils.distance(currentTarget, this);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
@@ -309,25 +309,25 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < game._shipsList.length ; j++) {
-			if (utils.distance(game._shipsList[j], this) < minDistance && game._shipsList[j] != this) {
-				minDistance = utils.distance(game._shipsList[j], this);
+		for (var j = 0 ; j < server.universe._shipsList.length ; j++) {
+			if (utils.distance(server.universe._shipsList[j], this) < minDistance && server.universe._shipsList[j] != this) {
+				minDistance = utils.distance(server.universe._shipsList[j], this);
 				closeEnnemyKey = j;
 			}
 		}
-		return game._shipsList[closeEnnemyKey];
+		return server.universe._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		//s.x = this.position.x - game._camera.x();
-		//s.y = this.position.y - game._camera.y();
-		var renderCoo = utils.absoluteToStd(this.position, game._camera._position);
+		//s.x = this.position.x - server.universe._camera.x();
+		//s.y = this.position.y - server.universe._camera.y();
+		var renderCoo = utils.absoluteToStd(this.position, server.universe._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 		//s.isometricConversion(); 
-		//s.x = this.position.x - game._camera.x();
-		//s.y = this.position.y - game._camera.y();
+		//s.x = this.position.x - server.universe._camera.x();
+		//s.y = this.position.y - server.universe._camera.y();
 	}
 	
 	
@@ -345,9 +345,9 @@ this.phobos = this.phobos || {};
 
 	s.manageClick = function() {
 		allowMoveClick = false ; 
-		game._playerShip.setTargetId(this.id);
-		game._playerShip.setHasTarget(true);
-		game._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
+		server.universe._playerShip.setTargetId(this.id);
+		server.universe._playerShip.setHasTarget(true);
+		server.universe._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
 	}
 
 	s.load = function(shipData){

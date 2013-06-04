@@ -204,7 +204,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.position.z = -1;
-		game.switchPlayerToKilled(this);
+		server.universe.switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -239,7 +239,7 @@ this.phobos = this.phobos || {};
 
 	s.doDock = function() {
 		this.position.z = this.dockingTarget._mapZ;
-		game.switchPlayerToStation(this);
+		server.universe.switchPlayerToStation(this);
 		this.visible = false;
 		debug("Docked !");
 		ui.newStationElement();
@@ -247,7 +247,7 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		if (this.hasTarget) {
-			var currentTarget = game._shipsList[this.targetId];
+			var currentTarget = server.universe._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -304,18 +304,18 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < game._shipsList.length ; j++) {
-			if (utils.distance(game._shipsList[j], this) < minDistance && game._shipsList[j] != this) {
-				minDistance = utils.distance(game._shipsList[j], this);
+		for (var j = 0 ; j < server.universe._shipsList.length ; j++) {
+			if (utils.distance(server.universe._shipsList[j], this) < minDistance && server.universe._shipsList[j] != this) {
+				minDistance = utils.distance(server.universe._shipsList[j], this);
 				closeEnnemyKey = j;
 			}
 		}
-		return game._shipsList[closeEnnemyKey];
+		return server.universe._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		var renderCoo = utils.absoluteToStd(this.position, game._camera._position);
+		var renderCoo = utils.absoluteToStd(this.position, server.universe._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
