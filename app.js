@@ -38,10 +38,8 @@ var io = require('socket.io').listen(httpServer);
 httpServer.listen(gameport); 
 loadGameCore();
 
+require("./phobos.server.js");
 
-utils = new phobos.Utils();
-
-game = new phobos.Game();
 io.sockets.on('connection', function(socket) {
 
 	socket.on('playerData', function (playerData) {
