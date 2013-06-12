@@ -18,6 +18,7 @@
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
 
+	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
 		if (server) console.log("Server");
 		else console.log("Client");
@@ -25,6 +26,7 @@
 		console.log("init game");
 	}
 
+	/* DATA ENTRY TO SPECIFY !!! */
 	g.initGraphics = function() {
 
 		resize();
