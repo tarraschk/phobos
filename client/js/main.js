@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
-	clientManager = new Client();
+	clientManager = new phobos.Client();
 	clientManager.generateGame();
 	clientManager.startGame();
 	var socket = io.connect('http://localhost:4112');
