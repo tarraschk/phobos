@@ -1,7 +1,7 @@
 jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
-	game = new Game();
+	game = new phobos.Game();
 	game.launchTicker();
 });
 function debug(data){
