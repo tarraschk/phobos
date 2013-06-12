@@ -30,6 +30,7 @@ this.phobos = this.phobos || {};
 // constructor:
 	s.initialize = function (params) {
 		if (params) {
+			
 			this.acceleration   = params.acceleration || 0.06 ;
 			this.currentSpeed   = params.currentSpeed || 0 ; 
 			this.destination    = params.destination || {x:null, y:null};
