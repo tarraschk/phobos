@@ -1,3 +1,4 @@
+
 phobos = this.phobos || {};
 
 
@@ -41,7 +42,7 @@ s.messages = [];
 
 	    this.client_time = 0.01;            //Our local 'clock' based on server time - client interpolation(net_offset).
 	    this.server_time = 0.01;            //The time the server reported it was at, last we heard from it
-
+	    
 	    this.dt = 0.016;                    //The time that the last frame took to run
 	    this.fps = 0;                       //The current instantaneous fps (1/this.dt)
 	    this.fps_avg_count = 0;             //The number of samples we have taken for fps_avg
@@ -49,16 +50,16 @@ s.messages = [];
 	    this.fps_avg_acc = 0;    
 	}
 
-
+	
 // public methods:
 	s.log = function() {
 
 	}
 	s.onMessage = function() {
-
+		
 	}
 	s.onInput = function() {
-
+		
 	}
 	s.generateUniverse = function(universeToken) {
 		this.universe = new phobos.Game(universeToken);
@@ -81,7 +82,7 @@ s.messages = [];
 	        this.socket.send('p.' + (this.lastPingTime) );
 
 	    }.bind(this), 1000);
-
+	    
 	}; //s.createPingTimer
 
 	s.playerJoin = function(data){
