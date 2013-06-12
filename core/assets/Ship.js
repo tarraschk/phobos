@@ -11,45 +11,45 @@ this.phobos = this.phobos || {};
 
 // static public properties:
 	Sh.path = 'img/ship/';
-	
+
 // public properties:
-	s.position = {x:null, y:null, rotation: 90};
-	s.destination = {x:null, y:null};
+	s.position       = {x:null, y:null, rotation: 90};
+	s.destination    = {x:null, y:null};
 	s.limitSpeed ;
 	s.acceleration ; 
 	s.limitRotation;
 	s.currentSpeed ; 
 	s.rotationSpeed ;
 	s.hasDestination = false;
-	s.weapons = null;
-	s.hasTarget = false ; 
+	s.weapons        = null;
+	s.hasTarget      = false ; 
 	s.energy ;
-	s.targetId = null;
-	s.dockingTarget = null ;
+	s.targetId       = null;
+	s.dockingTarget  = null ;
 	s.name;
 // constructor:
 	s.initialize = function (params) {
 		if (params) {
+			this.acceleration   = params.acceleration || 0.06 ;
+			this.currentSpeed   = params.currentSpeed || 0 ; 
+			this.destination    = params.destination || {x:null, y:null};
+			this.energy         = params.energy || 500;
+			this.hasDestination = params.hasDestination || false;
+			this.id             = params.id;
+			this.limitSpeed     = params.limitSpeed || 3.5;
+			this.name           = params.name;
+			this.position       = {x:params.x, y:params.y, z: 1, rotation: 90};
+			this.rotationSpeed  = params.rotationSpeed || 6;
+			this.weapons        = null || new Weapon(params.weapon);
 
-			this.position = {x:null, y:null, z: 1, rotation: 90};
 			this.setMapCoords({x: params.x, y: params.y});
-			this.destination = {x:null, y:null};
-			this.limitSpeed = 3.5;
-			this.acceleration = 0.06 ; 
 			this.limitRotation;
-			this.setEnergy(500);
-			this.weapons = new Weapon(this, 1);
-			this.currentSpeed = 0 ; 
-			this.rotationSpeed = 6;
-			this.hasDestination = false;
-			this.name = params.name;
-			this.id = params.id;
 			this.load(params);
 		}
 	}
 
 // public methods:
-	
+
 	s.moveTo = function (destination) {
 		this.setHasTarget(false);
 		this.setDestination({x:destination.x, y:destination.y});
@@ -188,8 +188,8 @@ this.phobos = this.phobos || {};
 			this.stop() ; 
 		}
 	}
-	
-	
+
+
 	s.setHasTarget = function(newHasTarget) {
 		this.hasTarget = newHasTarget;
 	}
