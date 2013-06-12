@@ -29,6 +29,7 @@ this.phobos = this.phobos || {};
 	s.name;
 // constructor:
 	s.initialize = function (params) {
+		console.log(params);
 		if (params) {
 			
 			this.acceleration   = params.acceleration || 0.06 ;
@@ -41,7 +42,7 @@ this.phobos = this.phobos || {};
 			this.name           = params.name;
 			this.position       = {x:params.x, y:params.y, z: 1, rotation: 90};
 			this.rotationSpeed  = params.rotationSpeed || 6;
-			this.weapons        = null || new Weapon(params.weapon);
+			// this.weapons        = params.weapon || new phobos.Weapon(1);
 
 			this.setMapCoords({x: params.x, y: params.y});
 			this.limitRotation;
