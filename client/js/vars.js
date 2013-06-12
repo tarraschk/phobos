@@ -48,4 +48,5 @@ var cPlayground = new _.Stage("playground");
 var cBackground = new _.Stage("background");
 var camera = null;
 var ui;
+var server = false ; 
 	

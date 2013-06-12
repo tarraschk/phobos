@@ -33,10 +33,10 @@ phobos = this.phobos || {};
 		this.game = new phobos.Game();
 	}
 	c.startGame = function() {
-		this.game.startGraphicsUpdate();
+		this.game.startUpdate();
 	}
 	c.endUniverse = function(universe) {
-		this.game.stopGraphicsUpdate();
+		this.game.stopUpdate();
 	}
 
 	c.createPingTimer = function() {
