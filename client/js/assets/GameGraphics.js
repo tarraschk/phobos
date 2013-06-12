@@ -23,8 +23,8 @@
 		else 
 			g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
-		var startPoint = {x: o1.x + game._camera.x(), y: o1.y + game._camera.y()};
-		var endPoint = {x: o2.x + game._camera.x(), y: o2.y + game._camera.y()};
+		var startPoint = {x: o1.x + client.getGame().getCamera().x(), y: o1.y + client.getGame().getCamera().y()};
+		var endPoint = {x: o2.x + client.getGame().getCamera().x(), y: o2.y + client.getGame().getCamera().y()};
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
 
@@ -37,8 +37,8 @@
 	}
 
 	g.tick = function() {
-		this._container.x = this._containerX - game._camera.x();
-		this._container.y = this._containerY - game._camera.y();
+		this._container.x = this._containerX - client.getGame().getCamera().x();
+		this._container.y = this._containerY - client.getGame().getCamera().y();
 		if (Math.random() < 0.2) this.emptyGraphics(); 
 	}
 

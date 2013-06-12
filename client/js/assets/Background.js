@@ -23,8 +23,8 @@
 // public methods:
 
 	bg.tick = function (event) {
-		this.x = this.posXinit - game._camera._position.x / this.scaleFactor + screenWidth / 2 - this.width / 2;
-		this.y = this.posYinit - game._camera._position.y / this.scaleFactor - this.height / 4 ;
+		this.x = this.posXinit - client.getGame().getCamera()._position.x / this.scaleFactor + screenWidth / 2 - this.width / 2;
+		this.y = this.posYinit - client.getGame().getCamera()._position.y / this.scaleFactor - this.height / 4 ;
 	}
 
 	bg.setBackgroundSrc = function(newSrc) {

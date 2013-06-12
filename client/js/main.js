@@ -1,13 +1,12 @@
 jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
-	clientManager = new phobos.Client();
-	clientManager.generateGame();
-	clientManager.startGame();
+	client = new phobos.Client();
+	client.generateGame();
+	client.startGame();
 	var socket = io.connect('http://localhost:4112');
 	socket.emit('connect', {name: 'wam'});
 	socket.on('connected', function(data){
-		console.log(data.ship.position);
 		new phobos.Ship(data.ship.position);
 	});
 });

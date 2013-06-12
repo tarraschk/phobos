@@ -39,6 +39,10 @@ phobos = this.phobos || {};
 		this.game.stopUpdate();
 	}
 
+	c.getGame = function() {
+		return this.game ;
+	}
+
 	c.createPingTimer = function() {
 
 	        //Set a ping timer to 1 second, to maintain the ping/latency between
