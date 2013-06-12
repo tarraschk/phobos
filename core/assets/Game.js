@@ -19,6 +19,7 @@
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
 
 	g.initialize = function () {
+		console.log("init game");
 	}
 
 	g.startUpdate = function() {
@@ -31,6 +32,10 @@
 // public methods:
 
 	g.tick = function (event) {
+	    this.diffT() ; 
+	    this.objectsTick();
+	}
+	g.diffT = function() {
 		t  = Date.now() ; 
 	    //Work out the delta time
 	    this.dt = this.lastframetime ? ( (t - this.lastframetime)/1000.0) : 0.016;
@@ -38,8 +43,6 @@
 
 	        //Store the last frame time
 	    this.lastframetime = t;
-
-	    this.objectsTick();
 	}
 	g.objectsTick = function() {
 		allowMoveClick = true ; 
