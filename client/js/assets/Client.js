@@ -29,6 +29,9 @@ phobos = this.phobos || {};
 	c.onInput = function() {
 		
 	}
+	c.generateGame = function() {
+		this.game = new phobos.Game();
+	}
 	c.startGame = function() {
 		this.game.startGraphicsUpdate();
 	}

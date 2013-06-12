@@ -1,8 +1,9 @@
 jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
-	game = new Game();
-	game.launchTicker();
+	clientManager = new Client();
+	clientManager.generateGame();
+	clientManager.startGame();
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));
