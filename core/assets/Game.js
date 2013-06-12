@@ -24,9 +24,13 @@
 
 	g.startUpdate = function() {
 
-		setInterval(function(){
-	        this.tick();
-    	}.bind(this), 1);
+		// setInterval(function(){
+	 //        this.tick();
+  //   	}.bind(this), 15);
+	}
+
+	g.startClientUpdate = function() {
+
 	}
 
 // public methods:

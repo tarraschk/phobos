@@ -2,7 +2,7 @@ jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
 	game = new phobos.Game();
-	game.launchTicker();
+	game.startUpdate();
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));
