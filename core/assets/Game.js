@@ -34,7 +34,7 @@
 		t  = Date.now() ; 
 	    //Work out the delta time
 	    this.dt = this.lastframetime ? ( (t - this.lastframetime)/1000.0) : 0.016;
-		console.log(this.dt);
+		console.log("FPS : " + 1 / this.dt);
 
 	        //Store the last frame time
 	    this.lastframetime = t;
