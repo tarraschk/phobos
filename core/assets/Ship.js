@@ -13,7 +13,7 @@ this.phobos = this.phobos || {};
 	Sh.path = 'img/ship/';
 
 // public properties:
-	s.position       = {x:null, y:null, rotation: 90};
+	s.position       = {x:0, y:0, rotation: 90};
 	s.destination    = {x:null, y:null};
 	s.limitSpeed ;
 	s.acceleration ; 
@@ -29,6 +29,7 @@ this.phobos = this.phobos || {};
 	s.name;
 // constructor:
 	s.initialize = function (params) {
+		console.log("INIT");
 		console.log(params);
 		if (params) {
 			this.acceleration   = params.acceleration || 0.06 ;
@@ -39,7 +40,7 @@ this.phobos = this.phobos || {};
 			this.id             = params.id;
 			this.limitSpeed     = params.limitSpeed || 3.5;
 			this.name           = params.name;
-			this.position       = {x:params.x, y:params.y, z: 1, rotation: 90};
+			this.position       = {x:params.position.x, y:params.position.y, z: 1, rotation: 90};
 			this.rotationSpeed  = params.rotationSpeed || 6;
 			// this.weapons        = params.weapon || new phobos.Weapon(1);
 
@@ -296,7 +297,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.rotationFrame = function() {
-		this.gotoAndPlay("walk");
+		// this.gotoAndPlay("walk");
 		if (this.position.rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
 		else
@@ -318,6 +319,7 @@ this.phobos = this.phobos || {};
 
 	s.drawRender = function () {
 		this.rotationFrame();
+		console.log(this.position);
 		var renderCoo = utils.absoluteToStd(this.position, client.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;

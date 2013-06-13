@@ -78,7 +78,7 @@
 
 	g.joinPlayer = function(playerData) {
 		console.log(playerData);
-		this._shipsList[0] = new phobos.Ship(playerData.ship.position);
+		this._shipsList[0] = new phobos.Ship(playerData.ship);
 	}
 
 	g.graphicsTick = function() {
