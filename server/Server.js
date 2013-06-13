@@ -71,6 +71,11 @@ s.messages = [];
 		this.universe.stopUpdate();
 	}
 
+	s.playerMove = function(data) {
+
+		this.universe._shipsList[0].moveTo(data); 
+	}
+
 	s.createPingTimer = function() {
 
 	        //Set a ping timer to 1 second, to maintain the ping/latency between
@@ -86,15 +91,16 @@ s.messages = [];
 	}; //s.createPingTimer
 
 	s.playerJoin = function(data){
-		var s = this.universe.playerJoin({
+		var shipGenData = {
 				position: {x: 0, y: 0},
 				name: data.name,
 				id: "super id"
-			});
+			}
+		var s = this.universe.playerJoin(shipGenData, true);
 		console.log("emit");
 		console.log(s);
 		data.socket.emit('connected', {
-			ship: s
+			ship: shipGenData
 		});
 	};
 	phobos.Server = Server;

@@ -43,7 +43,6 @@ this.phobos = this.phobos || {};
 			this.position       = {x:0, y:0, z: 1, rotation: 90};
 			this.rotationSpeed  = params.rotationSpeed || 6;
 			// this.weapons        = params.weapon || new phobos.Weapon(1);
-			console.log(params.position.x);
 			// this.setMapCoords({x: params.position.x, y: params.position.y});
 			this.limitRotation;
 			console.log("launch");

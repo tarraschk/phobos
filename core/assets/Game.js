@@ -62,6 +62,7 @@
 // public methods:
 
 	g.tick = function () {
+
 	    this.diffT(); 
 	    this.objectsTick();
 	    if (!server) this.graphicsTick() ; 
@@ -105,7 +106,10 @@
 		allowMoveClick = true ; 
 		for (key in g._shipsList) {
 			if (String(Number(key)) === key && g._shipsList.hasOwnProperty(key)) {
-				if (g._shipsList[key].index == g._shipsList[key].id) g._shipsList[key].tick();
+				if (g._shipsList[key].index == g._shipsList[key].id) {
+					g._shipsList[key].tick();
+					if (Math.random() < 0.7)console.log(g._shipsList[0].position);
+				}
 			}
 		}
 		// g._station1.tick();

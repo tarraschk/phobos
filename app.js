@@ -49,6 +49,12 @@ io.sockets.on('connection', function(socket) {
 			name: data.name
 		});
 	});
+
+	socket.on('move', function(data){
+		console.log("Move player"); 
+		console.log(data); 
+		server.playerMove(data);
+	});
 	socket.on('playerData', function (playerData) {
 
 	});

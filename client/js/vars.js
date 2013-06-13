@@ -50,4 +50,5 @@ var camera = null;
 var ui;
 var server = false ; 
 var client ;
+var socket ; 
 	

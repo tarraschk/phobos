@@ -4,7 +4,7 @@ jQuery(document).ready(function($) {
 	client = new phobos.Client();
 	client.generateGame();
 	client.startGame();
-	var socket = io.connect('http://localhost:4112');
+	socket = io.connect('http://localhost:4112');
 	socket.emit('connect', {name: 'wam'});
 	socket.on('connected', function(data){
 		console.log("received");
