@@ -29,6 +29,9 @@ phobos = this.phobos || {};
 	c.onInput = function() {
 		
 	}
+	c.joinPlayer  = function(playerData) {
+		this.game.joinPlayer(playerData); 
+	}
 	c.generateGame = function() {
 		this.game = new phobos.Game();
 	}

@@ -281,7 +281,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.weaponsTick = function() {
-		this.weapons.tick();
+		if (this.weapons)
+			this.weapons.tick();
 	}
 
 	s.tickMovement = function () {
@@ -317,7 +318,7 @@ this.phobos = this.phobos || {};
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		var renderCoo = utils.absoluteToStd(this.position, server.universe._camera._position);
+		var renderCoo = utils.absoluteToStd(this.position, client.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
@@ -326,7 +327,8 @@ this.phobos = this.phobos || {};
 		this.weaponsTick() ; 
 		this.behavior();
 		this.tickMovement(); 
-		// this.drawRender();
+		if (!server)
+			this.drawRender();
 	}
 
 	s.load = function(shipData){

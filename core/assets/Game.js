@@ -76,6 +76,11 @@
 	    this.lastframetime = t;
 	}
 
+	g.joinPlayer = function(playerData) {
+		console.log(playerData);
+		this._shipsList[0] = new phobos.Ship(playerData.ship.position);
+	}
+
 	g.graphicsTick = function() {
 		this._gameGraphics.tick();
 		this._camera.tick();
@@ -91,11 +96,11 @@
 
 	g.objectsTick = function() {
 		allowMoveClick = true ; 
-		// for (key in g._shipsList) {
-		// 	if (String(Number(key)) === key && g._shipsList.hasOwnProperty(key)) {
-		// 		if (g._shipsList[key].index == g._shipsList[key].id) g._shipsList[key].tick();
-		// 	}
-		// }
+		for (key in g._shipsList) {
+			if (String(Number(key)) === key && g._shipsList.hasOwnProperty(key)) {
+				if (g._shipsList[key].index == g._shipsList[key].id) g._shipsList[key].tick();
+			}
+		}
 		// g._station1.tick();
 		// g._station2.tick();
 		// g._shipsList[3].moveTo({x:-150,y:-200});

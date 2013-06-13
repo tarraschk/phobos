@@ -7,7 +7,7 @@ jQuery(document).ready(function($) {
 	var socket = io.connect('http://localhost:4112');
 	socket.emit('connect', {name: 'wam'});
 	socket.on('connected', function(data){
-		new phobos.Ship(data.ship.position);
+		client.joinPlayer(data); 
 	});
 });
 function debug(data){
