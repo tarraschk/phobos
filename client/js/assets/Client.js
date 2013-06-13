@@ -29,8 +29,19 @@ phobos = this.phobos || {};
 	c.onInput = function() {
 		
 	}
-	c.joinPlayer  = function(playerData) {
-		this.game.joinPlayer(playerData); 
+	c.playerJoin  = function(playerData) {
+		var that = this ; 
+		this.game.playerJoin(playerData, true); 
+
+		$(document).on('click', function(e){
+			if (allowMoveClick) {
+				var gameCam = that.game.getCamera();
+				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
+
+				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
+				that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+			}
+		});
 	}
 	c.generateGame = function() {
 		this.game = new phobos.Game();

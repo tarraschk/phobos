@@ -86,7 +86,7 @@ s.messages = [];
 	}; //s.createPingTimer
 
 	s.playerJoin = function(data){
-		var s = new phobos.Ship({
+		var s = this.universe.playerJoin({
 				position: {x: 0, y: 0},
 				name: data.name,
 				id: "super id"

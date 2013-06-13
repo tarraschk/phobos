@@ -70,15 +70,22 @@
 		t  = Date.now() ; 
 	    //Work out the delta time
 	    this.dt = this.lastframetime ? ( (t - this.lastframetime)/1000.0) : 0.016;
-		// console.log("FPS : " + 1 / this.dt);
+		if (Math.random() < 0.01) console.log("FPS : " + 1 / this.dt);
 
 	        //Store the last frame time
 	    this.lastframetime = t;
 	}
 
-	g.joinPlayer = function(playerData) {
+	g.playerJoin = function(playerData, isMainPlayer) {
 		console.log(playerData);
-		this._shipsList[0] = new phobos.Ship(playerData.ship);
+		this._shipsList[0] = new phobos.Ship(playerData);
+		if (isMainPlayer)
+			this.setPlayerShip(this._shipsList[0]); 
+		return this._shipsList[0];
+	}
+
+	g.setPlayerShip = function(playerShipData) {
+		this._playerShip = playerShipData;
 	}
 
 	g.graphicsTick = function() {
