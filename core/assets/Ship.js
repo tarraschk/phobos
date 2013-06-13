@@ -6,8 +6,8 @@ this.phobos = this.phobos || {};
 	var Sh = function(params){
 		this.initialize(params);
 	}
-
-	var s = Sh.prototype ;
+	if (server) var s = Sh.prototype ;
+	else var s = Sh.prototype = new _.BitmapAnimation();
 
 // static public properties:
 	Sh.path = 'img/ship/';
@@ -31,10 +31,9 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		console.log(params);
 		if (params) {
-			
 			this.acceleration   = params.acceleration || 0.06 ;
 			this.currentSpeed   = params.currentSpeed || 0 ; 
-			this.destination    = params.destination || {x:null, y:null};
+			this.destination    = params.destination || {x:5, y:5};
 			this.energy         = params.energy || 500;
 			this.hasDestination = params.hasDestination || false;
 			this.id             = params.id;
@@ -46,6 +45,7 @@ this.phobos = this.phobos || {};
 
 			this.setMapCoords({x: params.x, y: params.y});
 			this.limitRotation;
+			console.log("launch");
 			this.load(params);
 		}
 	}
@@ -330,7 +330,43 @@ this.phobos = this.phobos || {};
 	}
 
 	s.load = function(shipData){
+		console.log("load ");
 		this.index = shipData.id; 
+		if (!server) {
+			var imgShip = new Image(); 
+
+			shipData.src  = "spriteShip.png";
+
+			imgShip.src = Sh.path + shipData.src;
+			var that = this;
+			imgShip.onload = function() {
+				var shipSpriteSheet = new _.SpriteSheet({
+					// image to use
+					images: [this], 
+					frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+					// width, height & registration point of each sprite
+					animations: {    
+						walk: [0, 30, "walk"]
+					}
+				});
+				that.index = shipData.id; 
+				//that.image = this;
+				that.spriteSheet = shipSpriteSheet;
+				that.gotoAndStop("walk");
+				that.setMapCoords(shipData);
+				that.x = shipData.x;
+				that.y = shipData.y;
+				that.scaleX = 0.4;
+				that.scaleY = 0.4; 
+				that.name = shipData.name; 
+				console.log("load image");
+				cPlayground.addChild(that);
+				cPlayground.update();//Create a Shape DisplayObject.
+
+			}
+		}
 	}
+
+
     phobos.Ship = Sh
 }());
