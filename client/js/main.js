@@ -7,6 +7,8 @@ jQuery(document).ready(function($) {
 	var socket = io.connect('http://localhost:4112');
 	socket.emit('connect', {name: 'wam'});
 	socket.on('connected', function(data){
+		console.log("received");
+		console.log(data);
 		client.playerJoin(data); 
 	});
 });
