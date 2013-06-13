@@ -91,6 +91,7 @@ s.messages = [];
 				name: data.name,
 				id: "super id"
 			});
+		console.log("emit");
 		console.log(s);
 		data.socket.emit('connected', {
 			ship: s

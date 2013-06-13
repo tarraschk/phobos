@@ -40,15 +40,16 @@ this.phobos = this.phobos || {};
 			this.id             = params.id;
 			this.limitSpeed     = params.limitSpeed || 3.5;
 			this.name           = params.name;
-			this.position       = {x:params.position.x, y:params.position.y, z: 1, rotation: 90};
+			this.position       = {x:0, y:0, z: 1, rotation: 90};
 			this.rotationSpeed  = params.rotationSpeed || 6;
 			// this.weapons        = params.weapon || new phobos.Weapon(1);
-
-			this.setMapCoords({x: params.x, y: params.y});
+			console.log(params.position.x);
+			// this.setMapCoords({x: params.position.x, y: params.position.y});
 			this.limitRotation;
 			console.log("launch");
 			this.load(params);
 		}
+		console.log(this.position);
 	}
 
 // public methods:
@@ -319,7 +320,6 @@ this.phobos = this.phobos || {};
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		console.log(this.position);
 		var renderCoo = utils.absoluteToStd(this.position, client.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
@@ -357,7 +357,6 @@ this.phobos = this.phobos || {};
 				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
-				that.setMapCoords(shipData);
 				that.x = shipData.x;
 				that.y = shipData.y;
 				that.scaleX = 0.4;

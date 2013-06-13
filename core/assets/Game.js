@@ -49,7 +49,7 @@
 
 		setInterval(function(){
 	        this.tick();
-    	}.bind(this), 1);
+    	}.bind(this), 15);
 	}
 
 	g.startClientUpdate = function() {
