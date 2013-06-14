@@ -12,6 +12,13 @@ jQuery(document).ready(function($) {
 		console.log(data);
 		client.playerJoin(data); 
 	});
+
+	socket.on('sectorPlayersLoaded', function(data){
+		var shipsList =  data.shipsList; 
+		console.log("received ships");
+		console.log(shipsList);
+		// client.playerJoin(data); 
+	});
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));

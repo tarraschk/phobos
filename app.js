@@ -53,13 +53,14 @@ io.sockets.on('connection', function(socket) {
 	socket.on('move', function(data){
 		console.log("Move player"); 
 		console.log(data); 
-		server.playerMove(data);
+		server.playerMove(data.player, data);
 	});
 	socket.on('playerData', function (playerData) {
 
 	});
 
 	socket.on('loadPlayers', function() {
+		server.loadSectorPlayers(this, player); 
 	});
 	socket.on('playerLogin', function(user) {
 

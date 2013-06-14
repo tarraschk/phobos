@@ -38,6 +38,8 @@ this.phobos = this.phobos || {};
 			this.energy         = params.energy || 500;
 			this.hasDestination = params.hasDestination || false;
 			this.id             = params.id;
+			console.log("ID");
+			console.log(this.id);
 			this.limitSpeed     = params.limitSpeed || 3.5;
 			this.name           = params.name;
 			this.position       = {x:0, y:0, z: 1, rotation: 90};
@@ -54,6 +56,7 @@ this.phobos = this.phobos || {};
 // public methods:
 
 	s.moveTo = function (destination) {
+		console.log(destination);
 		this.setHasTarget(false);
 		this.setDestination({x:destination.x, y:destination.y});
 	}

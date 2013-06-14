@@ -79,10 +79,10 @@
 
 	g.playerJoin = function(playerData, isMainPlayer) {
 		console.log(playerData);
-		this._shipsList[0] = new phobos.Ship(playerData);
+		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 		if (isMainPlayer)
-			this.setPlayerShip(this._shipsList[0]); 
-		return this._shipsList[0];
+			this.setPlayerShip(this._shipsList[playerData.id]); 
+		return this._shipsList[playerData.id];
 	}
 
 	g.setPlayerShip = function(playerShipData) {
@@ -98,6 +98,10 @@
 		backgroundGame3.tick();
 	}
 
+	g.getShipsList = function() {
+		return this._shipsList; 
+	}
+
 	g.getCamera = function() {
 		return this._camera;
 	}
@@ -105,10 +109,9 @@
 	g.objectsTick = function() {
 		allowMoveClick = true ; 
 		for (key in g._shipsList) {
-			if (String(Number(key)) === key && g._shipsList.hasOwnProperty(key)) {
+			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
-					if (Math.random() < 0.7)console.log(g._shipsList[0].position);
 				}
 			}
 		}

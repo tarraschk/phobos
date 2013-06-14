@@ -70,10 +70,17 @@ s.messages = [];
 	s.endUniverse = function(universe) {
 		this.universe.stopUpdate();
 	}
+	s.loadSectorPlayers = function(socket, sector) {
+		socket.emit('sectorPlayersLoaded', {
+			shipsList: this.universe.getShipsList() 
+		});
+	}
 
-	s.playerMove = function(data) {
-
-		this.universe._shipsList[0].moveTo(data); 
+	s.playerMove = function(playerId, moveData) {
+		console.log("move");
+		console.log(moveData);
+		console.log(playerId);
+		this.universe._shipsList[playerId].moveTo(moveData); 
 	}
 
 	s.createPingTimer = function() {
@@ -90,18 +97,22 @@ s.messages = [];
 	    
 	}; //s.createPingTimer
 
+	s.createNewPlayer = function() {
+
+	}
+
+	s.getPlayerData = function(playerId) {
+		console.log("generate id"); 
+		console.log(utils.generateId()); 
+		return ({ position: {x: 0, y: 0}, name: playerId.name, id: utils.generateId() })
+	}
+
 	s.playerJoin = function(data){
-		var shipGenData = {
-				position: {x: 0, y: 0},
-				name: data.name,
-				id: "super id"
-			}
+		var shipGenData = this.getPlayerData(data); 
 		var s = this.universe.playerJoin(shipGenData, true);
 		console.log("emit");
 		console.log(s);
-		data.socket.emit('connected', {
-			ship: shipGenData
-		});
+		data.socket.emit('connected', shipGenData);
 	};
 	phobos.Server = Server;
 

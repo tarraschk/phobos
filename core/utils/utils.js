@@ -1,3 +1,6 @@
+
+this.phobos = this.phobos || {};
+
 (function(){
 	Utils = function(){ }
 
