@@ -60,7 +60,7 @@ io.sockets.on('connection', function(socket) {
 	});
 
 	socket.on('loadPlayers', function() {
-		server.loadSectorPlayers(this, player); 
+		server.loadSectorPlayers(this); 
 	});
 	socket.on('playerLogin', function(user) {
 

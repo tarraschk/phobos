@@ -16,7 +16,7 @@ jQuery(document).ready(function($) {
 	socket.on('sectorPlayersLoaded', function(data){
 		var shipsList =  data.shipsList; 
 		console.log("received ships");
-		console.log(shipsList);
+		console.log(data);
 		// client.playerJoin(data); 
 	});
 });

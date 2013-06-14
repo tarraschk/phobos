@@ -71,9 +71,10 @@ s.messages = [];
 		this.universe.stopUpdate();
 	}
 	s.loadSectorPlayers = function(socket, sector) {
-		socket.emit('sectorPlayersLoaded', {
-			shipsList: this.universe.getShipsList() 
-		});
+		console.log("ship list :") ; 
+		sectorPlayers = this.universe.getShipsList() ; 
+		console.log(sectorPlayers); 
+		socket.emit('sectorPlayersLoaded', sectorPlayers);
 	}
 
 	s.playerMove = function(playerId, moveData) {
@@ -109,7 +110,7 @@ s.messages = [];
 
 	s.playerJoin = function(data){
 		var shipGenData = this.getPlayerData(data); 
-		var s = this.universe.playerJoin(shipGenData, true);
+		var s = this.universe.playerJoin(shipGenData, false);
 		console.log("emit");
 		console.log(s);
 		data.socket.emit('connected', shipGenData);
