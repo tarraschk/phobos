@@ -29,6 +29,13 @@ phobos = this.phobos || {};
 	c.onInput = function() {
 		
 	}
+
+	c.connectToServer = function() {
+
+		socket.emit('connect', {name: 'wam'});
+		
+	}
+
 	c.playerJoin  = function(playerData) {
 		var that = this ; 
 		this.game.playerJoin(playerData, true); 
@@ -45,7 +52,7 @@ phobos = this.phobos || {};
 			}
 		});
 	}
-	c.generateGame = function() {
+	c.loadGameData = function() {
 		this.game = new phobos.Game();
 	}
 	c.startGame = function() {
@@ -53,6 +60,10 @@ phobos = this.phobos || {};
 	}
 	c.endUniverse = function(universe) {
 		this.game.stopUpdate();
+	}
+
+	c.loadServerPlayer = function(playerLocation) {
+
 	}
 
 	c.getGame = function() {
@@ -72,6 +83,7 @@ phobos = this.phobos || {};
 	    }.bind(this), 1000);
 	    
 	}; //s.createPingTimer
+
 
 	phobos.Client = Client;
 

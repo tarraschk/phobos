@@ -1,11 +1,12 @@
 jQuery(document).ready(function($) {
+	socket = io.connect('http://localhost:4112');
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
-	client.generateGame();
+	client.connectToServer(); 
+	client.loadGameData();
 	client.startGame();
-	socket = io.connect('http://localhost:4112');
-	socket.emit('connect', {name: 'wam'});
+	
 	socket.on('connected', function(data){
 		console.log("received");
 		console.log(data);
@@ -65,3 +66,4 @@ $(document).on('click', function(e){
 	e.preventDefault();
 	return false;
 });
+
