@@ -14,9 +14,10 @@ jQuery(document).ready(function($) {
 	});
 
 	socket.on('sectorPlayersLoaded', function(data){
-		var shipsList =  data.shipsList; 
-		console.log("received ships");
 		console.log(data);
+		var shipsList =  data; 
+		console.log("received ships");
+		console.log(shipsList);
 		// client.playerJoin(data); 
 	});
 });

@@ -72,9 +72,9 @@ s.messages = [];
 	}
 	s.loadSectorPlayers = function(socket, sector) {
 		console.log("ship list :") ; 
-		var sectorPlayers = this.universe.getShipsList() ; 
+		var sectorPlayers = this.universe._shipsList ; 
 		console.log(sectorPlayers); 
-		socket.emit('sectorPlayersLoaded', sectorPlayers);
+		socket.emit('sectorPlayersLoaded', {shipList: sectorPlayers});
 	}
 
 	s.playerMove = function(playerId, moveData) {

@@ -99,6 +99,8 @@
 	}
 
 	g.getShipsList = function() {
+		console.log("Get ships list.");
+		console.log(this._shipsList); 
 		return this._shipsList; 
 	}
 
