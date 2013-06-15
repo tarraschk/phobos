@@ -63,11 +63,20 @@ phobos = this.phobos || {};
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
 
+	/* A player joined the game.
+	This player IS the current client's player. */
 	c.mainPlayerLogged = function(playerData)  {
 		this.setPlayerId(playerData.id); 
 		this.playerJoinGame(playerData, true); 
 	}
 
+	/* A player joined the game.
+	This player isn't the current client's player. */
+	c.newPlayerLogged = function(playerData)  {
+		this.playerJoinGame(playerData, false); 
+	}
+
+	/* Adds a player to the client's game. */
 	c.playerJoinGame  = function(playerData, mainPlayer) {
 		this.game.playerJoin(playerData, mainPlayer); 
 		if (mainPlayer) this.initMouseClick() ;

@@ -44,10 +44,12 @@ require("./phobos.server.js");
 
 io.sockets.on('connection', function(socket) {
 	socket.on('login', function(loginData){
-		server.playerLogin({
-			socket: this,
-			loginData: loginData
-		});
+		var loggedInShipData = server.playerLogin({socket: this,loginData: loginData}); 
+
+		if (loggedInShipData) {	
+			socket.emit('loggedIn', loggedInShipData);
+  			socket.broadcast.emit('newPlayerLoggedIn', loggedInShipData);
+		}
 	});
 
 	socket.on('playerMove', function(data){

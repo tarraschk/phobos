@@ -25,6 +25,12 @@ jQuery(document).ready(function($) {
 		console.log(data);
 		client.onPlayerMove(data); 
 	});
+
+	socket.on('newPlayerLoggedIn', function(playerData) {
+		console.log("new player");
+		console.log(playerData); 
+		client.newPlayerLogged(playerData); 
+	});
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));

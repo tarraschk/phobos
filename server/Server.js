@@ -118,13 +118,14 @@ s.messages = [];
 		if (1) { // login check
 			var shipData = this.getPlayerData(loginData); 
 			this.addUser(shipData); 
-			this.playerJoinsGame(shipData, socketData); 
+			return (this.playerJoinsGame(shipData, socketData)); 
 		}
 	}
 
 	s.playerJoinsGame = function(shipData, socketData){
-		this.universe.playerJoin(shipData, false);
-		socketData.emit('loggedIn', shipData);
+		if (this.universe.playerJoin(shipData, false))
+			return shipData;
+		else return -1; 
 	};
 	phobos.Server = Server;
 
