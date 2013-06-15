@@ -51,4 +51,4 @@ var ui;
 var server = false ; 
 var client ;
 var socket ; 
-	
+var gameport = 8080
