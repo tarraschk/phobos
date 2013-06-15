@@ -32,7 +32,7 @@ this.phobos = this.phobos || {};
 		if (params) {
 			this.acceleration   = params.acceleration || 0.06 ;
 			this.currentSpeed   = params.currentSpeed || 0 ; 
-			this.destination    = params.destination || {x:5, y:5};
+			this.destination    = params.destination || {x:0, y:0};
 			this.energy         = params.energy || 500;
 			this.hasDestination = params.hasDestination || false;
 			this.id             = params.id;

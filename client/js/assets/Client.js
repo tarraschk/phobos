@@ -35,11 +35,12 @@ phobos = this.phobos || {};
 		socket.emit('loadPlayers', player);
 	}
 	c.loadSectorPlayers = function(playersData) {
-		
+
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
 					console.log(playersData[key]); 
+					this.playerJoin(playersData[key], false); 
 				}
 			}
 		}
@@ -52,12 +53,16 @@ phobos = this.phobos || {};
 	}
 	// General methods 
 	
-	c.playerJoin  = function(playerData) {
-		var that = this ; 
-		this.game.playerJoin(playerData, true); 
+	c.playerJoin  = function(playerData, mainPlayer) {
+		this.game.playerJoin(playerData, mainPlayer); 
+		if (mainPlayer) this.initMouseClick() ;
+	}
 
+	c.initMouseClick = function() {
+		var that = this ; 
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
+				console.log("click"); 
 				var gameCam = that.game.getCamera();
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 
@@ -67,6 +72,7 @@ phobos = this.phobos || {};
 			}
 		});
 	}
+
 	c.loadGameData = function() {
 		this.loadServerPlayer() ; 
 		this.game = new phobos.Game();

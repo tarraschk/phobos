@@ -10,7 +10,7 @@ jQuery(document).ready(function($) {
 	socket.on('connected', function(data){
 		console.log("received");
 		console.log(data);
-		client.playerJoin(data); 
+		client.playerJoin(data, true); 
 	});
 
 	socket.on('sectorPlayersLoaded', function(data){
