@@ -1,8 +1,8 @@
 {
-  "name": "realtime-multiplayer-in-html5",
-  "author" : "Sven Bergström",
-  "description": "An article and demo explaining how multiplayer games work, with a demo in HTML5 using socket.io, node.js and canvas.",
-  "license": "MIT",
+  "name": "Phobos",
+  "author" : "Raphaël Sfeir",
+  "description": "Alpha version of the realtime multiplayer game Phobos",
+  "license": "Protected",
   "version": "1.0.0",
   "dependencies": {
     "socket.io": "0.9.x",

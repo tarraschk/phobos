@@ -31,8 +31,9 @@ var http = require('http'),
 	phobos = {};
 	server = true ; 
 	
-httpServer = http.createServer(function(req, res) {
-	res.end("HelloWorld") ; 
+httpServer = http.createServer(function(request, response) {
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.end("Hello World\n");
 }); 
 
 var io = require('socket.io').listen(httpServer);

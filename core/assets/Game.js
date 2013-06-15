@@ -27,7 +27,6 @@
 
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initGraphics = function() {
-
 		resize();
 		backgroundGame = new Background("void/space-art-hd-473771.jpg");
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
