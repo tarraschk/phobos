@@ -7,12 +7,19 @@ jQuery(document).ready(function($) {
 	client.loadGameData();
 	client.startGame();
 	
-	socket.on('connected', function(data){
+	socket.on('loggedIn', function(data){
 		console.log("received");
 		console.log(data);
 		client.mainPlayerLogged(data); 
 	});
 
+	socket.on('sectorPlayersLoaded', function(data){
+		var shipsList =  data; 
+		console.log("received ships");
+		console.log(shipsList);
+		client.loadSectorPlayers(shipsList); 
+	});
+	
 	socket.on('sectorPlayersLoaded', function(data){
 		var shipsList =  data; 
 		console.log("received ships");

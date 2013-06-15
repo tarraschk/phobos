@@ -50,7 +50,7 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
-	socket.on('move', function(data){
+	socket.on('playerMove', function(data){
 		server.playerMove(data.player, data);
 	});
 	socket.on('playerData', function (playerData) {

@@ -115,17 +115,16 @@ s.messages = [];
 	s.playerLogin = function(loginData) {
 		var credentials = loginData.loginData;
 		var socketData = loginData.socket ; 
-		this.loginCheck(loginData.)
+		if (1) { // login check
+			var shipData = this.getPlayerData(loginData); 
+			this.addUser(shipData); 
+			this.playerJoinsGame(shipData, socketData); 
+		}
 	}
 
-	s.playerJoin = function(data){
-		var shipData = this.getPlayerData(data); 
-		this.addUser(shipData); 
+	s.playerJoinsGame = function(shipData, socketData){
 		this.universe.playerJoin(shipData, false);
-		data.socket.emit('connected', shipData);
-		console.log("USERS LIST");
-		console.log(this.users); 
-		console.log("USERS LIST");
+		socketData.emit('loggedIn', shipData);
 	};
 	phobos.Server = Server;
 

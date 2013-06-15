@@ -42,8 +42,8 @@ phobos = this.phobos || {};
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
-					console.log(playersData[key]); 
-					this.playerJoin(playersData[key], false); 
+					if (key != this.playerId) //Must be other players, not main player already loaded
+						this.playerJoinGame(playersData[key], false); 
 				}
 			}
 		}
@@ -56,12 +56,13 @@ phobos = this.phobos || {};
 	// General methods 
 	
 	c.mainPlayerLogged = function(playerData)  {
+		this.setPlayerId(playerData.id); 
 		this.playerJoinGame(playerData, true); 
-		if (mainPlayer) this.initMouseClick() ;
 	}
 
 	c.playerJoinGame  = function(playerData, mainPlayer) {
 		this.game.playerJoin(playerData, mainPlayer); 
+		if (mainPlayer) this.initMouseClick() ;
 	}
 
 	c.initMouseClick = function() {
@@ -75,7 +76,7 @@ phobos = this.phobos || {};
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 				console.log(that.game._playerShip); 
 				that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
-	        	socket.emit('move', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
+	        	socket.emit('playerMove', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 			}
 		});
 	}
@@ -93,6 +94,9 @@ phobos = this.phobos || {};
 
 	c.getGame = function() {
 		return this.game ;
+	}
+	c.setPlayerId = function(newPlayerId) {
+		this.playerId = newPlayerId ; 
 	}
 
 	c.createPingTimer = function() {
