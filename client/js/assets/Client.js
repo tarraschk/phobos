@@ -34,6 +34,17 @@ phobos = this.phobos || {};
 	c.loadServerPlayer = function(player) {
 		socket.emit('loadPlayers', player);
 	}
+	c.loadSectorPlayers = function(playersData) {
+		
+		for (key in playersData) {
+			if (String((key)) === key && playersData.hasOwnProperty(key)) {
+				if (playersData[key].index == playersData[key].id) {
+					console.log(playersData[key]); 
+				}
+			}
+		}
+	}
+
 	c.connectToServer = function() {
 
 		socket.emit('connect', {name: 'wam'});

@@ -14,6 +14,7 @@ s.local_time = 0;
 s._dt = new Date().getTime();
 s._dte = new Date().getTime();
 s.universe ; 
+s.playerCount = -1 ; 
 
     //a local queue of messages we delay if faking latency
 s.messages = [];
@@ -72,9 +73,9 @@ s.messages = [];
 	}
 	s.loadSectorPlayers = function(socket, sector) {
 		console.log("ship list :") ; 
-		var sectorPlayers = this.universe._shipsList ; 
+		var sectorPlayers = this.universe.getShipsList() ; 
 		console.log(sectorPlayers); 
-		socket.emit('sectorPlayersLoaded', {shipList: sectorPlayers});
+		socket.emit('sectorPlayersLoaded', sectorPlayers);
 	}
 
 	s.playerMove = function(playerId, moveData) {
@@ -100,7 +101,8 @@ s.messages = [];
 	}
 
 	s.getPlayerData = function(playerId) {
-		return ({ position: {x: 0, y: 0}, name: playerId.name, id: utils.generateId() })
+		this.playerCount++ ; 
+		return ({ position: {x: Math.random() * 500, y: Math.random() * 500}, name: playerId.name, id: this.playerCount })
 	}
 
 	s.playerJoin = function(data){
