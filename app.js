@@ -22,7 +22,7 @@ function loadGameUtils() {
 }
 
 var http = require('http'),
-	gameport = 4112,
+	gameport = 8080,
 	coreDir = "core",
 	dirSep = "/",
 	utilsDir = "utils",
