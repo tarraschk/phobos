@@ -337,6 +337,7 @@ this.phobos = this.phobos || {};
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
+			console.log("load a ship.");
 			imgShip.onload = function() {
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use

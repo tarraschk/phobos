@@ -44,6 +44,7 @@ phobos = this.phobos || {};
 				if (playersData[key].index == playersData[key].id) {
 					if (key != this.playerId) //Must be other players, not main player already loaded
 						this.playerJoinGame(playersData[key], false); 
+					else console.log("THIS IS THE PLAYER"); 
 				}
 			}
 		}
@@ -55,6 +56,13 @@ phobos = this.phobos || {};
 	}
 	// General methods 
 	
+	c.onPlayerMove = function(playerMoveData) {
+		console.log(playerMoveData);
+		console.log(this.game._shipsList);
+		if (this.game._shipsList[playerMoveData.player])
+			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
+	}
+
 	c.mainPlayerLogged = function(playerData)  {
 		this.setPlayerId(playerData.id); 
 		this.playerJoinGame(playerData, true); 

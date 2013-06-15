@@ -19,12 +19,11 @@ jQuery(document).ready(function($) {
 		console.log(shipsList);
 		client.loadSectorPlayers(shipsList); 
 	});
-	
-	socket.on('sectorPlayersLoaded', function(data){
-		var shipsList =  data; 
-		console.log("received ships");
-		console.log(shipsList);
-		client.loadSectorPlayers(shipsList); 
+
+	socket.on('playerMove', function(data){
+		console.log("player has moved");
+		console.log(data);
+		client.onPlayerMove(data); 
 	});
 });
 function debug(data){
