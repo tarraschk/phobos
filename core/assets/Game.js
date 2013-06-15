@@ -60,7 +60,6 @@
 // public methods:
 
 	g.tick = function () {
-
 	    this.diffT(); 
 	    this.objectsTick();
 	    if (!server) this.graphicsTick() ; 
