@@ -29,8 +29,6 @@ this.phobos = this.phobos || {};
 	s.name;
 // constructor:
 	s.initialize = function (params) {
-		console.log("INIT");
-		console.log(params);
 		if (params) {
 			this.acceleration   = params.acceleration || 0.06 ;
 			this.currentSpeed   = params.currentSpeed || 0 ; 
@@ -38,8 +36,6 @@ this.phobos = this.phobos || {};
 			this.energy         = params.energy || 500;
 			this.hasDestination = params.hasDestination || false;
 			this.id             = params.id;
-			console.log("ID");
-			console.log(this.id);
 			this.limitSpeed     = params.limitSpeed || 3.5;
 			this.name           = params.name;
 			this.position       = {x:0, y:0, z: 1, rotation: 90};
@@ -47,16 +43,13 @@ this.phobos = this.phobos || {};
 			// this.weapons        = params.weapon || new phobos.Weapon(1);
 			// this.setMapCoords({x: params.position.x, y: params.position.y});
 			this.limitRotation;
-			console.log("launch");
 			this.load(params);
 		}
-		console.log(this.position);
 	}
 
 // public methods:
 
 	s.moveTo = function (destination) {
-		console.log(destination);
 		this.setHasTarget(false);
 		this.setDestination({x:destination.x, y:destination.y});
 	}
@@ -336,7 +329,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.load = function(shipData){
-		console.log("load ");
 		this.index = shipData.id; 
 		if (!server) {
 			var imgShip = new Image(); 
@@ -364,7 +356,6 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
-				console.log("load image");
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
 
