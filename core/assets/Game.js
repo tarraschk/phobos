@@ -23,7 +23,6 @@
 		if (server) console.log("Server");
 		else console.log("Client");
 		if (!server) this.initGraphics(); 
-		console.log("init game");
 	}
 
 	/* DATA ENTRY TO SPECIFY !!! */
@@ -69,16 +68,12 @@
 	}
 	g.diffT = function() {
 		t  = Date.now() ; 
-	    //Work out the delta time
 	    this.dt = this.lastframetime ? ( (t - this.lastframetime)/1000.0) : 0.016;
 		if (Math.random() < 0.01) console.log("FPS : " + 1 / this.dt);
-
-	        //Store the last frame time
 	    this.lastframetime = t;
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
-		console.log(playerData);
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 		if (isMainPlayer)
 			this.setPlayerShip(this._shipsList[playerData.id]); 

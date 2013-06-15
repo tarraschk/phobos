@@ -49,16 +49,19 @@ phobos = this.phobos || {};
 		}
 	}
 
-	c.connectToServer = function() {
-
-		socket.emit('connect', {name: 'wam'});
+	c.loginToServer = function() {
+		socket.emit('login', {name: this.playerId });
 
 	}
 	// General methods 
 	
-	c.playerJoin  = function(playerData, mainPlayer) {
-		this.game.playerJoin(playerData, mainPlayer); 
+	c.mainPlayerLogged = function(playerData)  {
+		this.playerJoinGame(playerData, true); 
 		if (mainPlayer) this.initMouseClick() ;
+	}
+
+	c.playerJoinGame  = function(playerData, mainPlayer) {
+		this.game.playerJoin(playerData, mainPlayer); 
 	}
 
 	c.initMouseClick = function() {

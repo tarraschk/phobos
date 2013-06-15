@@ -73,9 +73,7 @@ s.messages = [];
 		this.universe.stopUpdate();
 	}
 	s.loadSectorPlayers = function(socket, sector) {
-		console.log("ship list :") ; 
 		var sectorPlayers = this.universe.getShipsList() ; 
-		console.log(sectorPlayers); 
 		socket.emit('sectorPlayersLoaded', sectorPlayers);
 	}
 
@@ -106,10 +104,28 @@ s.messages = [];
 		return ({ position: {x: Math.random() * 500, y: Math.random() * 500}, name: playerId.name, id: this.playerCount })
 	}
 
+	s.addUser = function(user) {
+		this.users[user.id] = user ; 
+	}
+
+	s.removeUser = function(user) {
+		this.users[user.id] = null ; 
+	}
+
+	s.playerLogin = function(loginData) {
+		var credentials = loginData.loginData;
+		var socketData = loginData.socket ; 
+		this.loginCheck(loginData.)
+	}
+
 	s.playerJoin = function(data){
-		var shipGenData = this.getPlayerData(data); 
-		var s = this.universe.playerJoin(shipGenData, false);
-		data.socket.emit('connected', shipGenData);
+		var shipData = this.getPlayerData(data); 
+		this.addUser(shipData); 
+		this.universe.playerJoin(shipData, false);
+		data.socket.emit('connected', shipData);
+		console.log("USERS LIST");
+		console.log(this.users); 
+		console.log("USERS LIST");
 	};
 	phobos.Server = Server;
 

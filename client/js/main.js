@@ -3,14 +3,14 @@ jQuery(document).ready(function($) {
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
-	client.connectToServer(); 
+	client.loginToServer(); 
 	client.loadGameData();
 	client.startGame();
 	
 	socket.on('connected', function(data){
 		console.log("received");
 		console.log(data);
-		client.playerJoin(data, true); 
+		client.mainPlayerLogged(data); 
 	});
 
 	socket.on('sectorPlayersLoaded', function(data){

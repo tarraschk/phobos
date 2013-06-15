@@ -43,10 +43,10 @@ loadGameCore();
 require("./phobos.server.js");
 
 io.sockets.on('connection', function(socket) {
-	socket.on('connect', function(data){
-		server.playerJoin({
+	socket.on('login', function(loginData){
+		server.playerLogin({
 			socket: this,
-			name: data.name
+			loginData: loginData
 		});
 	});
 
