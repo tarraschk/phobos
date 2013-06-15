@@ -15,6 +15,7 @@ s._dt = new Date().getTime();
 s._dte = new Date().getTime();
 s.universe ; 
 s.playerCount = -1 ; 
+s.users = []; 
 
     //a local queue of messages we delay if faking latency
 s.messages = [];

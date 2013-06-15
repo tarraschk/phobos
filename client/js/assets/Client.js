@@ -13,9 +13,12 @@ phobos = this.phobos || {};
 
 	    //a local queue of messages we delay if faking latency
 	c.messages = [];
+	c.playerId ; 
 	// constructor:
 
 	c.initialize = function () { 
+		c.playerId = utils.generateId(); 
+		console.log("this client :" + c.playerId);
 	}
 
 	
@@ -67,6 +70,7 @@ phobos = this.phobos || {};
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
+				console.log(that.game._playerShip); 
 				that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 	        	socket.emit('move', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 			}
