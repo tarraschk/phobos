@@ -1,5 +1,5 @@
 jQuery(document).ready(function($) {
-	socket = io.connect('http://localhost:' + gameport);
+	socket = io.connect('http://phobosproto.jit.su');
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
