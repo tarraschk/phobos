@@ -133,7 +133,7 @@ phobos = this.phobos || {};
 	        this.lastPingTime = new Date().getTime() //- this.fakeLag;
 	        socket.emit('ping', { pingTime:(this.lastPingTime) } );
 
-	    }.bind(this), 1500);
+	    }.bind(this), 2000);
 	    
 	}; //s.createPingTimer
 

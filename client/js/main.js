@@ -9,32 +9,23 @@ jQuery(document).ready(function($) {
 	client.startGame();
 	
 	socket.on('loggedIn', function(data){
-		console.log("received");
-		console.log(data);
 		client.mainPlayerLogged(data); 
 	});
 
 	socket.on('sectorPlayersLoaded', function(data){
 		var shipsList =  data; 
-		console.log("received ships");
-		console.log(shipsList);
 		client.loadSectorPlayers(shipsList); 
 	});
 
 	socket.on('playerMove', function(data){
-		console.log("player has moved");
-		console.log(data);
 		client.onPlayerMove(data); 
 	});
 
 	socket.on('newPlayerLoggedIn', function(playerData) {
-		console.log("new player");
-		console.log(playerData); 
 		client.newPlayerLogged(playerData); 
 	});
 
 	socket.on('pong', function() {
-		console.log("ping received"); 
 		client.onPong();
 
 	})
