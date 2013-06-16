@@ -32,7 +32,12 @@ var http = require('http'),
 	server = true ; 
 	
 httpServer = http.createServer(function(request, response) {
-  response.end("Server launched.\n");
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  // write some content to the browser that your user will see
+  response.write('Phobos server launched');
+
+  // close the response
+  response.end();
 }); 
 
 var io = require('socket.io').listen(httpServer);
