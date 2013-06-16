@@ -57,6 +57,9 @@ s.messages = [];
 	s.log = function() {
 
 	}
+	s.pushMessage = function(client, message) {
+		this.messages.push({message:message, client:client}); 
+	}
 	s.onMessage = function() {
 		
 	}
