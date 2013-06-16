@@ -32,13 +32,32 @@ var http = require('http'),
 	server = true ; 
 	
 httpServer = http.createServer(function(request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
   // write some content to the browser that your user will see
-  response.write('Phobos server launched');
-
+var body = '<html>'+
+    '<head>'+
+    '<meta http-equiv="Content-Type" content="text/html; '+
+    'charset=UTF-8" />'+
+    '</head>'+
+    '<body>'+
+    '<form action="/upload" method="post">'+
+    '<textarea name="text" rows="20" cols="60"></textarea>'+
+    '<input type="submit" value="Envoyer" />'+
+    '</form>'+
+    '</body>'+
+    '</html>';
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.write(body);
+ 	 response.write('Phobos server launched');
+    response.end();
   // close the response
-  response.end();
 }); 
+
+function upload(response, postData) {
+  console.log("Le gestionnaire 'upload' est appelé.");
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.write("Vous avez envoyé : " + querystring.parse(postData).text);
+  response.end();
+}
 
 var io = require('socket.io').listen(httpServer);
 
