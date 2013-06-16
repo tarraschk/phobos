@@ -15,6 +15,7 @@ phobos = this.phobos || {};
 	c.messages = [];
 	c.playerId ; 
 	c.lastPingTime ; 
+	c.pingTime ; 
 	// constructor:
 
 	c.initialize = function () { 
@@ -117,18 +118,22 @@ phobos = this.phobos || {};
 		this.playerId = newPlayerId ; 
 	}
 
+	c.onPong = function(pongTime) {
+		this.pongTime = new Date().getTime()
+		var pingResult = (this.pongTime - this.lastPingTime) / 2; //split : this time is the go and return time, we just want half of it
+		$("#ping").html(pingResult); 
+	}
+
 	c.createPingTimer = function() {
 
 	        //Set a ping timer to 1 second, to maintain the ping/latency between
 	        //client and server and calculated roughly how our connection is doing
 
 	    setInterval(function(){
-
 	        this.lastPingTime = new Date().getTime() //- this.fakeLag;
-	        console.log("ping send " + this.lastPingTime); 
-	        this.socket.send('ping', { pingTime:(this.lastPingTime) } );
+	        socket.emit('ping', { pingTime:(this.lastPingTime) } );
 
-	    }.bind(this), 1000);
+	    }.bind(this), 1500);
 	    
 	}; //s.createPingTimer
 

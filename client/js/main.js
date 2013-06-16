@@ -4,6 +4,7 @@ jQuery(document).ready(function($) {
 	net = new Net();
 	client = new phobos.Client();
 	client.loginToServer(); 
+	client.createPingTimer(); 
 	client.loadGameData();
 	client.startGame();
 	
@@ -32,9 +33,10 @@ jQuery(document).ready(function($) {
 		client.newPlayerLogged(playerData); 
 	});
 
-	socket.on('pong', function(pongTime) {
+	socket.on('pong', function() {
 		console.log("ping received"); 
-		console.log(pongTime); 
+		client.onPong();
+
 	})
 });
 function debug(data){
