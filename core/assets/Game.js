@@ -14,6 +14,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
+	g._updateTime = 16 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -47,7 +48,7 @@
 
 		setInterval(function(){
 	        this.tick();
-    	}.bind(this), 16);
+    	}.bind(this), this._updateTime);
 	}
 
 	g.startClientUpdate = function() {

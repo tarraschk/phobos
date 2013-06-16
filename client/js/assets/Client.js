@@ -14,6 +14,7 @@ phobos = this.phobos || {};
 	    //a local queue of messages we delay if faking latency
 	c.messages = [];
 	c.playerId ; 
+	c.lastPingTime ; 
 	// constructor:
 
 	c.initialize = function () { 
@@ -123,8 +124,8 @@ phobos = this.phobos || {};
 
 	    setInterval(function(){
 
-	        this.last_ping_time = new Date().getTime() - this.fakeLag;
-	        this.socket.send('p.' + (this.lastPingTime) );
+	        this.lastPingTime = new Date().getTime() //- this.fakeLag;
+	        this.socket.send('ping', { pingTime:(this.lastPingTime) } );
 
 	    }.bind(this), 1000);
 	    
