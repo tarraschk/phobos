@@ -47,32 +47,32 @@ loadGameCore();
 
 require("./phobos.server.js");
 
-io.sockets.on('connection', function(socket) {
-	socket.on('login', function(loginData){
-		var loggedInShipData = server.playerLogin({socket: this,loginData: loginData}); 
+io.sockets.on('connection', function(client) {
+	client.on('login', function(loginData){
+		var loggedInShipData = server.playerLogin({client: this,loginData: loginData}); 
 
 		if (loggedInShipData) {	
-			socket.emit('loggedIn', loggedInShipData);
-  			socket.broadcast.emit('newPlayerLoggedIn', loggedInShipData);
+			client.emit('loggedIn', loggedInShipData);
+  			client.broadcast.emit('newPlayerLoggedIn', loggedInShipData);
 		}
 	});
 
-	socket.on('playerMove', function(data){
+	client.on('playerMove', function(data){
 		server.playerMove(data.player, data);
-  		socket.broadcast.emit('playerMove', data);
+  		client.broadcast.emit('playerMove', data);
 	});
-	socket.on('playerData', function (playerData) {
+	client.on('playerData', function (playerData) {
 
 	});
 
-	socket.on('loadPlayers', function() {
+	client.on('loadPlayers', function() {
 		server.loadSectorPlayers(this); 
 	});
-	socket.on('playerLogin', function(user) {
+	client.on('playerLogin', function(user) {
 
 	}); 
 	
-	socket.on('tickPlayer', function(user) {
+	client.on('tickPlayer', function(user) {
 	}); 
 	
 }); 
