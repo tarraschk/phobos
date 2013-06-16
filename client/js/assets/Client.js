@@ -125,6 +125,7 @@ phobos = this.phobos || {};
 	    setInterval(function(){
 
 	        this.lastPingTime = new Date().getTime() //- this.fakeLag;
+	        console.log("ping send " + this.lastPingTime); 
 	        this.socket.send('ping', { pingTime:(this.lastPingTime) } );
 
 	    }.bind(this), 1000);

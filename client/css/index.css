@@ -23,3 +23,15 @@ canvas {
   border: 1px solid black;
   overflow: auto;
   padding: 5px; }
+#misc_text {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: whitesmoke;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 160px;
+  border: 1px solid black;
+  overflow: auto;
+  padding: 5px;
+}

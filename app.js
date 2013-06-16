@@ -78,5 +78,10 @@ io.sockets.on('connection', function(client) {
 	
 	client.on('tickPlayer', function(user) {
 	}); 
+
+	client.on('ping', function(pingTime) {
+		console.log("ping receive" + pingTime);
+		client.emit('pong', new Date().getTime()); 
+	}); 
 	
 }); 

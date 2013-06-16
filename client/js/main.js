@@ -31,6 +31,11 @@ jQuery(document).ready(function($) {
 		console.log(playerData); 
 		client.newPlayerLogged(playerData); 
 	});
+
+	socket.on('pong', function(pongTime) {
+		console.log("ping received"); 
+		console.log(pongTime); 
+	})
 });
 function debug(data){
 	$('<div>').html(data+'<br/>').prependTo($('#debug'));
