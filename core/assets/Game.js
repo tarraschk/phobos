@@ -47,7 +47,7 @@
 
 		setInterval(function(){
 	        this.tick();
-    	}.bind(this), 15);
+    	}.bind(this), 16);
 	}
 
 	g.startClientUpdate = function() {
