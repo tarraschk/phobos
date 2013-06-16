@@ -105,7 +105,7 @@
 			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
-					if (Math.random() < 0.01) console.log(g._shipsList[key].position); 
+					if (Math.random() < 0.001) console.log(g._shipsList[key].position); 
 				}
 			}
 		}
