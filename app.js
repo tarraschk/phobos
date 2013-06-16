@@ -64,6 +64,7 @@ io.sockets.on('connection', function(client) {
 	client.on('playerMove', function(data){
 		server.playerMove(data.player, data);
   		client.broadcast.emit('playerMove', data);
+  		client.emit('playerMove', data);
 	});
 	client.on('playerData', function (playerData) {
 

@@ -94,7 +94,7 @@ phobos = this.phobos || {};
 
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 				console.log(that.game._playerShip); 
-				that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+				// that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 	        	socket.emit('playerMove', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 			}
 		});
