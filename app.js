@@ -32,8 +32,7 @@ var http = require('http'),
 	server = true ; 
 	
 httpServer = http.createServer(function(request, response) {
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.end("Hello World\n");
+  // response.end("Server launched.\n");
 }); 
 
 var io = require('socket.io').listen(httpServer);
