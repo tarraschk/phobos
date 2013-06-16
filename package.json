@@ -4,7 +4,7 @@
   "description": "Alpha version of the realtime multiplayer game Phobos",
   "license": "Protected",
   "main": "app.js",
-  "version": "0.0.1-11",
+  "version": "0.0.1-12",
   "scripts": {
     "start": "node app.js"
   },
