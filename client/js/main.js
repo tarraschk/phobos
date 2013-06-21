@@ -1,5 +1,6 @@
 jQuery(document).ready(function($) {
-	socket = io.connect('http://phobosproto.jit.su');
+	socket = io.connect('http://localhost:8080');
+	// socket = io.connect('http://phobosproto.jit.su');
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
@@ -12,17 +13,24 @@ jQuery(document).ready(function($) {
 		client.mainPlayerLogged(data); 
 	});
 
-	socket.on('sectorPlayersLoaded', function(data){
-		var shipsList =  data; 
+	socket.on('sectorPlayersLoaded', function(shipsList){
 		client.loadSectorPlayers(shipsList); 
 	});
 
-	socket.on('playerMove', function(data){
-		client.onPlayerMove(data); 
+	socket.on('sectorLoaded', function(sector){
+		client.loadSector(sector); 
 	});
 
-	socket.on('newPlayerLoggedIn', function(playerData) {
-		client.newPlayerLogged(playerData); 
+	socket.on('sectorDataLoaded', function(sector){
+		client.loadSector(sector); 
+	});
+
+	socket.on('playerMove', function(move){
+		client.onPlayerMove(move); 
+	});
+
+	socket.on('newPlayerLoggedIn', function(player) {
+		client.newPlayerLogged(player); 
 	});
 
 	socket.on('pong', function() {

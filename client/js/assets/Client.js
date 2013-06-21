@@ -39,6 +39,14 @@ phobos = this.phobos || {};
 	c.loadServerPlayer = function(player) {
 		socket.emit('loadPlayers', player);
 	}
+	c.loadSectorData = function(player) {
+		socket.emit('loadSector', player);
+	}
+
+	c.loadSector = function(sector) {
+		
+	}
+
 	c.loadSectorPlayers = function(playersData) {
 
 		for (key in playersData) {
@@ -102,6 +110,7 @@ phobos = this.phobos || {};
 
 	c.loadGameData = function() {
 		this.loadServerPlayer() ; 
+		this.loadSectorData() ; 
 		this.game = new phobos.Game();
 	}
 	c.startGame = function() {

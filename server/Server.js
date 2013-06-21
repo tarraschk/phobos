@@ -80,6 +80,11 @@ s.messages = [];
 		socket.emit('sectorPlayersLoaded', sectorPlayers);
 	}
 
+	s.loadSector = function(socket, sector) {
+		var sectorPlayers = this.universe.getShipsList() ; 
+		socket.emit('sectorLoaded', sectorPlayers);
+	}
+
 	s.playerMove = function(playerId, moveData) {
 		this.universe._shipsList[playerId].moveTo(moveData); 
 	}

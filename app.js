@@ -73,6 +73,10 @@ io.sockets.on('connection', function(client) {
 	client.on('loadPlayers', function() {
 		server.loadSectorPlayers(this); 
 	});
+	client.on('loadSector', function() {
+		console.log(":: Loading sector :: "); 
+		server.loadSector(this); 
+	});
 	client.on('playerLogin', function(user) {
 
 	}); 

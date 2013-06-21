@@ -10,6 +10,8 @@
 	g._engine = null;
 	g._playerShip = null;
 	g._tilesMap = []; 
+	g._objectsList = [] ; 
+	g._tilesList = [] ;
 	g._dockedShipsList = [] ; 
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
@@ -42,6 +44,31 @@
 			});
 		}
 		this._gameGraphics = new GameGraphics();
+	}
+
+	g.loadSector = function(sector) {
+		var sectorObjects = sector.objects;
+		var sectorTiles = sector.tiles ; 
+		this.loadObjects(sectorObjects);
+		this.loadTiles(sectorTiles); 
+	}
+
+	g.initObjects = function() {
+		this._objectsList = [] ; 
+	}
+
+	g.initTiles = function() {
+		this._tilesList = [] ; 
+	}
+
+	g.loadObjects = function(objects) {
+		for (var k = 0 ; k < objects.length ; k++) {
+
+		}
+	}
+
+	g.loadTiles = function(tiles) {
+
 	}
 
 	g.startUpdate = function() {
