@@ -92,7 +92,7 @@ s.messages = [];
 		var sectorObjects = this.universe.getObjectsList() ; 
 		sector = {objects: sectorObjects, tiles: sectorTiles}; 
 		console.log(sector); 
-		socket.emit('sectorLoaded', sectorObjects);
+		// socket.emit('sectorLoaded', sectorObjects);
 	}
 
 	s.playerMove = function(playerId, moveData) {
