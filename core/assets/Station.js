@@ -27,6 +27,7 @@ this.phobos = this.phobos || {};
 	s._id;
 // constructor:
 	s.initialize = function (params) {
+		console.log("station"); 
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;

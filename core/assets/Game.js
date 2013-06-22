@@ -49,6 +49,8 @@
 	g.loadSector = function(sector) {
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ; 
+		this.initObjects();
+		this.initTiles(); 
 		this.loadObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
 	}
@@ -63,8 +65,21 @@
 
 	g.loadObjects = function(objects) {
 		for (var k = 0 ; k < objects.length ; k++) {
-
+			switch(objects[k].type) {
+				case "Station":
+					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
+				break;
+				case "Bot":
+					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
+				break;
+			}
 		}
+		console.log("OBJECTS LIST")
+		console.log(this._objectsList); 
+		console.log("OBJECTS LIST")
+		console.log("OBJECTS LIST")
+		console.log("OBJECTS LIST")
+		console.log("OBJECTS LIST")
 	}
 
 	g.loadTiles = function(tiles) {
@@ -123,6 +138,14 @@
 		return this._shipsList; 
 	}
 
+	g.getObjectsList = function() {
+		return this._objectsList; 
+	}
+
+	g.getTilesList = function() {
+		return this._tilesList; 
+	}
+
 	g.getCamera = function() {
 		return this._camera;
 	}
@@ -134,6 +157,15 @@
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
 					if (Math.random() < 0.001) console.log(g._shipsList[key].position); 
+				}
+			}
+		}
+
+		for (key in this._objectsList) {
+			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
+				if (this._objectsList[key].index == this._objectsList[key].id) {
+					this._objectsList[key].tick();
+					// if (Math.random() < 1) console.log(this._objectsList[key]); 
 				}
 			}
 		}

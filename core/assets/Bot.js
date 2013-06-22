@@ -32,6 +32,7 @@ this.phobos = this.phobos || {};
 	s.name;
 // constructor:
 	s.initialize = function (params) {
+		console.log("new bot"); 
 		if (params) {
 
 			this.position = {x:null, y:null, z:1, rotation: 90};

@@ -67,7 +67,14 @@ s.messages = [];
 		
 	}
 	s.generateUniverse = function(universeToken) {
+		sector = {
+			objects:[{id:0,type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},{id:1, type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},
+			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000}],
+			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
+		};
+
 		this.universe = new phobos.Game(universeToken);
+		this.universe.loadSector(sector); 
 	}
 	s.startUniverse = function(universe) {
 		this.universe.startUpdate();
@@ -81,8 +88,11 @@ s.messages = [];
 	}
 
 	s.loadSector = function(socket, sector) {
-		var sectorPlayers = this.universe.getShipsList() ; 
-		socket.emit('sectorLoaded', sectorPlayers);
+		var sectorTiles = this.universe.getTilesList() ; 
+		var sectorObjects = this.universe.getObjectsList() ; 
+		sector = {objects: sectorObjects, tiles: sectorTiles}; 
+		console.log(sector); 
+		socket.emit('sectorLoaded', sectorObjects);
 	}
 
 	s.playerMove = function(playerId, moveData) {
