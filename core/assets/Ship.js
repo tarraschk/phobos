@@ -13,39 +13,46 @@ this.phobos = this.phobos || {};
 	Sh.path = 'img/ship/';
 
 // public properties:
-	s.position       = {x:0, y:0, rotation: 90};
-	s.destination    = {x:null, y:null};
-	s.limitSpeed ;
-	s.acceleration ; 
-	s.limitRotation;
-	s.currentSpeed ; 
-	s.rotationSpeed ;
-	s.hasDestination = false;
-	s.weapons        = null;
-	s.hasTarget      = false ; 
-	s.energy ;
-	s.targetId       = null;
-	s.dockingTarget  = null ;
-	// s.AIGame ; 
-	s.name;
+	s.id ;
+	s.shared = {
+		position: {x:null, y:null, rotation: 90},
+		initPosition: {x:null, y:null, rotation: 90},
+		destination: {x:null, y:null},
+		limitSpeed: 1.5,
+		acceleration: 0.06 , 
+		limitRotation:0,
+		currentSpeed: 0 , 
+		rotationSpeed: 3,
+		hasDestination: false,
+		weapons: null,
+		hasTarget: false , 
+		energy: 100,
+		targetId: null,
+		name:null,
+		dockingTarget:null,
+	};
+	s.local = {
+		game: null,
+	}
 // constructor:
 	s.initialize = function (params) {
+		console.log("new bot"); 
 		if (params) {
-			this.acceleration   = params.acceleration || 0.06 ;
-			this.currentSpeed   = params.currentSpeed || 0 ; 
-			this.destination    = params.destination || {x:0, y:0};
-			this.energy         = params.energy || 500;
-			this.hasDestination = params.hasDestination || false;
-			this.id             = params.id;
-			this.limitSpeed     = params.limitSpeed || 3.5;
-			this.name           = params.name;
-			this.position       = {x:params.position.x, y:params.position.y, z: 1, rotation: 90};
-			this.rotationSpeed  = params.rotationSpeed || 6;
-			// this.weapons        = params.weapon || new phobos.Weapon(1);
-			// this.setMapCoords({x: params.position.x, y: params.position.y});
-			this.limitRotation;
-			// if (server) this.AIGame = &server;
-			// else this.AIGame = &client;
+			this.shared.position = {x:null, y:null, z:1, rotation: 90};
+			this.shared.initPosition = {x:this.shared.position.x, y:this.shared.position.y};
+			this.shared.destination = {x:null, y:null};
+			this.shared.limitSpeed = 3.5;
+			this.shared.acceleration = 0.06 ; 
+			this.shared.limitRotation;
+			this.shared.weapons = new Weapon(this, 2);
+			this.shared.currentSpeed = 0 ; 
+			this.shared.rotationSpeed = 3;
+			this.id = params.id;
+			this.shared.hasDestination = false;
+			this.shared.name = params.name;
+			if (server) this.local.game = server;
+			else this.local.game = client;
+			this.setMapCoords({x: params.x, y: params.y});
 			this.load(params);
 		}
 	}
@@ -67,59 +74,59 @@ this.phobos = this.phobos || {};
 			y: dockStation._mapY - 70
 		}
 		this.moveTo(newDestination);
-		this.dockingTarget = dockStation;
+		this.shared.dockingTarget = dockStation;
 	}
 
 	s.rotate = function (rotation) {
-		this.position.rotation += rotation;
+		this.shared.position.rotation += rotation;
 	}
 
 	s.throttleBrake = function (speed) {
 		if (speed < 0) 
 		{
 			//Brake
-			this.currentSpeed = ((this.currentSpeed + speed < 0) ? 0 : this.currentSpeed + speed) ; 
+			this.shared.currentSpeed = ((this.shared.currentSpeed + speed < 0) ? 0 : this.shared.currentSpeed + speed) ; 
 		}
 		else 
 		{
 			//Throttle
-			this.currentSpeed = ((this.currentSpeed + speed > this.limitSpeed) ? this.limitSpeed : this.currentSpeed + speed) ; 
+			this.shared.currentSpeed = ((this.shared.currentSpeed + speed > this.shared.limitSpeed) ? this.shared.limitSpeed : this.shared.currentSpeed + speed) ; 
 		}
 	}
 
 	s.stop = function () {
-		this.currentSpeed = 0 ; 
-		this.destination.x = this.position.x ; 
-		this.destination.y = this.position.y;
+		this.shared.currentSpeed = 0 ; 
+		this.shared.destination.x = this.shared.position.x ; 
+		this.shared.destination.y = this.shared.position.y;
 	}
 
 	s.setLimitSpeed = function (newLimitSpeed) {
-		this.limitSpeed = newLimitSpeed ; 
+		this.shared.limitSpeed = newLimitSpeed ; 
 	}
 
 	s.setDestination = function (newDestination) { 
-		if (newDestination.x != this.position.x && newDestination.y != this.position.y) {
-			this.destination.x = newDestination.x;
-			this.destination.y = newDestination.y;
-			if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
+		if (newDestination.x != this.shared.position.x && newDestination.y != this.shared.position.y) {
+			this.shared.destination.x = newDestination.x;
+			this.shared.destination.y = newDestination.y;
+			if (newDestination.rotation) this.shared.destination.rotation = newDestination.rotation ; 
 			var diffPosDest = this.getDiffDestinationPosition(); 
-			this.destination.rotation = this.getDiffAngle(diffPosDest); 
+			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
 			//s.position.rotation = s.destination.rotation ;
 			this.setHasDestination(true); 
 		}
 		else {
-			if (newDestination.rotation) this.destination.rotation = newDestination.rotation ; 
+			if (newDestination.rotation) this.shared.destination.rotation = newDestination.rotation ; 
 			this.setHasDestination(true); 
 
 		}
 	}
 
 	s.setHasDestination = function (newSetHasDestination) {
-		this.hasDestination = newSetHasDestination; 
+		this.shared.hasDestination = newSetHasDestination; 
 	}
 
 	s.setRotationSpeed = function (newRotationSpeed) {
-		this.rotationSpeed = newRotationSpeed;
+		this.shared.rotationSpeed = newRotationSpeed;
 	}
 
 	s.setName = function (newName) {
@@ -127,13 +134,13 @@ this.phobos = this.phobos || {};
 	}
 
 	s.setMapCoords = function(newMapCoo){
-		this.position.x = newMapCoo.x;
-		this.position.y = newMapCoo.y;
+		this.shared.position.x = newMapCoo.x;
+		this.shared.position.y = newMapCoo.y;
 	}
 
 	s.getDiffDestinationPosition = function(destination) {
-		if (!destination) destination = this.destination ; 
-		return ({dX : (destination.x - this.position.x), dY : (destination.y - this.position.y), dRotation: (destination.rotation % 360 - this.position.rotation % 360)});
+		if (!destination) destination = this.shared.destination ; 
+		return ({dX : (destination.x - this.shared.position.x), dY : (destination.y - this.shared.position.y), dRotation: (destination.rotation % 360 - this.shared.position.rotation % 360)});
 	}
 
 	s.getDiffAngle = function(diffPosDest) {
@@ -151,40 +158,40 @@ this.phobos = this.phobos || {};
 	s.rotateToDestination = function(diffPosDest) {
 		if (diffPosDest.dRotation > 0) {
 			if (Math.abs(diffPosDest.dRotation) > 180) {
-				this.rotate(-this.rotationSpeed);
+				this.rotate(-this.shared.rotationSpeed);
 			}
-			else this.rotate(this.rotationSpeed);
+			else this.rotate(this.shared.rotationSpeed);
 		}
 		else {
 			if (Math.abs(diffPosDest.dRotation) > 180) {
-				this.rotate(this.rotationSpeed);
+				this.rotate(this.shared.rotationSpeed);
 			}
-			else this.rotate(-this.rotationSpeed);
+			else this.rotate(-this.shared.rotationSpeed);
 		}
 	}
 
 	s.idleBehavior = function() {
-		this.currentSpeed = 0 ; 
+		this.shared.currentSpeed = 0 ; 
 	}
 
 	s.moveToDestinationMovement = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
-			this.destination.rotation = this.getDiffAngle(diffPosDest); 
+			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
 		} 
 		if (Math.abs(diffPosDest.dRotation) > 3) {
 			this.rotateToDestination(diffPosDest);
 			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
-				this.throttleBrake(-this.acceleration) ; 
+				this.throttleBrake(-this.shared.acceleration) ; 
 			else 
-				this.throttleBrake(this.acceleration); 
+				this.throttleBrake(this.shared.acceleration); 
 		}
 		else {
-			if (this.currentSpeed < this.limitSpeed)
+			if (this.shared.currentSpeed < this.shared.limitSpeed)
 			{
-				this.throttleBrake(this.acceleration) ; 
+				this.throttleBrake(this.shared.acceleration) ; 
 			}
-			this.position.rotation = this.destination.rotation ; 
+			this.shared.position.rotation = this.shared.destination.rotation ; 
 		}
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
@@ -205,8 +212,8 @@ this.phobos = this.phobos || {};
 
 	s.die = function() {
 		debug("dead");
-		this.position.z = -1;
-		this.AIGame.getGame().switchPlayerToKilled(this);
+		this.shared.position.z = -1;
+		this.local.game.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -222,7 +229,7 @@ this.phobos = this.phobos || {};
 	s.lookAt = function (coo) {
 		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
 		var destRotation = this.getDiffAngle(diffPosDest); 
-		this.setDestination({ x:this.position.x, y:this.position.y, rotation: destRotation } );
+		this.setDestination({ x:this.shared.position.x, y:this.shared.position.y, rotation: destRotation } );
 	}
 
 	s.shootAt = function(target, weapon) {
@@ -233,15 +240,15 @@ this.phobos = this.phobos || {};
 	}
 
 	s.dockingMovement = function() {
-		var dockPosition = {position: {x:this.dockingTarget._mapX, y:this.dockingTarget._mapY } }; 
+		var dockPosition = {position: {x:this.shared.dockingTarget._mapX, y:this.shared.dockingTarget._mapY } }; 
 		if (utils.distance(dockPosition, this) < 200) {
 			this.doDock();
 		}
 	}
 
 	s.doDock = function() {
-		this.position.z = this.dockingTarget._mapZ;
-		this.AIGame.getGame().switchPlayerToStation(this);
+		this.shared.position.z = this.shared.dockingTarget._mapZ;
+		this.local.game.getGame().switchPlayerToStation(this);
 		this.visible = false;
 		debug("Docked !");
 		ui.newStationElement();
@@ -249,13 +256,13 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		if (this.hasTarget) {
-			var currentTarget = this.AIGame.getGame()._shipsList[this.targetId];
+			var currentTarget = this.local.game.getGame()._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
-			if (targetRange <= this.weapons.getRange()) {
+			if (targetRange <= this.shared.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
-				if (this.weapons.isReady()) {
-					var attackResult = this.shootAt(currentTarget, this.weapons); 
+				if (this.shared.weapons.isReady()) {
+					var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
 					if (attackResult == -1) {
 						debug("You killed it ! ");
 						this.setHasTarget(false) ;
@@ -269,10 +276,10 @@ this.phobos = this.phobos || {};
 				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
 			}
 		}
-		if (this.dockingTarget) {
+		if (this.shared.dockingTarget) {
 			this.dockingMovement();
 		}
-		if (this.hasDestination) {
+		if (this.shared.hasDestination) {
 			this.moveToDestinationMovement();
 		}
 		else {
@@ -281,50 +288,50 @@ this.phobos = this.phobos || {};
 	}
 
 	s.weaponsTick = function() {
-		if (this.weapons)
-			this.weapons.tick();
+		if (this.shared.weapons)
+			this.shared.weapons.tick();
 	}
 
 	s.tickMovement = function () {
 		//Throttle. 
 		//s.position.rotation += 1 ;
-		if (this.position.rotation >= 180) this.position.rotation = -180 + this.position.rotation % 180 ;
-		if (this.position.rotation <= -180) this.position.rotation = 180 - this.position.rotation % 180 ;  
+		if (this.shared.position.rotation >= 180) this.shared.position.rotation = -180 + this.shared.position.rotation % 180 ;
+		if (this.shared.position.rotation <= -180) this.shared.position.rotation = 180 - this.shared.position.rotation % 180 ;  
 		//s.position.rotation = s.position.rotation % 360 ; 
-		this.position.x += Math.sin((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
-		this.position.y += Math.cos((this.position.rotation)*(Math.PI/-180)) * this.currentSpeed;
+		this.shared.position.x += Math.sin((this.shared.position.rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
+		this.shared.position.y += Math.cos((this.shared.position.rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
 	}
 
 	s.rotationFrame = function() {
 		// this.gotoAndPlay("walk");
-		if (this.position.rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.position.rotation ) % 360) / 12)));
+		if (this.shared.position.rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.shared.position.rotation ) % 360) / 12)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.position.rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.shared.position.rotation % 360) / 12)));
 
 	}
 
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < this.AIGame.getGame()._shipsList.length ; j++) {
-			if (utils.distance(this.AIGame.getGame()._shipsList[j], this) < minDistance && this.AIGame.getGame()._shipsList[j] != this) {
-				minDistance = utils.distance(this.AIGame.getGame()._shipsList[j], this);
+		for (var j = 0 ; j < this.local.game.getGame()._shipsList.length ; j++) {
+			if (utils.distance(this.local.game.getGame()._shipsList[j], this) < minDistance && this.local.game.getGame()._shipsList[j] != this) {
+				minDistance = utils.distance(this.local.game.getGame()._shipsList[j], this);
 				closeEnnemyKey = j;
 			}
 		}
-		return this.AIGame.getGame()._shipsList[closeEnnemyKey];
+		return this.local.game.getGame()._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		var renderCoo = utils.absoluteToStd(this.position, client.getGame().getCamera()._position);
+		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.game.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
 
 	s.tick = function (event) {
-		this.weaponsTick() ; 
+		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		if (!server)
