@@ -44,7 +44,8 @@ phobos = this.phobos || {};
 	}
 
 	c.loadSector = function(sector) {
-		
+		console.log(sector); 
+		this.game.loadSector(sector); 
 	}
 
 	c.loadSectorPlayers = function(playersData) {

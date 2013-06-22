@@ -48,7 +48,10 @@
 
 	g.loadSector = function(sector) {
 		var sectorObjects = sector.objects;
-		var sectorTiles = sector.tiles ; 
+		var sectorTiles = sector.tiles ;
+
+		console.log(sectorObjects);
+		console.log(sectorTiles);  
 		this.initObjects();
 		this.initTiles(); 
 		this.loadObjects(sectorObjects);
@@ -65,11 +68,15 @@
 
 	g.loadObjects = function(objects) {
 		for (var k = 0 ; k < objects.length ; k++) {
+			console.log("LOAD"); 
+			console.log(objects[k]);
 			switch(objects[k].type) {
 				case "Station":
 					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
+				console.log("BOT"); 
+				console.log(phobos.Bot); 
 					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}

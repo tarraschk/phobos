@@ -18,6 +18,8 @@ jQuery(document).ready(function($) {
 	});
 
 	socket.on('sectorLoaded', function(sector){
+		console.log("Client load sector"); 
+		console.log(sector); 
 		client.loadSector(sector); 
 	});
 

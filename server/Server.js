@@ -50,6 +50,8 @@ s.messages = [];
 	    this.fps_avg_count = 0;             //The number of samples we have taken for fps_avg
 	    this.fps_avg = 0;                   //The current average fps displayed in the debug UI
 	    this.fps_avg_acc = 0;    
+
+	    this.sectors = {sector1: []};
 	}
 
 	
@@ -66,15 +68,18 @@ s.messages = [];
 	s.onInput = function() {
 		
 	}
+	s.setSector = function(targetSector, newSector) {
+		this.sectors.sector1 = newSector ; 
+	}
 	s.generateUniverse = function(universeToken) {
 		sector = {
 			objects:[{id:0,type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},{id:1, type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},
 			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000}],
 			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
 		};
-
+		this.setSector(null, sector); 
 		this.universe = new phobos.Game(universeToken);
-		this.universe.loadSector(sector); 
+		this.universe.loadSector(this.sectors.sector1); 
 	}
 	s.startUniverse = function(universe) {
 		this.universe.startUpdate();
@@ -88,11 +93,11 @@ s.messages = [];
 	}
 
 	s.loadSector = function(socket, sector) {
-		var sectorTiles = this.universe.getTilesList() ; 
-		var sectorObjects = this.universe.getObjectsList() ; 
-		sector = {objects: sectorObjects, tiles: sectorTiles}; 
-		console.log(sector); 
-		// socket.emit('sectorLoaded', sectorObjects);
+		// var sectorTiles = this.universe.getTilesList() ; 
+		// var sectorObjects = this.universe.getObjectsList() ; 
+		// sector = {objects: sectorObjects, tiles: sectorTiles}; 
+		// console.log(this.sectors.sector1); 
+		socket.emit('sectorLoaded', this.sectors.sector1);
 	}
 
 	s.playerMove = function(playerId, moveData) {
@@ -115,6 +120,10 @@ s.messages = [];
 
 	s.createNewPlayer = function() {
 
+	}
+
+	s.getGame = function() {
+		return this.universe; 
 	}
 
 	s.getPlayerData = function(playerId) {

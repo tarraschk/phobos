@@ -26,6 +26,8 @@ this.phobos = this.phobos || {};
 	s.hasTarget = false ; 
 	s.energy = 100;
 	s.targetId = null;
+
+	s.AIGame ; 
 	s.AI = "wait";
 	s.AIStopRange = 600 ; 
 	s.AIRange = 500;
@@ -34,7 +36,6 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		console.log("new bot"); 
 		if (params) {
-
 			this.position = {x:null, y:null, z:1, rotation: 90};
 			this.setMapCoords({x: params.x, y: params.y});
 			this.initPosition = {x:this.position.x, y:this.position.y};
@@ -48,8 +49,8 @@ this.phobos = this.phobos || {};
 			this.id = params.id;
 			this.hasDestination = false;
 			this.name = params.name;
-			console.log("init : ");
-			console.log(params);
+			if (server) this.AIGame = server;
+			else this.AIGame = client;
 			this.load(params);
 		}
 	}
@@ -196,7 +197,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.position.z = -1;
-		server.universe.switchPlayerToKilled(this);
+		this.AIGame.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -225,7 +226,7 @@ this.phobos = this.phobos || {};
 	s.behavior = function () {
 		var that = this ; 
 		if (this.hasTarget) {
-			var currentTarget = server.universe._shipsList[this.targetId];
+			var currentTarget = this.AIGame.getGame()._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -265,8 +266,8 @@ this.phobos = this.phobos || {};
 			break;
 			case "attack":
 				if (this.hasTarget) {
-					console.log(server.universe._shipsList);
-					var currentTarget = server.universe._shipsList[this.targetId];
+					console.log(this.AIGame.getGame()._shipsList);
+					var currentTarget = this.AIGame.getGame()._shipsList[this.targetId];
 					console.log("target " + currentTarget.name);
 					var targetRange = utils.distance(currentTarget, this);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
@@ -310,25 +311,25 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < server.universe._shipsList.length ; j++) {
-			if (utils.distance(server.universe._shipsList[j], this) < minDistance && server.universe._shipsList[j] != this) {
-				minDistance = utils.distance(server.universe._shipsList[j], this);
+		for (var j = 0 ; j < this.AIGame.getGame()._shipsList.length ; j++) {
+			if (utils.distance(this.AIGame.getGame()._shipsList[j], this) < minDistance && this.AIGame.getGame()._shipsList[j] != this) {
+				minDistance = utils.distance(this.AIGame.getGame()._shipsList[j], this);
 				closeEnnemyKey = j;
 			}
 		}
-		return server.universe._shipsList[closeEnnemyKey];
+		return this.AIGame.getGame()._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		//s.x = this.position.x - server.universe._camera.x();
-		//s.y = this.position.y - server.universe._camera.y();
-		var renderCoo = utils.absoluteToStd(this.position, server.universe._camera._position);
+		//s.x = this.position.x - this.AIGame.getGame()._camera.x();
+		//s.y = this.position.y - this.AIGame.getGame()._camera.y();
+		var renderCoo = utils.absoluteToStd(this.position, this.AIGame.getGame()._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 		//s.isometricConversion(); 
-		//s.x = this.position.x - server.universe._camera.x();
-		//s.y = this.position.y - server.universe._camera.y();
+		//s.x = this.position.x - this.AIGame.getGame()._camera.x();
+		//s.y = this.position.y - this.AIGame.getGame()._camera.y();
 	}
 	
 	
@@ -346,9 +347,9 @@ this.phobos = this.phobos || {};
 
 	s.manageClick = function() {
 		allowMoveClick = false ; 
-		server.universe._playerShip.setTargetId(this.id);
-		server.universe._playerShip.setHasTarget(true);
-		server.universe._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
+		this.AIGame.getGame()._playerShip.setTargetId(this.id);
+		this.AIGame.getGame()._playerShip.setHasTarget(true);
+		this.AIGame.getGame()._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
 	}
 
 	s.load = function(shipData){
