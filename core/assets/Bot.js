@@ -7,7 +7,8 @@ this.phobos = this.phobos || {};
 		this.initialize(params);
 	}
 
-	var s = Sh.prototype ;
+	if (server) var s = Sh.prototype ;
+	else var s = Sh.prototype = new _.BitmapAnimation();
 
 // static public properties:
 	Sh.path = 'img/ship/';
@@ -342,7 +343,8 @@ this.phobos = this.phobos || {};
 		this.botBehavior();
 		this.behavior();
 		this.tickMovement(); 
-		// this.drawRender();
+		if (!server)
+			this.drawRender();
 	}
 
 	s.manageClick = function() {
@@ -354,8 +356,42 @@ this.phobos = this.phobos || {};
 
 	s.load = function(shipData){
 		this.index = shipData.id; 
-		this.setMapCoords(shipData);
-		this.name = shipData.name; 
+		if (!server) {
+			console.log("ALERT"); 
+			alert("Load this"); 
+			var imgShip = new Image(); 
+
+			shipData.src  = "spriteShip.png";
+
+			imgShip.src = Sh.path + shipData.src;
+			var that = this;
+			console.log("load a ship.");
+			imgShip.onload = function() {
+				var shipSpriteSheet = new _.SpriteSheet({
+					// image to use
+					images: [this], 
+					frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+					// width, height & registration point of each sprite
+					animations: {    
+						walk: [0, 30, "walk"]
+					}
+				});
+				that.index = shipData.id; 
+				//that.image = this;
+				that.spriteSheet = shipSpriteSheet;
+				that.gotoAndStop("walk");
+				that.x = shipData.x;
+				that.y = shipData.y;
+				that.scaleX = 0.4;
+				that.scaleY = 0.4; 
+				that.name = shipData.name; 
+				console.log(that);
+				cPlayground.addChild(that);
+				cPlayground.update();//Create a Shape DisplayObject.
+				console.log(cPlayground);
+
+			}
+		}
 	}
     phobos.Bot = Sh
 }());

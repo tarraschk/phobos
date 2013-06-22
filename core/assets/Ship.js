@@ -26,6 +26,7 @@ this.phobos = this.phobos || {};
 	s.energy ;
 	s.targetId       = null;
 	s.dockingTarget  = null ;
+	// s.AIGame ; 
 	s.name;
 // constructor:
 	s.initialize = function (params) {
@@ -43,6 +44,8 @@ this.phobos = this.phobos || {};
 			// this.weapons        = params.weapon || new phobos.Weapon(1);
 			// this.setMapCoords({x: params.position.x, y: params.position.y});
 			this.limitRotation;
+			// if (server) this.AIGame = &server;
+			// else this.AIGame = &client;
 			this.load(params);
 		}
 	}
@@ -203,7 +206,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.position.z = -1;
-		server.universe.switchPlayerToKilled(this);
+		this.AIGame.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -238,7 +241,7 @@ this.phobos = this.phobos || {};
 
 	s.doDock = function() {
 		this.position.z = this.dockingTarget._mapZ;
-		server.universe.switchPlayerToStation(this);
+		this.AIGame.getGame().switchPlayerToStation(this);
 		this.visible = false;
 		debug("Docked !");
 		ui.newStationElement();
@@ -246,7 +249,7 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		if (this.hasTarget) {
-			var currentTarget = server.universe._shipsList[this.targetId];
+			var currentTarget = this.AIGame.getGame()._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -304,13 +307,13 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < server.universe._shipsList.length ; j++) {
-			if (utils.distance(server.universe._shipsList[j], this) < minDistance && server.universe._shipsList[j] != this) {
-				minDistance = utils.distance(server.universe._shipsList[j], this);
+		for (var j = 0 ; j < this.AIGame.getGame()._shipsList.length ; j++) {
+			if (utils.distance(this.AIGame.getGame()._shipsList[j], this) < minDistance && this.AIGame.getGame()._shipsList[j] != this) {
+				minDistance = utils.distance(this.AIGame.getGame()._shipsList[j], this);
 				closeEnnemyKey = j;
 			}
 		}
-		return server.universe._shipsList[closeEnnemyKey];
+		return this.AIGame.getGame()._shipsList[closeEnnemyKey];
 	}
 
 	s.drawRender = function () {
