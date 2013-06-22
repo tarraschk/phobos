@@ -42,6 +42,7 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		console.log("new bot"); 
 		if (params) {
+			this.id = params.id;
 			this.shared.position = {x:null, y:null, z:1, rotation: 90};
 			this.shared.initPosition = {x:this.shared.position.x, y:this.shared.position.y};
 			this.shared.destination = {x:null, y:null};
@@ -51,7 +52,6 @@ this.phobos = this.phobos || {};
 			this.shared.weapons = new Weapon(this, 2);
 			this.shared.currentSpeed = 0 ; 
 			this.shared.rotationSpeed = 3;
-			this.id = params.id;
 			this.shared.hasDestination = false;
 			this.shared.name = params.name;
 			if (server) this.local.game = server;
@@ -262,7 +262,7 @@ this.phobos = this.phobos || {};
 			case "wait":
 			var closeTarget = this.getCloseEnnemy();
 			if (closeTarget) {
-				if (utils.distance(closeTarget, this) < this.shared.AIRange && !this.shared.hasTarget) {
+				if (utils.distance(closeTarget.shared, this.shared) < this.shared.AIRange && !this.shared.hasTarget) {
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
 					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
@@ -318,8 +318,8 @@ this.phobos = this.phobos || {};
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
 		for (var j = 0 ; j < this.local.game.getGame()._shipsList.length ; j++) {
-			if (utils.distance(this.local.game.getGame()._shipsList[j], this) < minDistance && this.local.game.getGame()._shipsList[j] != this) {
-				minDistance = utils.distance(this.local.game.getGame()._shipsList[j], this);
+			if (utils.distance(this.local.game.getGame()._shipsList[j].shared, this.shared) < minDistance && this.local.game.getGame()._shipsList[j].shared != this.shared) {
+				minDistance = utils.distance(this.local.game.getGame()._shipsList[j].shared, this);
 				closeEnnemyKey = j;
 			}
 		}
@@ -330,7 +330,7 @@ this.phobos = this.phobos || {};
 		this.rotationFrame();
 		//s.x = this.position.x - this.local.game.getGame()._camera.x();
 		//s.y = this.position.y - this.local.game.getGame()._camera.y();
-		var renderCoo = utils.absoluteToStd(this.position, this.local.game.getGame()._camera._position);
+		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.game.getGame()._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 		//s.isometricConversion(); 

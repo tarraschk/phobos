@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 16 ; 
+	g._updateTime = 80 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -49,9 +49,6 @@
 	g.loadSector = function(sector) {
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
-
-		console.log(sectorObjects);
-		console.log(sectorTiles);  
 		this.initObjects();
 		this.initTiles(); 
 		this.loadObjects(sectorObjects);
@@ -68,25 +65,17 @@
 
 	g.loadObjects = function(objects) {
 		for (var k = 0 ; k < objects.length ; k++) {
-			console.log("LOAD"); 
-			console.log(objects[k]);
 			switch(objects[k].type) {
 				case "Station":
-					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
+					// this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
 				console.log("BOT"); 
 				console.log(phobos.Bot); 
-					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
+					// this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}
-		console.log("OBJECTS LIST")
-		console.log(this._objectsList); 
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
 	}
 
 	g.loadTiles = function(tiles) {
@@ -122,7 +111,15 @@
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
+		console.log("IS MAIN PLAYER" + isMainPlayer);
+		console.log("JOIN");
+		console.log(playerData);
+		console.log(isMainPlayer);
+
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
+
+		console.log(this._shipsList[playerData.id]);
+
 		if (isMainPlayer)
 			this.setPlayerShip(this._shipsList[playerData.id]); 
 		return this._shipsList[playerData.id];
@@ -159,18 +156,19 @@
 
 	g.objectsTick = function() {
 		allowMoveClick = true ; 
+		if (Math.random() < 0.1) console.log(g._shipsList); 
 		for (key in g._shipsList) {
 			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
-					if (Math.random() < 0.001) console.log(g._shipsList[key].position); 
+					if (Math.random() < 0.5) console.log(g._shipsList[key].shared.position);
 				}
 			}
 		}
 
 		for (key in this._objectsList) {
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				if (this._objectsList[key].index == this._objectsList[key].id) {
+				if (g._objectsList[key].index == g._objectsList[key].id) {
 					this._objectsList[key].tick();
 					// if (Math.random() < 1) console.log(this._objectsList[key]); 
 				}

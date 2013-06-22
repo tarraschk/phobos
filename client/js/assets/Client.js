@@ -53,6 +53,8 @@ phobos = this.phobos || {};
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
+					console.log("key" + key);
+					console.log(this.playerId);
 					if (key != this.playerId) //Must be other players, not main player already loaded
 						this.playerJoinGame(playersData[key], false); 
 					else console.log("THIS IS THE PLAYER"); 
@@ -84,11 +86,13 @@ phobos = this.phobos || {};
 	/* A player joined the game.
 	This player isn't the current client's player. */
 	c.newPlayerLogged = function(playerData)  {
+		alert("new player");
 		this.playerJoinGame(playerData, false); 
 	}
 
 	/* Adds a player to the client's game. */
 	c.playerJoinGame  = function(playerData, mainPlayer) {
+
 		this.game.playerJoin(playerData, mainPlayer); 
 		if (mainPlayer) this.initMouseClick() ;
 	}

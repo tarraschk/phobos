@@ -51,7 +51,6 @@ this.phobos = this.phobos || {};
 		});
 	}
 	u.absoluteToStd = function(position, camera) {
-
 		return ((this.absoluteToCamera(this.stdToIsometricScreen(position), camera)));
 	}
 	u.stdToAbsolute = function (position, camera) {
