@@ -35,6 +35,9 @@ this.phobos = this.phobos || {};
 				rotationSpeed: 3,
 				hasDestination: false,
 				name: params.name,
+				hasTarget: false , 
+				energy: 100,
+				targetId: null,
 			}
 			if (server) this.local.env = server;
 			else this.local.env = client;
@@ -193,7 +196,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.setEnergy = function(newEnergy) {
-		this.energy = newEnergy;
+		this.shared.energy = newEnergy;
 	}
 
 	s.die = function() {
@@ -205,7 +208,9 @@ this.phobos = this.phobos || {};
 	}
 
 	s.receiveDamage = function (power) {
-		this.setEnergy(this.energy - power);
+		console.log(this.shared.energy);
+		console.log(power);
+		this.setEnergy(this.shared.energy - power);
 		if (this.energy <= 0) {
 			return this.die(); 
 		}

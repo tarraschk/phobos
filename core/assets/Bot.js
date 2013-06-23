@@ -200,6 +200,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.receiveDamage = function (power) {
+		console.log(this.shared.energy);
 		this.setEnergy(this.shared.energy - power);
 		if (this.shared.energy <= 0) {
 			return this.die(); 
@@ -214,7 +215,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		console.log("Shoot !");
 		weapon.doShoot(target, this.getPositionDraw());
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
@@ -399,15 +399,12 @@ this.phobos = this.phobos || {};
 			var that = this;
 			imgShip.onload = function() {
 				var shipSpriteSheet = new _.SpriteSheet({
-					// image to use
 					images: [this], 
 					frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
-					// width, height & registration point of each sprite
 					animations: {    
 						walk: [0, 30, "walk"]
 					}
 				});
-				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
 				that.x = shipData.x;
@@ -416,7 +413,20 @@ this.phobos = this.phobos || {};
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
 				cPlayground.addChild(that);
-				cPlayground.update();//Create a Shape DisplayObject.
+				cPlayground.update();
+
+				
+				that.addEventListener("mouseover", function(e) {
+					debug('over '+that.id);
+					that.manageMouseOver();
+				});
+				that.addEventListener("mouseout", function(e) {
+					debug('out of '+that.id);
+					that.manageMouseOut();
+				});
+				that.addEventListener("click", function(e){
+					that.manageClick();
+				});
 
 			}
 		}
