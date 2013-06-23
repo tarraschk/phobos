@@ -36,7 +36,7 @@ this.phobos = this.phobos || {};
 				currentSpeed: 0 , 
 				rotationSpeed: 3,
 				hasDestination: false,
-				weapons: null,
+				weapons: new Weapon(2),
 				hasTarget: false , 
 				energy: 100,
 				targetId: null,
