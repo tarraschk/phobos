@@ -27,8 +27,8 @@ this.phobos = this.phobos || {};
 			this.id = params.id;
 			this.index = this.id ; 
 			this.shared = {
-				position: {x:params.x, y:params.y, rotation: 90},
-				initPosition: {x:params.x, y:params.y, rotation: 90},
+				position: {x:params.x, y:params.y, z:1, rotation: 90},
+				initPosition: {x:params.x, y:params.y, z:params.z, rotation: 90},
 				destination: {x:null, y:null},
 				limitSpeed: 1.5,
 				acceleration: 0.06 , 
@@ -255,15 +255,18 @@ this.phobos = this.phobos || {};
 				if (utils.distance(closeTarget.shared, this.shared) < this.shared.AIRange && !this.shared.hasTarget) {
 					this.setTargetId(closeTarget.id);
 					this.setHasTarget(true);
-					this.setDestination({ x:closeTarget.position.x, y:closeTarget.position.y} );
+					this.setDestination({ x:closeTarget.getPosition().x, y:closeTarget.getPosition().y} );
 					this.setAI("attack");
 				}
 			}
 			break;
 			case "attack":
+			console.log("attack");
 				if (this.shared.hasTarget) {
 					var currentTarget = this.local.game.getGame()._shipsList[this.shared.targetId];
 					var targetRange = utils.distance(currentTarget.shared, this.shared);
+					console.log(currentTarget);
+					console.log(targetRange);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);
 						this.setHasTarget(false);
@@ -327,6 +330,10 @@ this.phobos = this.phobos || {};
 			}
 		}
 		return this.local.game.getGame()._shipsList[closeEnnemyKey];
+	}
+	
+	s.getPosition = function() {
+		return this.shared.position;
 	}
 
 	s.drawRender = function () {

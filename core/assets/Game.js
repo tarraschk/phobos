@@ -67,17 +67,13 @@
 		for (var k = 0 ; k < objects.length ; k++) {
 			switch(objects[k].type) {
 				case "Station":
-				console.log("new station");
 					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
-				console.log("new bot");
 					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}
-		console.log(this._objectsList);
-		console.log("CCACACAA");
 	}
 
 	g.loadTiles = function(tiles) {
@@ -113,7 +109,11 @@
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
-
+		console.log("JOIIIIIN");
+		console.log("JOIIIIIN");
+		console.log("JOIIIIIN");
+		console.log("JOIIIIIN");
+		console.log(playerData);
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
 		if (isMainPlayer)

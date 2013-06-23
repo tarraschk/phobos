@@ -10,6 +10,8 @@ jQuery(document).ready(function($) {
 	client.startGame();
 	
 	socket.on('loggedIn', function(data){
+		console.log("LOGGED");
+		console.log(data);
 		client.mainPlayerLogged(data); 
 	});
 

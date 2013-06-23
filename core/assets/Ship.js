@@ -14,7 +14,6 @@ this.phobos = this.phobos || {};
 
 // public properties:
 	s.id ;
-	s.position = {x:null, y:null, rotation: 90};
 	s.shared = {};
 	s.local = {
 		game: null,
@@ -26,7 +25,7 @@ this.phobos = this.phobos || {};
 		if (params) {
 			this.id = params.id;
 			this.shared = {
-				position: {x:null, y:null, z:1, rotation: 90},
+				position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
 				destination: {x:null, y:null},
 				limitSpeed: 3.5,
 				acceleration: 0.06 , 
@@ -38,19 +37,8 @@ this.phobos = this.phobos || {};
 				hasDestination: false,
 				name: params.name,
 			}
-			// this.shared.position = {x:null, y:null, z:1, rotation: 90};
-			// this.shared.destination = {x:null, y:null};
-			// this.shared.limitSpeed = 3.5;
-			// this.shared.acceleration = 0.06 ; 
-			// this.shared.limitRotation;
-			// this.shared.weapons = new Weapon(this, 2);
-			// this.shared.currentSpeed = 0 ; 
-			// this.shared.rotationSpeed = 3;
-			// this.shared.hasDestination = false;
-			// this.shared.name = params.name;
 			if (server) this.local.game = server;
 			else this.local.game = client;
-			// this.setMapCoords(params.position);
 			this.load(params);
 		}
 	}
@@ -319,6 +307,10 @@ this.phobos = this.phobos || {};
 			}
 		}
 		return this.local.game.getGame()._shipsList[closeEnnemyKey];
+	}
+
+	s.getPosition = function() {
+		return this.shared.position;
 	}
 
 	s.drawRender = function () {
