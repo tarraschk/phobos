@@ -20,7 +20,6 @@ phobos = this.phobos || {};
 
 	c.initialize = function () { 
 		c.playerId = utils.generateId(); 
-		console.log("this client :" + c.playerId);
 	}
 
 	
@@ -44,7 +43,6 @@ phobos = this.phobos || {};
 	}
 
 	c.loadSector = function(sector) {
-		console.log(sector); 
 		this.game.loadSector(sector); 
 	}
 
@@ -55,7 +53,6 @@ phobos = this.phobos || {};
 				if (playersData[key].index == playersData[key].id) {
 					if (key != this.playerId) //Must be other players, not main player already loaded
 						this.playerJoinGame(playersData[key], false); 
-					else console.log("THIS IS THE PLAYER"); 
 				}
 			}
 		}
@@ -97,12 +94,11 @@ phobos = this.phobos || {};
 		var that = this ; 
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
-				console.log("click"); 
 				var gameCam = that.game.getCamera();
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
-				console.log(that.game._playerShip); 
+				
 				// that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 	        	socket.emit('playerMove', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 			}

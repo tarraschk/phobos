@@ -40,7 +40,6 @@ this.phobos = this.phobos || {};
 	}
 // constructor:
 	s.initialize = function (params) {
-		console.log("new bot"); 
 		if (params) {
 			this.id = params.id;
 			this.shared.position = {x:null, y:null, z:1, rotation: 90};
@@ -223,7 +222,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		console.log("shoot at " + target.name);
 		weapon.doShoot(target);
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
@@ -272,9 +270,7 @@ this.phobos = this.phobos || {};
 			break;
 			case "attack":
 				if (this.shared.hasTarget) {
-					console.log(this.local.game.getGame()._shipsList);
 					var currentTarget = this.local.game.getGame()._shipsList[this.shared.targetId];
-					console.log("target " + currentTarget.name);
 					var targetRange = utils.distance(currentTarget, this);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);

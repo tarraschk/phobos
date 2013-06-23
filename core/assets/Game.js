@@ -70,8 +70,6 @@
 					// this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
-				console.log("BOT"); 
-				console.log(phobos.Bot); 
 					// this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
@@ -111,20 +109,11 @@
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
-		console.log("IS MAIN PLAYER" + isMainPlayer);
-		console.log("JOIN");
-		console.log(playerData);
-		console.log(isMainPlayer);
 
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
-		console.log(this._shipsList[playerData.id]);
-
 		if (isMainPlayer)
 			this.setPlayerShip(this._shipsList[playerData.id]); 
-
-		console.log("AFTER JOIN"); 
-		console.log(this._shipsList);
 		return this._shipsList[playerData.id];
 	}
 
@@ -133,7 +122,6 @@
 	}
 
 	g.graphicsTick = function() {
-		// console.log(this._playerShip); 
 		this._gameGraphics.tick();
 		this._camera.tick();
 		renderCanvas();
@@ -159,8 +147,7 @@
 	}
 
 	g.objectsTick = function() {
-		allowMoveClick = true ; 
-		if (Math.random() < 0.1) console.log(g._shipsList); 
+		allowMoveClick = true ;  
 		for (key in g._shipsList) {
 			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {

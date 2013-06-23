@@ -150,7 +150,6 @@ this.phobos = this.phobos || {};
 	s.setMapCoords = function(newMapCoo){
 		this.shared.position.x = newMapCoo.x;
 		this.shared.position.y = newMapCoo.y;
-		console.log(newMapCoo);
 		console.log(this.shared.position);
 	}
 
@@ -249,7 +248,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		console.log("shoot at " + target.name);
 		weapon.doShoot(target);
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
