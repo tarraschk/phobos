@@ -230,15 +230,15 @@ this.phobos = this.phobos || {};
 			console.log(this.local.env.getGame()._shipsList[this.getTargetId()]);
 			var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
 			var targetRange = utils.distance(currentTarget.shared, this.shared);
-			if (targetRange <= this.weapons.getRange()) {
+			if (targetRange <= this.getWeapons().getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
 				this.stop();
-				if (this.shared.weapons.isReady()) {
-					this.shootAt(currentTarget, this.shared.weapons); 
+				if (this.getWeapons().isReady()) {
+					this.shootAt(currentTarget, this.getWeapons()); 
 				}
 			}
 			else {
-				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.setDestination(currentTarget.getPosition());
 			}
 		}
 		if (this.hasDestination) {
@@ -342,6 +342,10 @@ this.phobos = this.phobos || {};
 		return this.shared.position;
 	}
 
+	s.getWeapons = function() {
+		return this.shared.weapons;
+	}
+
 	s.getHasTarget = function() {
 		return this.shared.hasTarget;
 	}
@@ -364,7 +368,7 @@ this.phobos = this.phobos || {};
 	
 	
 	s.weaponsTick = function() {
-		this.shared.weapons.tick();
+		this.getWeapons().tick();
 	}
 	
 	s.tick = function (event) {
