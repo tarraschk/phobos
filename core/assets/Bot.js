@@ -214,7 +214,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		weapon.doShoot(target);
+		console.log("Shoot !");
+		weapon.doShoot(target, this.getPositionDraw());
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
 	}
@@ -236,7 +237,6 @@ this.phobos = this.phobos || {};
 			}
 		}
 		if (this.getHasDestination) {
-			console.log("MOVE OUT");
 			this.moveToDestinationMovement();
 		}
 		else {
@@ -334,6 +334,10 @@ this.phobos = this.phobos || {};
 
 	s.getPosition = function() {
 		return this.shared.position;
+	}
+
+	s.getPositionDraw = function() {
+		return {x:this.x, y:this.y};
 	}
 
 	s.getWeapons = function() {

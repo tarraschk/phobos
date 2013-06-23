@@ -35,8 +35,9 @@ this.phobos = this.phobos || {};
 		// else this._ready = false ; 
 	}
 
-	w.doShoot = function(target) {
-		// game._gameGraphics.drawLaser(this._owner, target, this._weaponId);
+	w.doShoot = function(target, shooterPos) {
+		if (!server)
+			client.getGame()._gameGraphics.drawLaser(shooterPos, target, this._weaponId);
 		this._ready = false ; 
 		this._cooldown.start();
 	}
