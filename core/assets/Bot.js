@@ -23,11 +23,6 @@ this.phobos = this.phobos || {};
 	}
 // constructor:
 	s.initialize = function (params) {
-		console.log(params);
-		console.log(params);
-		console.log("init bot");
-		console.log(params.x);
-		console.log(params.y);
 		if (params) {
 			this.id = params.id;
 			this.index = this.id ; 
@@ -50,11 +45,9 @@ this.phobos = this.phobos || {};
 				AI:"wait",
 				name:null,
 			}
-			console.log(this.shared);
 			if (server) this.local.game = server;
 			else this.local.game = client;
 			// this.setMapCoords({x: params.x, y: params.y});
-			console.log(this.shared);
 			this.load(params);
 		}
 	}
@@ -106,10 +99,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.setMapCoords = function(newMapCoo){
-		console.log(this.shared.position);
 		this.shared.position.x = newMapCoo.x;
 		this.shared.position.y = newMapCoo.y;
-		console.log(this.shared.position);
 	}
 
 	s.getDiffDestinationPosition = function(destination) {
@@ -315,7 +306,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.getInitPosition = function() {
-		console.log(this.shared);
 		return (this.shared.initPosition);
 	}
 
@@ -398,10 +388,8 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
-				console.log(that);
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
-				console.log(cPlayground);
 
 			}
 		}
