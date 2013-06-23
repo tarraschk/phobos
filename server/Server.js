@@ -74,7 +74,7 @@ s.messages = [];
 	s.generateUniverse = function(universeToken) {
 		sector = {
 			objects:[{id:0,type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 500,y: 600,life: 150000},{id:1, type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},
-			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 120,y: 900,life: 150000}],
+			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 920,y: 900,life: 150000}],
 			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
 		};
 		this.setSector(null, sector); 
