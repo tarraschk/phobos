@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 15.5 ; 
+	g._updateTime = 16 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -67,13 +67,17 @@
 		for (var k = 0 ; k < objects.length ; k++) {
 			switch(objects[k].type) {
 				case "Station":
-					// this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
+				console.log("new station");
+					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
-					// this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
+				console.log("new bot");
+					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}
+		console.log(this._objectsList);
+		console.log("CCACACAA");
 	}
 
 	g.loadTiles = function(tiles) {
@@ -158,9 +162,11 @@
 
 		for (key in this._objectsList) {
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				if (g._objectsList[key].index == g._objectsList[key].id) {
+				// console.log(key);
+				// console.log(g._objectsList[key]);
+				// console.log(g._objectsList);
+				if (this._objectsList[key].index == this._objectsList[key].id) {
 					this._objectsList[key].tick();
-					// if (Math.random() < 1) console.log(this._objectsList[key]); 
 				}
 			}
 		}

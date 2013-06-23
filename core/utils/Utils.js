@@ -58,11 +58,19 @@ this.phobos = this.phobos || {};
 	}
 
 	u.isSameZ = function (o1,o2) {
+		if (o1.shared && o2.shared)
+			o1 = o1.shared;
+			o2 = o2.shared
 		return (o1.position.z == o2.position.z);
 	}
 
 	u.distance = function (o1, o2) {
+		if (o1.shared || o2.shared) {
+			o1 = o1.shared;
+			o2 = o2.shared;
+		}
 		return (Math.sqrt(Math.pow((o2.position.x - o1.position.x), 2) + Math.pow((o2.position.y - o1.position.y), 2)));
+		
 	}
 
 	phobos.Utils = Utils;

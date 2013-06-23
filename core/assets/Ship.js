@@ -15,23 +15,7 @@ this.phobos = this.phobos || {};
 // public properties:
 	s.id ;
 	s.position = {x:null, y:null, rotation: 90};
-	s.shared = {
-		position: {x:null, y:null, rotation: 90},
-		destination: {x:null, y:null},
-		limitSpeed: 1.5,
-		acceleration: 0.06 , 
-		limitRotation:0,
-		currentSpeed: 0 , 
-		rotationSpeed: 3,
-		hasDestination: false,
-		weapons: null,
-		hasTarget: false , 
-		energy: 100,
-		targetId: null,
-		name:null,
-		test:"caca",
-		dockingTarget:null,
-	};
+	s.shared = {};
 	s.local = {
 		game: null,
 	}
