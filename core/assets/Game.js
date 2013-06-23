@@ -152,10 +152,10 @@
 
 	g.objectsTick = function() {
 		allowMoveClick = true ;  
-		for (key in g._shipsList) {
-			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
-				if (g._shipsList[key].index == g._shipsList[key].id) {
-					g._shipsList[key].tick();
+		for (key in this._shipsList) {
+			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
+				if (this._shipsList[key].index == this._shipsList[key].id) {
+					this._shipsList[key].tick();
 				}
 			}
 		}
@@ -172,12 +172,29 @@
 		}
 		// g._station1.tick();
 		// g._station2.tick();
-		// g._shipsList[3].moveTo({x:-150,y:-200});
+		// this._shipsList[3].moveTo({x:-150,y:-200});
 		// for (var k = 0 ; k < g._tilesMap.length ; k++) {
 		// 	g._tilesMap[k].tick();
 		// }
 		// if (Math.random() < 0.01) console.clear();
 	}
+
+	g.switchPlayerToKilled = function (player) {
+		console.log("Before kill");
+		console.log(player.name);
+		g._killedShipsList[player.id] = player;
+		//this._shipsList.splice(player.id, 1); 
+		console.log("after kill");
+		console.log(this._shipsList);
+
+	}
+
+	g.switchPlayerToStation = function (player) {
+		g._dockedShipsList[player.id] = player;
+		this._shipsList.splice(player.id, 1); 
+
+	}
+
 	phobos.Game = Game;
 
 }());

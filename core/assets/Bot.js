@@ -202,7 +202,8 @@ this.phobos = this.phobos || {};
 	s.receiveDamage = function (power) {
 		console.log(this.shared.energy);
 		this.setEnergy(this.shared.energy - power);
-		if (this.shared.energy <= 0) {
+		if (this.getEnergy() <= 0) {
+			console.log("Dead !");
 			return this.die(); 
 		}
 		else return this.shared.energy;
@@ -352,6 +353,10 @@ this.phobos = this.phobos || {};
 		return this.shared.targetId;
 	}
 
+	s.getEnergy = function() {
+		return this.shared.energy;
+	}
+
 	s.getHasDestination = function() {
 		return this.shared.hasDestination;
 	}
@@ -415,7 +420,7 @@ this.phobos = this.phobos || {};
 				cPlayground.addChild(that);
 				cPlayground.update();
 
-				
+
 				that.addEventListener("mouseover", function(e) {
 					debug('over '+that.id);
 					that.manageMouseOver();

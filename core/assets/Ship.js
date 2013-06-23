@@ -200,7 +200,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.die = function() {
-		debug("dead");
 		this.shared.position.z = -1;
 		this.local.env.getGame().switchPlayerToKilled(this);
 		this.visible = false;
@@ -211,7 +210,8 @@ this.phobos = this.phobos || {};
 		console.log(this.shared.energy);
 		console.log(power);
 		this.setEnergy(this.shared.energy - power);
-		if (this.energy <= 0) {
+		if (this.getEnergy() <= 0) {
+			console.log("Dead !");
 			return this.die(); 
 		}
 		else return this.energy;
@@ -311,6 +311,10 @@ this.phobos = this.phobos || {};
 			}
 		}
 		return this.local.env.getGame()._shipsList[closeEnnemyKey];
+	}
+
+	s.getEnergy = function() {
+		return this.shared.energy;
 	}
 
 	s.getPosition = function() {
