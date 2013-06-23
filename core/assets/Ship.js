@@ -14,9 +14,9 @@ this.phobos = this.phobos || {};
 
 // public properties:
 	s.id ;
+	s.position = {x:null, y:null, rotation: 90};
 	s.shared = {
 		position: {x:null, y:null, rotation: 90},
-		initPosition: {x:null, y:null, rotation: 90},
 		destination: {x:null, y:null},
 		limitSpeed: 1.5,
 		acceleration: 0.06 , 
@@ -29,6 +29,7 @@ this.phobos = this.phobos || {};
 		energy: 100,
 		targetId: null,
 		name:null,
+		test:"caca",
 		dockingTarget:null,
 	};
 	s.local = {
@@ -40,20 +41,32 @@ this.phobos = this.phobos || {};
 		console.log(params);
 		if (params) {
 			this.id = params.id;
-			this.shared.position = {x:null, y:null, z:1, rotation: 90};
-			this.shared.initPosition = {x:this.shared.position.x, y:this.shared.position.y};
-			this.shared.destination = {x:null, y:null};
-			this.shared.limitSpeed = 3.5;
-			this.shared.acceleration = 0.06 ; 
-			this.shared.limitRotation;
-			this.shared.weapons = new Weapon(this, 2);
-			this.shared.currentSpeed = 0 ; 
-			this.shared.rotationSpeed = 3;
-			this.shared.hasDestination = false;
-			this.shared.name = params.name;
+			this.shared = {
+				position: {x:null, y:null, z:1, rotation: 90},
+				destination: {x:null, y:null},
+				limitSpeed: 3.5,
+				acceleration: 0.06 , 
+				limitRotation:0,
+				weapons:null, 
+				// weapons: new Weapon(this, 2),
+				currentSpeed: 0 , 
+				rotationSpeed: 3,
+				hasDestination: false,
+				name: params.name,
+			}
+			// this.shared.position = {x:null, y:null, z:1, rotation: 90};
+			// this.shared.destination = {x:null, y:null};
+			// this.shared.limitSpeed = 3.5;
+			// this.shared.acceleration = 0.06 ; 
+			// this.shared.limitRotation;
+			// this.shared.weapons = new Weapon(this, 2);
+			// this.shared.currentSpeed = 0 ; 
+			// this.shared.rotationSpeed = 3;
+			// this.shared.hasDestination = false;
+			// this.shared.name = params.name;
 			if (server) this.local.game = server;
 			else this.local.game = client;
-			this.setMapCoords(params.position);
+			// this.setMapCoords(params.position);
 			this.load(params);
 		}
 	}
@@ -334,7 +347,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.tick = function (event) {
-		this.shared.weapons.tick() ; 
+		// this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		if (!server)

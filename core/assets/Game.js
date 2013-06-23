@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 80 ; 
+	g._updateTime = 70 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -122,6 +122,9 @@
 
 		if (isMainPlayer)
 			this.setPlayerShip(this._shipsList[playerData.id]); 
+
+		console.log("AFTER JOIN"); 
+		console.log(this._shipsList);
 		return this._shipsList[playerData.id];
 	}
 
@@ -130,6 +133,7 @@
 	}
 
 	g.graphicsTick = function() {
+		// console.log(this._playerShip); 
 		this._gameGraphics.tick();
 		this._camera.tick();
 		renderCanvas();
@@ -161,7 +165,9 @@
 			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
-					if (Math.random() < 0.5) console.log(g._shipsList[key].shared.position);
+					// console.log(g._shipsList[key].id); 
+					// console.log(g._shipsList[key].shared); 
+					// if (Math.random() < 0.5) console.log(g._shipsList[key]);
 				}
 			}
 		}
