@@ -143,8 +143,6 @@ this.phobos = this.phobos || {};
 		this.shared.hasTarget = newHasTarget;
 	}
 	s.setTargetId = function(newTargetId) {
-		console.log(newTargetId);
-
 		this.shared.targetId = newTargetId;
 	}
 
@@ -224,14 +222,10 @@ this.phobos = this.phobos || {};
 	s.behavior = function () {
 		var that = this ; 
 		if (this.getHasTarget()) {
-			console.log(this.local.env.getGame()._shipsList);
-			console.log(this.getTargetId());
-			console.log(this.shared);
-			console.log(this.local.env.getGame()._shipsList[this.getTargetId()]);
 			var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
 			var targetRange = utils.distance(currentTarget.shared, this.shared);
 			if (targetRange <= this.getWeapons().getRange()) {
-				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.lookAt(currentTarget.getPosition() );
 				this.stop();
 				if (this.getWeapons().isReady()) {
 					this.shootAt(currentTarget, this.getWeapons()); 
@@ -241,7 +235,8 @@ this.phobos = this.phobos || {};
 				this.setDestination(currentTarget.getPosition());
 			}
 		}
-		if (this.hasDestination) {
+		if (this.getHasDestination) {
+			console.log("MOVE OUT");
 			this.moveToDestinationMovement();
 		}
 		else {
@@ -267,7 +262,6 @@ this.phobos = this.phobos || {};
 			}
 			break;
 			case "attack":
-			console.log("attack");
 				if (this.shared.hasTarget) {
 					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
 					var targetRange = utils.distance(currentTarget.shared, this.shared);
@@ -354,6 +348,10 @@ this.phobos = this.phobos || {};
 		return this.shared.targetId;
 	}
 
+	s.getHasDestination = function() {
+		return this.shared.hasDestination;
+	}
+
 	s.drawRender = function () {
 		this.rotationFrame();
 		//s.x = this.position.x - this.local.env.getGame()._camera.x();
@@ -372,7 +370,7 @@ this.phobos = this.phobos || {};
 	}
 	
 	s.tick = function (event) {
-		// this.weaponsTick() ; 
+		this.weaponsTick() ; 
 		this.botBehavior();
 		this.behavior();
 		this.tickMovement(); 
