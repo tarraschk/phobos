@@ -53,8 +53,6 @@ phobos = this.phobos || {};
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
-					console.log("key" + key);
-					console.log(this.playerId);
 					if (key != this.playerId) //Must be other players, not main player already loaded
 						this.playerJoinGame(playersData[key], false); 
 					else console.log("THIS IS THE PLAYER"); 
@@ -70,13 +68,7 @@ phobos = this.phobos || {};
 	// General methods 
 	
 	c.onPlayerMove = function(playerMoveData) {
-		console.log(playerMoveData);
-		console.log(this.game._shipsList);
 		this.game._shipsList[playerMoveData.player].shared.position.x += 5 ; 
-		// this.game._shipsList[0].shared.test += "TEST DONE" ; 
-		// this.game._shipsList[1].shared.test += " EEEDEDED" ; 
-		// this.game._shipsList[0].position = {caca:"test"} ; 
-		// this.game._shipsList[1].position = {caca:5} ; 
 		if (this.game._shipsList[playerMoveData.player])
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
@@ -91,8 +83,6 @@ phobos = this.phobos || {};
 	/* A player joined the game.
 	This player isn't the current client's player. */
 	c.newPlayerLogged = function(playerData)  {
-		console.log("BEFORE JOIN"); 
-		console.log(this.game._shipsList);
 		this.playerJoinGame(playerData, false); 
 	}
 

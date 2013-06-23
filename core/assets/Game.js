@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 70 ; 
+	g._updateTime = 15.5 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -165,9 +165,6 @@
 			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
 				if (g._shipsList[key].index == g._shipsList[key].id) {
 					g._shipsList[key].tick();
-					// console.log(g._shipsList[key].id); 
-					// console.log(g._shipsList[key].shared); 
-					// if (Math.random() < 0.5) console.log(g._shipsList[key]);
 				}
 			}
 		}
