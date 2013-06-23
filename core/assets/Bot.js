@@ -19,7 +19,7 @@ this.phobos = this.phobos || {};
 	s.index ; 
 	s.shared = {};
 	s.local = {
-		game: null,
+		env: null,
 	}
 // constructor:
 	s.initialize = function (params) {
@@ -45,8 +45,8 @@ this.phobos = this.phobos || {};
 				AI:"wait",
 				name:null,
 			}
-			if (server) this.local.game = server;
-			else this.local.game = client;
+			if (server) this.local.env = server;
+			else this.local.env = client;
 			// this.setMapCoords({x: params.x, y: params.y});
 			this.load(params);
 		}
@@ -143,6 +143,8 @@ this.phobos = this.phobos || {};
 		this.shared.hasTarget = newHasTarget;
 	}
 	s.setTargetId = function(newTargetId) {
+		console.log(newTargetId);
+
 		this.shared.targetId = newTargetId;
 	}
 
@@ -194,7 +196,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.shared.position.z = -1;
-		this.local.game.getGame().switchPlayerToKilled(this);
+		this.local.env.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -221,8 +223,12 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		var that = this ; 
-		if (this.hasTarget) {
-			var currentTarget = this.game.getGame()._shipsList[this.targetId];
+		if (this.getHasTarget()) {
+			console.log(this.local.env.getGame()._shipsList);
+			console.log(this.getTargetId());
+			console.log(this.shared);
+			console.log(this.local.env.getGame()._shipsList[this.getTargetId()]);
+			var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
 			var targetRange = utils.distance(currentTarget.shared, this.shared);
 			if (targetRange <= this.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -263,10 +269,8 @@ this.phobos = this.phobos || {};
 			case "attack":
 			console.log("attack");
 				if (this.shared.hasTarget) {
-					var currentTarget = this.local.game.getGame()._shipsList[this.shared.targetId];
+					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
 					var targetRange = utils.distance(currentTarget.shared, this.shared);
-					console.log(currentTarget);
-					console.log(targetRange);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 						this.setTargetId(null);
 						this.setHasTarget(false);
@@ -291,20 +295,20 @@ this.phobos = this.phobos || {};
 		//Throttle. 
 		//s.position.rotation += 1 ;
 
-		if (this.shared.position.rotation >= 180) this.shared.position.rotation = -180 + this.shared.position.rotation % 180 ;
-		if (this.shared.position.rotation <= -180) this.shared.position.rotation = 180 - this.shared.position.rotation % 180 ;  
+		if (this.shared.position.rotation >= 180) this.getPosition().rotation = -180 + this.getPosition().rotation % 180 ;
+		if (this.getPosition().rotation <= -180) this.getPosition().rotation = 180 - this.getPosition().rotation % 180 ;  
 		//s.position.rotation = s.position.rotation % 360 ; 
-		this.shared.position.x += Math.sin((this.shared.position.rotation)*(Math.PI/-180)) * this.getCurrentSpeed();
-		this.shared.position.y += Math.cos((this.shared.position.rotation)*(Math.PI/-180)) * this.getCurrentSpeed();
+		this.getPosition().x += Math.sin((this.getPosition().rotation)*(Math.PI/-180)) * this.getCurrentSpeed();
+		this.getPosition().y += Math.cos((this.getPosition().rotation)*(Math.PI/-180)) * this.getCurrentSpeed();
 	
 
 	}
 
 	s.rotationFrame = function() {
-		if (this.shared.position.rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.shared.position.rotation ) % 360) / 12)));
+		if (this.getPosition().rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 12)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.shared.position.rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 12)));
 
 	}
 
@@ -323,29 +327,39 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < this.local.game.getGame()._shipsList.length ; j++) {
-			if (utils.distance(this.local.game.getGame()._shipsList[j].shared, this.shared) < minDistance && this.local.game.getGame()._shipsList[j].shared != this.shared) {
-				minDistance = utils.distance(this.local.game.getGame()._shipsList[j].shared, this.shared);
-				closeEnnemyKey = j;
+		for (key in this.local.env.getShipsList()) {
+			if (String((key)) === key && this.local.env.getShipsList().hasOwnProperty(key)) {
+				if (utils.distance(this.local.env.getShipsList()[key].shared, this.shared) < minDistance && this.local.env.getGame()._shipsList[key].shared != this.shared) {
+					minDistance = utils.distance(this.local.env.getGame()._shipsList[key].shared, this.shared);
+					closeEnnemyKey = key;
+				}
 			}
 		}
-		return this.local.game.getGame()._shipsList[closeEnnemyKey];
+		return this.local.env.getGame()._shipsList[closeEnnemyKey];
 	}
-	
+
 	s.getPosition = function() {
 		return this.shared.position;
 	}
 
+	s.getHasTarget = function() {
+		return this.shared.hasTarget;
+	}
+
+	s.getTargetId = function() {
+		return this.shared.targetId;
+	}
+
 	s.drawRender = function () {
 		this.rotationFrame();
-		//s.x = this.position.x - this.local.game.getGame()._camera.x();
-		//s.y = this.position.y - this.local.game.getGame()._camera.y();
-		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.game.getGame()._camera._position);
+		//s.x = this.position.x - this.local.env.getGame()._camera.x();
+		//s.y = this.position.y - this.local.env.getGame()._camera.y();
+		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame()._camera._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 		//s.isometricConversion(); 
-		//s.x = this.position.x - this.local.game.getGame()._camera.x();
-		//s.y = this.position.y - this.local.game.getGame()._camera.y();
+		//s.x = this.position.x - this.local.env.getGame()._camera.x();
+		//s.y = this.position.y - this.local.env.getGame()._camera.y();
 	}
 	
 	
@@ -364,9 +378,9 @@ this.phobos = this.phobos || {};
 
 	s.manageClick = function() {
 		allowMoveClick = false ; 
-		this.local.game.getGame()._playerShip.setTargetId(this.id);
-		this.local.game.getGame()._playerShip.setHasTarget(true);
-		this.local.game.getGame()._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
+		this.local.env.getGame()._playerShip.setTargetId(this.id);
+		this.local.env.getGame()._playerShip.setHasTarget(true);
+		this.local.env.getGame()._playerShip.setDestination({ x:this.position.x, y: this.position.y} );
 	}
 
 	s.load = function(shipData){

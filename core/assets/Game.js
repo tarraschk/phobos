@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 16 ; 
+	g._updateTime = 80 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class

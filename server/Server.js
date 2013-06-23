@@ -122,6 +122,10 @@ s.messages = [];
 
 	}
 
+	s.getShipsList = function() {
+		return (this.getGame()._shipsList);
+	}
+
 	s.getGame = function() {
 		return this.universe; 
 	}

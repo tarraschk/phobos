@@ -16,7 +16,7 @@ this.phobos = this.phobos || {};
 	s.id ;
 	s.shared = {};
 	s.local = {
-		game: null,
+		env: null,
 	}
 // constructor:
 	s.initialize = function (params) {
@@ -37,8 +37,8 @@ this.phobos = this.phobos || {};
 				hasDestination: false,
 				name: params.name,
 			}
-			if (server) this.local.game = server;
-			else this.local.game = client;
+			if (server) this.local.env = server;
+			else this.local.env = client;
 			this.load(params);
 		}
 	}
@@ -200,7 +200,7 @@ this.phobos = this.phobos || {};
 	s.die = function() {
 		debug("dead");
 		this.shared.position.z = -1;
-		this.local.game.getGame().switchPlayerToKilled(this);
+		this.local.env.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
 	}
@@ -234,7 +234,7 @@ this.phobos = this.phobos || {};
 
 	s.doDock = function() {
 		this.shared.position.z = this.shared.dockingTarget._mapZ;
-		this.local.game.getGame().switchPlayerToStation(this);
+		this.local.env.getGame().switchPlayerToStation(this);
 		this.visible = false;
 		debug("Docked !");
 		ui.newStationElement();
@@ -242,7 +242,7 @@ this.phobos = this.phobos || {};
 
 	s.behavior = function () {
 		if (this.hasTarget) {
-			var currentTarget = this.local.game.getGame()._shipsList[this.targetId];
+			var currentTarget = this.local.env.getGame()._shipsList[this.targetId];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.shared.weapons.getRange()) {
 				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
@@ -281,32 +281,32 @@ this.phobos = this.phobos || {};
 	s.tickMovement = function () {
 		//Throttle. 
 		//s.position.rotation += 1 ;
-		if (this.shared.position.rotation >= 180) this.shared.position.rotation = -180 + this.shared.position.rotation % 180 ;
-		if (this.shared.position.rotation <= -180) this.shared.position.rotation = 180 - this.shared.position.rotation % 180 ;  
+		if (this.getPosition().rotation >= 180) this.getPosition().rotation = -180 + this.getPosition().rotation % 180 ;
+		if (this.getPosition().rotation <= -180) this.getPosition().rotation = 180 - this.getPosition().rotation % 180 ;  
 		//s.position.rotation = s.position.rotation % 360 ; 
-		this.shared.position.x += Math.sin((this.shared.position.rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
-		this.shared.position.y += Math.cos((this.shared.position.rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
+		this.getPosition().x += Math.sin((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
+		this.getPosition().y += Math.cos((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
 	}
 
 	s.rotationFrame = function() {
 		// this.gotoAndPlay("walk");
-		if (this.shared.position.rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.shared.position.rotation ) % 360) / 12)));
+		if (this.getPosition().rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 12)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.shared.position.rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 12)));
 
 	}
 
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < this.local.game.getGame()._shipsList.length ; j++) {
-			if (utils.distance(this.local.game.getGame()._shipsList[j].shared, this) < minDistance && this.local.game.getGame()._shipsList[j].shared != this) {
-				minDistance = utils.distance(this.local.game.getGame()._shipsList[j].shared, this);
+		for (var j = 0 ; j < this.local.env.getGame()._shipsList.length ; j++) {
+			if (utils.distance(this.local.env.getGame()._shipsList[j].shared, this) < minDistance && this.local.env.getGame()._shipsList[j].shared != this) {
+				minDistance = utils.distance(this.local.env.getGame()._shipsList[j].shared, this);
 				closeEnnemyKey = j;
 			}
 		}
-		return this.local.game.getGame()._shipsList[closeEnnemyKey];
+		return this.local.env.getGame()._shipsList[closeEnnemyKey];
 	}
 
 	s.getPosition = function() {
@@ -315,7 +315,7 @@ this.phobos = this.phobos || {};
 
 	s.drawRender = function () {
 		this.rotationFrame();
-		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.game.getGame().getCamera()._position);
+		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}

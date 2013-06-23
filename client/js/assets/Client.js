@@ -117,6 +117,10 @@ phobos = this.phobos || {};
 		this.game.stopUpdate();
 	}
 
+	c.getShipsList = function() {
+		return (this.getGame()._shipsList);
+	}
+
 	c.getGame = function() {
 		return this.game ;
 	}
