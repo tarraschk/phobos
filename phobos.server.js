@@ -9,6 +9,9 @@ server.startUniverse();
 
 
 io.sockets.on('connection', function(client) {
+
+	server.setSocketsManager(client);
+
 	client.on('login', function(loginData){
 		var loggedInShipData = server.playerLogin({client: this,loginData: loginData}); 
 

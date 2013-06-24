@@ -253,7 +253,7 @@ this.phobos = this.phobos || {};
 		if (server)  {
 			//Socket emit
 			console.log("try emit socket");
-			console.log(socket);
+			console.log(server.emitSocket('setBotBehavior', this.shared));
 		}
 		switch(newBotBehavior) {
 			case "wait":
