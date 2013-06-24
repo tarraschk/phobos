@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
 
 	socket.on('setBotBehavior', function(data) {
 		console.log(data);
-		client.setBotBehavior(data.newBotBehavior, data.bot);
+		client.setBotBehavior(data.newBehavior, data.bot, data.data);
 	})
 
 	socket.on('sectorLoaded', function(sector){

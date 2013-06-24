@@ -135,6 +135,16 @@ s.messages = [];
 		else return -1; 
 	}
 
+	s.broadcastToAllSocket = function(message, messageData) {
+		if (this.socketManager) {
+			this.socketManager.emit(message, messageData);
+			this.socketManager.broadcast.emit(message, messageData);
+		}
+		else return -1; 
+	}
+
+	
+
 	s.getShipsList = function() {
 		return (this.getGame()._shipsList);
 	}

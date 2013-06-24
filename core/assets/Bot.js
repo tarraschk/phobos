@@ -252,12 +252,13 @@ this.phobos = this.phobos || {};
 
 	s.setBotBehavior = function (newBotBehavior, miscData) {
 		if (server)  {
-			console.log(server.emitSocket('setBotBehavior', {newBehavior:newBotBehavior, bot:this.shared}));
+			server.broadcastToAllSocket('setBotBehavior', {newBehavior:newBotBehavior, bot:this.shared, data:miscData});
 		}
 		switch(newBotBehavior) {
 			case "wait":
 			break;
 			case "attack":
+				console.log("SWITCH TO ATTACK");
 				var closeTarget = miscData;
 				this.setTargetId(closeTarget.id);
 				this.setHasTarget(true);

@@ -111,8 +111,9 @@ phobos = this.phobos || {};
 		this.game = new phobos.Game();
 	}
 
-	c.setBotBehavior = function(newBotBehavior, bot) {
-		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior);
+	c.setBotBehavior = function(newBotBehavior, bot, data) {
+		console.log(this.game.getObjectsList()[bot.id]);
+		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior, data);
 	}
 
 	c.startGame = function() {
