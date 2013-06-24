@@ -27,6 +27,7 @@ this.phobos = this.phobos || {};
 			this.id = params.id;
 			this.index = this.id ; 
 			this.shared = {
+				id: params.id,
 				position: {x:params.x, y:params.y, z:1, rotation: 90},
 				initPosition: {x:params.x, y:params.y, z:params.z, rotation: 90},
 				destination: {x:null, y:null},
@@ -251,9 +252,7 @@ this.phobos = this.phobos || {};
 
 	s.setBotBehavior = function (newBotBehavior, miscData) {
 		if (server)  {
-			//Socket emit
-			console.log("try emit socket");
-			console.log(server.emitSocket('setBotBehavior', this.shared));
+			console.log(server.emitSocket('setBotBehavior', {newBehavior:newBotBehavior, bot:this.shared}));
 		}
 		switch(newBotBehavior) {
 			case "wait":

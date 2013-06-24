@@ -110,6 +110,11 @@ phobos = this.phobos || {};
 		this.loadSectorData() ; 
 		this.game = new phobos.Game();
 	}
+
+	c.setBotBehavior = function(newBotBehavior, bot) {
+		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior);
+	}
+
 	c.startGame = function() {
 		this.game.startUpdate();
 	}

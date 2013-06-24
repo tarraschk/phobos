@@ -19,8 +19,9 @@ jQuery(document).ready(function($) {
 		client.loadSectorPlayers(shipsList); 
 	});
 
-	socket.on('setBotBehavior', function(bot) {
-		console.log(bot);
+	socket.on('setBotBehavior', function(data) {
+		console.log(data);
+		client.setBotBehavior(data.newBotBehavior, data.bot);
 	})
 
 	socket.on('sectorLoaded', function(sector){
