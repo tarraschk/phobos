@@ -248,6 +248,31 @@ this.phobos = this.phobos || {};
 	s.setAI = function(newAI) {
 		this.shared.AI = newAI;
 	}
+
+	s.setBotBehavior = function (newBotBehavior, miscData) {
+		if (server)  {
+			//Socket emit
+			console.log("try emit socket");
+			console.log(socket);
+		}
+		switch(newBotBehavior) {
+			case "wait":
+			break;
+			case "attack":
+				var closeTarget = miscData;
+				this.setTargetId(closeTarget.id);
+				this.setHasTarget(true);
+				this.setDestination({ x:closeTarget.getPosition().x, y:closeTarget.getPosition().y} );
+				this.setAI("attack");
+			break;
+			case "backToPosition":
+				this.moveTo({x:this.getInitPosition().x,y:this.getInitPosition().y} );
+				this.setTargetId(null);
+				this.setHasTarget(false);
+				this.setAI("backToPosition")
+			break;
+		}
+	}
 	
 	s.botBehavior = function() {
 		switch(this.shared.AI) {
@@ -255,10 +280,7 @@ this.phobos = this.phobos || {};
 			var closeTarget = this.getCloseEnnemy();
 			if (closeTarget) {
 				if (utils.distance(closeTarget.shared, this.shared) < this.shared.AIRange && !this.shared.hasTarget) {
-					this.setTargetId(closeTarget.id);
-					this.setHasTarget(true);
-					this.setDestination({ x:closeTarget.getPosition().x, y:closeTarget.getPosition().y} );
-					this.setAI("attack");
+					if (server) this.setBotBehavior("attack", closeTarget);
 				}
 			}
 			break;
@@ -267,16 +289,10 @@ this.phobos = this.phobos || {};
 					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
 					var targetRange = utils.distance(currentTarget.shared, this.shared);
 					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
-						this.setTargetId(null);
-						this.setHasTarget(false);
-						this.setAI("backToPositionTrigger");
+						if (server) this.setBotBehavior("backToPosition");
 					}
 				}
 				else this.setAI("backToPositionTrigger");
-			break;
-			case "backToPositionTrigger":
-				this.moveTo({x:this.getInitPosition().x,y:this.getInitPosition().y} );
-				this.setAI("backToPosition")
 			break;
 			case "backToPosition":
 				//Trigger, all is ok.

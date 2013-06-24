@@ -16,6 +16,7 @@ s._dte = new Date().getTime();
 s.universe ; 
 s.playerCount = -1 ; 
 s.users = []; 
+s.socketManager ;
 
     //a local queue of messages we delay if faking latency
 s.messages = [];
@@ -52,6 +53,8 @@ s.messages = [];
 	    this.fps_avg_acc = 0;    
 
 	    this.sectors = {sector1: []};
+
+
 	}
 
 	
@@ -120,6 +123,16 @@ s.messages = [];
 
 	s.createNewPlayer = function() {
 
+	}
+
+	s.setSocketsManager = function(newSocketsManager) {
+		this.socketManager = newSocketsManager; 
+	}
+
+	s.emitSocket = function(message, messageData) {
+		if (this.socketManager)
+			this.socketManager.emit(message, messageData);
+		else return -1; 
 	}
 
 	s.getShipsList = function() {

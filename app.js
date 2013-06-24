@@ -21,6 +21,13 @@ function loadGameUtils() {
 	require(gameUtilsDir + "Utils.js");
 }
 
+function upload(response, postData) {
+  console.log("Le gestionnaire 'upload' est appelé.");
+  response.writeHead(200, {"Content-Type": "text/plain"});
+  response.write("Vous avez envoyé : " + querystring.parse(postData).text);
+  response.end();
+}
+
 var http = require('http'),
 	gameport = 8080,
 	coreDir = "core",
@@ -34,58 +41,11 @@ var http = require('http'),
 httpServer = http.createServer(function(request, response) {
 	response.write('Phobos server launched');
 	response.end();
-  // close the response
 }); 
 
-function upload(response, postData) {
-  console.log("Le gestionnaire 'upload' est appelé.");
-  response.writeHead(200, {"Content-Type": "text/plain"});
-  response.write("Vous avez envoyé : " + querystring.parse(postData).text);
-  response.end();
-}
-
-var io = require('socket.io').listen(httpServer);
+io = require('socket.io').listen(httpServer);
 
 httpServer.listen(gameport); 
 loadGameCore();
 
 require("./phobos.server.js");
-
-io.sockets.on('connection', function(client) {
-	client.on('login', function(loginData){
-		var loggedInShipData = server.playerLogin({client: this,loginData: loginData}); 
-
-		if (loggedInShipData) {	
-			client.emit('loggedIn', loggedInShipData);
-  			client.broadcast.emit('newPlayerLoggedIn', loggedInShipData);
-		}
-	});
-
-	client.on('playerMove', function(data){
-		server.playerMove(data.player, data);
-  		client.broadcast.emit('playerMove', data);
-  		client.emit('playerMove', data);
-	});
-	client.on('playerData', function (playerData) {
-
-	});
-
-	client.on('loadPlayers', function() {
-		server.loadSectorPlayers(this); 
-	});
-	client.on('loadSector', function() {
-		console.log(":: Loading sector :: "); 
-		server.loadSector(this); 
-	});
-	client.on('playerLogin', function(user) {
-
-	}); 
-	
-	client.on('tickPlayer', function(user) {
-	}); 
-
-	client.on('ping', function() {
-		client.emit('pong'); 
-	}); 
-	
-}); 
