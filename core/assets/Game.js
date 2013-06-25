@@ -67,10 +67,10 @@
 		for (var k = 0 ; k < objects.length ; k++) {
 			switch(objects[k].type) {
 				case "Station":
-					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
+					// this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
-					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
+					// this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}

@@ -358,8 +358,6 @@ this.phobos = this.phobos || {};
 				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
-				that.x = shipData.position.x;
-				that.y = shipData.position.y;
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
