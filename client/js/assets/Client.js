@@ -50,8 +50,6 @@ phobos = this.phobos || {};
 		console.log("loading sector playerz");
 		console.log(playersData);
 		for (key in playersData) {
-			console.log(key);
-			console.log(playersData[key]);
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
 					console.log(key);

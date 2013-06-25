@@ -16,7 +16,7 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 16 ; 
+	g._updateTime = 80 ; 
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
@@ -74,6 +74,7 @@
 				break;
 			}
 		}
+		console.log(this._objectsList);
 	}
 
 	g.loadTiles = function(tiles) {
@@ -109,8 +110,6 @@
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
-		console.log(playerData);
-		console.log("THIS IS JOINING");
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
 		if (isMainPlayer)
@@ -159,9 +158,6 @@
 
 		for (key in this._objectsList) {
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				// console.log(key);
-				// console.log(g._objectsList[key]);
-				// console.log(g._objectsList);
 				if (this._objectsList[key].index == this._objectsList[key].id) {
 					this._objectsList[key].tick();
 				}
@@ -177,12 +173,8 @@
 	}
 
 	g.switchPlayerToKilled = function (player) {
-		console.log("Before kill");
-		console.log(player.name);
 		g._killedShipsList[player.id] = player;
 		//this._shipsList.splice(player.id, 1); 
-		console.log("after kill");
-		console.log(this._shipsList);
 
 	}
 

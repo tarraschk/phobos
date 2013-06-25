@@ -26,8 +26,11 @@ this.phobos = this.phobos || {};
 	s.fucused = false;
 	s.scannable;
 	s._id;
+	s.local = {};
 // constructor:
 	s.initialize = function (params) {
+		this.id = params.id;
+		this.index = params.id;
 		console.log("station"); 
 		this._id = utils.generateId();
 		this._targetZ = this._id;
@@ -35,6 +38,8 @@ this.phobos = this.phobos || {};
 		this.setMapCoords({x: params.x, y: params.y});
 		if (!server) this.load(params.src);
 		this._life = this._lifeLeft = params.life;
+		if (server) this.local.env = server;
+		else this.local.env = client;
 	}
 
 // public methods:
@@ -46,11 +51,13 @@ this.phobos = this.phobos || {};
 		this._mapY = params.y;
 	}
 	s.drawRender = function() {
-		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, game._camera._position);
+		console.log("draw station");
+		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
-	s.tick = function (event) {
+	s.tick = function () {
+		console.log("ticking");
 		this._mapX = this._mapX + 0.001;
 		if (!server) this.drawRender();
 	}
