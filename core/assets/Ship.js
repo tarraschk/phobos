@@ -335,6 +335,7 @@ this.phobos = this.phobos || {};
 	s.load = function(shipData){
 		console.log("LOADING SHIP");
 		console.log(this.shared);
+		console.log(shipData);
 		this.index = shipData.id; 
 		if (!server) {
 			var imgShip = new Image(); 
@@ -357,8 +358,8 @@ this.phobos = this.phobos || {};
 				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
-				that.x = shipData.x;
-				that.y = shipData.y;
+				that.x = shipData.position.x;
+				that.y = shipData.position.y;
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
