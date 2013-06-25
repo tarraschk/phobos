@@ -124,7 +124,6 @@ this.phobos = this.phobos || {};
 	s.setMapCoords = function(newMapCoo){
 		this.shared.position.x = newMapCoo.x;
 		this.shared.position.y = newMapCoo.y;
-		console.log(this.shared.position);
 	}
 
 	s.getDiffDestinationPosition = function(destination) {
@@ -207,11 +206,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.receiveDamage = function (power) {
-		console.log(this.shared.energy);
-		console.log(power);
 		this.setEnergy(this.shared.energy - power);
 		if (this.getEnergy() <= 0) {
-			console.log("Dead !");
 			return this.die(); 
 		}
 		else return this.energy;
@@ -337,6 +333,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.load = function(shipData){
+		console.log("LOADING SHIP");
+		console.log(this.shared);
 		this.index = shipData.id; 
 		if (!server) {
 			var imgShip = new Image(); 
@@ -345,7 +343,6 @@ this.phobos = this.phobos || {};
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
-			console.log("load a ship.");
 			imgShip.onload = function() {
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
@@ -365,9 +362,9 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
+				console.log("Ship loaded :" + that.x + " ; " + that.id);
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
-
 			}
 		}
 	}

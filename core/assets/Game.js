@@ -109,6 +109,8 @@
 	}
 
 	g.playerJoin = function(playerData, isMainPlayer) {
+		console.log(playerData);
+		console.log("THIS IS JOINING");
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
 		if (isMainPlayer)

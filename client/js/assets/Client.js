@@ -47,12 +47,15 @@ phobos = this.phobos || {};
 	}
 
 	c.loadSectorPlayers = function(playersData) {
-
+		console.log("loading sector playerz");
+		console.log(playersData);
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
 					if (key != this.playerId) //Must be other players, not main player already loaded
-						this.playerJoinGame(playersData[key], false); 
+						var player = playersData[key].shared
+						player.id = playersData[key].id;
+						this.playerJoinGame(player, false); 
 				}
 			}
 		}
@@ -84,9 +87,8 @@ phobos = this.phobos || {};
 	}
 
 	/* Adds a player to the client's game. */
-	c.playerJoinGame  = function(playerData, mainPlayer) {
-
-		this.game.playerJoin(playerData, mainPlayer); 
+	c.playerJoinGame  = function(player, mainPlayer) {
+		this.game.playerJoin(player, mainPlayer); 
 		if (mainPlayer) this.initMouseClick() ;
 	}
 
@@ -112,7 +114,6 @@ phobos = this.phobos || {};
 	}
 
 	c.setBotBehavior = function(newBotBehavior, bot, data) {
-		console.log(this.game.getObjectsList()[bot.id]);
 		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior, data);
 	}
 

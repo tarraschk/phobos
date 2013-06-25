@@ -10,8 +10,6 @@ jQuery(document).ready(function($) {
 	client.startGame();
 	
 	socket.on('loggedIn', function(data){
-		console.log("LOGGED");
-		console.log(data);
 		client.mainPlayerLogged(data); 
 	});
 
@@ -20,13 +18,10 @@ jQuery(document).ready(function($) {
 	});
 
 	socket.on('setBotBehavior', function(data) {
-		console.log(data);
 		client.setBotBehavior(data.newBehavior, data.bot, data.data);
 	})
 
 	socket.on('sectorLoaded', function(sector){
-		console.log("Client load sector"); 
-		console.log(sector); 
 		client.loadSector(sector); 
 	});
 
