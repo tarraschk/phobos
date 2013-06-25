@@ -51,13 +51,11 @@ this.phobos = this.phobos || {};
 		this._mapY = params.y;
 	}
 	s.drawRender = function() {
-		console.log("draw station");
 		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
 	s.tick = function () {
-		console.log("ticking");
 		this._mapX = this._mapX + 0.001;
 		if (!server) this.drawRender();
 	}
