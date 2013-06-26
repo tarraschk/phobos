@@ -6,6 +6,7 @@ jQuery(document).ready(function($) {
 	client = new phobos.Client();
 	client.loginToServer(); 
 	client.createPingTimer(); 
+	client.createServerLoop(); 
 	client.loadGameData();
 	client.startGame();
 	
@@ -39,6 +40,12 @@ jQuery(document).ready(function($) {
 
 	socket.on('pong', function() {
 		client.onPong();
+
+	})
+
+	socket.on('sync', function(data) {
+		console.log("sync");
+		console.log(data);
 
 	})
 });

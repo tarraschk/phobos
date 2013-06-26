@@ -48,4 +48,15 @@ io.sockets.on('connection', function(client) {
 		client.emit('pong'); 
 	}); 
 	
-}); 
+	client.on('sync', function() {
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		console.log("SYYYYYYYNC");
+		client.emit('sync'); 
+	});
+ }); 

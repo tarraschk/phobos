@@ -159,6 +159,13 @@ phobos = this.phobos || {};
 	}; //s.createPingTimer
 
 
+	c.createServerLoop = function() {
+		setInterval(function(){
+	        socket.emit('sync', { object:"salut" } );
+
+	    }.bind(this), 2000);
+	}
+
 	phobos.Client = Client;
 
 }());
