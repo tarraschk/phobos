@@ -186,6 +186,7 @@ phobos = this.phobos || {};
 				if (servShips[key]) {
 					if (servShips[key].index == servShips[key].id) {
 						this.diffShip(servShips[key], this.getGame().getShipsList()[key], frameServer, frameClient);
+						this.getGame().getShipsList()[key].shared.position = servShips[key].shared.position;
 					}
 				}
 			}
