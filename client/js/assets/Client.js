@@ -206,7 +206,7 @@ phobos = this.phobos || {};
 		setInterval(function(){
 	        socket.emit('sync', { player:this.getGame().getPlayerShip().getShared() } );
 
-	    }.bind(this), 1045);
+	    }.bind(this), 45);
 	}
 
 	phobos.Client = Client;
