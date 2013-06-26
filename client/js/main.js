@@ -5,10 +5,10 @@ jQuery(document).ready(function($) {
 	net = new Net();
 	client = new phobos.Client();
 	client.loginToServer(); 
-	client.createPingTimer(); 
-	client.createServerLoop(); 
 	client.loadGameData();
 	client.startGame();
+	client.createPingTimer(); 
+	client.createServerLoop(); 
 	
 	socket.on('loggedIn', function(data){
 		client.mainPlayerLogged(data); 
@@ -46,6 +46,8 @@ jQuery(document).ready(function($) {
 	socket.on('sync', function(sy) {
 		var time = sy.time;
 		var sync = sy.data;
+		console.log(sy);
+		client.sync(time, sync);
 	})
 });
 function debug(data){

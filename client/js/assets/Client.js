@@ -158,6 +158,13 @@ phobos = this.phobos || {};
 	    
 	}; //s.createPingTimer
 
+	c.sync = function(nowServer, serverData) {
+		var nowClient = new Date().getTime();
+		var dt =  nowClient - nowServer;
+
+		servShips = serverData.ships;
+		servObjects = serverData.objects;
+	}
 
 	c.createServerLoop = function() {
 		setInterval(function(){
