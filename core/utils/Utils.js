@@ -73,6 +73,10 @@ this.phobos = this.phobos || {};
 		
 	}
 
+	u.getDiffPosition = function(o1, o2) {
+		return ({dX: Math.abs(o2.x - o1.x), dY: Math.abs(o2.y - o1.y)}); 
+	}
+
 	phobos.Utils = Utils;
 
 }());
