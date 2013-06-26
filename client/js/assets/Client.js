@@ -161,9 +161,9 @@ phobos = this.phobos || {};
 
 	c.createServerLoop = function() {
 		setInterval(function(){
-	        socket.emit('sync', { object:"salut" } );
+	        socket.emit('sync', { player:this.getGame().getPlayerShip().getShared() } );
 
-	    }.bind(this), 2000);
+	    }.bind(this), 1045);
 	}
 
 	phobos.Client = Client;

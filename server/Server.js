@@ -143,6 +143,16 @@ s.messages = [];
 		else return -1; 
 	}
 
+	s.getSyncDataSector = function(sector) {
+		//Now only one sector. 
+		//this.getGame().getSector(sector);
+		var sector = this.getGame();
+		var shipsList = sector.getShipsList();
+		var objectsList = sector.getObjectsList();
+
+		return {ships: shipsList, objects: objectsList};
+	}
+
 	
 
 	s.getShipsList = function() {

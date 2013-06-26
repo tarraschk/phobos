@@ -43,10 +43,9 @@ jQuery(document).ready(function($) {
 
 	})
 
-	socket.on('sync', function(data) {
-		console.log("sync");
-		console.log(data);
-
+	socket.on('sync', function(sy) {
+		var time = sy.time;
+		var sync = sy.data;
 	})
 });
 function debug(data){

@@ -309,6 +309,10 @@ this.phobos = this.phobos || {};
 		return this.local.env.getGame()._shipsList[closeEnnemyKey];
 	}
 
+	s.getShared = function() {
+		return this.shared;
+	}
+
 	s.getEnergy = function() {
 		return this.shared.energy;
 	}

@@ -130,6 +130,10 @@
 		backgroundGame3.tick();
 	}
 
+	g.getPlayerShip = function() {
+		return this._playerShip;
+	}
+
 	g.getShipsList = function() {
 		return this._shipsList; 
 	}

@@ -48,15 +48,9 @@ io.sockets.on('connection', function(client) {
 		client.emit('pong'); 
 	}); 
 	
-	client.on('sync', function() {
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		console.log("SYYYYYYYNC");
-		client.emit('sync'); 
+	client.on('sync', function(player) {
+		var syncData = server.getSyncDataSector(player.position);
+		var dateSend = new Date().getTime();
+		client.emit('sync', { time:dateSend, data: syncData }); 
 	});
  }); 
