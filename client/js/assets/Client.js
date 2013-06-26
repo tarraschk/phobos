@@ -158,12 +158,36 @@ phobos = this.phobos || {};
 	    
 	}; //s.createPingTimer
 
+	c.diffShip = function(shipServ, shipClient, nowServ, nowClient) {
+		
+	}
+
 	c.sync = function(nowServer, serverData) {
 		var nowClient = new Date().getTime();
 		var dt =  nowClient - nowServer;
 
 		servShips = serverData.ships;
 		servObjects = serverData.objects;
+
+
+		for (key in servShips) {
+			if (String((key)) === key && servShips.hasOwnProperty(key)) {
+				if (servShips[key]) {
+					if (servShips[key].index == servShips[key].id) {
+						this.diffShip(servShips[key], this.getGame().getShipsList()[key], nowServer, nowClient);
+					}
+				}
+			}
+		}
+		for (key in servObjects) {
+			if (String((key)) === key && servObjects.hasOwnProperty(key)) {
+				if (servObjects[key]) {
+					if (servObjects[key].index == servObjects[key].id) {
+					// servObjects[key].tick();
+					}
+				}
+			}
+		}
 	}
 
 	c.createServerLoop = function() {

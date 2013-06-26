@@ -46,7 +46,6 @@ jQuery(document).ready(function($) {
 	socket.on('sync', function(sy) {
 		var time = sy.time;
 		var sync = sy.data;
-		console.log(sy);
 		client.sync(time, sync);
 	})
 });
