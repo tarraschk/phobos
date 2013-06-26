@@ -49,3 +49,4 @@ httpServer.listen(gameport);
 loadGameCore();
 
 require("./phobos.server.js");
+require("./firebase.server.js");

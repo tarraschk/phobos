@@ -50,7 +50,7 @@ io.sockets.on('connection', function(client) {
 	
 	client.on('sync', function(player) {
 		var syncData = server.getSyncDataSector(player.position);
-		var dateSend = new Date().getTime();
-		client.emit('sync', { time:dateSend, data: syncData }); 
+		var frameSend = server.getGameFrame();
+		client.emit('sync', { frame:frameSend, data: syncData }); 
 	});
  }); 

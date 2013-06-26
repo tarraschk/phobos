@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
-	socket = io.connect('http://localhost:8080');
-	// socket = io.connect('http://phobosproto.jit.su');
+	// socket = io.connect('http://localhost:8080');
+	socket = io.connect('http://phobosproto.jit.su');
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
@@ -12,6 +12,7 @@ jQuery(document).ready(function($) {
 	
 	socket.on('loggedIn', function(data){
 		client.mainPlayerLogged(data); 
+		client.setGameFrame(data.frame); 
 	});
 
 	socket.on('sectorPlayersLoaded', function(shipsList){
@@ -44,9 +45,9 @@ jQuery(document).ready(function($) {
 	})
 
 	socket.on('sync', function(sy) {
-		var time = sy.time;
+		var frame = sy.frame;
 		var sync = sy.data;
-		client.sync(time, sync);
+		client.sync(frame, sync);
 	})
 });
 function debug(data){

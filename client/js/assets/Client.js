@@ -121,6 +121,10 @@ phobos = this.phobos || {};
 		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior, data);
 	}
 
+	c.setGameFrame = function(frame) {
+		this.game.setFrame(frame);
+	}
+
 	c.startGame = function() {
 		this.game.startUpdate();
 	}
@@ -170,8 +174,8 @@ phobos = this.phobos || {};
 
 	}
 
-	c.sync = function(nowServer, serverData) {
-		var nowClient = new Date().getTime();
+	c.sync = function(frameServer, serverData) {
+		var frameClient = this.getGame().getFrame();
 
 		servShips = serverData.ships;
 		servObjects = serverData.objects;
@@ -181,7 +185,7 @@ phobos = this.phobos || {};
 			if (String((key)) === key && servShips.hasOwnProperty(key)) {
 				if (servShips[key]) {
 					if (servShips[key].index == servShips[key].id) {
-						this.diffShip(servShips[key], this.getGame().getShipsList()[key], nowServer, nowClient);
+						this.diffShip(servShips[key], this.getGame().getShipsList()[key], frameServer, frameClient);
 					}
 				}
 			}

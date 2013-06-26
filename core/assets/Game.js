@@ -17,12 +17,14 @@
 	g._shipsList = [];
 	g._gameGraphics = null ; 
 	g._updateTime = 15 ; 
+	g._frame ;
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
 
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
+		this._frame = 0 ; 
 		if (server) console.log("Server");
 		else console.log("Client");
 		if (!server) this.initGraphics(); 
@@ -35,6 +37,7 @@
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		this._camera = new Camera();
+		this._frame = 0 ;
 		for (var j = 0 ; j < 700 ; j++) {
 			g._tilesMap[j] = new Tile({
 				id:1,
@@ -101,6 +104,7 @@
 	    this.diffT(); 
 	    this.objectsTick();
 	    if (!server) this.graphicsTick() ; 
+	    this._frame++;
 	}
 	g.diffT = function() {
 		t  = Date.now() ; 
@@ -119,6 +123,10 @@
 
 	g.setPlayerShip = function(playerShipData) {
 		this._playerShip = playerShipData;
+	}
+
+	g.setFrame = function(newFrame) {
+		this._frame= newFrame;
 	}
 
 	g.graphicsTick = function() {
@@ -148,6 +156,10 @@
 
 	g.getCamera = function() {
 		return this._camera;
+	}
+
+	g.getFrame = function() {
+		return this._frame;
 	}
 
 	g.objectsTick = function() {

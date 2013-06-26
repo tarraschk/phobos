@@ -163,6 +163,10 @@ s.messages = [];
 		return this.universe; 
 	}
 
+	s.getGameFrame = function() {
+		return this.getGame().getFrame();
+	}
+
 	s.getPlayerData = function(playerId) {
 		this.playerCount++ ; 
 		return ({ position: {x: Math.random() * 500, y: Math.random() * 500, z:1 }, name: playerId.name, id: this.playerCount })
@@ -180,7 +184,8 @@ s.messages = [];
 		var credentials = loginData.loginData;
 		var socketData = loginData.socket ; 
 		if (1) { // login check
-			var shipData = this.getPlayerData(loginData); 
+			var shipData = this.getPlayerData(loginData);
+			shipData.frame = this.getGameFrame(); 
 			this.addUser(shipData); 
 			return (this.playerJoinsGame(shipData, socketData)); 
 		}
