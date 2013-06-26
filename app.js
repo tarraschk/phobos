@@ -21,7 +21,6 @@ function loadGameUtils() {
 	var gameUtilsDir = "./" + coreDir + dirSep + utilsDir + dirSep;
 	require(gameUtilsDir + "Utils.js");
 }
-
 function upload(response, postData) {
   console.log("Le gestionnaire 'upload' est appelé.");
   response.writeHead(200, {"Content-Type": "text/plain"});
