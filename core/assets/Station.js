@@ -6,7 +6,8 @@ this.phobos = this.phobos || {};
 		this.initialize(params);
 	}
 
-	var s = Station.prototype ;
+	if (server) var s = Station.prototype ;
+	else var s = Station.prototype = new _.Bitmap();
 
 // static public properties:
 	Station.path = 'img/objects/stations/';
@@ -25,15 +26,20 @@ this.phobos = this.phobos || {};
 	s.fucused = false;
 	s.scannable;
 	s._id;
+	s.local = {};
 // constructor:
 	s.initialize = function (params) {
+		this.id = params.id;
+		this.index = params.id;
 		console.log("station"); 
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;
 		this.setMapCoords({x: params.x, y: params.y});
-		this.load(params.src);
+		if (!server) this.load(params.src);
 		this._life = this._lifeLeft = params.life;
+		if (server) this.local.env = server;
+		else this.local.env = client;
 	}
 
 // public methods:
@@ -45,13 +51,13 @@ this.phobos = this.phobos || {};
 		this._mapY = params.y;
 	}
 	s.drawRender = function() {
-		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, game._camera._position);
+		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
-	s.tick = function (event) {
+	s.tick = function () {
 		this._mapX = this._mapX + 0.001;
-		// this.drawRender();
+		if (!server) this.drawRender();
 	}
 	s.shoot = function(target){
 		if(utils.range(target, this) < 200){// si la cible est assez près on lui tire dessus
@@ -84,6 +90,23 @@ this.phobos = this.phobos || {};
 		}
 	}
 	s.load = function(src){
+		this.image = new Image();
+		this.image.src = Station.path+src; 
+		var that = this;
+		this.image.onload = function() {
+			that.addEventListener("mouseover", function(e) {
+				debug('over '+that._name);
+				that.manageMouseOver();
+			});
+			that.addEventListener("mouseout", function(e) {
+				debug('out of '+that._name);
+				that.manageMouseOut();
+			});
+			that.addEventListener("click", function(e){
+				that.manageClick();
+			});
+			cPlayground.addChild(that);
+		}
 	}
 	s.name = function(name){
 		if(name != undefined){

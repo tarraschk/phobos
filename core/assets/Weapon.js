@@ -13,7 +13,6 @@ this.phobos = this.phobos || {};
 	Weapon.path = 'img/objects/stations/';
 	
 // public properties:
-	w._owner = null ; 
 	w._power = null // dommages que la station peut causer quand elle attaque;
 	w._id = null;
 	w._weaponId = null ; 
@@ -21,8 +20,7 @@ this.phobos = this.phobos || {};
 	w._ready = false;
 	w._cooldown = null;
 // constructor:
-	w.initialize = function (owner, weaponId) {
-		this._owner = owner ;
+	w.initialize = function (weaponId) {
 		this._id = utils.generateId();
 		this._power = 20;
 		this._weaponId = weaponId ;
@@ -37,8 +35,9 @@ this.phobos = this.phobos || {};
 		// else this._ready = false ; 
 	}
 
-	w.doShoot = function(target) {
-		// game._gameGraphics.drawLaser(this._owner, target, this._weaponId);
+	w.doShoot = function(target, shooterPos) {
+		if (!server)
+			client.getGame()._gameGraphics.drawLaser(shooterPos, target, this._weaponId);
 		this._ready = false ; 
 		this._cooldown.start();
 	}

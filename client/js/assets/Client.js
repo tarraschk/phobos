@@ -20,7 +20,6 @@ phobos = this.phobos || {};
 
 	c.initialize = function () { 
 		c.playerId = utils.generateId(); 
-		console.log("this client :" + c.playerId);
 	}
 
 	
@@ -44,18 +43,23 @@ phobos = this.phobos || {};
 	}
 
 	c.loadSector = function(sector) {
-		console.log(sector); 
 		this.game.loadSector(sector); 
 	}
 
 	c.loadSectorPlayers = function(playersData) {
-
+		console.log("loading sector playerz");
+		console.log(playersData);
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
+					console.log(key);
+					console.log("player id: " + this.playerId);
 					if (key != this.playerId) //Must be other players, not main player already loaded
-						this.playerJoinGame(playersData[key], false); 
-					else console.log("THIS IS THE PLAYER"); 
+					{
+						var player = playersData[key].shared
+						player.id = playersData[key].id;
+						this.playerJoinGame(player, false); 
+					}
 				}
 			}
 		}
@@ -68,8 +72,7 @@ phobos = this.phobos || {};
 	// General methods 
 	
 	c.onPlayerMove = function(playerMoveData) {
-		console.log(playerMoveData);
-		console.log(this.game._shipsList);
+		this.game._shipsList[playerMoveData.player].shared.position.x += 5 ; 
 		if (this.game._shipsList[playerMoveData.player])
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
@@ -88,8 +91,8 @@ phobos = this.phobos || {};
 	}
 
 	/* Adds a player to the client's game. */
-	c.playerJoinGame  = function(playerData, mainPlayer) {
-		this.game.playerJoin(playerData, mainPlayer); 
+	c.playerJoinGame  = function(player, mainPlayer) {
+		this.game.playerJoin(player, mainPlayer); 
 		if (mainPlayer) this.initMouseClick() ;
 	}
 
@@ -97,12 +100,11 @@ phobos = this.phobos || {};
 		var that = this ; 
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
-				console.log("click"); 
 				var gameCam = that.game.getCamera();
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 
 				var cooClick2 = utils.stdToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
-				console.log(that.game._playerShip); 
+				
 				// that.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
 	        	socket.emit('playerMove', {player: that.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 			}
@@ -114,11 +116,24 @@ phobos = this.phobos || {};
 		this.loadSectorData() ; 
 		this.game = new phobos.Game();
 	}
+
+	c.setBotBehavior = function(newBotBehavior, bot, data) {
+		this.game.getObjectsList()[bot.id].setBotBehavior(newBotBehavior, data);
+	}
+
+	c.setGameFrame = function(frame) {
+		this.game.setFrame(frame);
+	}
+
 	c.startGame = function() {
 		this.game.startUpdate();
 	}
 	c.endUniverse = function(universe) {
 		this.game.stopUpdate();
+	}
+
+	c.getShipsList = function() {
+		return (this.getGame()._shipsList);
 	}
 
 	c.getGame = function() {
@@ -147,6 +162,52 @@ phobos = this.phobos || {};
 	    
 	}; //s.createPingTimer
 
+	c.diffShip = function(shipServ, shipClient, nowServ, nowClient) {
+		var positionServ = shipServ.shared.position;
+		var positionClient = shipClient.shared.position;
+		console.log(positionServ);
+		console.log(positionClient);
+		var dPos = utils.getDiffPosition(positionServ, positionClient);
+		console.log(dPos);
+		var dT = nowClient - nowServ;
+		console.log(dT);
+
+	}
+
+	c.sync = function(frameServer, serverData) {
+		var frameClient = this.getGame().getFrame();
+
+		servShips = serverData.ships;
+		servObjects = serverData.objects;
+
+
+		for (key in servShips) {
+			if (String((key)) === key && servShips.hasOwnProperty(key)) {
+				if (servShips[key]) {
+					if (servShips[key].index == servShips[key].id) {
+						this.diffShip(servShips[key], this.getGame().getShipsList()[key], frameServer, frameClient);
+						this.getGame().getShipsList()[key].shared.position = servShips[key].shared.position;
+					}
+				}
+			}
+		}
+		for (key in servObjects) {
+			if (String((key)) === key && servObjects.hasOwnProperty(key)) {
+				if (servObjects[key]) {
+					if (servObjects[key].index == servObjects[key].id) {
+					// servObjects[key].tick();
+					}
+				}
+			}
+		}
+	}
+
+	c.createServerLoop = function() {
+		setInterval(function(){
+	        socket.emit('sync', { player:this.getGame().getPlayerShip().getShared() } );
+
+	    }.bind(this), 45);
+	}
 
 	phobos.Client = Client;
 

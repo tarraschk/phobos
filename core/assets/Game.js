@@ -16,13 +16,15 @@
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 16 ; 
+	g._updateTime = 15 ; 
+	g._frame ;
 
 // constructor:
 	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
 
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
+		this._frame = 0 ; 
 		if (server) console.log("Server");
 		else console.log("Client");
 		if (!server) this.initGraphics(); 
@@ -35,6 +37,7 @@
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		this._camera = new Camera();
+		this._frame = 0 ;
 		for (var j = 0 ; j < 700 ; j++) {
 			g._tilesMap[j] = new Tile({
 				id:1,
@@ -49,9 +52,6 @@
 	g.loadSector = function(sector) {
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
-
-		console.log(sectorObjects);
-		console.log(sectorTiles);  
 		this.initObjects();
 		this.initTiles(); 
 		this.loadObjects(sectorObjects);
@@ -68,25 +68,16 @@
 
 	g.loadObjects = function(objects) {
 		for (var k = 0 ; k < objects.length ; k++) {
-			console.log("LOAD"); 
-			console.log(objects[k]);
 			switch(objects[k].type) {
 				case "Station":
 					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
-				console.log("BOT"); 
-				console.log(phobos.Bot); 
 					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}
-		console.log("OBJECTS LIST")
-		console.log(this._objectsList); 
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
-		console.log("OBJECTS LIST")
+		console.log(this._objectsList);
 	}
 
 	g.loadTiles = function(tiles) {
@@ -113,6 +104,7 @@
 	    this.diffT(); 
 	    this.objectsTick();
 	    if (!server) this.graphicsTick() ; 
+	    this._frame++;
 	}
 	g.diffT = function() {
 		t  = Date.now() ; 
@@ -123,6 +115,7 @@
 
 	g.playerJoin = function(playerData, isMainPlayer) {
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
+
 		if (isMainPlayer)
 			this.setPlayerShip(this._shipsList[playerData.id]); 
 		return this._shipsList[playerData.id];
@@ -132,6 +125,10 @@
 		this._playerShip = playerShipData;
 	}
 
+	g.setFrame = function(newFrame) {
+		this._frame= newFrame;
+	}
+
 	g.graphicsTick = function() {
 		this._gameGraphics.tick();
 		this._camera.tick();
@@ -139,6 +136,10 @@
 		backgroundGame.tick();
 		backgroundGame2.tick();
 		backgroundGame3.tick();
+	}
+
+	g.getPlayerShip = function() {
+		return this._playerShip;
 	}
 
 	g.getShipsList = function() {
@@ -157,13 +158,16 @@
 		return this._camera;
 	}
 
+	g.getFrame = function() {
+		return this._frame;
+	}
+
 	g.objectsTick = function() {
-		allowMoveClick = true ; 
-		for (key in g._shipsList) {
-			if (String((key)) === key && g._shipsList.hasOwnProperty(key)) {
-				if (g._shipsList[key].index == g._shipsList[key].id) {
-					g._shipsList[key].tick();
-					if (Math.random() < 0.001) console.log(g._shipsList[key].position); 
+		allowMoveClick = true ;  
+		for (key in this._shipsList) {
+			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
+				if (this._shipsList[key].index == this._shipsList[key].id) {
+					this._shipsList[key].tick();
 				}
 			}
 		}
@@ -172,18 +176,30 @@
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
 				if (this._objectsList[key].index == this._objectsList[key].id) {
 					this._objectsList[key].tick();
-					// if (Math.random() < 1) console.log(this._objectsList[key]); 
 				}
 			}
 		}
 		// g._station1.tick();
 		// g._station2.tick();
-		// g._shipsList[3].moveTo({x:-150,y:-200});
+		// this._shipsList[3].moveTo({x:-150,y:-200});
 		// for (var k = 0 ; k < g._tilesMap.length ; k++) {
 		// 	g._tilesMap[k].tick();
 		// }
 		// if (Math.random() < 0.01) console.clear();
 	}
+
+	g.switchPlayerToKilled = function (player) {
+		g._killedShipsList[player.id] = player;
+		//this._shipsList.splice(player.id, 1); 
+
+	}
+
+	g.switchPlayerToStation = function (player) {
+		g._dockedShipsList[player.id] = player;
+		this._shipsList.splice(player.id, 1); 
+
+	}
+
 	phobos.Game = Game;
 
 }());

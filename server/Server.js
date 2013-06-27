@@ -16,6 +16,7 @@ s._dte = new Date().getTime();
 s.universe ; 
 s.playerCount = -1 ; 
 s.users = []; 
+s.socketManager ;
 
     //a local queue of messages we delay if faking latency
 s.messages = [];
@@ -52,6 +53,8 @@ s.messages = [];
 	    this.fps_avg_acc = 0;    
 
 	    this.sectors = {sector1: []};
+
+
 	}
 
 	
@@ -73,8 +76,8 @@ s.messages = [];
 	}
 	s.generateUniverse = function(universeToken) {
 		sector = {
-			objects:[{id:0,type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},{id:1, type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},
-			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000}],
+			objects:[{id:0,type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 500,y: 600,life: 150000},{id:1, type:'Station', src: 'stationIso.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000},
+			{id:3, type:'Bot', src: 'stationIso.png',name: 'Station spatiale internationale',x: 920,y: 900,life: 150000}],
 			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
 		};
 		this.setSector(null, sector); 
@@ -122,13 +125,51 @@ s.messages = [];
 
 	}
 
+	s.setSocketsManager = function(newSocketsManager) {
+		this.socketManager = newSocketsManager; 
+	}
+
+	s.emitSocket = function(message, messageData) {
+		if (this.socketManager)
+			this.socketManager.emit(message, messageData);
+		else return -1; 
+	}
+
+	s.broadcastToAllSocket = function(message, messageData) {
+		if (this.socketManager) {
+			this.socketManager.emit(message, messageData);
+			this.socketManager.broadcast.emit(message, messageData);
+		}
+		else return -1; 
+	}
+
+	s.getSyncDataSector = function(sector) {
+		//Now only one sector. 
+		//this.getGame().getSector(sector);
+		var sector = this.getGame();
+		var shipsList = sector.getShipsList();
+		var objectsList = sector.getObjectsList();
+
+		return {ships: shipsList, objects: objectsList};
+	}
+
+	
+
+	s.getShipsList = function() {
+		return (this.getGame()._shipsList);
+	}
+
 	s.getGame = function() {
 		return this.universe; 
 	}
 
+	s.getGameFrame = function() {
+		return this.getGame().getFrame();
+	}
+
 	s.getPlayerData = function(playerId) {
 		this.playerCount++ ; 
-		return ({ position: {x: Math.random() * 500, y: Math.random() * 500}, name: playerId.name, id: this.playerCount })
+		return ({ position: {x: Math.random() * 500, y: Math.random() * 500, z:1 }, name: playerId.name, id: this.playerCount })
 	}
 
 	s.addUser = function(user) {
@@ -143,7 +184,8 @@ s.messages = [];
 		var credentials = loginData.loginData;
 		var socketData = loginData.socket ; 
 		if (1) { // login check
-			var shipData = this.getPlayerData(loginData); 
+			var shipData = this.getPlayerData(loginData);
+			shipData.frame = this.getGameFrame(); 
 			this.addUser(shipData); 
 			return (this.playerJoinsGame(shipData, socketData)); 
 		}
