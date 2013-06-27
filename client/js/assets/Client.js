@@ -150,7 +150,6 @@ phobos = this.phobos || {};
 	}
 
 	c.createPingTimer = function() {
-
 	        //Set a ping timer to 1 second, to maintain the ping/latency between
 	        //client and server and calculated roughly how our connection is doing
 
