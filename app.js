@@ -46,7 +46,7 @@ httpServer = http.createServer(function(request, response) {
 io = require('socket.io').listen(httpServer);
 
 httpServer.listen(gameport); 
-loadGameCore();
+loadGameCore(); 
 
 require("./phobos.server.js");
 require("./firebase.server.js");
