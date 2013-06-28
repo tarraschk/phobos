@@ -164,12 +164,8 @@ phobos = this.phobos || {};
 	c.diffShip = function(shipServ, shipClient, nowServ, nowClient) {
 		var positionServ = shipServ.shared.position;
 		var positionClient = shipClient.shared.position;
-		console.log(positionServ);
-		console.log(positionClient);
 		var dPos = utils.getDiffPosition(positionServ, positionClient);
-		console.log(dPos);
 		var dT = nowClient - nowServ;
-		console.log(dT);
 
 	}
 

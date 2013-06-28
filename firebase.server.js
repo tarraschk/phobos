@@ -16,4 +16,4 @@ setInterval(function(){
 
 	myRootRef.set( server.getGame().getSharedData() );
 
-}.bind(this), 5000);
+}.bind(this), 100);
