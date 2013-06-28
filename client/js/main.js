@@ -1,6 +1,6 @@
 jQuery(document).ready(function($) {
-	// socket = io.connect('http://localhost:8080');
-	socket = io.connect('http://phobosproto.jit.su');
+	socket = io.connect('http://localhost:8080');
+	// socket = io.connect('http://phobosproto.jit.su');
 	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();

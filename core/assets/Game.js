@@ -138,6 +138,26 @@
 		backgroundGame3.tick();
 	}
 
+	g.getSharedData = function() {
+		var sharedData = { ships:[], objects:[] };
+		for (key in this._shipsList) {
+			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
+				if (this._shipsList[key].index == this._shipsList[key].id) {
+					sharedData.ships[key] = this._shipsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._objectsList) {
+			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
+				if (this._objectsList[key].index == this._objectsList[key].id) {
+					sharedData.objects[key] = this._objectsList[key].shared ;
+				}
+			}
+		}
+		console.log(sharedData);
+	}
+
 	g.getPlayerShip = function() {
 		return this._playerShip;
 	}
