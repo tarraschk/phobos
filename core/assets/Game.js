@@ -78,6 +78,12 @@
 			}
 		}
 		console.log(this._objectsList);
+		console.log("LOAD OBJECTS");
+		console.log("LOAD OBJECTS");
+		console.log("LOAD OBJECTS");
+		console.log("LOAD OBJECTS");
+		console.log("LOAD OBJECTS");
+		console.log("LOAD OBJECTS");
 	}
 
 	g.loadTiles = function(tiles) {
@@ -139,7 +145,7 @@
 	}
 
 	g.getSharedData = function() {
-		var sharedData = { ships:[], objects:[] };
+		var sharedData = { ships:{}, objects:{} };
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
 				if (this._shipsList[key].index == this._shipsList[key].id) {
@@ -151,11 +157,18 @@
 		for (key in this._objectsList) {
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
 				if (this._objectsList[key].index == this._objectsList[key].id) {
-					sharedData.objects[key] = this._objectsList[key].shared ;
+					// sharedData.objects[key] = this._objectsList[key].shared ;
 				}
 			}
 		}
+		console.log("GET SHARED DATA");
+		console.log("GET SHARED DATA");
+		console.log("GET SHARED DATA");
+		console.log("GET SHARED DATA");
 		console.log(sharedData);
+		console.log("GET SHARED DATA");
+
+		return sharedData;
 	}
 
 	g.getPlayerShip = function() {

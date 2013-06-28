@@ -169,7 +169,7 @@ s.messages = [];
 
 	s.getPlayerData = function(playerId) {
 		this.playerCount++ ; 
-		return ({ position: {x: Math.random() * 500, y: Math.random() * 500, z:1 }, name: playerId.name, id: this.playerCount })
+		return ({ position: {x: Math.random() * 500, y: Math.random() * 500, z:1 }, name: "testeur" + this.playerCount, id: this.playerCount })
 	}
 
 	s.addUser = function(user) {
