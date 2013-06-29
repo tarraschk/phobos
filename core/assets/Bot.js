@@ -435,18 +435,17 @@ this.phobos = this.phobos || {};
 				that.name = shipData.name; 
 				cPlayground.addChild(that);
 				cPlayground.update();
-
-
+				
 				that.addEventListener("mouseover", function(e) {
-					debug('over '+that.id);
-					that.manageMouseOver();
+					ui.showEntityInfos(that);
 				});
 				that.addEventListener("mouseout", function(e) {
-					debug('out of '+that.id);
-					that.manageMouseOut();
+					ui.hideEntityInfos(that);
 				});
 				that.addEventListener("click", function(e){
-					that.manageClick();
+					allowMoveClick = false ; 
+					debug('arrimage '+that._name);
+					client.getGame().getPlayerShip().dockTo(that);
 				});
 
 			}

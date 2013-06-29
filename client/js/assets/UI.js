@@ -51,11 +51,17 @@
 		var surroundDimensions = {w:296,h:167};
 		g.x = target.x + client.getGame().getCamera().x();
 		g.y = target.y + client.getGame().getCamera().y();
+		if (target.image) {
 		console.log(target.image.width );
 		console.log(target.image.height );
-
-		g.scaleX = 1.2 * target.image.width / surroundDimensions.w;
-		g.scaleY = 1.1 * target.image.height / surroundDimensions.h;
+			g.scaleX = 1.2 * target.image.width / surroundDimensions.w;
+			g.scaleY = 1.1 * target.image.height / surroundDimensions.h;
+		}
+		else if (target.spriteSheet) {
+			console.log(target.spriteSheet);
+			g.scaleX = 1.2 * target.spriteSheet.width / surroundDimensions.w;
+			g.scaleY = 1.1 * target.spriteSheet.height / surroundDimensions.h;
+		}
 		// g.beginStroke(_.Graphics.getRGB(50,6,10));
 		// g.setStrokeStyle(5,10,10);
 		// g.drawCircle(target.x ,target.y ,300);
