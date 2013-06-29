@@ -97,11 +97,9 @@ this.phobos = this.phobos || {};
 		var that = this;
 		this.image.onload = function() {
 			that.addEventListener("mouseover", function(e) {
-				debug('over '+that._name);
 				that.manageMouseOver();
 			});
 			that.addEventListener("mouseout", function(e) {
-				debug('out of '+that._name);
 				that.manageMouseOut();
 			});
 			that.addEventListener("click", function(e){

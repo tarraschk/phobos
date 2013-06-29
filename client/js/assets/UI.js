@@ -8,6 +8,8 @@
 
 	ui.initialize = function(params){
 		this.renderTargetWrapper();
+		this._container = new _.Container();
+		cPlayground.addChild(this._container);
 	}
 
 	ui.renderTargetWrapper = function(data) {
@@ -26,19 +28,40 @@
 		}).slideDown(300);
 	}
 
+	ui.clear = function() {
+		this._container.removeAllChildren();
+	}
+
+	ui.drawStatusBar = function(target) {
+		var g = new _.Graphics();
+		g.beginStroke(_.Graphics.getRGB(50,6,10));
+		g.setStrokeStyle(5,10,10);
+		startPoint = {x: 50, y:100};
+		endPoint = {x: 900, y:900};
+		g.moveTo(startPoint.x,startPoint.y)
+		.lineTo(endPoint.x,endPoint.y).endStroke();
+
+		var s = new _.Shape(g);
+		this._container.addChild(s);
+	}
+
 	ui.showEntityInfos = function(entity){
-		var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
-			name: entity.name(),
-			id: entity.id()
-		}));
-		b.appendTo($('#body')).css({
-			left: mouse.x,
-			top: mouse.y
-		}).slideDown(300);
+		console.log("Show entity");
+		console.log(entity);
+		this.drawStatusBar(entity);
+		// var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
+		// 	name: entity.name(),
+		// 	id: entity.id()
+		// }));
+		// b.appendTo($('#body')).css({
+		// 	left: mouse.x,
+		// 	top: mouse.y
+		// }).slideDown(300);
 	}
 	ui.hideEntityInfos = function(entity){
-		$("#"+entity.id()).slideUp(100, function(){
-			$(this).remove();
-		});
+		// $("#"+entity.id()).slideUp(100, function(){
+		// 	$(this).remove();
+		// });
+		this.clear();
 	}
 })(jQuery);
