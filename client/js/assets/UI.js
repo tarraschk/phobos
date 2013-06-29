@@ -59,8 +59,8 @@
 		}
 		else if (target.spriteSheet) {
 			console.log(target.spriteSheet);
-			g.scaleX = 1.2 * target.spriteSheet.width / surroundDimensions.w;
-			g.scaleY = 1.1 * target.spriteSheet.height / surroundDimensions.h;
+			g.scaleX = 1.2 * target.spriteSheet._regX / surroundDimensions.w;
+			g.scaleY = 1.1 * target.spriteSheet._regY / surroundDimensions.h;
 		}
 		// g.beginStroke(_.Graphics.getRGB(50,6,10));
 		// g.setStrokeStyle(5,10,10);
