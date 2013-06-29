@@ -36,8 +36,8 @@
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
-		startPoint = {x: 50, y:100};
-		endPoint = {x: 900, y:900};
+		startPoint = {x: target.x, y:target.y};
+		endPoint = {x: target.x + 200, y:target.y + 50};
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
 
