@@ -53,6 +53,9 @@
 		g.y = target.y + client.getGame().getCamera().y();
 		console.log(target.image.width );
 		console.log(target.image.height );
+
+		g.scaleX = 1.2 * target.image.width / surroundDimensions.w;
+		g.scaleY = 1.1 * target.image.height / surroundDimensions.h;
 		// g.beginStroke(_.Graphics.getRGB(50,6,10));
 		// g.setStrokeStyle(5,10,10);
 		// g.drawCircle(target.x ,target.y ,300);
