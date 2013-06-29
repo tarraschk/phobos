@@ -37,6 +37,7 @@ var http = require('http'),
 	assetsDir = "assets";
 	phobos = {};
 	server = true ; 
+	firebaseRecover = false;
 	
 httpServer = http.createServer(function(request, response) {
 	response.write('Phobos server launched');
