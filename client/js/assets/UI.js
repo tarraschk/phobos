@@ -7,6 +7,8 @@
 	var ui = UI.prototype;
 
 	ui.initialize = function(params){
+		this._containerX = 0;
+		this._containerY = 0 ; 
 		this.renderTargetWrapper();
 		this._container = new _.Container();
 		cPlayground.addChild(this._container);
@@ -36,20 +38,34 @@
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
-		g.drawCircle(target.x,target.y,30);
+		g.drawCircle(target.x ,target.y ,300);
 		startPoint = {x: target.x, y:target.y};
 		endPoint = {x: target.x + 200, y:target.y + 50};
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
 
 		var s = new _.Shape(g);
-		this._container.addChild(s);
+	}
+	ui.drawSurround = function(target) {
+		var g = new _.Bitmap("img/ui/surround.png");
+		g.x = target.x + client.getGame().getCamera().x();
+		g.y = target.y + client.getGame().getCamera().y();
+		// g.beginStroke(_.Graphics.getRGB(50,6,10));
+		// g.setStrokeStyle(5,10,10);
+		// g.drawCircle(target.x ,target.y ,300);
+		// startPoint = {x: target.x, y:target.y};
+		// endPoint = {x: target.x + 200, y:target.y + 50};
+		// g.moveTo(startPoint.x,startPoint.y)
+		// .lineTo(endPoint.x,endPoint.y).endStroke();
+
+		// var s = new _.Shape(g);
+		this._container.addChild(g);
 	}
 
 	ui.showEntityInfos = function(entity){
-		console.log("Show entity");
 		console.log(entity);
 		this.drawStatusBar(entity);
+		this.drawSurround(entity);
 		// var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
 		// 	name: entity.name(),
 		// 	id: entity.id()
@@ -65,4 +81,10 @@
 		// });
 		this.clear();
 	}
+
+	ui.tick = function() {
+		this._container.x = this._containerX - client.getGame().getCamera().x();
+		this._container.y = this._containerY - client.getGame().getCamera().y();
+	}
+
 })(jQuery);

@@ -1,7 +1,6 @@
 jQuery(document).ready(function($) {
 	socket = io.connect('http://localhost:8080');
 	// socket = io.connect('http://phobosproto.jit.su');
-	ui = new UI();
 	net = new Net();
 	client = new phobos.Client();
 	client.loginToServer(); 
@@ -9,6 +8,7 @@ jQuery(document).ready(function($) {
 	client.startGame();
 	client.createPingTimer(); 
 	client.createServerLoop(); 
+	ui = new UI();
 	
 	socket.on('loggedIn', function(data){
 		client.mainPlayerLogged(data); 

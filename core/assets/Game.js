@@ -135,6 +135,7 @@
 		backgroundGame.tick();
 		backgroundGame2.tick();
 		backgroundGame3.tick();
+		ui.tick();
 	}
 
 	g.getSharedData = function() {
@@ -199,6 +200,7 @@
 				}
 			}
 		}
+
 		// g._station1.tick();
 		// g._station2.tick();
 		// this._shipsList[3].moveTo({x:-150,y:-200});
