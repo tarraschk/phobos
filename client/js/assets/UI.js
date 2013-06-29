@@ -36,6 +36,7 @@
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
+		g.drawCircle(target.x,target.y,30);
 		startPoint = {x: target.x, y:target.y};
 		endPoint = {x: target.x + 200, y:target.y + 50};
 		g.moveTo(startPoint.x,startPoint.y)

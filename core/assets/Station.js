@@ -97,13 +97,15 @@ this.phobos = this.phobos || {};
 		var that = this;
 		this.image.onload = function() {
 			that.addEventListener("mouseover", function(e) {
-				that.manageMouseOver();
+				ui.showEntityInfos(that);
 			});
 			that.addEventListener("mouseout", function(e) {
-				that.manageMouseOut();
+				ui.hideEntityInfos(that);
 			});
 			that.addEventListener("click", function(e){
-				that.manageClick();
+				allowMoveClick = false ; 
+				debug('arrimage '+that._name);
+				game._playerShip.dockTo(that);
 			});
 			cPlayground.addChild(that);
 		}
@@ -116,20 +118,6 @@ this.phobos = this.phobos || {};
 		else{
 			return this._name;
 		}
-	}
-	s.manageClick = function(){
-		allowMoveClick = false ; 
-		debug('arrimage '+this._name);
-		game._playerShip.dockTo(this);
-		//afficher dans le hud en tant que cible potentielle
-	}
-	//Affiche le nom et la barre de vie de la station
-	s.manageMouseOver = function(){
-		ui.showEntityInfos(this);
-	}
-	//cache le nom et la barre de vie de la station
-	s.manageMouseOut = function(){
-		ui.hideEntityInfos(this);
 	}
 	s.isInspected = function(is){
 		if(is != undefined){
