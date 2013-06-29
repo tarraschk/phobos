@@ -4,16 +4,6 @@ var myRootRef = new Firebase('https://phobosdb.firebaseIO.com/');
 
 setInterval(function(){
 	var sharedData = server.getGame().getSharedData();
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-	console.log(sharedData);	
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-	console.log("SHAREDDATA");
-
-	myRootRef.set( server.getGame().getSharedData() );
+	myRootRef.server( set.getGame().getSharedData() );
 
 }.bind(this), 100);
