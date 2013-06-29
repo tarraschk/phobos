@@ -48,8 +48,11 @@
 	}
 	ui.drawSurround = function(target) {
 		var g = new _.Bitmap("img/ui/surround.png");
+		var surroundDimensions = {w:296,h:167};
 		g.x = target.x + client.getGame().getCamera().x();
 		g.y = target.y + client.getGame().getCamera().y();
+		console.log(target.image.width );
+		console.log(target.image.height );
 		// g.beginStroke(_.Graphics.getRGB(50,6,10));
 		// g.setStrokeStyle(5,10,10);
 		// g.drawCircle(target.x ,target.y ,300);

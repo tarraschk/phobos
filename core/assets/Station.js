@@ -92,22 +92,24 @@ this.phobos = this.phobos || {};
 		}
 	}
 	s.load = function(src){
-		this.image = new Image();
-		this.image.src = Station.path+src; 
-		var that = this;
-		this.image.onload = function() {
-			that.addEventListener("mouseover", function(e) {
-				ui.showEntityInfos(that);
-			});
-			that.addEventListener("mouseout", function(e) {
-				ui.hideEntityInfos(that);
-			});
-			that.addEventListener("click", function(e){
-				allowMoveClick = false ; 
-				debug('arrimage '+that._name);
-				game._playerShip.dockTo(that);
-			});
-			cPlayground.addChild(that);
+		if (!server) {
+			this.image = new Image();
+			this.image.src = Station.path+src; 
+			var that = this;
+			this.image.onload = function() {
+				that.addEventListener("mouseover", function(e) {
+					ui.showEntityInfos(that);
+				});
+				that.addEventListener("mouseout", function(e) {
+					ui.hideEntityInfos(that);
+				});
+				that.addEventListener("click", function(e){
+					allowMoveClick = false ; 
+					debug('arrimage '+that._name);
+					client.getGame().getPlayerShip().dockTo(that);
+				});
+				cPlayground.addChild(that);
+			}
 		}
 	}
 	s.name = function(name){
