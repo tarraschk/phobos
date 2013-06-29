@@ -10,6 +10,10 @@
 
 	}
 
+	ui.renderTargetWrapper = function() {
+		
+	}
+
 	ui.newStationElement = function() {
 		var b = $(Mustache.render($('.station_main_container').html(), {
 			name: "station",
