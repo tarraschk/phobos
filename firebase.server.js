@@ -1,9 +1,19 @@
 var Firebase = require('firebase');
-var myRootRef = new Firebase('https://phobosdb.firebaseIO.com/');
-// myRootRef.set({server:{game: {sector1:"data", sector2: "coucou"} } });
+var myRootRef = new Firebase('https://phobosalpha.firebaseio.com/');
+myRootRef.set({server:{game: {sector1:"data", sector2: "coucou"} } });
 
 setInterval(function(){
 	var sharedData = server.getGame().getSharedData();
-	myRootRef.server( set.getGame().getSharedData() );
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
+	console.log(sharedData);	
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
+	console.log("SHAREDDATA");
 
-}.bind(this), 100);
+	myRootRef.set( {server:{game:sharedData}} );
+
+}.bind(this), 2000);
