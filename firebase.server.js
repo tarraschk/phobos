@@ -1,6 +1,6 @@
 var Firebase = require('firebase');
-var myRootRef = new Firebase('https://phobosalpha.firebaseio.com/');
-myRootRef.set({server:{game: {sector1:"data", sector2: "coucou"} } });
+var phobosAlpha = new Firebase('https://phobosalpha.firebaseio.com/');
+phobosAlpha.set({server:{game: {sector1:"data", sector2: "coucou"} } });
 
 setInterval(function(){
 	var sharedData = server.getGame().getSharedData();
@@ -14,6 +14,6 @@ setInterval(function(){
 	console.log("SHAREDDATA");
 	console.log("SHAREDDATA");
 
-	myRootRef.set( {server:{game:sharedData}} );
+	phobosAlpha.set( {server:{game: { sector1: sharedData}}} );
 
-}.bind(this), 2000);
+}.bind(this), 500);
