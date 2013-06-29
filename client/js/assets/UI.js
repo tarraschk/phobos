@@ -11,7 +11,7 @@
 	}
 
 	ui.renderTargetWrapper = function() {
-		
+
 	}
 
 	ui.newStationElement = function() {
@@ -26,7 +26,6 @@
 	}
 
 	ui.showEntityInfos = function(entity){
-		
 		var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
 			name: entity.name(),
 			id: entity.id()
