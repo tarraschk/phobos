@@ -7,11 +7,12 @@
 	var ui = UI.prototype;
 
 	ui.initialize = function(params){
-
+		this.renderTargetWrapper();
 	}
 
-	ui.renderTargetWrapper = function() {
-
+	ui.renderTargetWrapper = function(data) {
+		//Data to define
+		
 	}
 
 	ui.newStationElement = function() {

@@ -7,6 +7,7 @@
 	<meta name="generator" content="Sublime Text 2" />
 	<link rel="stylesheet" media="screen" type="text/css" title="index" href="css/reset.css" />
 	<link rel="stylesheet" media="screen" type="text/css" title="index" href="css/index.css" />
+	<link rel="stylesheet" media="screen" type="text/css" title="index" href="css/ui.css" />
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/themes/smoothness/jquery-ui.css" />
@@ -17,7 +18,16 @@
 	<body id="body">
 		<canvas width="1800" height="1000" id="background"></canvas>
 		<canvas width="1800" height="1000" id="playground"></canvas>
-		<div id="hud"></div>
+		<div id="hud">
+			<div id="target_wrapper">
+			</div>
+			<div id="minimap">
+			</div>
+			<div id="header">
+			</div>
+			<div id="minichat">
+			</div>
+		</div>
 		<div id="debug"></div>
 		<div id="misc_text">Ping: <span id="ping"></span> ms</div>
 	 <script type="text/javascript" src="http://localhost:8080/socket.io/socket.io.js"></script>

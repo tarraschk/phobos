@@ -51,7 +51,7 @@ jQuery(document).ready(function($) {
 	})
 });
 function debug(data){
-	$('<div>').html(data+'<br/>').prependTo($('#debug'));
+	$('<div>').html(data+'<br/>').prependTo($('#minichat'));
 }
 function resize(){
 	$('canvas').each(function(){
