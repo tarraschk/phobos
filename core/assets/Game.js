@@ -77,13 +77,6 @@
 				break;
 			}
 		}
-		console.log(this._objectsList);
-		console.log("LOAD OBJECTS");
-		console.log("LOAD OBJECTS");
-		console.log("LOAD OBJECTS");
-		console.log("LOAD OBJECTS");
-		console.log("LOAD OBJECTS");
-		console.log("LOAD OBJECTS");
 	}
 
 	g.loadTiles = function(tiles) {
@@ -161,12 +154,6 @@
 				}
 			}
 		}
-		console.log("GET SHARED DATA");
-		console.log("GET SHARED DATA");
-		console.log("GET SHARED DATA");
-		console.log("GET SHARED DATA");
-		console.log(sharedData);
-		console.log("GET SHARED DATA");
 
 		return sharedData;
 	}
