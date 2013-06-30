@@ -50,7 +50,7 @@ this.phobos = this.phobos || {};
 // public methods:
 
 	s.moveTo = function (destination) {
-		if (this.shared.status == "docked") {
+		if (this.shared.status != "docked") {
 			this.setHasTarget(false);
 			this.cancelDock() ; 
 			this.setDestination({x:destination.x, y:destination.y});
@@ -344,7 +344,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.getStatus = function() {
-		
+		return this.shared.status;
 	}
 
 	s.drawRender = function () {
