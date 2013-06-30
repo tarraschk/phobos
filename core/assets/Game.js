@@ -228,6 +228,7 @@
 		console.log(this.getDockedShipsList());
 		this._dockedShipsList[player.id] = player;
 		this._shipsList.splice(player.id, 1); 
+		this._shipsList.remove(player.id);
 		console.log("AFTER");
 		console.log(this.getShipsList());
 		console.log(this.getDockedShipsList());
