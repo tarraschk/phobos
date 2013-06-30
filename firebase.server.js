@@ -5,8 +5,7 @@ var phobosAlpha = new Firebase('https://phobosalpha.firebaseio.com/');
 
 function startGameUpdate() {
 	setInterval(function(){
-		var sharedData = server.getGame().getSharedData();
-		phobosAlpha.set( {server:{game: { sector1: sharedData}}} );
+		phobosAlpha.set( server.getExport() );
 
 	}.bind(this), 500);
 }

@@ -38,6 +38,7 @@ this.phobos = this.phobos || {};
 				hasTarget: false , 
 				energy: 100,
 				targetId: null,
+				isDocked:false,
 			}
 			if (server) this.local.env = server;
 			else this.local.env = client;
@@ -48,8 +49,10 @@ this.phobos = this.phobos || {};
 // public methods:
 
 	s.moveTo = function (destination) {
-		this.setHasTarget(false);
-		this.setDestination({x:destination.x, y:destination.y});
+		if (!this.shared.isDocked) {
+			this.setHasTarget(false);
+			this.setDestination({x:destination.x, y:destination.y});
+		}
 	}
 
 	s.dockTo = function(dockStation) {
@@ -57,13 +60,12 @@ this.phobos = this.phobos || {};
 		// 	x: dockStation._mapX + dockStation.image.width / 2, 
 		// 	y: dockStation._mapY + dockStation.image.height / 2
 		// }
-		console.log(dockStation);
 		var newDestination = {
 			x: dockStation.shared.position.x + 150, 
 			y: dockStation.shared.position.y - 70
 		}
 		this.moveTo(newDestination);
-		this.shared.dockingTarget = dockStation;
+		this.shared.dockingTarget = dockStation.getShared();
 	}
 
 	s.rotate = function (rotation) {
@@ -227,16 +229,19 @@ this.phobos = this.phobos || {};
 	}
 
 	s.dockingMovement = function() {
-		var dockPosition = {position: {x:this.shared.dockingTarget._mapX, y:this.shared.dockingTarget._mapY } }; 
-		if (utils.distance(dockPosition, this) < 200) {
+		var dockPosition = {position: {x:this.shared.position.x, y:this.shared.position.x } }; 
+		if (utils.distance(dockPosition, this.getShared()) < 200) {
 			this.doDock();
 		}
 	}
 
 	s.doDock = function() {
+		console.log("DO DOOOOCK");
 		this.shared.position.z = this.shared.dockingTarget._mapZ;
+		this.shared.isDocked = true ; 
 		this.local.env.getGame().switchPlayerToStation(this);
 		this.visible = false;
+		this.stop();
 		debug("Docked !");
 		ui.newStationElement();
 	}

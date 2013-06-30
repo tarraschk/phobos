@@ -10,6 +10,7 @@
 	g._engine = null;
 	g._playerShip = null;
 	g._tilesMap = []; 
+	g._sectors = [];
 	g._objectsList = [] ; 
 	g._tilesList = [] ;
 	g._dockedShipsList = [] ; 
@@ -167,6 +168,10 @@
 		return this._shipsList; 
 	}
 
+	g.getDockedShipsList = function() {
+		return this._dockedShipsList; 
+	}
+
 	g.getObjectsList = function() {
 		return this._objectsList; 
 	}
@@ -184,6 +189,7 @@
 	}
 
 	g.objectsTick = function() {
+		// if (Math.random() < 0.1) console.log(client.getGame().getShipsList());
 		allowMoveClick = true ;  
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
@@ -211,14 +217,20 @@
 	}
 
 	g.switchPlayerToKilled = function (player) {
-		g._killedShipsList[player.id] = player;
+		this._killedShipsList[player.id] = player;
 		//this._shipsList.splice(player.id, 1); 
 
 	}
 
 	g.switchPlayerToStation = function (player) {
-		g._dockedShipsList[player.id] = player;
+		console.log("BEFORE");
+		console.log(this.getShipsList());
+		console.log(this.getDockedShipsList());
+		this._dockedShipsList[player.id] = player;
 		this._shipsList.splice(player.id, 1); 
+		console.log("AFTER");
+		console.log(this.getShipsList());
+		console.log(this.getDockedShipsList());
 
 	}
 

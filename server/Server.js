@@ -172,6 +172,25 @@ s.messages = [];
 		return ({ position: {x: Math.random() * 500, y: Math.random() * 500, z:1 }, name: "testeur" + this.playerCount, id: utils.generateId() })
 	}
 
+	s.getUsers = function() {
+		return this.users;
+	}
+
+	s.getExport = function() {
+		var sharedData = this.getGame().getSharedData();
+		var users = this.getUsers();
+		return (
+		{
+			server:{
+					game: 
+						{ 
+							sector1: sharedData
+						},
+					users: users
+			}
+		});
+	}
+
 	s.addUser = function(user) {
 		this.users[user.id] = user ; 
 	}

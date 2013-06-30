@@ -32,11 +32,10 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		this.id = params.id;
 		this.index = params.id;
-		console.log("station"); 
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;
-		this.shared.position = {x: params.x, y: params.y};
+		this.shared = { position: {x: params.x, y: params.y } };
 		this.setMapCoords({x: params.x, y: params.y});
 		if (!server) this.load(params.src);
 		this._life = this._lifeLeft = params.life;
@@ -58,29 +57,12 @@ this.phobos = this.phobos || {};
 		this.y = renderCoo.y;
 	}
 	s.tick = function () {
-		this._mapX = this._mapX + 0.001;
+		this.shared.position.x = this.shared.position.x + 0.1;
 		if (!server) this.drawRender();
-	}
-	s.shoot = function(target){
-		if(utils.range(target, this) < 200){// si la cible est assez près on lui tire dessus
-
-		}
-		else{
-			this._target = null;
-		}
 	}
 	s.takeDamage = function(shooter, d){
 		this._target = shooter;
 		this._lifeLeft -= d;
-	}
-	s.setBackgroundSrc = function(newSrc) {
-
-	}
-	s.onOver = function(){
-		//display name
-	}
-	s.onClick = function(){
-		//gerer le clic
 	}
 	s.id = function(id){
 		if(id != undefined){
@@ -111,6 +93,9 @@ this.phobos = this.phobos || {};
 				cPlayground.addChild(that);
 			}
 		}
+	}
+	s.getShared = function() {
+		return this.shared;
 	}
 	s.name = function(name){
 		if(name != undefined){

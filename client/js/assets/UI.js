@@ -20,14 +20,15 @@
 	}
 
 	ui.newStationElement = function() {
-		var b = $(Mustache.render($('.station_main_container').html(), {
-			name: "station",
-			id: 1
-		}));
-		b.appendTo($('#body')).css({
-			left: 300,
-			top: 400
-		}).slideDown(300);
+		debug("New station element");
+		// var b = $(Mustache.render($('.station_main_container').html(), {
+		// 	name: "station",
+		// 	id: 1
+		// }));
+		// b.appendTo($('#body')).css({
+		// 	left: 300,
+		// 	top: 400
+		// }).slideDown(300);
 	}
 
 	ui.clear = function() {
