@@ -308,10 +308,12 @@ this.phobos = this.phobos || {};
 
 	s.rotationFrame = function() {
 		// this.gotoAndPlay("walk");
+		console.log(this.currentAnimationFrame);
 		if (this.getPosition().rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 4)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 4)));
+		if (Math.random() < 0.1) console.log(this.currentAnimationFrame);
 
 	}
 
@@ -370,7 +372,7 @@ this.phobos = this.phobos || {};
 		if (!server) {
 			var imgShip = new Image(); 
 
-			shipData.src  = "spriteShip.png";
+			shipData.src  = "spriteMantis1.png";
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
@@ -378,10 +380,10 @@ this.phobos = this.phobos || {};
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
 					images: [this], 
-					frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+					frames: {width: 255, height: 235, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
 					// width, height & registration point of each sprite
 					animations: {    
-						walk: [0, 30, "walk"]
+						walk: [0, 86, "walk"]
 					}
 				});
 				that.index = shipData.id; 
