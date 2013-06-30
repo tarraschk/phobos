@@ -86,9 +86,10 @@ this.phobos = this.phobos || {};
 					ui.hideEntityInfos(that);
 				});
 				that.addEventListener("click", function(e){
+					console.log("STATION !");
 					allowMoveClick = false ; 
 					debug('arrimage '+that._name);
-					client.getGame().getPlayerShip().dockTo(that);
+					client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:that.getShared()});
 				});
 				cPlayground.addChild(that);
 			}

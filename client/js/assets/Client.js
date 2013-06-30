@@ -16,6 +16,7 @@ phobos = this.phobos || {};
 	c.playerId ; 
 	c.lastPingTime ; 
 	c.pingTime ; 
+	c.syncTime = 5000 ; 
 	// constructor:
 
 	c.initialize = function () { 
@@ -32,6 +33,10 @@ phobos = this.phobos || {};
 	}
 	c.onInput = function() {
 		
+	}
+
+	c.socketEmit = function(message, data) {
+		socket.emit(message, data);
 	}
 
 	// Link with server methods 
@@ -77,6 +82,12 @@ phobos = this.phobos || {};
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
 
+	c.onPlayerDock = function(dock) {
+		console.log("Docking")
+		console.log(dock);
+		this.getGame().getShipsList()[dock.player.id].dockTo(dock.station);
+	}
+
 	/* A player joined the game.
 	This player IS the current client's player. */
 	c.mainPlayerLogged = function(playerData)  {
@@ -100,6 +111,7 @@ phobos = this.phobos || {};
 		var that = this ; 
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
+				console.log("Move to !");
 				var gameCam = that.game.getCamera();
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);
 
@@ -201,7 +213,7 @@ phobos = this.phobos || {};
 		setInterval(function(){
 	        socket.emit('sync', { player:this.getGame().getPlayerShip().getShared() } );
 
-	    }.bind(this), 45);
+	    }.bind(this), this.syncTime);
 	}
 
 	phobos.Client = Client;

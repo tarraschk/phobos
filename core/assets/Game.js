@@ -26,6 +26,9 @@
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
 		this._frame = 0 ; 
+		this._shipsList = [];
+		this._dockedShipsList = [];
+		this._killedShipsList = [];
 		if (server) console.log("Server");
 		else console.log("Client");
 		if (!server) this.initGraphics(); 
@@ -140,11 +143,19 @@
 	}
 
 	g.getSharedData = function() {
-		var sharedData = { ships:{}, objects:{} };
+		var sharedData = { killedShips: {}, dockedShips: {}, ships:{}, objects:{} };
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
 				if (this._shipsList[key].index == this._shipsList[key].id) {
 					sharedData.ships[key] = this._shipsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._dockedShipsList) {
+			if (String((key)) === key && this._dockedShipsList.hasOwnProperty(key)) {
+				if (this._dockedShipsList[key].index == this._dockedShipsList[key].id) {
+					sharedData.dockedShips[key] = this._dockedShipsList[key].shared ;
 				}
 			}
 		}
@@ -227,8 +238,9 @@
 		console.log(this.getShipsList());
 		console.log(this.getDockedShipsList());
 		this._dockedShipsList[player.id] = player;
-		this._shipsList.splice(player.id, 1); 
-		this._shipsList.remove(player.id);
+		// this._shipsList.splice(player.id, 1); 
+		delete this._shipsList[player.id];
+		// this._shipsList.remove(1, 2);
 		console.log("AFTER");
 		console.log(this.getShipsList());
 		console.log(this.getDockedShipsList());

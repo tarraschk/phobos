@@ -20,10 +20,23 @@ io.sockets.on('connection', function(client) {
 	});
 
 	client.on('playerMove', function(data){
+		console.log("MOOOVE TO !");
 		server.playerMove(data.player, data);
   		client.broadcast.emit('playerMove', data);
   		client.emit('playerMove', data);
 	});
+
+	client.on('playerDockTo', function(data){
+		console.log("DOCK TO !");
+		console.log(data);
+		var playerDocking = data.player;
+		var station = data.station;
+		server.getGame().getShipsList()[playerDocking.id].dockTo(station);
+		// server.playerMove(data.player, data);
+  		client.broadcast.emit('playerDockTo', data);
+  		client.emit('playerDockTo', data);
+	});
+
 	client.on('playerData', function (playerData) {
 
 	});

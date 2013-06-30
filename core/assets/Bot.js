@@ -287,10 +287,13 @@ this.phobos = this.phobos || {};
 			case "attack":
 				if (this.shared.hasTarget) {
 					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
-					var targetRange = utils.distance(currentTarget.shared, this.shared);
-					if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
-						if (server) this.setBotBehavior("backToPosition");
+					if (currentTarget) {
+						var targetRange = utils.distance(currentTarget.shared, this.shared);
+						if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
+							if (server) this.setBotBehavior("backToPosition");
+						}
 					}
+					else this.setBotBehavior("backToPosition");
 				}
 				else this.setAI("backToPositionTrigger");
 			break;

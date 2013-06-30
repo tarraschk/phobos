@@ -35,6 +35,10 @@ jQuery(document).ready(function($) {
 		client.onPlayerMove(move); 
 	});
 
+	socket.on('playerDockTo', function(dock){
+		client.onPlayerDock(dock); 
+	});
+
 	socket.on('newPlayerLoggedIn', function(player) {
 		client.newPlayerLogged(player); 
 	});
