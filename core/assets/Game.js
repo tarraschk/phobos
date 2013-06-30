@@ -199,6 +199,11 @@
 		return this._frame;
 	}
 
+	g.getMainPlayerStatus = function() {
+		console.log(this._playerShip);
+		return this._playerShip.getStatus();
+	}
+
 	g.objectsTick = function() {
 		// if (Math.random() < 0.1) console.log(client.getGame().getShipsList());
 		allowMoveClick = true ;  

@@ -107,10 +107,20 @@ phobos = this.phobos || {};
 		if (mainPlayer) this.initMouseClick() ;
 	}
 
+
 	c.initMouseClick = function() {
 		var that = this ; 
 		$(document).on('click', function(e){
 			if (allowMoveClick) {
+				switch(that.getGame().getMainPlayerStatus()) {
+					case "space":
+					break;
+					case "docked":
+					break;
+					case "killed":
+					break;
+				}
+				console.log(allowMoveClick);
 				console.log("Move to !");
 				var gameCam = that.game.getCamera();
 				var cooClick = utils.cameraToAbsolute({	x:e.clientX, y:e.clientY}, gameCam._position);

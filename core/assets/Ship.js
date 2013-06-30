@@ -39,7 +39,7 @@ this.phobos = this.phobos || {};
 				hasTarget: false , 
 				energy: 100,
 				targetId: null,
-				isDocked:false,
+				status:"space",
 			}
 			if (server) this.local.env = server;
 			else this.local.env = client;
@@ -50,8 +50,9 @@ this.phobos = this.phobos || {};
 // public methods:
 
 	s.moveTo = function (destination) {
-		if (!this.shared.isDocked) {
+		if (this.shared.status == "docked") {
 			this.setHasTarget(false);
+			this.cancelDock() ; 
 			this.setDestination({x:destination.x, y:destination.y});
 		}
 	}
@@ -67,6 +68,10 @@ this.phobos = this.phobos || {};
 		}
 		this.moveTo(newDestination);
 		this.shared.dockingTarget = dockStation;
+	}
+
+	s.cancelDock = function() {
+		this.shared.dockingTarget = null;
 	}
 
 	s.rotate = function (rotation) {
@@ -238,12 +243,19 @@ this.phobos = this.phobos || {};
 
 	s.doDock = function() {
 		this.shared.position.z = 5//this.shared.dockingTarget._mapZ;
-		this.shared.isDocked = true ; 
+		this.shared.status = "docked" ; 
 		this.local.env.getGame().switchPlayerToStation(this);
 		this.visible = false;
 		this.stop();
-		if (!server)
+		if (!server) {
 			ui.newStationElement();
+			console.log("dock compare");
+			console.log(this.local.env.getGame().getPlayerShip().getId());
+			console.log(this.getId());
+			if (this.local.env.getGame().getPlayerShip().getId() == this.getId()) 
+				allowMoveClick = false ; 
+			console.log(allowMoveClick);
+		}
 	}
 
 	s.behavior = function () {
@@ -323,8 +335,16 @@ this.phobos = this.phobos || {};
 		return this.shared.energy;
 	}
 
+	s.getId = function() {
+		return this.id;
+	}
+
 	s.getPosition = function() {
 		return this.shared.position;
+	}
+
+	s.getStatus = function() {
+		
 	}
 
 	s.drawRender = function () {
