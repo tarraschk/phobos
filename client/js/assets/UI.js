@@ -40,6 +40,19 @@
 		this.objectSelected = objectSelected;
 	}
 
+	ui.showObjectSelectedInfos = function() {
+		this.showObjectData(this.objectSelected);
+		this.showObjectActions(this.objectSelected);
+	}
+
+	ui.showObjectData = function(object) {
+
+	}
+
+	ui.showObjectActions = function(object) {
+
+	}
+
 	ui.drawStatusBar = function(target) {
 
 		console.log("DRAW STATUS BAR");
@@ -81,7 +94,7 @@
 		// }
 
 		var g = new _.Graphics();
-	    g.setStrokeStyle(5);
+	    g.setStrokeStyle(2);
 	    g.beginStroke("#069D1A");
 
 	    g.drawEllipse(target.x + client.getGame().getCamera().x() , target.y + client.getGame().getCamera().y(), target.image.width, target.image.height);

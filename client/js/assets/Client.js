@@ -140,13 +140,13 @@ phobos = this.phobos || {};
 
 						break;
 						case "mouse1Object":
-
 							var object = input.targObject;
-							console.log("STATION !");
-							console.log(object);
-							allowMoveClick = false ; 
-							debug('arrimage '+object._name);
-							client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:object.getShared()});
+							ui.setObjectSelected(object);
+							// console.log("STATION !");
+							// console.log(object);
+							// allowMoveClick = false ; 
+							// debug('arrimage '+object._name);
+							// client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:object.getShared()});
 
 						break;
 					}
