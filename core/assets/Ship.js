@@ -28,12 +28,12 @@ this.phobos = this.phobos || {};
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
 				destination: {x:null, y:null},
-				limitSpeed: 3.5,
-				acceleration: 0.06 , 
+				limitSpeed: 5.5,
+				acceleration: 0.16 , 
 				limitRotation:0,
 				weapons: new Weapon(2),
 				currentSpeed: 0 , 
-				rotationSpeed: 3,
+				rotationSpeed: 4,
 				hasDestination: false,
 				name: params.name,
 				hasTarget: false , 
@@ -310,9 +310,9 @@ this.phobos = this.phobos || {};
 		// this.gotoAndPlay("walk");
 		console.log(this.currentAnimationFrame);
 		if (this.getPosition().rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 4)));
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 4)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
 		if (Math.random() < 0.1) console.log(this.currentAnimationFrame);
 
 	}
@@ -372,7 +372,7 @@ this.phobos = this.phobos || {};
 		if (!server) {
 			var imgShip = new Image(); 
 
-			shipData.src  = "spriteMantis1.png";
+			shipData.src  = "Mantis1.png";
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
@@ -380,10 +380,10 @@ this.phobos = this.phobos || {};
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
 					images: [this], 
-					frames: {width: 255, height: 235, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+					frames: {width: 340, height: 263, regX: 339 / 2, regY: 263 / 2, vX:0.5, currentAnimationFrame: 15}, 
 					// width, height & registration point of each sprite
 					animations: {    
-						walk: [0, 86, "walk"]
+						walk: [0, 72, "walk"]
 					}
 				});
 				that.index = shipData.id; 
