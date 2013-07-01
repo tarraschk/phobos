@@ -36,16 +36,17 @@
 	}
 
 	ui.drawStatusBar = function(target) {
+
+		console.log("DRAW STATUS BAR");
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,6,10));
 		g.setStrokeStyle(5,10,10);
-		g.drawCircle(target.x ,target.y ,300);
 		startPoint = {x: target.x, y:target.y};
-		endPoint = {x: target.x + 200, y:target.y + 50};
+		endPoint = {x: target.x + target.width, y:target.y };
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
-
 		var s = new _.Shape(g);
+		this._container.addChild(s);	
 	}
 	ui.drawSurround = function(target) {
 		var g = new _.Bitmap("img/ui/surround.png");
