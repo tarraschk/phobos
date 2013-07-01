@@ -40,7 +40,7 @@
 		console.log("DRAW STATUS BAR");
 		console.log(target);
 		var g = new _.Graphics();
-		g.beginStroke(_.Graphics.getRGB(50,255,10));
+		g.beginStroke(_.Graphics.getRGB(50,205,10));
 		g.setStrokeStyle(5,10,10);
 		startPoint = {x: target.x + client.getGame().getCamera().x(), y:target.y + client.getGame().getCamera().y() };
 		if (target.image)

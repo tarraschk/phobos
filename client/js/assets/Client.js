@@ -122,7 +122,7 @@ phobos = this.phobos || {};
 					case "space":
 
 						switch (command) {
-							
+
 						case "mouse1InSpace":
 
 							console.log(allowMoveClick);
