@@ -110,7 +110,7 @@ phobos = this.phobos || {};
 
 	c.initMouseClick = function() {
 		var that = this ; 
-		$(document).on('click', function(e){
+		domPlayground.on('click', function(e){
 			if (allowMoveClick) {
 				that.inputPlayer("mouse1InSpace", e);
 			}
@@ -138,7 +138,6 @@ phobos = this.phobos || {};
 
 						case "mouse1InSpace":
 
-							console.log(allowMoveClick);
 							console.log("Move to !");
 							var gameCam = this.game.getCamera();
 							var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
@@ -156,7 +155,7 @@ phobos = this.phobos || {};
 							var object = input.targObject;
 							ui.setObjectSelected(object);
 							ui.showObjectSelectedInfos();
-							// console.log("STATION !");
+							console.log("STATION !");
 							// console.log(object);
 							// allowMoveClick = false ; 
 							// debug('arrimage '+object._name);

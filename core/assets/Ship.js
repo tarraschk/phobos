@@ -62,9 +62,13 @@ this.phobos = this.phobos || {};
 		// 	x: dockStation._mapX + dockStation.image.width / 2, 
 		// 	y: dockStation._mapY + dockStation.image.height / 2
 		// }
+
+		console.log("DOCK DEST");
+		console.log(dockStation);
+		console.log("DOCK DEST");
 		var newDestination = {
-			x: dockStation.position.x + 150, 
-			y: dockStation.position.y - 70
+			x: dockStation.position.x + dimensions.w / 2, 
+			y: dockStation.position.y - dimensions.h / 2
 		}
 		this.moveTo(newDestination);
 		this.shared.dockingTarget = dockStation;

@@ -42,6 +42,7 @@ var allowMoveClick = true ;
 var screenWidth = 960;
 var screenHeight = 540;
 var game = null;
+var domPlayground = $("#playground");
 var cPlayground = new _.Stage("playground");
 	cPlayground.enableMouseOver(10);
 	cPlayground.mouseMoveOutside = true;
