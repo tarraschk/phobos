@@ -1,5 +1,5 @@
 function loadGameCore() {
-	console.log(":: Welcome ::");
+	console.log(":: Welcome ! ::");
 	console.log("::Loading game Core... ::");
 	loadGameAssets();
 	loadGameUtils();
