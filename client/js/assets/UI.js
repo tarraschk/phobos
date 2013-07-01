@@ -53,6 +53,7 @@
 	ui.showObjectActions = function(object) {
 		var actions = object.shared.actions ; 
 		console.log(actions);
+		debug(actions[0]);
 	}
 
 	ui.drawStatusBar = function(target) {
