@@ -28,12 +28,12 @@ this.phobos = this.phobos || {};
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
 				destination: {x:null, y:null},
-				limitSpeed: 5.5,
-				acceleration: 0.16 , 
+				limitSpeed: 4.5,
+				acceleration: 0.06 , 
 				limitRotation:0,
 				weapons: new Weapon(2),
 				currentSpeed: 0 , 
-				rotationSpeed: 4,
+				rotationSpeed: 3,
 				hasDestination: false,
 				name: params.name,
 				hasTarget: false , 
@@ -308,12 +308,10 @@ this.phobos = this.phobos || {};
 
 	s.rotationFrame = function() {
 		// this.gotoAndPlay("walk");
-		console.log(this.currentAnimationFrame);
 		if (this.getPosition().rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
 			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
-		if (Math.random() < 0.1) console.log(this.currentAnimationFrame);
 
 	}
 

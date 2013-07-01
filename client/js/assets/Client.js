@@ -118,28 +118,45 @@ phobos = this.phobos || {};
 	}
 
 	c.inputPlayer = function(command, input) {
-		switch (command) {
-			case "mouse1InSpace":
 				switch(this.getGame().getMainPlayerStatus()) {
 					case "space":
-						console.log(allowMoveClick);
-						console.log("Move to !");
-						var gameCam = this.game.getCamera();
-						var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
 
-						var cooClick2 = utils.stdToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
-						
-						// this.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
-			        	socket.emit('playerMove', {player: this.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
+						switch (command) {
+							
+						case "mouse1InSpace":
+
+							console.log(allowMoveClick);
+							console.log("Move to !");
+							var gameCam = this.game.getCamera();
+							var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
+
+							var cooClick2 = utils.stdToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
+							
+							// this.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+				        	socket.emit('playerMove', {player: this.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
+
+						break;
+						case "mouse2InSpace":
+
+						break;
+						case "mouse1Object":
+
+							var object = input.targObject;
+							console.log("STATION !");
+							console.log(object);
+							allowMoveClick = false ; 
+							debug('arrimage '+object._name);
+							client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:object.getShared()});
+
+						break;
+					}
+
 					break;
 					case "docked":
+						console.log("Docked !");
 					break;
 					case "killed":
 					break;
-				}
-			break;
-			case "mouse2InSpace":
-			break;
 		}
 	}
 
