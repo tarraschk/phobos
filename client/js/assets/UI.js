@@ -11,8 +11,9 @@
 		this._containerY = 0 ; 
 		this.renderTargetWrapper();
 		this._container = new _.Container();
+		this._objectSelected = null;
+		this._locked = false;
 		cPlayground.addChild(this._container);
-		this.objectSelected = null;
 	}
 
 	ui.renderTargetWrapper = function(data) {
@@ -37,17 +38,34 @@
 	}
 
 	ui.setObjectSelected = function(objectSelected) {
-		this.objectSelected = objectSelected;
+		if (!this._locked) {
+			this._objectSelected = objectSelected;
+			this.setLocked(true);
+		}
+		else  {
+			this.unselectObjectSelected();
+			this.setLocked(false);
+		}
+
+	}
+
+	ui.unselectObjectSelected = function() {
+		this.clearActions();
+		this._objectSelected = null;
 	}
 
 	ui.showObjectSelectedInfos = function() {
-		this.showObjectData(this.objectSelected);
-		this.showObjectActions(this.objectSelected);
+		this.showObjectData(this._objectSelected);
+		this.showObjectActions(this._objectSelected);
 	}
 
 	ui.showObjectData = function(object) {
 		var data = object.shared;
 		console.log(data);
+	}
+
+	ui.clearActions = function() {
+		$("#minichat").html("");
 	}
 
 	ui.showObjectActions = function(object) {
@@ -58,7 +76,7 @@
 	}
 
 	ui.objectSelectedAction = function(action) {
-		client.handleClientAction(action, this.objectSelected);
+		client.handleClientAction(action, this._objectSelected);
 	}
 
 	ui.drawStatusBar = function(target) {
@@ -97,10 +115,16 @@
 	    this._container.addChild(s);
 	}
 
+	ui.setLocked = function(locked) {
+		this._locked = locked;
+	}
+
 	ui.showEntityInfos = function(entity){
-		console.log(entity);
-		this.drawStatusBar(entity);
-		this.drawSurround(entity);
+		if (!this._locked) {
+			console.log(entity);
+			this.drawStatusBar(entity);
+			this.drawSurround(entity);
+		}
 		// var b = $(Mustache.render($('#tpl_entity_info_container').html(), {
 		// 	name: entity.name(),
 		// 	id: entity.id()
@@ -114,7 +138,8 @@
 		// $("#"+entity.id()).slideUp(100, function(){
 		// 	$(this).remove();
 		// });
-		this.clear();
+		if (!this._locked)
+			this.clear();
 	}
 
 	ui.tick = function() {
