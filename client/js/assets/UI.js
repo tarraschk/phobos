@@ -80,22 +80,6 @@
 		this._container.addChild(s);	
 	}
 	ui.drawSurround = function(target) {
-		// var g = new _.Bitmap("img/ui/surround.png");
-		// var surroundDimensions = {w:296,h:167};
-		// g.x = target.x + client.getGame().getCamera().x();
-		// g.y = target.y + client.getGame().getCamera().y();
-		// if (target.image) {
-		// console.log(target.image.width );
-		// console.log(target.image.height );
-		// 	g.scaleX = 1.2 * target.image.width / surroundDimensions.w;
-		// 	g.scaleY = 1.1 * target.image.height / surroundDimensions.h;
-		// }
-		// else if (target.spriteSheet) {
-		// 	console.log(target.spriteSheet);
-		// 	g.scaleX = 1.2 * target.spriteSheet._regX / surroundDimensions.w;
-		// 	g.scaleY = 1.1 * target.spriteSheet._regY / surroundDimensions.h;
-		// }
-
 		var g = new _.Graphics();
 	    // g.setStrokeStyle(2);
 	    // g.beginStroke("#069D1A");
@@ -106,17 +90,6 @@
 	    g.endFill();
 	    var s = new _.Shape(g);
 	    this._container.addChild(s);
-
-		// g.beginStroke(_.Graphics.getRGB(50,6,10));
-		// g.setStrokeStyle(5,10,10);
-		// g.drawCircle(target.x ,target.y ,300);
-		// startPoint = {x: target.x, y:target.y};
-		// endPoint = {x: target.x + 200, y:target.y + 50};
-		// g.moveTo(startPoint.x,startPoint.y)
-		// .lineTo(endPoint.x,endPoint.y).endStroke();
-
-		// var s = new _.Shape(g);
-		// this._container.addChild(g);
 	}
 
 	ui.showEntityInfos = function(entity){
