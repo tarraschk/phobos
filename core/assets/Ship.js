@@ -67,8 +67,8 @@ this.phobos = this.phobos || {};
 		console.log(dockStation);
 		console.log("DOCK DEST");
 		var newDestination = {
-			x: dockStation.position.x + dimensions.w / 2, 
-			y: dockStation.position.y - dimensions.h / 2
+			x: dockStation.position.x + dockStation.dimensions.w / 2, 
+			y: dockStation.position.y + dockStation.dimensions.h / 2
 		}
 		this.moveTo(newDestination);
 		this.shared.dockingTarget = dockStation;
@@ -239,8 +239,15 @@ this.phobos = this.phobos || {};
 	}
 
 	s.dockingMovement = function() {
-		var dockPosition = {position: {x:this.shared.position.x, y:this.shared.position.x } }; 
-		if (utils.distance(dockPosition, this.getShared()) < 200) {
+		var dockPosition = {
+			position: {
+			x: this.getDockingTarget().position.x + this.getDockingTarget().dimensions.w / 2, 
+			y: this.getDockingTarget().position.y + this.getDockingTarget().dimensions.h / 2
+			}
+		}
+
+		console.log(utils.distance(dockPosition, this.getShared()));
+		if (utils.distance(dockPosition, this.getShared()) < 100) {
 			this.doDock();
 		}
 	}
@@ -349,6 +356,10 @@ this.phobos = this.phobos || {};
 
 	s.getStatus = function() {
 		return this.shared.status;
+	}
+
+	s.getDockingTarget = function() {
+		return this.getShared().dockingTarget;
 	}
 
 	s.drawRender = function () {
