@@ -12,6 +12,7 @@
 		this.renderTargetWrapper();
 		this._container = new _.Container();
 		cPlayground.addChild(this._container);
+		this.objectSelected = null;
 	}
 
 	ui.renderTargetWrapper = function(data) {
@@ -33,6 +34,10 @@
 
 	ui.clear = function() {
 		this._container.removeAllChildren();
+	}
+
+	ui.setObjectSelected = function(objectSelected) {
+		this.objectSelected = objectSelected;
 	}
 
 	ui.drawStatusBar = function(target) {
