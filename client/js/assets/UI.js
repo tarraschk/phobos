@@ -94,11 +94,13 @@
 		// }
 
 		var g = new _.Graphics();
-	    g.setStrokeStyle(2);
-	    g.beginStroke("#069D1A");
-
-	    g.drawEllipse(target.x + client.getGame().getCamera().x() , target.y + client.getGame().getCamera().y(), target.image.width, target.image.height);
-	    g.endStroke();
+	    // g.setStrokeStyle(2);
+	    // g.beginStroke("#069D1A");
+	    var x = target.x + client.getGame().getCamera().x();
+	    var y = target.y + client.getGame().getCamera().y();
+	    g.beginRadialGradientFill(["rgba(49,138,36,0.8)", "rgba(71,201,87,0.3)"], [0.4, 0.6], x, y, 0, x, y, target.image.height);
+	    g.drawEllipse(x , y, target.image.width, target.image.height);
+	    g.endFill();
 	    var s = new _.Shape(g);
 	    this._container.addChild(s);
 
