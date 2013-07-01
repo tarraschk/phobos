@@ -46,11 +46,13 @@
 	}
 
 	ui.showObjectData = function(object) {
-
+		var data = object.shared;
+		console.log(data);
 	}
 
 	ui.showObjectActions = function(object) {
-
+		var actions = object.shared.actions ; 
+		console.log(actions);
 	}
 
 	ui.drawStatusBar = function(target) {

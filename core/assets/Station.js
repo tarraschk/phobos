@@ -35,7 +35,8 @@ this.phobos = this.phobos || {};
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;
-		this.shared = { position: {x: params.x, y: params.y } };
+		this.shared = { position: {x: params.x, y: params.y },
+		actions: ["salut", "caca"] };
 		this.setMapCoords({x: params.x, y: params.y});
 		if (!server) this.load(params.src);
 		this._life = this._lifeLeft = params.life;

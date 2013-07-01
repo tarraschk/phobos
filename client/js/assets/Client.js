@@ -142,6 +142,7 @@ phobos = this.phobos || {};
 						case "mouse1Object":
 							var object = input.targObject;
 							ui.setObjectSelected(object);
+							ui.showObjectSelectedInfos();
 							// console.log("STATION !");
 							// console.log(object);
 							// allowMoveClick = false ; 
