@@ -117,6 +117,19 @@ phobos = this.phobos || {};
 		});
 	}
 
+	c.handleClientAction = function(action, data) {
+		switch(action) {
+			case "dock":
+				var station = data;
+				console.log("STATION !");
+				console.log(station);
+				allowMoveClick = false ; 
+				debug('arrimage '+station._name);
+				client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:station.getShared()});
+			break;
+		}
+	}
+
 	c.inputPlayer = function(command, input) {
 				switch(this.getGame().getMainPlayerStatus()) {
 					case "space":

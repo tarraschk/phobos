@@ -54,6 +54,11 @@
 		var actions = object.shared.actions ; 
 		console.log(actions);
 		debug(actions[0]);
+		$("#minichat").html("<a href='#' onclick='ui.objectSelectedAction(\"dock\")'>" + actions[0] + "</a>");
+	}
+
+	ui.objectSelectedAction = function(action) {
+		client.handleClientAction(action, this.objectSelected);
 	}
 
 	ui.drawStatusBar = function(target) {
