@@ -33,7 +33,7 @@ this.phobos = this.phobos || {};
 				limitRotation:0,
 				weapons: new Weapon(2),
 				currentSpeed: 0 , 
-				rotationSpeed: 3,
+				rotationSpeed: 4,
 				hasDestination: false,
 				name: params.name,
 				hasTarget: false , 
