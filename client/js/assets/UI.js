@@ -38,13 +38,23 @@
 	ui.drawStatusBar = function(target) {
 
 		console.log("DRAW STATUS BAR");
+		console.log(target);
 		var g = new _.Graphics();
-		g.beginStroke(_.Graphics.getRGB(50,6,10));
+		g.beginStroke(_.Graphics.getRGB(50,255,10));
 		g.setStrokeStyle(5,10,10);
-		startPoint = {x: target.x, y:target.y};
-		endPoint = {x: target.x + target.width, y:target.y };
+		startPoint = {x: target.x + client.getGame().getCamera().x(), y:target.y + client.getGame().getCamera().y() };
+		if (target.image)
+			var endWidth = target.image.width;
+		else if (target.spriteSheet) 
+			var endWidth = target.spriteSheet._frameWidth
+		endPoint = {x: target.x + client.getGame().getCamera().x() +  endWidth  , y:target.y + client.getGame().getCamera().y() };
+
+		console.log(startPoint);
+		console.log(endPoint);
+
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
+
 		var s = new _.Shape(g);
 		this._container.addChild(s);	
 	}
