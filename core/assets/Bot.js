@@ -164,6 +164,10 @@ this.phobos = this.phobos || {};
 		}
 	}
 
+	s.idleBehavior = function() {
+		this.shared.currentSpeed = 0 ; 
+	}
+
 	s.moveToDestinationMovement = function() {
 		var diffPosDest = this.getDiffDestinationPosition();
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
@@ -223,26 +227,34 @@ this.phobos = this.phobos || {};
 	}
 
 	s.behavior = function () {
-		var that = this ; 
 		if (this.getHasTarget()) {
 			var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
-			var targetRange = utils.distance(currentTarget.shared, this.shared);
-			if (targetRange <= this.getWeapons().getRange()) {
-				this.lookAt(currentTarget.getPosition() );
+						console.log(currentTarget);
+			var targetRange = utils.distance(currentTarget, this);
+			if (targetRange <= this.shared.weapons.getRange()) {
+				this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
 				this.stop();
-				if (this.getWeapons().isReady()) {
-					this.shootAt(currentTarget, this.getWeapons()); 
+				if (this.shared.weapons.isReady()) {
+					var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
+					if (attackResult == -1) {
+						this.setHasTarget(false) ;
+						this.setTargetId (null) ;  
+						this.stop();
+					}
 				}
 			}
 			else {
-				this.setDestination(currentTarget.getPosition());
+				this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
 			}
 		}
-		if (this.getHasDestination) {
+		if (this.shared.dockingTarget) {
+			this.dockingMovement();
+		}
+		if (this.shared.hasDestination) {
 			this.moveToDestinationMovement();
 		}
 		else {
-			this.idleMovement() ; 
+			this.idleBehavior() ; 
 		}
 	}
 	
@@ -260,9 +272,10 @@ this.phobos = this.phobos || {};
 			case "attack":
 				console.log("SWITCH TO ATTACK");
 				var closeTarget = miscData;
+				console.log(closeTarget);
 				this.setTargetId(closeTarget.id);
 				this.setHasTarget(true);
-				this.setDestination({ x:closeTarget.getPosition().x, y:closeTarget.getPosition().y} );
+				this.setDestination({ x:closeTarget.shared.position.x, y:closeTarget.shared.position.y} );
 				this.setAI("attack");
 			break;
 			case "backToPosition":
@@ -320,9 +333,9 @@ this.phobos = this.phobos || {};
 
 	s.rotationFrame = function() {
 		if (this.getPosition().rotation % 360 > 0) 
-			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
-			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 12)));
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
 
 	}
 
@@ -417,16 +430,18 @@ this.phobos = this.phobos || {};
 		if (!server) {
 			var imgShip = new Image(); 
 
-			shipData.src  = "spriteShip.png";
+			shipData.src  = "Mantis1.png";
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
 			imgShip.onload = function() {
 				var shipSpriteSheet = new _.SpriteSheet({
+					// image to use
 					images: [this], 
-					frames: {width: 120, height: 120, regX: 60, regY: 60, vX:0.5, currentAnimationFrame: 27}, 
+					frames: {width: 340, height: 263, regX: 339 / 2, regY: 263 / 2, vX:0.5, currentAnimationFrame: 15}, 
+					// width, height & registration point of each sprite
 					animations: {    
-						walk: [0, 30, "walk"]
+						walk: [0, 71, "walk"]
 					}
 				});
 				that.spriteSheet = shipSpriteSheet;

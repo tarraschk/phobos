@@ -163,11 +163,10 @@
 		for (key in this._objectsList) {
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
 				if (this._objectsList[key].index == this._objectsList[key].id) {
-					// sharedData.objects[key] = this._objectsList[key].shared ;
+					sharedData.objects[key] = this._objectsList[key].shared ;
 				}
 			}
 		}
-
 		return sharedData;
 	}
 
