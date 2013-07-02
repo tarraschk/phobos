@@ -239,7 +239,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.shootAt = function(target, weapon) {
-		weapon.doShoot(target);
+		weapon.doShoot(target, this.getPositionDraw());
 		var attackResult = target.receiveDamage(weapon._power);
 		return attackResult;
 	}
@@ -382,6 +382,10 @@ this.phobos = this.phobos || {};
 
 	s.getDockingTarget = function() {
 		return this.getShared().dockingTarget;
+	}
+
+	s.getPositionDraw = function() {
+		return {x:this.x, y:this.y};
 	}
 
 	s.drawRender = function () {
