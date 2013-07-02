@@ -162,6 +162,15 @@ phobos = this.phobos || {};
 							// client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:object.getShared()});
 
 						break;
+
+						case "mouse1TargetBot":
+							allowMoveClick = false ; 
+							console.log(input);
+							this.game._playerShip.setTargetId(input.target.shared.id);
+							this.game._playerShip.setHasTarget(true);
+							this.game._playerShip.setTargetType("bot");
+							this.game._playerShip.setDestination({ x:input.target.shared.position.x, y: input.target.shared.position.y} );
+						break;
 					}
 
 					break;

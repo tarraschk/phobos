@@ -229,7 +229,6 @@ this.phobos = this.phobos || {};
 	s.behavior = function () {
 		if (this.getHasTarget()) {
 			var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
-						console.log(currentTarget);
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.shared.weapons.getRange()) {
 				this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
@@ -461,9 +460,7 @@ this.phobos = this.phobos || {};
 					ui.hideEntityInfos(that);
 				});
 				that.addEventListener("click", function(e){
-					allowMoveClick = false ; 
-					debug('arrimage '+that._name);
-					client.getGame().getPlayerShip().dockTo(that);
+					client.inputPlayer("mouse1TargetBot",{ click:e, target: that});
 				});
 
 			}

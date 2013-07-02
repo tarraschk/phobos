@@ -37,7 +37,8 @@ this.phobos = this.phobos || {};
 				hasDestination: false,
 				name: params.name,
 				hasTarget: false , 
-				energy: 100,
+				energy: 1000,
+				targetType: null,
 				targetId: null,
 				status:"space",
 			}
@@ -139,6 +140,10 @@ this.phobos = this.phobos || {};
 		this.shared.position.y = newMapCoo.y;
 	}
 
+	s.setTargetType = function(newTargetType) {
+		this.shared.targetType = newTargetType;
+	}
+
 	s.getDiffDestinationPosition = function(destination) {
 		if (!destination) destination = this.shared.destination ; 
 		return ({dX : (destination.x - this.shared.position.x), dY : (destination.y - this.shared.position.y), dRotation: (destination.rotation % 360 - this.shared.position.rotation % 360)});
@@ -201,10 +206,11 @@ this.phobos = this.phobos || {};
 
 
 	s.setHasTarget = function(newHasTarget) {
-		this.hasTarget = newHasTarget;
+		console.log("SET HAS TARGET §" + newHasTarget);
+		this.shared.hasTarget = newHasTarget;
 	}
 	s.setTargetId = function(newTargetId) {
-		this.targetId = newTargetId;
+		this.shared.targetId = newTargetId;
 	}
 
 	s.setEnergy = function(newEnergy) {
@@ -270,25 +276,26 @@ this.phobos = this.phobos || {};
 	}
 
 	s.behavior = function () {
-		if (this.hasTarget) {
-			var currentTarget = this.local.env.getGame()._shipsList[this.targetId];
+		if (this.getHasTarget()) {
+			if (this.getTargetType() == "ship") 
+				var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
+			else if (this.getTargetType() == "bot") 
+				var currentTarget = this.local.env.getGame()._objectsList[this.getTargetId()];
 			var targetRange = utils.distance(currentTarget, this);
 			if (targetRange <= this.shared.weapons.getRange()) {
-				this.lookAt({x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
 				this.stop();
 				if (this.shared.weapons.isReady()) {
 					var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
 					if (attackResult == -1) {
-						debug("You killed it ! ");
 						this.setHasTarget(false) ;
 						this.setTargetId (null) ;  
 						this.stop();
 					}
-					else debug ("Energy left " + attackResult);
 				}
 			}
 			else {
-				this.setDestination({ x:currentTarget.position.x, y:currentTarget.position.y} );
+				this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
 			}
 		}
 		if (this.shared.dockingTarget) {
@@ -303,8 +310,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.weaponsTick = function() {
-		if (this.shared.weapons)
-			this.shared.weapons.tick();
+		this.getWeapons().tick();
 	}
 
 	s.tickMovement = function () {
@@ -338,6 +344,10 @@ this.phobos = this.phobos || {};
 		return this.local.env.getGame()._shipsList[closeEnnemyKey];
 	}
 
+	s.getWeapons = function() {
+		return this.shared.weapons;
+	}
+
 	s.getShared = function() {
 		return this.shared;
 	}
@@ -354,8 +364,20 @@ this.phobos = this.phobos || {};
 		return this.shared.position;
 	}
 
+	s.getTargetId = function() {
+		return this.shared.targetId;
+	}
+	
+	s.getHasTarget = function() {
+		return this.shared.hasTarget;
+	}
+
 	s.getStatus = function() {
 		return this.shared.status;
+	}
+
+	s.getTargetType = function() {
+		return this.shared.targetType;
 	}
 
 	s.getDockingTarget = function() {
@@ -370,7 +392,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.tick = function (event) {
-		// this.shared.weapons.tick() ; 
+		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		if (!server)
