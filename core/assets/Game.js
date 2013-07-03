@@ -13,6 +13,7 @@
 	g._objectsList = [] ; 
 	g._tilesList = [] ;
 	g._dockedShipsList = [] ; 
+	g._destroyedObjectsList = []; 
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
 	g._gameGraphics = null ; 
