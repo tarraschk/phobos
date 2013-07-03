@@ -154,7 +154,13 @@
 	}
 
 	g.getSharedData = function() {
-		var sharedData = { killedShips: {}, dockedShips: {}, ships:{}, objects:{} };
+		var sharedData = { 
+			killedShips: {}, 
+			dockedShips: {}, 
+			ships:{}, 
+			objects:{},
+			destroyedObjects:{},
+		};
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
 				if (this._shipsList[key].index == this._shipsList[key].id) {
@@ -175,6 +181,14 @@
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
 				if (this._objectsList[key].index == this._objectsList[key].id) {
 					sharedData.objects[key] = this._objectsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._destroyedObjectsList) {
+			if (String((key)) === key && this._destroyedObjectsList.hasOwnProperty(key)) {
+				if (this._destroyedObjectsList[key].index == this._destroyedObjectsList[key].id) {
+					sharedData.destroyedObjects[key] = this._destroyedObjectsList[key].shared ;
 				}
 			}
 		}
