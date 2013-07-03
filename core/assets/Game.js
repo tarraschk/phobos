@@ -1,4 +1,3 @@
-
 (function () {
 
 	function Game() {
@@ -231,6 +230,11 @@
 		// if (Math.random() < 0.01) console.clear();
 	}
 
+	g.switchObjectToDestroyed = function(object) {
+		this._destroyedObjectsList[object.id] = object;
+		delete this._objectsList[object.id];
+	}
+	
 	g.switchPlayerToKilled = function (player) {
 		this._killedShipsList[player.id] = player;
 		//this._shipsList.splice(player.id, 1); 
