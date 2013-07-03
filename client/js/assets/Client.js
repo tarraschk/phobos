@@ -17,10 +17,12 @@ phobos = this.phobos || {};
 	c.lastPingTime ; 
 	c.pingTime ; 
 	c.syncTime = 5000 ; 
+	c.net;
 	// constructor:
 
 	c.initialize = function () { 
 		c.playerId = utils.generateId(); 
+		c.net =  new phobos.Net(socket); 
 	}
 
 	
@@ -166,6 +168,7 @@ phobos = this.phobos || {};
 						case "mouse1TargetBot":
 							allowMoveClick = false ; 
 							console.log(input);
+							this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip(), target:input.target});
 							this.game._playerShip.setTargetId(input.target.shared.id);
 							this.game._playerShip.setHasTarget(true);
 							this.game._playerShip.setTargetType("bot");

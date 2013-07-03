@@ -1,11 +1,26 @@
+this.phobos = this.phobos || {};
+
 (function(window){
-	Net = function(){
-		this.initialize();
+	Net = function(socket){
+		this.initialize(socket);
 	}
 
 	var net = Net.prototype;
 
-	net.initialize = function(){
+	//a local queue of messages we delay if faking latency
+	net._messages = [];
+	net._socket ;
 
+	//constructor
+	net.initialize = function(socket){
+		this._socket = socket;
 	}
-}(window));
+
+
+	net.sendMessage = function(message, data) {
+    	socket.emit(message, data);
+	}
+
+	phobos.Net = Net;
+
+}());
