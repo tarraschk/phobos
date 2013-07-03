@@ -80,18 +80,27 @@
 	}
 
 	ui.drawStatusBar = function(target) {
+		if (target.spriteSheet)
+			var isSprite = true;
+		else 
+			var isSprite = false;
 
 		console.log("DRAW STATUS BAR");
 		console.log(target);
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,205,10));
 		g.setStrokeStyle(5,10,10);
-		startPoint = {x: target.x + client.getGame().getCamera().x(), y:target.y + client.getGame().getCamera().y() };
-		if (target.image)
+		if (!isSprite) {
 			var endWidth = target.image.width;
-		else if (target.spriteSheet) 
-			var endWidth = target.spriteSheet._frameWidth
-		endPoint = {x: target.x + client.getGame().getCamera().x() +  endWidth  , y:target.y + client.getGame().getCamera().y() };
+			var startPoint = {x: target.x + client.getGame().getCamera().x(), y:target.y + client.getGame().getCamera().y() };
+			var endPoint = {x: target.x + client.getGame().getCamera().x() +  endWidth  , y:target.y + client.getGame().getCamera().y() };
+		}
+		else {
+			var endWidth = target.spriteSheet._frameWidth * target.scaleX
+		
+			var startPoint = {x: target.x + client.getGame().getCamera().x() - target.spriteSheet._regX / 3, y:target.y + client.getGame().getCamera().y()  - target.spriteSheet._regY / 3 };
+			var endPoint = {x: target.x + client.getGame().getCamera().x() +  endWidth - target.spriteSheet._regX / 3  , y:target.y + client.getGame().getCamera().y() - target.spriteSheet._regY / 3 };
+			}
 
 		console.log(startPoint);
 		console.log(endPoint);
@@ -103,13 +112,27 @@
 		this._container.addChild(s);	
 	}
 	ui.drawSurround = function(target) {
+		if (target.spriteSheet)
+			var isSprite = true;
+		else 
+			var isSprite = false;
 		var g = new _.Graphics();
 	    g.setStrokeStyle(2);
 	    g.beginStroke("#069D1A");
-	    var x = target.x + client.getGame().getCamera().x();
-	    var y = target.y + client.getGame().getCamera().y();
+	    if (!isSprite) {
+	    	var targetWidth = target.image.width;
+	    	var targetHeight = target.image.height;
+		    var x = target.x + client.getGame().getCamera().x();
+		    var y = target.y + client.getGame().getCamera().y();
+	    }
+	    else {
+	    	var targetWidth = target.spriteSheet._frameWidth * target.scaleX;
+	    	var targetHeight = target.spriteSheet._frameHeight * target.scaleY;
+		    var x = target.x - target.spriteSheet._regX / 3 + client.getGame().getCamera().x();
+		    var y = target.y - target.spriteSheet._regY / 3+ client.getGame().getCamera().y();
+	    }
 	    // g.beginRadialGradientFill(["rgba(49,138,36,0.8)", "rgba(71,201,87,0.3)"], [0.4, 0.6], x, y, 0, x, y, target.image.height);
-	    g.drawEllipse(x , y, target.image.width, target.image.height);
+	    g.drawEllipse(x , y, targetWidth, targetHeight);
 	    g.endFill();
 	    var s = new _.Shape(g);
 	    this._container.addChild(s);

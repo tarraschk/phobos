@@ -76,11 +76,12 @@ s.messages = [];
 	}
 	s.generateUniverse = function(universeToken) {
 		sector = {
-			objects:[{id:0,type:'Station', src: 'Anna-Cruiser.png',name: 'Station spatiale internationale',x: 1500,y: 600,life: 150000, width:218, height:181},
-			{id:1, type:'Station', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 0,y: 0,life: 150000, width:1032, height:620},
-			{id:3, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 1520,y: 900, z:1, life: 150000, width:1032, height:620},
-			{id:4, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 2920,y: 900, z:1, life: 150000, width:1032, height:620},
-			{id:5, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 920,y: 900, z:1, life: 150000, width:1032, height:620}],
+			objects:[
+			// {id:0,type:'Station', src: 'Anna-Cruiser.png',name: 'Station spatiale internationale',x: 1500,y: 600,life: 150000, width:218, height:181},
+			{id:1, type:'Station', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 500,y: 500,life: 150000, width:1032, height:620},
+			// {id:3, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 1520,y: 900, z:1, life: 150000, width:1032, height:620},
+			// {id:4, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 2920,y: 900, z:1, life: 150000, width:1032, height:620},
+			{id:5, type:'Bot', src: 'Anna Cruiser.png',name: 'Station spatiale internationale',x: 500,y: 500, z:1, life: 150000, width:1032, height:620}],
 			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
 		};
 		this.setSector(null, sector); 
