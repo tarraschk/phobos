@@ -19,8 +19,6 @@ this.phobos = this.phobos || {};
 	s._target;
 	s._isInspected;
 	s._targetZ;
-	s._mapX;
-	s._mapY;
 	s._mapZ;
 	s._name;
 	s.fucused = false;
@@ -30,20 +28,29 @@ this.phobos = this.phobos || {};
 	s.local = {};
 // constructor:
 	s.initialize = function (params) {
+		console.log("STATIOOOOOON");
+		console.log(params);
 		this.id = params.id;
 		this.index = params.id;
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;
-		this.shared = { position: {x: params.position.x, y: params.position.y, type:"Station" },
-		actions: ["dock"],
-		dimensions: {
-			w: params.width,
-			h: params.height,
-		}
+		this.shared = { 
+			id: params.id,
+			index: params.id,
+			position: {x: params.position.x, y: params.position.y, },
+			type:"Station",
+			actions: ["dock"],
+			dimensions: {
+				w: params.width,
+				h: params.height,
+			},
+			image: {
+				src:params.image.src,
+				dim:500 //To do
+			}
 		 };
-		this.setMapCoords({x: params.x, y: params.y});
-		if (!server) this.load(params.src);
+		if (!server) this.load();
 		this._life = this._lifeLeft = params.life;
 		if (server) this.local.env = server;
 		else this.local.env = client;
@@ -58,12 +65,12 @@ this.phobos = this.phobos || {};
 		this._mapY = params.y;
 	}
 	s.drawRender = function() {
-		var renderCoo = utils.absoluteToStd({x:this._mapX,y:this._mapY}, this.local.env.getGame().getCamera()._position);
+		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
 	s.tick = function () {
-		this.shared.position.x = this.shared.position.x + 0.1;
+		this.shared.position.x = this.shared.position.x + 1;
 		if (!server) this.drawRender();
 	}
 	s.takeDamage = function(shooter, d){
@@ -79,10 +86,13 @@ this.phobos = this.phobos || {};
 			return this._id;
 		}
 	}
-	s.load = function(src){
+	s.load = function(){
+		console.log(this);
+		console.log("LOAD IMAGE STATION");
 		if (!server) {
 			this.image = new Image();
-			this.image.src = Station.path+src; 
+			console.log(this.shared);
+			this.image.src = Station.path+this.shared.image.src; 
 			var that = this;
 			this.image.onload = function() {
 				that.addEventListener("mouseover", function(e) {

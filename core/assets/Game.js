@@ -86,6 +86,7 @@
 				console.log(objects[key].type);
 				switch(objects[key].type) {
 					case "Station":
+					console.log("STATION");
 						console.log(key);
 						console.log(objects[key]);
 						this._objectsList[objects[key].id] = new phobos.Station(objects[key]);
