@@ -35,7 +35,7 @@ this.phobos = this.phobos || {};
 		this._id = utils.generateId();
 		this._targetZ = this._id;
 		this._name = params.name;
-		this.shared = { position: {x: params.x, y: params.y },
+		this.shared = { position: {x: params.x, y: params.y, type:"Station" },
 		actions: ["dock"],
 		dimensions: {
 			w: params.width,

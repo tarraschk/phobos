@@ -45,6 +45,7 @@ this.phobos = this.phobos || {};
 				AIRange: 500,
 				AI:"wait",
 				name:null,
+				type:"Bot",
 			}
 			if (server) this.local.env = server;
 			else this.local.env = client;

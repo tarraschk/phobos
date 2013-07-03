@@ -104,7 +104,7 @@ s.messages = [];
 		// var sectorObjects = this.universe.getObjectsList() ; 
 		// sector = {objects: sectorObjects, tiles: sectorTiles}; 
 		// console.log(this.sectors.sector1); 
-		socket.emit('sectorLoaded', this.sectors.sector1);
+		socket.emit('sectorLoaded', this.getSectorExport(sector));
 	}
 
 	s.playerMove = function(playerId, moveData) {
@@ -178,6 +178,11 @@ s.messages = [];
 
 	s.getUsers = function() {
 		return this.users;
+	}
+
+	s.getSectorExport = function(sector) {
+		var sharedData = this.getGame().getSharedData(); //TO DO : ONLY FOR A SECTOR
+		return (sharedData);
 	}
 
 	s.getExport = function() {

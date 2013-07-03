@@ -53,12 +53,19 @@
 		this._gameGraphics = new GameGraphics();
 	}
 
-	g.loadSector = function(sector) {
+	g.loadSector = function(sector, shared) {
+		console.log(sector);
+		console.log("Sector loading");
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
 		this.initObjects();
 		this.initTiles(); 
-		this.loadObjects(sectorObjects);
+		console.log("sector objects");
+		console.log(sectorObjects);
+		if (shared)
+			this.loadSharedObjects(sectorObjects);
+		else 
+			this.loadObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
 	}
 
@@ -69,19 +76,50 @@
 	g.initTiles = function() {
 		this._tilesList = [] ; 
 	}
-
+	g.loadSharedObjects = function(objects) {
+		console.log("Load");
+		console.log(objects);
+		for (key in objects) {
+			console.log(key);
+			if (String((key)) === key && objects.hasOwnProperty(key)) {
+				console.log(objects[key]);
+				console.log(objects[key].type);
+				switch(objects[key].type) {
+					case "Station":
+						console.log(key);
+						console.log(objects[key]);
+						this._objectsList[objects[key].id] = new phobos.Station(objects[key]);
+					break;
+					case "Bot":
+					console.log("BOOOOOT");
+						console.log(key);
+						console.log(objects[key]);
+						this._objectsList[objects[key].id] = new phobos.Bot(objects[key]);
+					break;
+				}
+			}
+		}
+	}
 	g.loadObjects = function(objects) {
+		console.log("Load");
+		console.log(objects)
 		for (var k = 0 ; k < objects.length ; k++) {
 			switch(objects[k].type) {
 				case "Station":
+					console.log(k);
+					console.log(objects[k]);
 					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
 				break;
 				case "Bot":
+					console.log(k);
+					console.log(objects[k]);
 					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
 				break;
 			}
 		}
 	}
+	// g.loadObjects = function(objects) {
+	// }
 
 	g.loadTiles = function(tiles) {
 
