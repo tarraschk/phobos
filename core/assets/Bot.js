@@ -23,13 +23,15 @@ this.phobos = this.phobos || {};
 	}
 // constructor:
 	s.initialize = function (params) {
+		console.log("BOOOT");
+		console.log(params);
 		if (params) {
 			this.id = params.id;
 			this.index = this.id ; 
 			this.shared = {
 				id: params.id,
-				position: {x:params.x, y:params.y, z:1, rotation: 90},
-				initPosition: {x:params.x, y:params.y, z:params.z, rotation: 90},
+				position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
+				initPosition: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: 90},
 				destination: {x:null, y:null},
 				limitSpeed: 1.5,
 				acceleration: 0.06 , 
@@ -430,6 +432,7 @@ this.phobos = this.phobos || {};
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
 			imgShip.onload = function() {
+				console.log("LOADED IMAGE");
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
 					images: [this], 
@@ -446,6 +449,7 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
+				console.log(that);
 				cPlayground.addChild(that);
 				cPlayground.update();
 				
