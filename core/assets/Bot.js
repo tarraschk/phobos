@@ -29,7 +29,7 @@ this.phobos = this.phobos || {};
 			this.shared = {
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
-				initPosition: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: 90},
+				initPosition: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
 				destination: {x:null, y:null},
 				limitSpeed: 1.5,
 				acceleration: 0.06 , 
