@@ -197,7 +197,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.die = function() {
-		debug("dead");
 		this.shared.position.z = -1;
 		this.local.env.getGame().switchObjectToDestroyed(this);
 		this.visible = false;

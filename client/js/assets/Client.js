@@ -84,6 +84,10 @@ phobos = this.phobos || {};
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
 
+	c.onPlayerAttack = function(attack) {
+		this.getGame().playerAttack(attack.player, attack.target);
+	}
+
 	c.onPlayerDock = function(dock) {
 		console.log("Docking")
 		console.log(dock);
@@ -168,11 +172,7 @@ phobos = this.phobos || {};
 						case "mouse1TargetBot":
 							allowMoveClick = false ; 
 							console.log(input);
-							this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip(), target:input.target});
-							this.game._playerShip.setTargetId(input.target.shared.id);
-							this.game._playerShip.setHasTarget(true);
-							this.game._playerShip.setTargetType("bot");
-							this.game._playerShip.setDestination({ x:input.target.shared.position.x, y: input.target.shared.position.y} );
+							this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip().getShared(), target:input.target.getShared()});
 						break;
 					}
 

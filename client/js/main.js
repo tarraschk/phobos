@@ -35,6 +35,10 @@ jQuery(document).ready(function($) {
 		client.onPlayerMove(move); 
 	});
 
+	socket.on('playerAttack', function(attack){
+		client.onPlayerAttack(attack); 
+	});
+
 	socket.on('playerDockTo', function(dock){
 		client.onPlayerDock(dock); 
 	});

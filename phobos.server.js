@@ -26,6 +26,11 @@ io.sockets.on('connection', function(client) {
   		client.emit('playerMove', data);
 	});
 
+	client.on('playerAttack', function(data) {
+		server.getGame().playerAttack(data.player, data.target); 
+		server.broadcastToAllSocket('playerAttack', data);
+	});
+
 	client.on('playerDockTo', function(data){
 		console.log("DOCK TO !");
 		console.log(data);

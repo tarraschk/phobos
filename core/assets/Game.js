@@ -115,6 +115,17 @@
 	    this.lastframetime = t;
 	}
 
+	g.playerAttack = function(player, target) {
+		console.log("ATTACKING");
+		console.log(player);
+		console.log(target);
+		var player = this.getShipsList()[player.id];
+		player.setTargetId(target.id);
+		player.setHasTarget(true);
+		player.setTargetType("bot");
+		player.setDestination({ x:target.position.x, y: target.position.y} );
+	}
+
 	g.playerJoin = function(playerData, isMainPlayer) {
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
@@ -231,6 +242,7 @@
 	}
 
 	g.switchObjectToDestroyed = function(object) {
+		console.log(object);
 		this._destroyedObjectsList[object.id] = object;
 		delete this._objectsList[object.id];
 	}
