@@ -59,8 +59,6 @@ phobos = this.phobos || {};
 		for (key in playersData) {
 			if (String((key)) === key && playersData.hasOwnProperty(key)) {
 				if (playersData[key].index == playersData[key].id) {
-					console.log(key);
-					console.log("player id: " + this.playerId);
 					if (key != this.playerId) //Must be other players, not main player already loaded
 					{
 						var player = playersData[key].shared
@@ -89,8 +87,6 @@ phobos = this.phobos || {};
 	}
 
 	c.onPlayerDock = function(dock) {
-		console.log("Docking")
-		console.log(dock);
 		this.getGame().getShipsList()[dock.player.id].dockTo(dock.station);
 	}
 
@@ -127,8 +123,6 @@ phobos = this.phobos || {};
 		switch(action) {
 			case "dock":
 				var station = data;
-				console.log("STATION !");
-				console.log(station);
 				allowMoveClick = false ; 
 				debug('arrimage '+station._name);
 				client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:station.getShared()});
@@ -144,7 +138,6 @@ phobos = this.phobos || {};
 
 						case "mouse1InSpace":
 
-							console.log("Move to !");
 							var gameCam = this.game.getCamera();
 							var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
 
@@ -161,17 +154,11 @@ phobos = this.phobos || {};
 							var object = input.targObject;
 							ui.setObjectSelected(object);
 							ui.showObjectSelectedInfos();
-							console.log("STATION !");
-							// console.log(object);
-							// allowMoveClick = false ; 
-							// debug('arrimage '+object._name);
-							// client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:object.getShared()});
 
 						break;
 
 						case "mouse1TargetBot":
 							allowMoveClick = false ; 
-							console.log(input);
 							this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip().getShared(), target:input.target.getShared()});
 						break;
 					}

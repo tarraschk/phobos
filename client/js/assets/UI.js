@@ -85,8 +85,6 @@
 		else 
 			var isSprite = false;
 
-		console.log("DRAW STATUS BAR");
-		console.log(target);
 		var g = new _.Graphics();
 		g.beginStroke(_.Graphics.getRGB(50,205,10));
 		g.setStrokeStyle(5,10,10);
@@ -102,8 +100,6 @@
 			var endPoint = {x: target.x + client.getGame().getCamera().x() +  endWidth - target.spriteSheet._regX / 3  , y:target.y + client.getGame().getCamera().y() - target.spriteSheet._regY / 3 };
 			}
 
-		console.log(startPoint);
-		console.log(endPoint);
 
 		g.moveTo(startPoint.x,startPoint.y)
 		.lineTo(endPoint.x,endPoint.y).endStroke();
@@ -144,7 +140,6 @@
 
 	ui.showEntityInfos = function(entity){
 		if (!this._locked) {
-			console.log(entity);
 			this.drawStatusBar(entity);
 			this.drawSurround(entity);
 		}

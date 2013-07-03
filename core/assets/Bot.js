@@ -204,10 +204,8 @@ this.phobos = this.phobos || {};
 	}
 
 	s.receiveDamage = function (power) {
-		console.log(this.shared.energy);
 		this.setEnergy(this.shared.energy - power);
 		if (this.getEnergy() <= 0) {
-			console.log("Dead !");
 			return this.die(); 
 		}
 		else return this.shared.energy;
@@ -268,9 +266,7 @@ this.phobos = this.phobos || {};
 			case "wait":
 			break;
 			case "attack":
-				console.log("SWITCH TO ATTACK");
 				var closeTarget = miscData;
-				console.log(closeTarget);
 				this.setTargetId(closeTarget.id);
 				this.setHasTarget(true);
 				this.setDestination({ x:closeTarget.shared.position.x, y:closeTarget.shared.position.y} );

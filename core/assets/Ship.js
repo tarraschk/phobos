@@ -20,8 +20,6 @@ this.phobos = this.phobos || {};
 	}
 // constructor:
 	s.initialize = function (params) {
-		console.log("NEW SHIP");
-		console.log(params);
 		if (params) {
 			this.id = params.id;
 			this.shared = {
@@ -59,14 +57,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.dockTo = function(dockStation) {
-		// var newDestination = {
-		// 	x: dockStation._mapX + dockStation.image.width / 2, 
-		// 	y: dockStation._mapY + dockStation.image.height / 2
-		// }
-
-		console.log("DOCK DEST");
-		console.log(dockStation);
-		console.log("DOCK DEST");
 		var newDestination = {
 			x: dockStation.position.x + dockStation.dimensions.w / 2, 
 			y: dockStation.position.y + dockStation.dimensions.h / 2
@@ -206,7 +196,6 @@ this.phobos = this.phobos || {};
 
 
 	s.setHasTarget = function(newHasTarget) {
-		console.log("SET HAS TARGET §" + newHasTarget);
 		this.shared.hasTarget = newHasTarget;
 	}
 	s.setTargetId = function(newTargetId) {
@@ -252,7 +241,6 @@ this.phobos = this.phobos || {};
 			}
 		}
 
-		console.log(utils.distance(dockPosition, this.getShared()));
 		if (utils.distance(dockPosition, this.getShared()) < 100) {
 			this.doDock();
 		}
@@ -266,12 +254,8 @@ this.phobos = this.phobos || {};
 		this.stop();
 		if (!server) {
 			ui.newStationElement();
-			console.log("dock compare");
-			console.log(this.local.env.getGame().getPlayerShip().getId());
-			console.log(this.getId());
 			if (this.local.env.getGame().getPlayerShip().getId() == this.getId()) 
 				allowMoveClick = false ; 
-			console.log(allowMoveClick);
 		}
 	}
 
@@ -404,9 +388,6 @@ this.phobos = this.phobos || {};
 	}
 
 	s.load = function(shipData){
-		console.log("LOADING SHIP");
-		console.log(this.shared);
-		console.log(shipData);
 		this.index = shipData.id; 
 		if (!server) {
 			var imgShip = new Image(); 
@@ -432,7 +413,6 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
-				console.log("Ship loaded :" + that.x + " ; " + that.id);
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
 			}

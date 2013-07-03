@@ -117,9 +117,6 @@
 	}
 
 	g.playerAttack = function(player, target) {
-		console.log("ATTACKING");
-		console.log(player);
-		console.log(target);
 		var player = this.getShipsList()[player.id];
 		player.setTargetId(target.id);
 		player.setHasTarget(true);
@@ -224,12 +221,10 @@
 	}
 
 	g.getMainPlayerStatus = function() {
-		console.log(this._playerShip);
 		return this._playerShip.getStatus();
 	}
 
 	g.objectsTick = function() {
-		// if (Math.random() < 0.1) console.log(client.getGame().getShipsList());
 		allowMoveClick = true ;  
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
@@ -257,7 +252,6 @@
 	}
 
 	g.switchObjectToDestroyed = function(object) {
-		console.log(object);
 		this._destroyedObjectsList[object.id] = object;
 		delete this._objectsList[object.id];
 	}
@@ -269,16 +263,10 @@
 	}
 
 	g.switchPlayerToStation = function (player) {
-		console.log("BEFORE");
-		console.log(this.getShipsList());
-		console.log(this.getDockedShipsList());
 		this._dockedShipsList[player.id] = player;
 		// this._shipsList.splice(player.id, 1); 
 		delete this._shipsList[player.id];
 		// this._shipsList.remove(1, 2);
-		console.log("AFTER");
-		console.log(this.getShipsList());
-		console.log(this.getDockedShipsList());
 
 	}
 

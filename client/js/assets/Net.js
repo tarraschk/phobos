@@ -18,9 +18,6 @@ this.phobos = this.phobos || {};
 
 
 	net.sendMessage = function(message, data) {
-		console.log("SEND MESSAGE");
-		console.log(message);
-		console.log(data);
     	socket.emit(message, data);
 	}
 
