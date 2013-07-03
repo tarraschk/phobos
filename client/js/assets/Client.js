@@ -53,22 +53,6 @@ phobos = this.phobos || {};
 		this.game.loadSector(sector, true); 
 	}
 
-	c.loadSectorPlayers = function(playersData) {
-		console.log("loading sector playerz");
-		console.log(playersData);
-		for (key in playersData) {
-			if (String((key)) === key && playersData.hasOwnProperty(key)) {
-				if (playersData[key].index == playersData[key].id) {
-					if (key != this.playerId) //Must be other players, not main player already loaded
-					{
-						var player = playersData[key].shared
-						player.id = playersData[key].id;
-						this.playerJoinGame(player, false); 
-					}
-				}
-			}
-		}
-	}
 
 	c.loginToServer = function() {
 		socket.emit('login', {name: this.playerId });

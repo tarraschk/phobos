@@ -23,8 +23,6 @@ this.phobos = this.phobos || {};
 	}
 // constructor:
 	s.initialize = function (params) {
-		console.log("BOOOT");
-		console.log(params);
 		if (params) {
 			this.id = params.id;
 			this.index = this.id ; 

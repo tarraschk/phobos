@@ -28,8 +28,6 @@ this.phobos = this.phobos || {};
 	s.local = {};
 // constructor:
 	s.initialize = function (params) {
-		console.log("STATIOOOOOON");
-		console.log(params);
 		this.id = params.id;
 		this.index = params.id;
 		this._id = utils.generateId();
@@ -87,11 +85,8 @@ this.phobos = this.phobos || {};
 		}
 	}
 	s.load = function(){
-		console.log(this);
-		console.log("LOAD IMAGE STATION");
 		if (!server) {
 			this.image = new Image();
-			console.log(this.shared);
 			this.image.src = Station.path+this.shared.image.src; 
 			var that = this;
 			this.image.onload = function() {
