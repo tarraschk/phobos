@@ -36,7 +36,7 @@ this.phobos = this.phobos || {};
 		this.shared = { 
 			id: params.id,
 			index: params.id,
-			position: {x: params.position.x, y: params.position.y, },
+			position: {x: params.position.x, y: params.position.y },
 			type:"Station",
 			actions: ["dock"],
 			dimensions: {
@@ -68,7 +68,7 @@ this.phobos = this.phobos || {};
 		this.y = renderCoo.y;
 	}
 	s.tick = function () {
-		this.shared.position.x = this.shared.position.x + 1;
+		this.shared.position.x = this.shared.position.x + 0.01;
 		if (!server) this.drawRender();
 	}
 	s.takeDamage = function(shooter, d){
