@@ -278,7 +278,7 @@ this.phobos = this.phobos || {};
 				this.moveTo({x:this.getInitPosition().x,y:this.getInitPosition().y} );
 				this.setTargetId(null);
 				this.setHasTarget(false);
-				this.setAI("backToPosition")
+				this.setAI("wait")
 			break;
 		}
 	}
@@ -298,8 +298,6 @@ this.phobos = this.phobos || {};
 					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
 					if (currentTarget) {
 						var targetRange = utils.distance(currentTarget.shared, this.shared);
-						console.log("targetRange");
-						console.log(this.shared.AIStopRange);
 						if (targetRange >= this.shared.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 							if (server) this.setBotBehavior("backToPosition");
 						}
@@ -428,16 +426,15 @@ this.phobos = this.phobos || {};
 		if (!server) {
 			var imgShip = new Image(); 
 
-			shipData.src  = "Mantis1.png";
+			shipData.src  = "Brood/BroodSprite.png";
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
 			imgShip.onload = function() {
-				console.log("LOADED IMAGE");
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
 					images: [this], 
-					frames: {width: 340, height: 263, regX: 340 / 2, regY: 263 / 2, vX:0.5, currentAnimationFrame: 15}, 
+					frames: {width: 294, height: 266, regX: 294 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
 					// width, height & registration point of each sprite
 					animations: {    
 						walk: [0, 71, "walk"]
@@ -450,7 +447,6 @@ this.phobos = this.phobos || {};
 				that.scaleX = 0.4;
 				that.scaleY = 0.4; 
 				that.name = shipData.name; 
-				console.log(that);
 				cPlayground.addChild(that);
 				cPlayground.update();
 				
