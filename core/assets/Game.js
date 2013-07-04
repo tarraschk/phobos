@@ -59,11 +59,16 @@
 		var sectorTiles = sector.tiles ;
 		this.initObjects();
 		this.initTiles(); 
+		console.log("LOADING OBJECTS");
+		console.log(sectorObjects);
 		if (shared)
 			this.loadSharedObjects(sectorObjects);
 		else 
 			this.loadObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
+
+		console.log("LOADING PLAYERS");
+		console.log(sectorShips);
 		this.loadSectorPlayers(sectorShips);
 	}
 

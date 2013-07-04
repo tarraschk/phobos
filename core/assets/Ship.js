@@ -22,24 +22,26 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		if (params) {
 			this.id = params.id;
+			console.log("LOAD SHIP");
 			this.shared = {
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
-				destination: {x:null, y:null},
-				limitSpeed: 4.5,
-				acceleration: 0.06 , 
-				limitRotation:0,
-				weapons: new Weapon(2),
-				currentSpeed: 0 , 
-				rotationSpeed: 4,
-				hasDestination: false,
+				destination: params.destination,
+				limitSpeed: params.limitSpeed,
+				acceleration:params.acceleration , 
+				limitRotation:params.limitRotation,
+				weapons: new phobos.Weapon(params.weapons),
+				currentSpeed: params.currentSpeed , 
+				rotationSpeed: params.rotationSpeed,
+				hasDestination: params.hasDestination,
 				name: params.name,
-				hasTarget: false , 
-				energy: 1000,
-				targetType: null,
-				targetId: null,
-				status:"space",
+				hasTarget: params.hasTarget , 
+				energy: params.energy,
+				targetType: params.targetType,
+				targetId: params.targetId,
+				status:params.status,
 			}
+			console.log(this.shared);
 			if (server) this.local.env = server;
 			else this.local.env = client;
 			this.load(params);
