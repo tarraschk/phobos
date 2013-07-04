@@ -29,6 +29,7 @@ this.phobos = this.phobos || {};
 			this.shared = {
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
+				initPosition: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
 				destination: params.destination,
 				limitSpeed: params.limitSpeed,
 				acceleration:params.acceleration , 
@@ -297,7 +298,9 @@ this.phobos = this.phobos || {};
 					var currentTarget = this.local.env.getGame()._shipsList[this.shared.targetId];
 					if (currentTarget) {
 						var targetRange = utils.distance(currentTarget.shared, this.shared);
-						if (targetRange >= this.AIStopRange || !utils.isSameZ(currentTarget,this)) {
+						console.log("targetRange");
+						console.log(this.shared.AIStopRange);
+						if (targetRange >= this.shared.AIStopRange || !utils.isSameZ(currentTarget,this)) {
 							if (server) this.setBotBehavior("backToPosition");
 						}
 					}
