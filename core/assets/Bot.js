@@ -27,25 +27,6 @@ this.phobos = this.phobos || {};
 			this.id = params.id;
 			this.index = this.id ; 
 			this.shared = {
-				// id: params.id,
-				// position: {x:params.position.x, y:params.position.y, z:1, rotation: 90},
-				// initPosition: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
-				// destination: {x:null, y:null},
-				// limitSpeed: 1.5,
-				// acceleration: 0.06 , 
-				// limitRotation:0,
-				// currentSpeed: 0 , 
-				// rotationSpeed: 3,
-				// hasDestination: false,
-				// weapons: new Weapon(2),
-				// hasTarget: false , 
-				// energy: 100,
-				// targetId: null,
-				// AIStopRange: 600 , 
-				// AIRange: 500,
-				// AI:"wait",
-				// name:null,
-				// type:"Bot",
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
 				destination: params.destination,
@@ -65,11 +46,10 @@ this.phobos = this.phobos || {};
 				AIRange: params.AIRange,
 				AI:params.AI,
 				type:params.type,
-				
+
 			}
 			if (server) this.local.env = server;
 			else this.local.env = client;
-			// this.setMapCoords({x: params.x, y: params.y});
 			this.load(params);
 		}
 	}
