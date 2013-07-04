@@ -42,7 +42,7 @@
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		this._camera = new Camera();
 		this._frame = 0 ;
-		for (var j = 0 ; j < 700 ; j++) {
+		for (var j = 0 ; j < 0 ; j++) {
 			g._tilesMap[j] = new Tile({
 				id:1,
 				x:Math.random() * 2500,
