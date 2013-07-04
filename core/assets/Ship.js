@@ -265,21 +265,23 @@ this.phobos = this.phobos || {};
 				var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
 			else if (this.getTargetType() == "bot") 
 				var currentTarget = this.local.env.getGame()._objectsList[this.getTargetId()];
-			var targetRange = utils.distance(currentTarget, this);
-			if (targetRange <= this.shared.weapons.getRange()) {
-				this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
-				this.stop();
-				if (this.shared.weapons.isReady()) {
-					var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
-					if (attackResult == -1) {
-						this.setHasTarget(false) ;
-						this.setTargetId (null) ;  
-						this.stop();
+			if (currentTarget) {
+				var targetRange = utils.distance(currentTarget, this);
+				if (targetRange <= this.shared.weapons.getRange()) {
+					this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
+					this.stop();
+					if (this.shared.weapons.isReady()) {
+						var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
+						if (attackResult == -1) {
+							this.setHasTarget(false) ;
+							this.setTargetId (null) ;  
+							this.stop();
+						}
 					}
 				}
-			}
-			else {
-				this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
+				else {
+					this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
+				}
 			}
 		}
 		if (this.shared.dockingTarget) {
