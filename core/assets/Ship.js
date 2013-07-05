@@ -22,7 +22,6 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		if (params) {
 			this.id = params.id;
-			console.log("LOAD SHIP");
 			this.shared = {
 				id: params.id,
 				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
@@ -39,9 +38,8 @@ this.phobos = this.phobos || {};
 				energy: params.energy,
 				targetType: params.targetType,
 				targetId: params.targetId,
-				status:params.status,
+				status:"space",
 			}
-			console.log(this.shared);
 			if (server) this.local.env = server;
 			else this.local.env = client;
 			this.load(params);
@@ -60,8 +58,8 @@ this.phobos = this.phobos || {};
 
 	s.dockTo = function(dockStation) {
 		var newDestination = {
-			x: dockStation.position.x + dockStation.dimensions.w / 2, 
-			y: dockStation.position.y + dockStation.dimensions.h / 2
+			x: dockStation.position.x + dockStation.dimensions.width / 2, 
+			y: dockStation.position.y + dockStation.dimensions.height / 2
 		}
 		this.moveTo(newDestination);
 		this.shared.dockingTarget = dockStation;
@@ -238,11 +236,10 @@ this.phobos = this.phobos || {};
 	s.dockingMovement = function() {
 		var dockPosition = {
 			position: {
-			x: this.getDockingTarget().position.x + this.getDockingTarget().dimensions.w / 2, 
-			y: this.getDockingTarget().position.y + this.getDockingTarget().dimensions.h / 2
+			x: this.shared.dockingTarget.position.x + this.shared.dockingTarget.dimensions.width / 2, 
+			y: this.shared.dockingTarget.position.y + this.shared.dockingTarget.dimensions.height / 2
 			}
 		}
-
 		if (utils.distance(dockPosition, this.getShared()) < 100) {
 			this.doDock();
 		}
@@ -369,7 +366,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.getDockingTarget = function() {
-		return this.getShared().dockingTarget;
+		return this.shared.dockingTarget;
 	}
 
 	s.getPositionDraw = function() {
