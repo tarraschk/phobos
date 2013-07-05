@@ -39,10 +39,7 @@ this.phobos = this.phobos || {};
 			position: {x: params.position.x, y: params.position.y },
 			type:"Station",
 			actions: ["dock"],
-			dimensions: {
-				w: params.width,
-				h: params.height,
-			},
+			dimensions: params.dimensions,
 			image: {
 				src:params.image.src,
 				dim:500 //To do
