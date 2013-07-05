@@ -77,8 +77,8 @@ s.messages = [];
 	s.generateUniverse = function(universeToken) {
 		sector = {
 			objects:[
-			{id:0,type:'Station', image: { src: 'Anna-Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600},life: 150000, width:218, height:181},
-			{id:1, type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0},life: 150000, width:1032, height:620},
+			{id:0,type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600},life: 150000, dimensions: { width:218, height:181 } },
+			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0},life: 150000, dimensions: { width:218, height:181 } },
 			{
 				id:6, 
 				type:'Bot', 
