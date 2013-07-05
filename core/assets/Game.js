@@ -59,16 +59,12 @@
 		var sectorTiles = sector.tiles ;
 		this.initObjects();
 		this.initTiles(); 
-		console.log("LOADING OBJECTS");
-		console.log(sectorObjects);
 		if (shared)
 			this.loadSharedObjects(sectorObjects);
 		else 
 			this.loadObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
 
-		console.log("LOADING PLAYERS");
-		console.log(sectorShips);
 		this.loadSectorPlayers(sectorShips);
 	}
 
@@ -166,9 +162,15 @@
 	g.playerJoin = function(playerData, isMainPlayer) {
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
 
-		if (isMainPlayer)
+		if (isMainPlayer) {
+			this.setPlayerId(playerData.id);
 			this.setPlayerShip(this._shipsList[playerData.id]); 
+		}
 		return this._shipsList[playerData.id];
+	}
+
+	g.setPlayerId = function(playerId) {
+		this.playerId = playerId ; 
 	}
 
 	g.setPlayerShip = function(playerShipData) {
