@@ -79,6 +79,7 @@ phobos = this.phobos || {};
 	c.mainPlayerLogged = function(playerData)  {
 		this.setPlayerId(playerData.id); 
 		this.playerJoinGame(playerData, true); 
+		// this.getGame().getCamera().centerOn(this.getGame().getPlayerShip().x, this.getGame().getPlayerShip().y);
 	}
 
 	/* A player joined the game.
@@ -96,10 +97,22 @@ phobos = this.phobos || {};
 
 	c.initMouseClick = function() {
 		var that = this ; 
-		domPlayground.on('click', function(e){
+		domPlayground.on('mousedown', function(e){
 			if (allowMoveClick) {
+				mouse.clicked = true ; 
+				console.log(mouse.clicked);
 				that.inputPlayer("mouse1InSpace", e);
 			}
+		});
+		domPlayground.on('mousemove', function(e){
+			if (mouse.clicked) {
+				console.log("Move " + e);
+				if (Math.random() < 0.5) that.inputPlayer("mouse1InSpace", e);
+			}
+		});
+
+		domPlayground.on('mouseup', function(e){
+			mouse.clicked = false ; 
 		});
 	}
 
