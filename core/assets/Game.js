@@ -1,316 +1,443 @@
+
+this.phobos = this.phobos || {};
+
 (function () {
 
-	function Game() {
-		this.initialize();
+	var Sh = function(params){
+		this.initialize(params);
 	}
-	var g = Game.prototype ;
-	g._isReady = false;
-	g._started = false;
-	g._engine = null;
-	g._playerShip = null;
-	g._tilesMap = []; 
-	g._sectors = [];
-	g._objectsList = [] ; 
-	g._tilesList = [] ;
-	g._dockedShipsList = [] ; 
-	g._destroyedObjectsList = []; 
-	g._killedShipsList = [] ; 
-	g._shipsList = [];
-	g._gameGraphics = null ; 
-	g._updateTime = 15 ; 
-	g._frame ;
+	if (server) var s = Sh.prototype ;
+	else var s = Sh.prototype = new _.BitmapAnimation();
 
+// static public properties:
+	Sh.path = 'img/ship/';
+
+// public properties:
+	s.id ;
+	s.shared = {};
+	s.local = {
+		env: null,
+	}
 // constructor:
-	this.Container_initialize = this.initialize;	//unique to avoid overiding base class
-
-	/* DATA ENTRY TO SPECIFY !!! */
-	g.initialize = function () {
-		this._frame = 0 ; 
-		this._shipsList = [];
-		this._dockedShipsList = [];
-		this._killedShipsList = [];
-		if (server) console.log("Server");
-		else console.log("Client");
-		if (!server) this.initGraphics(); 
-	}
-
-	/* DATA ENTRY TO SPECIFY !!! */
-	g.initGraphics = function() {
-		resize();
-		backgroundGame = new Background("void/space-art-hd-473771.jpg");
-		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
-		backgroundGame3 = new Background("void/nebulalayer.png", 25);
-		this._camera = new phobos.Camera();
-		this._frame = 0 ;
-		for (var j = 0 ; j < 0 ; j++) {
-			g._tilesMap[j] = new Tile({
-				id:1,
-				x:Math.random() * 2500,
-				y:Math.random() * 2500,
-				src:"iso-02-04.png",
-			});
-		}
-		this._gameGraphics = new GameGraphics();
-	}
-
-	g.loadSector = function(sector, shared) {
-		var sectorShips = sector.ships ; 
-		var sectorObjects = sector.objects;
-		var sectorTiles = sector.tiles ;
-		this.initObjects();
-		this.initTiles(); 
-		if (shared)
-			this.loadSharedObjects(sectorObjects);
-		else 
-			this.loadObjects(sectorObjects);
-		this.loadTiles(sectorTiles); 
-
-		this.loadSectorPlayers(sectorShips);
-	}
-
-	g.initObjects = function() {
-		this._objectsList = [] ; 
-	}
-
-	g.initTiles = function() {
-		this._tilesList = [] ; 
-	}
-
-	g.loadSectorPlayers = function(playersData) {
-		for (key in playersData) {
-			if (String((key)) === key && playersData.hasOwnProperty(key)) {
-					if (key != this.playerId) //Must be other players, not main player already loaded
-					{
-						var player = playersData[key]
-						this.playerJoin(player, false); 
-					}
-				
+	s.initialize = function (params) {
+		if (params) {
+			this.id = params.id;
+			this.shared = {
+				id: params.id,
+				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
+				destination: params.destination,
+				limitSpeed: params.limitSpeed,
+				acceleration:params.acceleration , 
+				limitRotation:params.limitRotation,
+				weapons: new phobos.Weapon(params.weapons),
+				currentSpeed: params.currentSpeed , 
+				rotationSpeed: params.rotationSpeed,
+				hasDestination: params.hasDestination,
+				name: params.name,
+				hasTarget: params.hasTarget , 
+				energy: params.energy,
+				targetType: params.targetType,
+				targetId: params.targetId,
+				status:"space",
 			}
+			if (server) this.local.env = server;
+			else this.local.env = client;
+			this.load(params);
 		}
-	}
-
-	g.loadSharedObjects = function(objects) {
-		for (key in objects) {
-			if (String((key)) === key && objects.hasOwnProperty(key)) {
-				switch(objects[key].type) {
-					case "Station":
-						this._objectsList[objects[key].id] = new phobos.Station(objects[key]);
-					break;
-					case "Bot":
-						this._objectsList[objects[key].id] = new phobos.Bot(objects[key]);
-					break;
-				}
-			}
-		}
-	}
-	g.loadObjects = function(objects) {
-		for (var k = 0 ; k < objects.length ; k++) {
-			switch(objects[k].type) {
-				case "Station":
-					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
-				break;
-				case "Bot":
-					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
-				break;
-			}
-		}
-	}
-	// g.loadObjects = function(objects) {
-	// }
-
-	g.loadTiles = function(tiles) {
-
-	}
-
-	g.startUpdate = function() {
-
-		setInterval(function(){
-	        this.tick();
-    	}.bind(this), this._updateTime);
-	}
-
-	g.startClientUpdate = function() {
-		_.Ticker.addListener(window);
-		_.Ticker.useRAF = true;
-		_.Ticker.setFPS(60);
-		_.Ticker.addEventListener("tick", this.tick);
 	}
 
 // public methods:
 
-	g.tick = function () {
-	    this.diffT(); 
-	    this.objectsTick();
-	    if (!server) this.graphicsTick() ; 
-	    this._frame++;
-	}
-	g.diffT = function() {
-		t  = Date.now() ; 
-	    this.dt = this.lastframetime ? ( (t - this.lastframetime)/1000.0) : 0.016;
-		if (Math.random() < 0.01) console.log("FPS : " + 1 / this.dt);
-	    this.lastframetime = t;
-	}
-
-	g.playerAttack = function(player, target) {
-		var player = this.getShipsList()[player.id];
-		player.setTargetId(target.id);
-		player.setHasTarget(true);
-		player.setTargetType("bot");
-		player.setDestination({ x:target.position.x, y: target.position.y} );
-	}
-
-	g.playerJoin = function(playerData, isMainPlayer) {
-		this._shipsList[playerData.id] = new phobos.Ship(playerData);
-
-		if (isMainPlayer) {
-			this.setPlayerId(playerData.id);
-			this.setPlayerShip(this._shipsList[playerData.id]); 
+	s.moveTo = function (destination) {
+		if (this.shared.status != "docked") {
+			this.setHasTarget(false);
+			this.cancelDock() ; 
+			this.setDestination({x:destination.x, y:destination.y});
 		}
-		return this._shipsList[playerData.id];
 	}
 
-	g.setPlayerId = function(playerId) {
-		this.playerId = playerId ; 
+	s.dockTo = function(dockStation) {
+		var newDestination = {
+			x: dockStation.position.x + dockStation.dimensions.width / 2, 
+			y: dockStation.position.y + dockStation.dimensions.height / 2
+		}
+		this.moveTo(newDestination);
+		this.shared.dockingTarget = dockStation;
 	}
 
-	g.setPlayerShip = function(playerShipData) {
-		this._playerShip = playerShipData;
+	s.cancelDock = function() {
+		this.shared.dockingTarget = null;
 	}
 
-	g.setFrame = function(newFrame) {
-		this._frame= newFrame;
+	s.rotate = function (rotation) {
+		this.shared.position.rotation += rotation;
 	}
 
-	g.graphicsTick = function() {
-		this._gameGraphics.tick();
-		this._camera.tick();
-		renderCanvas();
-		backgroundGame.tick();
-		backgroundGame2.tick();
-		backgroundGame3.tick();
-		ui.tick();
+	s.throttleBrake = function (speed) {
+		if (speed < 0) 
+		{
+			//Brake
+			this.shared.currentSpeed = ((this.shared.currentSpeed + speed < 0) ? 0 : this.shared.currentSpeed + speed) ; 
+		}
+		else 
+		{
+			//Throttle
+			this.shared.currentSpeed = ((this.shared.currentSpeed + speed > this.shared.limitSpeed) ? this.shared.limitSpeed : this.shared.currentSpeed + speed) ; 
+		}
 	}
 
-	g.getSharedData = function() {
-		var sharedData = { 
-			killedShips: {}, 
-			dockedShips: {}, 
-			ships:{}, 
-			objects:{},
-			destroyedObjects:{},
-		};
-		for (key in this._shipsList) {
-			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
-				if (this._shipsList[key].index == this._shipsList[key].id) {
-					sharedData.ships[key] = this._shipsList[key].shared ;
+	s.stop = function () {
+		this.shared.currentSpeed = 0 ; 
+		this.shared.destination.x = this.shared.position.x ; 
+		this.shared.destination.y = this.shared.position.y;
+	}
+
+	s.setLimitSpeed = function (newLimitSpeed) {
+		this.shared.limitSpeed = newLimitSpeed ; 
+	}
+
+	s.setDestination = function (newDestination) { 
+		if (newDestination.x != this.shared.position.x && newDestination.y != this.shared.position.y) {
+			this.shared.destination.x = newDestination.x;
+			this.shared.destination.y = newDestination.y;
+			if (newDestination.rotation) this.shared.destination.rotation = newDestination.rotation ; 
+			var diffPosDest = this.getDiffDestinationPosition(); 
+			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
+			//s.position.rotation = s.destination.rotation ;
+			this.setHasDestination(true); 
+		}
+		else {
+			if (newDestination.rotation) this.shared.destination.rotation = newDestination.rotation ; 
+			this.setHasDestination(true); 
+
+		}
+	}
+
+	s.setHasDestination = function (newSetHasDestination) {
+		this.shared.hasDestination = newSetHasDestination; 
+	}
+
+	s.setRotationSpeed = function (newRotationSpeed) {
+		this.shared.rotationSpeed = newRotationSpeed;
+	}
+
+	s.setName = function (newName) {
+		this.name = newName;
+	}
+
+	s.setMapCoords = function(newMapCoo){
+		this.shared.position.x = newMapCoo.x;
+		this.shared.position.y = newMapCoo.y;
+	}
+
+	s.setTargetType = function(newTargetType) {
+		this.shared.targetType = newTargetType;
+	}
+
+	s.getDiffDestinationPosition = function(destination) {
+		if (!destination) destination = this.shared.destination ; 
+		return ({dX : (destination.x - this.shared.position.x), dY : (destination.y - this.shared.position.y), dRotation: (destination.rotation % 360 - this.shared.position.rotation % 360)});
+	}
+
+	s.getDiffAngle = function(diffPosDest) {
+		var dX = diffPosDest.dX;
+		var dY = diffPosDest.dY;
+		var diffAngle ; 
+		var offset = 90 ; 
+		if (dX > 0) 
+			diffAngle = Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI) - offset ; 
+		else if (dX <= 0) 
+			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
+		return diffAngle;
+	}
+
+	s.rotateToDestination = function(diffPosDest) {
+		if (diffPosDest.dRotation > 0) {
+			if (Math.abs(diffPosDest.dRotation) > 180) {
+				this.rotate(-this.shared.rotationSpeed);
+			}
+			else this.rotate(this.shared.rotationSpeed);
+		}
+		else {
+			if (Math.abs(diffPosDest.dRotation) > 180) {
+				this.rotate(this.shared.rotationSpeed);
+			}
+			else this.rotate(-this.shared.rotationSpeed);
+		}
+	}
+
+	s.idleBehavior = function() {
+		this.shared.currentSpeed = 0 ; 
+	}
+
+	s.moveToDestinationMovement = function() {
+		var diffPosDest = this.getDiffDestinationPosition();
+		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
+			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
+		} 
+		if (Math.abs(diffPosDest.dRotation) > this.getRotationSpeed()) {
+			this.rotateToDestination(diffPosDest);
+			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
+				this.throttleBrake(-this.shared.acceleration) ; 
+			else 
+				this.throttleBrake(this.shared.acceleration); 
+		}
+		else {
+			if (this.shared.currentSpeed < this.shared.limitSpeed)
+			{
+				this.throttleBrake(this.shared.acceleration) ; 
+			}
+			this.shared.position.rotation = this.shared.destination.rotation ; 
+		}
+		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
+			this.stop() ; 
+		}
+	}
+
+
+	s.setHasTarget = function(newHasTarget) {
+		this.shared.hasTarget = newHasTarget;
+	}
+	s.setTargetId = function(newTargetId) {
+		this.shared.targetId = newTargetId;
+	}
+
+	s.setEnergy = function(newEnergy) {
+		this.shared.energy = newEnergy;
+	}
+
+	s.die = function() {
+		this.shared.position.z = -1;
+		this.local.env.getGame().switchPlayerToKilled(this);
+		this.visible = false;
+		return -1;
+	}
+
+	s.receiveDamage = function (power) {
+		this.setEnergy(this.shared.energy - power);
+		if (this.isPlayerShip()) {
+			if (!this.local.env.getGame().getCamera().getVibration() && Math.random() < 0.5)
+				this.local.env.getGame().getCamera().setVibration(true);
+		}
+		if (this.getEnergy() <= 0) {
+			return this.die(); 
+		}
+		else return this.energy;
+	}
+
+	s.lookAt = function (coo) {
+		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
+		var destRotation = this.getDiffAngle(diffPosDest); 
+		this.setDestination({ x:this.shared.position.x, y:this.shared.position.y, rotation: destRotation } );
+	}
+
+	s.shootAt = function(target, weapon) {
+		weapon.doShoot(target, this.getPositionDraw());
+		var attackResult = target.receiveDamage(weapon._power);
+
+
+		return attackResult;
+	}
+
+	s.dockingMovement = function() {
+		var dockPosition = {
+			position: {
+			x: this.shared.dockingTarget.position.x + this.shared.dockingTarget.dimensions.width / 2, 
+			y: this.shared.dockingTarget.position.y + this.shared.dockingTarget.dimensions.height / 2
+			}
+		}
+		if (utils.distance(dockPosition, this.getShared()) < 100) {
+			this.doDock();
+		}
+	}
+
+	s.doDock = function() {
+		this.shared.position.z = 5//this.shared.dockingTarget._mapZ;
+		this.shared.status = "docked" ; 
+		this.local.env.getGame().switchPlayerToStation(this);
+		this.visible = false;
+		this.stop();
+		if (!server) {
+			ui.newStationElement();
+			if (this.local.env.getGame().getPlayerShip().getId() == this.getId()) 
+				allowMoveClick = false ; 
+		}
+	}
+
+	s.behavior = function () {
+		if (this.getHasTarget()) {
+			if (this.getTargetType() == "ship") 
+				var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
+			else if (this.getTargetType() == "bot") 
+				var currentTarget = this.local.env.getGame()._objectsList[this.getTargetId()];
+			if (currentTarget) {
+				var targetRange = utils.distance(currentTarget, this);
+				if (targetRange <= this.shared.weapons.getRange()) {
+					this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
+					this.stop();
+					if (this.shared.weapons.isReady()) {
+						var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
+						if (attackResult == -1) {
+							this.setHasTarget(false) ;
+							this.setTargetId (null) ;  
+							this.stop();
+						}
+					}
+				}
+				else {
+					this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
 				}
 			}
 		}
+		if (this.shared.dockingTarget) {
+			this.dockingMovement();
+		}
+		if (this.shared.hasDestination) {
+			this.moveToDestinationMovement();
+		}
+		else {
+			this.idleBehavior() ; 
+		}
+	}
 
-		for (key in this._dockedShipsList) {
-			if (String((key)) === key && this._dockedShipsList.hasOwnProperty(key)) {
-				if (this._dockedShipsList[key].index == this._dockedShipsList[key].id) {
-					sharedData.dockedShips[key] = this._dockedShipsList[key].shared ;
-				}
+	s.weaponsTick = function() {
+		this.getWeapons().tick();
+	}
+
+	s.tickMovement = function () {
+		//Throttle. 
+		//s.position.rotation += 1 ;
+		if (this.getPosition().rotation >= 180) this.getPosition().rotation = -180 + this.getPosition().rotation % 180 ;
+		if (this.getPosition().rotation <= -180) this.getPosition().rotation = 180 - this.getPosition().rotation % 180 ;  
+		//s.position.rotation = s.position.rotation % 360 ; 
+		this.getPosition().x += Math.sin((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
+		this.getPosition().y += Math.cos((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
+	}
+
+	s.rotationFrame = function() {
+		// this.gotoAndPlay("walk");
+		if (this.getPosition().rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
+		else
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
+
+	}
+
+	s.getCloseEnnemy = function() {
+		var minDistance = 999999999999999;
+		var closeEnnemyKey = null;
+		for (var j = 0 ; j < this.local.env.getGame()._shipsList.length ; j++) {
+			if (utils.distance(this.local.env.getGame()._shipsList[j].shared, this) < minDistance && this.local.env.getGame()._shipsList[j].shared != this) {
+				minDistance = utils.distance(this.local.env.getGame()._shipsList[j].shared, this);
+				closeEnnemyKey = j;
 			}
 		}
-
-		for (key in this._objectsList) {
-			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				if (this._objectsList[key].index == this._objectsList[key].id) {
-					sharedData.objects[key] = this._objectsList[key].shared ;
-				}
-			}
-		}
-
-		for (key in this._destroyedObjectsList) {
-			if (String((key)) === key && this._destroyedObjectsList.hasOwnProperty(key)) {
-				if (this._destroyedObjectsList[key].index == this._destroyedObjectsList[key].id) {
-					sharedData.destroyedObjects[key] = this._destroyedObjectsList[key].shared ;
-				}
-			}
-		}
-		return sharedData;
+		return this.local.env.getGame()._shipsList[closeEnnemyKey];
 	}
 
-	g.getPlayerShip = function() {
-		return this._playerShip;
+	s.getWeapons = function() {
+		return this.shared.weapons;
 	}
 
-	g.getShipsList = function() {
-		return this._shipsList; 
+	s.getShared = function() {
+		return this.shared;
 	}
 
-	g.getDockedShipsList = function() {
-		return this._dockedShipsList; 
+	s.getEnergy = function() {
+		return this.shared.energy;
 	}
 
-	g.getObjectsList = function() {
-		return this._objectsList; 
+	s.getId = function() {
+		return this.id;
 	}
 
-	g.getTilesList = function() {
-		return this._tilesList; 
+	s.getPosition = function() {
+		return this.shared.position;
 	}
 
-	g.getCamera = function() {
-		return this._camera;
-	}
-
-	g.getFrame = function() {
-		return this._frame;
-	}
-
-	g.getMainPlayerStatus = function() {
-		return this._playerShip.getStatus();
-	}
-
-	g.objectsTick = function() {
-		allowMoveClick = true ;  
-		for (key in this._shipsList) {
-			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
-				if (this._shipsList[key].index == this._shipsList[key].id) {
-					this._shipsList[key].tick();
-				}
-			}
-		}
-
-		for (key in this._objectsList) {
-			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				if (this._objectsList[key].index == this._objectsList[key].id) {
-					this._objectsList[key].tick();
-				}
-			}
-		}
-
-		// g._station1.tick();
-		// g._station2.tick();
-		// this._shipsList[3].moveTo({x:-150,y:-200});
-		// for (var k = 0 ; k < g._tilesMap.length ; k++) {
-		// 	g._tilesMap[k].tick();
-		// }
-		// if (Math.random() < 0.01) console.clear();
-	}
-
-	g.switchObjectToDestroyed = function(object) {
-		this._destroyedObjectsList[object.id] = object;
-		delete this._objectsList[object.id];
+	s.getTargetId = function() {
+		return this.shared.targetId;
 	}
 	
-	g.switchPlayerToKilled = function (player) {
-		this._killedShipsList[player.id] = player;
-		//this._shipsList.splice(player.id, 1); 
-
+	s.getHasTarget = function() {
+		return this.shared.hasTarget;
 	}
 
-	g.switchPlayerToStation = function (player) {
-		this._dockedShipsList[player.id] = player;
-		// this._shipsList.splice(player.id, 1); 
-		delete this._shipsList[player.id];
-		// this._shipsList.remove(1, 2);
-
+	s.getStatus = function() {
+		return this.shared.status;
 	}
 
-	phobos.Game = Game;
+	s.getTargetType = function() {
+		return this.shared.targetType;
+	}
 
+	s.getDockingTarget = function() {
+		return this.shared.dockingTarget;
+	}
+
+	s.getPositionDraw = function() {
+		return {x:this.x, y:this.y};
+	}
+
+	s.getRotationSpeed = function() {
+		return this.shared.rotationSpeed;
+	}
+
+	s.isPlayerShip = function() {
+		return (!server && client.getGame().getPlayerShip().id == this.id);
+	}
+
+	s.drawRender = function () {
+		this.rotationFrame();
+		// if (client.getGame().getPlayerShip().id == this.id) {
+		// 	var renderCoo = utils.stdToIsometricScreen(this.shared.position);
+		// }
+		// else 
+			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
+		this.x = renderCoo.x;
+		this.y = renderCoo.y;
+	}
+
+	s.tick = function (event) {
+		this.shared.weapons.tick() ; 
+		this.behavior();
+		this.tickMovement(); 
+		if (!server)
+			this.drawRender();
+	}
+
+	s.load = function(shipData){
+		this.index = shipData.id; 
+		if (!server) {
+			var imgShip = new Image(); 
+
+			shipData.src  = "Mantis1.png";
+
+			imgShip.src = Sh.path + shipData.src;
+			var that = this;
+			imgShip.onload = function() {
+				var shipSpriteSheet = new _.SpriteSheet({
+					// image to use
+					images: [this], 
+					frames: {width: 340, height: 263, regX: 340 / 2, regY: 263 / 2, vX:0.5, currentAnimationFrame: 15}, 
+					// width, height & registration point of each sprite
+					animations: {    
+						walk: [0, 71, "walk"]
+					}
+				});
+				that.index = shipData.id; 
+				//that.image = this;
+				that.spriteSheet = shipSpriteSheet;
+				that.gotoAndStop("walk");
+				that.scaleX = 0.35;
+				that.scaleY = 0.35; 
+				that.name = shipData.name; 
+				cPlayground.addChild(that);
+				cPlayground.update();//Create a Shape DisplayObject.
+			}
+		}
+	}
+
+
+    phobos.Ship = Sh
 }());
