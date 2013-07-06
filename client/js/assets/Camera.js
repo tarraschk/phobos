@@ -85,7 +85,9 @@ phobos = this.phobos || {};
 			this._mouseIsDown = false;
 		}
 	};
+
 	Camera.prototype.tick = function (event) {
+		if (this._keyIsRight || this._keyIsLeft || this._keyIsUp || this._keyIsDown ) this.setVibration(false);
 		if(this._keyIsRight || this._mouseIsRight) this._position.x += this._SPEED;
 		if(this._keyIsLeft || this._mouseIsLeft) this._position.x -= this._SPEED;
 		if(this._keyIsUp || this._mouseIsUp) this._position.y -= this._SPEED;
@@ -96,10 +98,26 @@ phobos = this.phobos || {};
 		// this._position.y = client.getGame().getPlayerShip().y;
 
 		//Vibration de la mort que personne ne comprend
-		/*var newCoo = utils.stdToIsometricScreen(this._position);
-		this._position.x = newCoo.x ; 
-		this._position.y = newCoo.y ; */
+		if (this.getVibration()) {
+			// console.log("VIBRATION");
+			// this._position.x += this._SPEED;
+			// this._position.y -= this._SPEED;
+			// var newCoo = utils.stdToIsometricScreen(this._position);
+			// this._position.x = newCoo.x ; 
+			// this._position.y = newCoo.y ;
+			// var that = this ;  
+			// setTimeout(function() { that.setVibration(false) }, 600) ; 
+		}
 	};
+
+	Camera.prototype.getVibration = function() {
+		return this._vibration;
+	}
+
+	Camera.prototype.setVibration = function(newVibration) {
+		console.log("Set vibration !");
+		this._vibration = newVibration;
+	}
 
 	phobos.Camera = Camera;
 }());
