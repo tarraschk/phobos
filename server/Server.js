@@ -77,15 +77,15 @@ s.messages = [];
 	s.generateUniverse = function(universeToken) {
 		sector = {
 			objects:[
-			{id:0,type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600},life: 150000, dimensions: { width:218, height:181 } },
+			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600},life: 150000, dimensions: { width:218, height:181 } },
 			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0},life: 150000, dimensions: { width:218, height:181 } },
 			{
 				id:6, 
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: -1520,y: 500, z:1, rotation:-90},  
-				initPosition: {x: -1520,y: 500, z:1, rotation:-90},
+				position: {x: 920,y: 500, z:1, rotation:-90},  
+				initPosition: {x: 920,y: 500, z:1, rotation:-90},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -113,7 +113,7 @@ s.messages = [];
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
 				position: {x: 1520,y: 700, z:1, rotation:-90},  
-				initPosition: {x: -1520,y: 500, z:1, rotation:-90},
+				initPosition: {x: 1520,y: 500, z:1, rotation:-90},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -258,12 +258,12 @@ s.messages = [];
 		return ({ 
 			id: utils.generateId() ,
 			destination: {x:null, y:null},
-			limitSpeed: 4.5,
-			acceleration: 0.06 , 
+			limitSpeed: 6.5,
+			acceleration: 0.15 , 
 			limitRotation:0,
 			weapons: 2,
 			currentSpeed: 0 , 
-			rotationSpeed: 4,
+			rotationSpeed: 7,
 			hasDestination: false,
 			hasTarget: false , 
 			energy: 1000,
