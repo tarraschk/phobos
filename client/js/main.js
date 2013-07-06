@@ -63,6 +63,8 @@ function debug(data){
 }
 function resize(){
 	$('canvas').each(function(){
+		screenWidth = window.innerWidth;
+		screenHeight = window.innerHeight;
 		this.width = window.innerWidth;
 		this.height = window.innerHeight;
 	});
