@@ -1,4 +1,8 @@
-(function(window){
+
+phobos = this.phobos || {};
+
+
+(function(){
 
 	function Camera(position) {
 		this._position = null;
@@ -87,6 +91,9 @@
 		if(this._keyIsUp || this._mouseIsUp) this._position.y -= this._SPEED;
 		if(this._keyIsDown || this._mouseIsDown) this._position.y += this._SPEED;
 
+		//Center on player
+		// this._position.x = client.getGame().getPlayerShip().x;
+		// this._position.y = client.getGame().getPlayerShip().y;
 
 		//Vibration de la mort que personne ne comprend
 		/*var newCoo = utils.stdToIsometricScreen(this._position);
@@ -94,5 +101,5 @@
 		this._position.y = newCoo.y ; */
 	};
 
-	window.Camera = Camera;
-}(window));
+	phobos.Camera = Camera;
+}());
