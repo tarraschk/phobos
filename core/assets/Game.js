@@ -40,7 +40,7 @@
 		backgroundGame = new Background("void/space-art-hd-473771.jpg");
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
-		this._camera = new Camera();
+		this._camera = new phobos.Camera();
 		this._frame = 0 ;
 		for (var j = 0 ; j < 0 ; j++) {
 			g._tilesMap[j] = new Tile({
