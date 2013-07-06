@@ -175,7 +175,7 @@ this.phobos = this.phobos || {};
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
 			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
 		} 
-		if (Math.abs(diffPosDest.dRotation) > 3) {
+		if (Math.abs(diffPosDest.dRotation) > this.getRotationSpeed()) {
 			this.rotateToDestination(diffPosDest);
 			if (Math.abs(diffPosDest.dX) < 250 && Math.abs(diffPosDest.dY) < 250) //If target is very close, we brake.
 				this.throttleBrake(-this.shared.acceleration) ; 
@@ -373,9 +373,17 @@ this.phobos = this.phobos || {};
 		return {x:this.x, y:this.y};
 	}
 
+	s.getRotationSpeed = function() {
+		return this.shared.rotationSpeed;
+	}
+
 	s.drawRender = function () {
 		this.rotationFrame();
-		var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
+		// if (client.getGame().getPlayerShip().id == this.id) {
+		// 	var renderCoo = utils.stdToIsometricScreen(this.shared.position);
+		// }
+		// else 
+			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
@@ -411,8 +419,8 @@ this.phobos = this.phobos || {};
 				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
-				that.scaleX = 0.4;
-				that.scaleY = 0.4; 
+				that.scaleX = 0.35;
+				that.scaleY = 0.35; 
 				that.name = shipData.name; 
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
