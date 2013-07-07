@@ -36,7 +36,8 @@ var mouse = {
 	ox: 0,
 	oy: 0,
 	up: true,
-	down: false
+	down: false,
+	clicked: false,
 };
 var allowMoveClick = true ;
 var screenWidth = 960;
