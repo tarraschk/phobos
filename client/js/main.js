@@ -1,56 +1,116 @@
-/*
-Ficher des variables globales accessibles à l'ensemble du projet.
-*/
+jQuery(document).ready(function($) {
+	socket = io.connect('http://localhost:8080');
+	// socket = io.connect('http://phobosproto.jit.su');
+	net = new Net();
+	client = new phobos.Client();
+	client.loginToServer(); 
+	client.loadGameData();
+	client.startGame();
+	client.createPingTimer(); 
+	client.createServerLoop(); 
+	ui = new UI();
+	
+	socket.on('loggedIn', function(data){
+		client.mainPlayerLogged(data); 
+		client.setGameFrame(data.frame); 
+	});
 
-//liste des code de touche clavier
-window._ = window.createjs;
-var utils = new Utils();
-var net;
-var KEY = {
-		LEFT: 37,
-		UP: 38,
-		RIGHT: 39,
-		DOWN: 40,
-		SPACE: 32,
-		ENTER: 13,
-		ESC: 27,
-		PAUSE: 80,
-		"0": 96,
-		"1": 97,
-		"2": 98,
-		"3": 99,
-		"4": 100,
-		"5": 101,
-		"6": 102,
-		"7": 103,
-		"8": 104,
-		"9": 105
-	};
-	//objet mouse contenant les variables de déplacement de la souris
-	// Déjà pris en charge avec easelJS ?
-var mouse = {
-	x: 0,
-	y: 0,
-	dx: 0,
-	dy: 0,
-	ox: 0,
-	oy: 0,
-	up: true,
-	down: false,
-	clicked: false,
-};
-var allowMoveClick = true ;
-var screenWidth = 960;
-var screenHeight = 540;
-var game = null;
-var domPlayground = $("#playground");
-var cPlayground = new _.Stage("playground");
-	cPlayground.enableMouseOver(10);
-	cPlayground.mouseMoveOutside = true;
-var cBackground = new _.Stage("background");
-var camera = null;
-var ui;
-var server = false ; 
-var client ;
-var socket ; 
-var gameport = 8080
+	socket.on('sectorPlayersLoaded', function(shipsList){
+		client.loadSectorPlayers(shipsList); 
+	});
+
+	socket.on('setBotBehavior', function(data) {
+		client.setBotBehavior(data.newBehavior, data.bot, data.data);
+	})
+
+	socket.on('sectorLoaded', function(sector){
+		client.loadSector(sector); 
+	});
+
+	socket.on('sectorDataLoaded', function(sector){
+		client.loadSector(sector); 
+	});
+
+	socket.on('playerMove', function(move){
+		client.onPlayerMove(move); 
+	});
+
+	socket.on('playerAttack', function(attack){
+		client.onPlayerAttack(attack); 
+	});
+
+	socket.on('playerDockTo', function(dock){
+		client.onPlayerDock(dock); 
+	});
+
+	socket.on('newPlayerLoggedIn', function(player) {
+		client.newPlayerLogged(player); 
+	});
+
+	socket.on('pong', function() {
+		client.onPong();
+
+	})
+
+	socket.on('sync', function(sy) {
+		var frame = sy.frame;
+		var sync = sy.data;
+		client.sync(frame, sync);
+	})
+});
+function debug(data){
+	$('<div>').html(data+'<br/>').prependTo($('#minichat'));
+}
+function resize(){
+	$('canvas').each(function(){
+		screenWidth = window.innerWidth;
+		screenHeight = window.innerHeight;
+		this.width = window.innerWidth;
+		this.height = window.innerHeight;
+	});
+	//Prevents click. Hud won't be resized ? 
+	//$('#hud').width(window.innerWidth).height(window.innerHeight);
+}
+
+function handleTick() {
+}
+
+function renderCanvas() {
+	cBackground.update();
+	cPlayground.update();
+}
+
+$(document).on('mousemove', function(e){
+	e.preventDefault();
+	var x = e.clientX;
+	var y = e.clientY;
+	mouse.dx = x - mouse.ox;
+	mouse.dy = y - mouse.oy;
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+	mouse.ox = x;
+	mouse.oy = y;
+
+});
+$(document).on('mouseup', function(e){
+	e.preventDefault();
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+	mouse.down = true;
+	mouse.up = false;
+});
+$(document).on('mousedown', function(e){
+	e.preventDefault();
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+	mouse.down = false;
+	mouse.up = true;
+});
+$(window).on('resize', function(){
+	//resize();
+});
+$(document).on('click', function(e){
+	e.preventDefault();
+	return false;
+});
+
