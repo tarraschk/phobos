@@ -33,6 +33,7 @@ this.phobos = this.phobos || {};
 			z: params.z,
 		}
 		this.id = params.id;
+		this.index = params.id;
 		this.shared = {
 			id: params.id,
 			position: {
@@ -50,7 +51,6 @@ this.phobos = this.phobos || {};
 
 // public methods:
 	t.tick = function (event) {
-		console.log("ttt til");
 		// this.x = this.shared.position.x - game._camera.x();
 		// this.y = this.shared.position.y - game._camera.y();
 		if(this._type == 1)
@@ -59,9 +59,8 @@ this.phobos = this.phobos || {};
 	}
 
 	t.drawRender = function() {
-		console.log("darw til");
 
-		var renderCoo = utils.absoluteToStd({x:this.position.x,y:this.position.y}, this.local.env.getGame().getCamera()._position);
+		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, client.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
