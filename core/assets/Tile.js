@@ -28,23 +28,23 @@ this.phobos = this.phobos || {};
 		console.log(params)
 		// this.shared = {}; // To erase !
 		this._position = {
-			x: params.x,
-			y: params.y,
-			z: params.z,
+			x: params.position.x,
+			y: params.position.y,
+			z: params.position.z,
 		}
 		this.id = params.id;
 		this.index = params.id;
 		this.shared = {
 			id: params.id,
 			position: {
-
-				x: params.x,
-				y: params.y,
-				z: params.z,
+				x: params.position.x,
+				y: params.position.y,
+				z: params.position.z,
 			},
 			src: params.src
 
 		};
+		console.log(this.shared);
 		if (!server)
 			this.load(params.src);
 	}
@@ -59,7 +59,6 @@ this.phobos = this.phobos || {};
 	}
 
 	t.drawRender = function() {
-
 		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, client.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;

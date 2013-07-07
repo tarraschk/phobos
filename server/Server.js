@@ -165,7 +165,7 @@ s.messages = [];
 			},
 			],
 			tiles:[
-			{	id:1,x:Math.random() * 2500,y:Math.random() * 2500, z: 1, src:"iso-02-04.png",},
+			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-02-04.png",},
 			]
 		};
 		this.setSector(null, sector); 
