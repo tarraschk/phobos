@@ -1,6 +1,9 @@
-(function (window) {
 
-	Tile = function(params){
+this.phobos = this.phobos || {};
+
+(function () {
+
+	var Tile = function(params){
 		this.initialize(params);
 	}
 
@@ -10,31 +13,39 @@
 	Tile.path = 'img/tiles/';
 	
 // public properties:
+	t._id;
 	t._type;
 	t._mapX;
 	t._mapY;
+	t._position ;
 	t._fucused = false;
-	t._scannable;
-	t._collectable;
-	t._rotationSpeed; // env 3-4 deg/s
-	t._id;
+	t._actions ; 
+	t._type ; 
 // constructor:
 	t.initialize = function (params) {
-		this.setMapCoords({x: params.x, y: params.y});
+		this._position = {
+			x: params.x,
+			y: params.y,
+			z: params.z,
+		}
 		this.load(params.src);
 	}
 
 // public methods:
-	t.setMapCoords = function(params){
-		this._mapX = params.x;
-		this._mapY = params.y;
-	}
 	t.tick = function (event) {
-		this.x = this._mapX - game._camera.x();
-		this.y = this._mapY - game._camera.y();
+		this.x = this.position.x - game._camera.x();
+		this.y = this.position.y - game._camera.y();
 		if(this._type == 1)
 			this.rotate();
+		if (!server) this.drawRender();
 	}
+
+	t.drawRender = function() {
+		var renderCoo = utils.absoluteToStd({x:this.position.x,y:this.position.y}, this.local.env.getGame().getCamera()._position);
+		this.x = renderCoo.x;
+		this.y = renderCoo.y;
+	}
+
 	t.rotate = function(angle){
 
 	}
@@ -64,9 +75,23 @@
 	t.manageMouseOut = function(){
 		
 	}
+
+	/**
+	*	Returns data for this object that is shared within the whole network. 
+	*	Use this to send this object via a socket or to the database. 
+	*/
+	t.getExport = function() {
+		return ({
+			id: this._id
+			position: this._position,
+			type: this._type,
+			actions: this._actions,
+		})
+	}
+
 	t.manageClick = function(){
 		
 	}
-	window.Tile = Tile;
+	phobos.Tile = Tile;
 
-}(window));
+}());
