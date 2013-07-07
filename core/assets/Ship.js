@@ -40,8 +40,24 @@ this.phobos = this.phobos || {};
 				targetId: params.targetId,
 				status:"space",
 			}
-			if (server) this.local.env = server;
-			else this.local.env = client;
+			if (server) { 
+				this.local.env = server;
+				// this.local = {
+				// 	env: server,
+				// }
+			}
+			else { 
+				this.local = {
+					env: client,
+					isPlayerShip: false,
+					diffDrawCooForCamera: {x: 0, y:0},
+					drawCoo : {x:null, y: null},
+				}
+
+				if (this.isPlayerShip) {
+					this.local.isPlayerShip = true;;
+				}
+			}
 			this.load(params);
 		}
 	}
@@ -215,6 +231,10 @@ this.phobos = this.phobos || {};
 
 	s.receiveDamage = function (power) {
 		this.setEnergy(this.shared.energy - power);
+		if (this.isPlayerShip()) {
+			if (!this.local.env.getGame().getCamera().getVibration() && Math.random() < 0.5)
+				this.local.env.getGame().getCamera().setVibration(true);
+		}
 		if (this.getEnergy() <= 0) {
 			return this.die(); 
 		}
@@ -230,6 +250,8 @@ this.phobos = this.phobos || {};
 	s.shootAt = function(target, weapon) {
 		weapon.doShoot(target, this.getPositionDraw());
 		var attackResult = target.receiveDamage(weapon._power);
+
+
 		return attackResult;
 	}
 
@@ -377,15 +399,69 @@ this.phobos = this.phobos || {};
 		return this.shared.rotationSpeed;
 	}
 
+	s.isPlayerShip = function() {
+		return (!server && client.getGame().getPlayerShip().id == this.id);
+	}
+
 	s.drawRender = function () {
 		this.rotationFrame();
-		// if (client.getGame().getPlayerShip().id == this.id) {
-		// 	var renderCoo = utils.stdToIsometricScreen(this.shared.position);
+
+		if (this.local.env.getGame().getCamera().getCenteredOnPlayer())
+		{
+			var renderCoo = utils.stdToIsometricScreen(this.shared.position);
+
+			this.local.drawCoo.x = renderCoo.x;
+			this.local.drawCoo.y = renderCoo.y;
+
+			this.x = renderCoo.x;
+			this.y = renderCoo.y;
+
+			this.x -= this.local.env.getGame().getCamera()._position.x;
+			this.y -= this.local.env.getGame().getCamera()._position.y;	
+		}
+		else {
+			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
+
+			this.x = renderCoo.x;
+			this.y = renderCoo.y;
+
+		}
+		// if (this.isPlayerShip()) {
+		// 	// this.local.diffDrawCooForCamera.dX = this.x - renderCoo.x;
+		// 	// this.local.diffDrawCooForCamera.dY = this.y - renderCoo.y;
+		// 	var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
 		// }
 		// else 
-			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
-		this.x = renderCoo.x;
-		this.y = renderCoo.y;
+		// 	
+
+
+		// this.x = renderCoo.x;
+		// this.y = renderCoo.y;
+	}
+
+	/**
+	*	Returns data for this object that is shared within the whole network. 
+	*	Use this to send this object via a socket or to the database. 
+	*/
+	s.getExport = function() {
+		return ({
+			id: params.id,
+			position: this.position,
+			destination: this.destination,
+			limitSpeed: this.limitSpeed,
+			acceleration:this.acceleration , 
+			limitRotation:this.limitRotation,
+			weapons: this.weapons.getExport(),
+			currentSpeed: this.currentSpeed , 
+			rotationSpeed: this.rotationSpeed,
+			hasDestination: this.hasDestination,
+			name: this.name,
+			hasTarget: this.hasTarget , 
+			energy: this.energy,
+			targetType: this.targetType,
+			targetId: this.targetId,
+			status:this.status,
+		})
 	}
 
 	s.tick = function (event) {
