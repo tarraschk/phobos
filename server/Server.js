@@ -168,6 +168,9 @@ s.messages = [];
 			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-02-04.png",},
 			]
 		};
+		for (var ll = 0 ; ll < 500; ll++) {
+			sector.tiles[ll] = {	id:ll,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-02-04.png",};
+		}
 		this.setSector(null, sector); 
 		this.universe = new phobos.Game(universeToken);
 		this.universe.loadSector(this.sectors.sector1); 
