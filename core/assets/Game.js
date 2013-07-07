@@ -54,6 +54,8 @@
 	}
 
 	g.loadSector = function(sector, shared) {
+		console.log(sector);
+
 		var sectorShips = sector.ships ; 
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
@@ -119,7 +121,8 @@
 	// }
 
 	g.loadTiles = function(tiles) {
-
+		console.log("INIT TILES");
+		console.log(tiles);
 	}
 
 	g.startUpdate = function() {
@@ -228,6 +231,14 @@
 			if (String((key)) === key && this._destroyedObjectsList.hasOwnProperty(key)) {
 				if (this._destroyedObjectsList[key].index == this._destroyedObjectsList[key].id) {
 					sharedData.destroyedObjects[key] = this._destroyedObjectsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._tilesList) {
+			if (String((key)) === key && this._tilesList.hasOwnProperty(key)) {
+				if (this._tilesList[key].index == this._tilesList[key].id) {
+					sharedData._tilesList[key] = this._tilesList[key].shared ;
 				}
 			}
 		}

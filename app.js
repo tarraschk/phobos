@@ -15,6 +15,7 @@ function loadGameAssets() {
 	require(gameAssetsDir + "Station.js");
 	require(gameAssetsDir + "Cooldown.js");
 	require(gameAssetsDir + "Weapon.js");
+	require(gameAssetsDir + "Tile.js");
 }
 function loadGameUtils() {
 	console.log("::Loading game Utils... ::");
