@@ -17,6 +17,7 @@ phobos = this.phobos || {};
 		this._mouseIsUp;
 		this._keyIsDown = false;
 		this._mouseIsDown;
+		this._centeredOnPlayer = true ; 
 	};
 
 	Camera.prototype.initialize = function (position) {
@@ -94,9 +95,12 @@ phobos = this.phobos || {};
 		if(this._keyIsDown || this._mouseIsDown) this._position.y += this._SPEED;
 
 		//Center on player
-		// this._position.x = client.getGame().getPlayerShip().x;
-		// this._position.y = client.getGame().getPlayerShip().y;
-
+		// console.log("dX: " + client.getGame().getPlayerShip().local.diffDrawCooForCamera.dX);
+		// console.log("dY: " + client.getGame().getPlayerShip().local.diffDrawCooForCamera.dY);
+		if (this.getCenteredOnPlayer()) {
+			this._position.x = client.getGame().getPlayerShip().local.drawCoo.x - screenWidth / 2 ; //this._position.x //+ client.getGame().getPlayerShip().local.diffDrawCooForCamera.dX;//client.getGame().getPlayerShip().x;
+			this._position.y = client.getGame().getPlayerShip().local.drawCoo.y - screenHeight / 2 ; //+ client.getGame().getPlayerShip().local.diffDrawCooForCamera.dY;//client.getGame().getPlayerShip().y;
+		}
 		//Vibration de la mort que personne ne comprend
 		if (this.getVibration()) {
 			// console.log("VIBRATION");
@@ -110,14 +114,26 @@ phobos = this.phobos || {};
 		}
 	};
 
+	Camera.prototype.centerOn = function(x, y) {
+		// alert("center on" + x);
+		this._position.x = x - screenWidth  ;
+		this._position.y = y - screenHeight;
+	} 
+
 	Camera.prototype.getVibration = function() {
 		return this._vibration;
+	}
+
+	Camera.prototype.getCenteredOnPlayer = function() {
+		return this._centeredOnPlayer; 
 	}
 
 	Camera.prototype.setVibration = function(newVibration) {
 		console.log("Set vibration !");
 		this._vibration = newVibration;
 	}
-
+		// this.tick = function() {
+		// 	this.setCamera(players[currentPlayerIndex].drawX - STAGE_WIDTH /2 , players[currentPlayerIndex].drawY - STAGE_HEIGHT /2);
+		// }
 	phobos.Camera = Camera;
 }());
