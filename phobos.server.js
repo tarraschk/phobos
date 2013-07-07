@@ -10,6 +10,8 @@ io.sockets.on('connection', function(client) {
 
 	server.setSocketsManager(client);
 
+	/* Credentials actions, player joins or out */
+
 	client.on('login', function(loginData){
 		var loggedInShipData = server.playerLogin({client: this,loginData: loginData}); 
 
@@ -18,6 +20,9 @@ io.sockets.on('connection', function(client) {
   			client.broadcast.emit('newPlayerLoggedIn', loggedInShipData);
 		}
 	});
+
+	/* Player actions in the game */
+
 
 	client.on('playerMove', function(data){
 		console.log("MOOOVE TO !");
@@ -42,6 +47,9 @@ io.sockets.on('connection', function(client) {
   		client.emit('playerDockTo', data);
 	});
 
+	/* Player request for data in the game */
+
+
 	client.on('playerData', function (playerData) {
 
 	});
@@ -59,6 +67,9 @@ io.sockets.on('connection', function(client) {
 	
 	client.on('tickPlayer', function(user) {
 	}); 
+
+
+	/* Synchronisation and client-server binding  */
 
 	client.on('ping', function() {
 		client.emit('pong'); 
