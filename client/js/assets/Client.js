@@ -61,7 +61,6 @@ phobos = this.phobos || {};
 	// General methods 
 	
 	c.onPlayerMove = function(playerMoveData) {
-		this.game._shipsList[playerMoveData.player].shared.position.x += 5 ; 
 		if (this.game._shipsList[playerMoveData.player])
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
@@ -128,44 +127,45 @@ phobos = this.phobos || {};
 	}
 
 	c.inputPlayer = function(command, input) {
-				switch(this.getGame().getMainPlayerStatus()) {
-					case "space":
+		switch(this.getGame().getMainPlayerStatus()) {
+			case "space":
 
-						switch (command) {
+				switch (command) {
 
-						case "mouse1InSpace":
+				case "mouse1InSpace":
 
-							var gameCam = this.game.getCamera();
-							var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
+					var gameCam = this.game.getCamera();
+					var cooClick = utils.cameraToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
 
-							var cooClick2 = utils.stdToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
-							
-							// this.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
-				        	socket.emit('playerMove', {player: this.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
+					var cooClick2 = utils.stdToAbsolute({	x:input.clientX, y:input.clientY}, gameCam._position);
+					
+					// this.game._playerShip.moveTo({x:cooClick2.x, y:cooClick2.y});
+					this.net.sendMessage('playerMove', {player: this.game.getPlayerShip().id, x:cooClick2.x, y:cooClick2.y});
+		        	// socket.emit('playerMove', {player: this.game._playerShip.id, x:cooClick2.x, y:cooClick2.y});
 
-						break;
-						case "mouse2InSpace":
+				break;
+				case "mouse2InSpace":
 
-						break;
-						case "mouse1Object":
-							var object = input.targObject;
-							ui.setObjectSelected(object);
-							ui.showObjectSelectedInfos();
+				break;
+				case "mouse1Object":
+					var object = input.targObject;
+					ui.setObjectSelected(object);
+					ui.showObjectSelectedInfos();
 
-						break;
+				break;
 
-						case "mouse1TargetBot":
-							allowMoveClick = false ; 
-							this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip().getShared(), target:input.target.getShared()});
-						break;
-					}
+				case "mouse1TargetBot":
+					allowMoveClick = false ; 
+					this.net.sendMessage('playerAttack', {player:this.game.getPlayerShip().getId(), target:input.target.id});
+				break;
+			}
 
-					break;
-					case "docked":
-						console.log("Docked !");
-					break;
-					case "killed":
-					break;
+			break;
+			case "docked":
+				console.log("Docked !");
+			break;
+			case "killed":
+			break;
 		}
 	}
 
