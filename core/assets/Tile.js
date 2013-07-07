@@ -24,24 +24,43 @@ this.phobos = this.phobos || {};
 	t._type ; 
 // constructor:
 	t.initialize = function (params) {
+		console.log("NEW TILE");
+		console.log(params)
+		// this.shared = {}; // To erase !
 		this._position = {
 			x: params.x,
 			y: params.y,
 			z: params.z,
 		}
-		this.load(params.src);
+		this.id = params.id;
+		this.shared = {
+			id: params.id,
+			position: {
+
+				x: params.x,
+				y: params.y,
+				z: params.z,
+			},
+			src: params.src
+
+		};
+		if (!server)
+			this.load(params.src);
 	}
 
 // public methods:
 	t.tick = function (event) {
-		this.x = this.position.x - game._camera.x();
-		this.y = this.position.y - game._camera.y();
+		console.log("ttt til");
+		// this.x = this.shared.position.x - game._camera.x();
+		// this.y = this.shared.position.y - game._camera.y();
 		if(this._type == 1)
 			this.rotate();
 		if (!server) this.drawRender();
 	}
 
 	t.drawRender = function() {
+		console.log("darw til");
+
 		var renderCoo = utils.absoluteToStd({x:this.position.x,y:this.position.y}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;

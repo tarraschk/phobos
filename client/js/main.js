@@ -24,6 +24,9 @@ jQuery(document).ready(function($) {
 	})
 
 	socket.on('sectorLoaded', function(sector){
+		console.log("sector loaded")
+		console.log(sector);
+		
 		client.loadSector(sector); 
 	});
 

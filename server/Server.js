@@ -164,7 +164,9 @@ s.messages = [];
 				type:"Bot",
 			},
 			],
-			tiles:{	id:1,x:Math.random() * 2500,y:Math.random() * 2500,	src:"iso-02-04.png",},
+			tiles:[
+			{	id:1,x:Math.random() * 2500,y:Math.random() * 2500, z: 1, src:"iso-02-04.png",},
+			]
 		};
 		this.setSector(null, sector); 
 		this.universe = new phobos.Game(universeToken);

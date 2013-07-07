@@ -123,6 +123,15 @@
 	g.loadTiles = function(tiles) {
 		console.log("INIT TILES");
 		console.log(tiles);
+
+		for (key in tiles) {
+			if (String((key)) === key && tiles.hasOwnProperty(key)) {
+			console.log("For" + key);
+			this._tilesList[tiles[key].id] = new phobos.Tile(tiles[key]);
+			}
+		}
+		console.log("TILES LIST");
+		console.log(this._tilesList);
 	}
 
 	g.startUpdate = function() {
@@ -197,6 +206,7 @@
 
 	g.getSharedData = function() {
 		var sharedData = { 
+			tiles: {},
 			killedShips: {}, 
 			dockedShips: {}, 
 			ships:{}, 
@@ -238,7 +248,7 @@
 		for (key in this._tilesList) {
 			if (String((key)) === key && this._tilesList.hasOwnProperty(key)) {
 				if (this._tilesList[key].index == this._tilesList[key].id) {
-					sharedData._tilesList[key] = this._tilesList[key].shared ;
+					sharedData.tiles[key] = this._tilesList[key].shared ;
 				}
 			}
 		}
@@ -291,6 +301,14 @@
 			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
 				if (this._objectsList[key].index == this._objectsList[key].id) {
 					this._objectsList[key].tick();
+				}
+			}
+		}
+
+		for (key in this._tilesList) {
+			if (String((key)) === key && this._tilesList.hasOwnProperty(key)) {
+				if (this._tilesList[key].index == this._tilesList[key].id) {
+					this._tilesList[key].tick();
 				}
 			}
 		}
