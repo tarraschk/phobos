@@ -101,6 +101,9 @@
 					case "Bot":
 						this._objectsList[objects[key].id] = new phobos.Bot(objects[key]);
 					break;
+					case "Collectable":
+						this._objectsList[objects[key].id] = new phobos.Collectable(objects[key]);
+					break;
 				}
 			}
 		}
@@ -113,6 +116,9 @@
 				break;
 				case "Bot":
 					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
+				break;
+				case "Collectable":
+					this._objectsList[objects[k].id] = new phobos.Collectable(objects[k]);
 				break;
 			}
 		}

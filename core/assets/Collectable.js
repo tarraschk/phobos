@@ -10,14 +10,15 @@ this.phobos = this.phobos || {};
 	else var c = Collectable.prototype = new _.BitmapAnimation();
 
 // static public properties:
-	Station.path = 'img/objects/collectables/';
+	Collectable.path = 'img/objects/collectables/';
 	
 // public properties:
-	s._id;
-	s.shared = {};
-	s.local = {};
+	c._id;
+	c.shared = {};
+	c.local = {};
 // constructor:
-	s.initialize = function (params) {
+	c.initialize = function (params) {
+		console.log("NEW COLLECTABLE");
 		this.id = params.id;
 		this.index = params.id;
 		this.shared = { 
@@ -33,7 +34,7 @@ this.phobos = this.phobos || {};
 				dim:500 //To do
 			}
 		 };
-		if (!server) this.load();
+		if (!server) this.load(params);
 		if (server) this.local.env = server;
 		else this.local.env = client;
 	}
@@ -42,34 +43,54 @@ this.phobos = this.phobos || {};
 	c.getLifeInPercent = function(){
 		return this._lifeLeft*100/this._life;
 	}
+
+	c.rotationFrame = function() {
+		// this.gotoAndPlay("walk");
+		if (this.getPosition().rotation % 360 > 0) 
+			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
+		else
+			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
+
+	}
+
 	c.drawRender = function() {
+
+		this.rotationFrame();
 		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
+
+	c.getPosition = function() {
+		return this.shared.position;
+	}
+
 	c.tick = function () {
-		this.shared.position.x = this.shared.position.x + 0.01;
+		this.shared.position.rotation = this.shared.position.rotation + 1.5;
 		if (!server) this.drawRender();
 	}
 	c.load = function(params){
-		var imgShip = new Image(); 
+		var imgC = new Image(); 
 
 
-		imgShip.src = Sh.path + params.src;
+		imgC.src = Collectable.path + params.image.src;
 		var that = this;
-		imgShip.onload = function() {
+		imgC.onload = function() {
 			var shipSpriteSheet = new _.SpriteSheet({
 				// image to use
 				images: [this], 
-				frames: {width: 293, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
+				frames: {width: 294, height: 218, regX: 293 / 2, regY: 218 / 2, vX:0.5, currentAnimationFrame: 15}, 
 				// width, height & registration point of each sprite
 				animations: {    
-					walk: [0, 71, "walk"]
+					walk: [0, 70, "walk"]
 				}
 			});
 			//that.image = this;
+			that.scaleX = 0.2;
+			that.scaleY = 0.2;
 			that.spriteSheet = shipSpriteSheet;
 			that.gotoAndStop("walk");
+			console.log("WAAAALK");
 			cPlayground.addChild(that);
 			cPlayground.update();//Create a Shape DisplayObject.
 		}
@@ -77,6 +98,6 @@ this.phobos = this.phobos || {};
 	c.getShared = function() {
 		return this.shared;
 	}
-	phobos.Station = Station;
+	phobos.Collectable = Collectable;
 
 }());
