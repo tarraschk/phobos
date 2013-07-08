@@ -2,27 +2,17 @@ this.phobos = this.phobos || {};
 
 (function () {
 
-	Object = function(params){
+	Collectable = function(params){
 		this.initialize(params);
 	}
 
-	if (server) var o = Object.prototype ;
-	else var o = Object.prototype = new _.BitmapAnimation();
+	if (server) var c = Collectable.prototype ;
+	else var c = Collectable.prototype = new _.BitmapAnimation();
 
 // static public properties:
 	Station.path = 'img/objects/collectables/';
 	
 // public properties:
-	s._damages = 200 // dommages que la station peut causer quand elle attaque;
-	s._life; // vie totale de la station
-	s._lifeLeft; // vie restante a la station
-	s._target;
-	s._isInspected;
-	s._targetZ;
-	s._mapZ;
-	s._name;
-	s.fucused = false;
-	s.scannable;
 	s._id;
 	s.shared = {};
 	s.local = {};
@@ -30,14 +20,11 @@ this.phobos = this.phobos || {};
 	s.initialize = function (params) {
 		this.id = params.id;
 		this.index = params.id;
-		this._id = utils.generateId();
-		this._targetZ = this._id;
-		this._name = params.name;
 		this.shared = { 
 			id: params.id,
 			index: params.id,
-			position: {x: params.position.x, y: params.position.y },
-			type:"Station",
+			position: {x: params.position.x, y: params.position.y, z: params.position.z },
+			type:"Collectable",
 			actions: ["dock"],
 			dimensions: params.dimensions,
 			image: {
@@ -52,27 +39,27 @@ this.phobos = this.phobos || {};
 	}
 
 // public methods:
-	s.getLifeInPercent = function(){
+	c.getLifeInPercent = function(){
 		return this._lifeLeft*100/this._life;
 	}
-	s.setMapCoords = function(params){
+	c.setMapCoords = function(params){
 		this._mapX = params.x;
 		this._mapY = params.y;
 	}
-	s.drawRender = function() {
+	c.drawRender = function() {
 		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;
 	}
-	s.tick = function () {
+	c.tick = function () {
 		this.shared.position.x = this.shared.position.x + 0.01;
 		if (!server) this.drawRender();
 	}
-	s.takeDamage = function(shooter, d){
+	c.takeDamage = function(shooter, d){
 		this._target = shooter;
 		this._lifeLeft -= d;
 	}
-	s.id = function(id){
+	c.id = function(id){
 		if(id != undefined){
 			this._id = id;
 			return this;
@@ -81,7 +68,7 @@ this.phobos = this.phobos || {};
 			return this._id;
 		}
 	}
-	s.load = function(){
+	c.load = function(){
 		if (!server) {
 			this.image = new Image();
 			this.image.src = Station.path+this.shared.image.src; 
@@ -100,10 +87,10 @@ this.phobos = this.phobos || {};
 			}
 		}
 	}
-	s.getShared = function() {
+	c.getShared = function() {
 		return this.shared;
 	}
-	s.name = function(name){
+	c.name = function(name){
 		if(name != undefined){
 			this._name = name;
 			return this;
@@ -112,7 +99,7 @@ this.phobos = this.phobos || {};
 			return this._name;
 		}
 	}
-	s.isInspected = function(is){
+	c.isInspected = function(is){
 		if(is != undefined){
 			this._isInspected = is;
 			return this;
