@@ -477,7 +477,7 @@ this.phobos = this.phobos || {};
 		if (!server) {
 			var imgShip = new Image(); 
 
-			shipData.src  = "Mantis1.png";
+			shipData.src  = "Hercule/SpriteHercules.png";
 
 			imgShip.src = Sh.path + shipData.src;
 			var that = this;
@@ -485,7 +485,7 @@ this.phobos = this.phobos || {};
 				var shipSpriteSheet = new _.SpriteSheet({
 					// image to use
 					images: [this], 
-					frames: {width: 340, height: 263, regX: 340 / 2, regY: 263 / 2, vX:0.5, currentAnimationFrame: 15}, 
+					frames: {width: 293, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
 					// width, height & registration point of each sprite
 					animations: {    
 						walk: [0, 71, "walk"]
@@ -495,8 +495,8 @@ this.phobos = this.phobos || {};
 				//that.image = this;
 				that.spriteSheet = shipSpriteSheet;
 				that.gotoAndStop("walk");
-				that.scaleX = 0.35;
-				that.scaleY = 0.35; 
+				that.scaleX = 0.45;
+				that.scaleY = 0.45; 
 				that.name = shipData.name; 
 				cPlayground.addChild(that);
 				cPlayground.update();//Create a Shape DisplayObject.
