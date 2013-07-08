@@ -86,12 +86,23 @@ this.phobos = this.phobos || {};
 				}
 			});
 			//that.image = this;
-			that.scaleX = 0.2;
-			that.scaleY = 0.2;
+			that.scaleX = 0.5;
+			that.scaleY = 0.5;
 			that.spriteSheet = shipSpriteSheet;
 			that.gotoAndStop("walk");
 			console.log("WAAAALK");
 			cPlayground.addChild(that);
+			
+				that.addEventListener("mouseover", function(e) {
+					ui.showEntityInfos(that);
+				});
+				that.addEventListener("mouseout", function(e) {
+					ui.hideEntityInfos(that);
+				});
+				that.addEventListener("click", function(e){
+					client.inputPlayer("mouse1Object",{ click:e, targObject: that})
+				});
+
 			cPlayground.update();//Create a Shape DisplayObject.
 		}
 	}
