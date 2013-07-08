@@ -12,6 +12,7 @@ function loadGameAssets() {
 	require(gameAssetsDir + "Game.js");
 	require(gameAssetsDir + "Ship.js");
 	require(gameAssetsDir + "Bot.js");
+	require(gameAssetsDir + "Collectable.js");
 	require(gameAssetsDir + "Station.js");
 	require(gameAssetsDir + "Cooldown.js");
 	require(gameAssetsDir + "Weapon.js");
