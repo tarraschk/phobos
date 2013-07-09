@@ -301,6 +301,7 @@ this.phobos = this.phobos || {};
 	}
 
 	s.collect = function(collectable) {
+		this.getCargo().capacity -= collectable.shared.weight;
 		this.local.env.getGame().switchObjectToCargo(this.getShared(), collectable);
 		this.getCargo().content[collectable.id] = collectable.getShared();
 	}
