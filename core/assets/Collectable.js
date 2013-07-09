@@ -72,7 +72,6 @@ this.phobos = this.phobos || {};
 	c.load = function(params){
 		var imgC = new Image(); 
 
-
 		imgC.src = Collectable.path + params.image.src;
 		var that = this;
 		imgC.onload = function() {
@@ -92,7 +91,7 @@ this.phobos = this.phobos || {};
 			that.gotoAndStop("walk");
 			console.log("WAAAALK");
 			cPlayground.addChild(that);
-			
+
 				that.addEventListener("mouseover", function(e) {
 					ui.showEntityInfos(that);
 				});
