@@ -27,6 +27,7 @@ this.phobos = this.phobos || {};
 			position: {x: params.position.x, y: params.position.y, z: params.position.z, rotation: params.position.rotation },
 			type:"Collectable",
 			name: params.name,
+			weight:params.weight,
 			actions: ["collect"],
 			dimensions: params.dimensions,
 			image: {
@@ -105,6 +106,11 @@ this.phobos = this.phobos || {};
 			cPlayground.update();//Create a Shape DisplayObject.
 		}
 	}
+
+	c.hide = function() {
+		this.visible = false;
+	}
+
 	c.getShared = function() {
 		return this.shared;
 	}

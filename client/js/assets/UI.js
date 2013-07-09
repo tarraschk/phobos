@@ -72,7 +72,7 @@
 		var actions = object.shared.actions ; 
 		console.log(actions);
 		debug(actions[0]);
-		$("#minichat").html("<a href='#' onclick='ui.objectSelectedAction(\"dock\")'>" + actions[0] + "</a>");
+		$("#minichat").html("<a href='#' onclick='ui.objectSelectedAction(\"" +actions[0] +"\")'>" + actions[0] + "</a>");
 	}
 
 	ui.objectSelectedAction = function(action) {

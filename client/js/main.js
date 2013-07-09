@@ -42,6 +42,11 @@ jQuery(document).ready(function($) {
 		client.onPlayerAttack(attack); 
 	});
 
+	socket.on('playerCollects', function(collect){
+		console.log(collect);
+		client.onPlayerCollects(collect); 
+	});
+
 	socket.on('playerDockTo', function(dock){
 		client.onPlayerDock(dock); 
 	});

@@ -38,6 +38,7 @@ this.phobos = this.phobos || {};
 				energy: params.energy,
 				targetType: params.targetType,
 				targetId: params.targetId,
+				cargo: params.cargo,
 				status:"space",
 			}
 			if (server) { 
@@ -280,28 +281,59 @@ this.phobos = this.phobos || {};
 		}
 	}
 
+	s.attackBehavior = function(target) {
+		var targetRange = utils.distance(target, this);
+		if (targetRange <= this.shared.weapons.getRange()) {
+			this.lookAt({x:target.getPosition().x, y:target.getPosition().y} );
+			this.stop();
+			if (this.shared.weapons.isReady()) {
+				var attackResult = this.shootAt(target, this.shared.weapons); 
+				if (attackResult == -1) {
+					this.setHasTarget(false) ;
+					this.setTargetId (null) ;  
+					this.stop();
+				}
+			}
+		}
+		else {
+			this.setDestination({ x:target.getPosition().x, y:target.getPosition().y} );
+		}
+	}
+
+	s.collect = function(collectable) {
+		this.local.env.getGame().switchObjectToCargo(this.getShared(), collectable);
+		this.getCargo().content[collectable.id] = collectable.getShared();
+	}
+
+	s.collectBehavior = function(collectable) {
+		var targetRange = utils.distance(collectable, this);
+		if (targetRange <= 100) {
+			this.lookAt({x:collectable.getPosition().x, y:collectable.getPosition().y} );
+			this.stop();
+			if (this.getCargo().capacity >= collectable.shared.weight) {
+				//Pick up item
+				this.collect(collectable);
+			}
+		}
+		else {
+			this.setDestination({ x:collectable.getPosition().x, y:collectable.getPosition().y} );
+		}
+	}
+
 	s.behavior = function () {
 		if (this.getHasTarget()) {
-			if (this.getTargetType() == "ship") 
-				var currentTarget = this.local.env.getGame()._shipsList[this.getTargetId()];
-			else if (this.getTargetType() == "bot") 
-				var currentTarget = this.local.env.getGame()._objectsList[this.getTargetId()];
+			var targetType = this.getTargetType();
+			if (targetType == "ship") 
+				var currentTarget = this.local.env.getGame().getShipsList()[this.getTargetId()];
+			else if (targetType == "bot" || targetType == "collectable") 
+				var currentTarget = this.local.env.getGame().getObjectsList()[this.getTargetId()];
+
 			if (currentTarget) {
-				var targetRange = utils.distance(currentTarget, this);
-				if (targetRange <= this.shared.weapons.getRange()) {
-					this.lookAt({x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
-					this.stop();
-					if (this.shared.weapons.isReady()) {
-						var attackResult = this.shootAt(currentTarget, this.shared.weapons); 
-						if (attackResult == -1) {
-							this.setHasTarget(false) ;
-							this.setTargetId (null) ;  
-							this.stop();
-						}
-					}
+				if (targetType == "bot" || targetType == "ship") { //Attack behavior
+					this.attackBehavior(currentTarget);
 				}
-				else {
-					this.setDestination({ x:currentTarget.getPosition().x, y:currentTarget.getPosition().y} );
+				else if (targetType == "collectable") { //Pickup collectable
+					this.collectBehavior(currentTarget);
 				}
 			}
 		}
@@ -393,6 +425,10 @@ this.phobos = this.phobos || {};
 
 	s.getPositionDraw = function() {
 		return {x:this.x, y:this.y};
+	}
+
+	s.getCargo = function() {
+		return this.shared.cargo;
 	}
 
 	s.getRotationSpeed = function() {

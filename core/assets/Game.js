@@ -171,10 +171,21 @@
 
 	g.playerAttack = function(playerId, targetId) {
 		var player = this.getShipsList()[playerId];
-		var target = this.getObjectsList()[targetId];
+		var target = this.getObjectsList()[targetId]; //To do attack another player !
 		player.setTargetId(targetId);
 		player.setHasTarget(true);
 		player.setTargetType("bot");
+		player.setDestination({ x:target.getPosition().x, y: target.getPosition().y} );
+	}
+
+	g.playerCollects = function(playerId, objectId) {
+		console.log("SET PLAYER COLLECTS");
+		var player = this.getShipsList()[playerId];
+		console.log(objectId);
+		var target = this.getObjectsList()[objectId];
+		player.setTargetId(objectId);
+		player.setHasTarget(true);
+		player.setTargetType("collectable");
 		player.setDestination({ x:target.getPosition().x, y: target.getPosition().y} );
 	}
 
@@ -326,6 +337,11 @@
 		// 	g._tilesMap[k].tick();
 		// }
 		// if (Math.random() < 0.01) console.clear();
+	}
+
+	g.switchObjectToCargo = function(player, collectable) {
+		collectable.hide();
+		delete this._objectsList[collectable.id];
 	}
 
 	g.switchObjectToDestroyed = function(object) {

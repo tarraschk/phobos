@@ -65,6 +65,10 @@ phobos = this.phobos || {};
 			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
 
+	c.onPlayerCollects = function(collect) {
+		this.getGame().playerCollects(collect.player, collect.collectable);
+	}
+
 	c.onPlayerAttack = function(attack) {
 		this.getGame().playerAttack(attack.player, attack.target);
 	}
@@ -122,6 +126,11 @@ phobos = this.phobos || {};
 				allowMoveClick = false ; 
 				debug('arrimage '+station._name);
 				client.socketEmit('playerDockTo', {player:client.getGame().getPlayerShip().getShared(), station:station.getShared()});
+			break;
+			case "collect":
+				var object = data;
+				console.log(object);
+				client.socketEmit('playerCollects', {player:client.getGame().getPlayerShip().getId(), collectable:object.id});
 			break;
 		}
 	}
