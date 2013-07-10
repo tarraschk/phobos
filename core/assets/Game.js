@@ -37,7 +37,7 @@
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initGraphics = function() {
 		resize();
-		backgroundGame = new Background("void/space-art-hd-473771.jpg");
+		backgroundGame = new Background("void/far7plagiat.png");
 		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		this._camera = new phobos.Camera();
