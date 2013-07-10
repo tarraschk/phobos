@@ -83,7 +83,7 @@ s.messages = [];
 			{id:300,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
 			{id:200,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
 			{id:100,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
-			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600},life: 150000, dimensions: { width:218, height:181 } },
+			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1},life: 150000, dimensions: { width:218, height:181 } },
 			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0},life: 150000, dimensions: { width:218, height:181 } },
 			{
 				id:6, 

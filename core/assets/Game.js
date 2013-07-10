@@ -8,7 +8,6 @@
 	g._started = false;
 	g._engine = null;
 	g._playerShip = null;
-	g._tilesMap = []; 
 	g._sectors = [];
 	g._objectsList = [] ; 
 	g._tilesList = [] ;
@@ -16,6 +15,7 @@
 	g._destroyedObjectsList = []; 
 	g._killedShipsList = [] ; 
 	g._shipsList = [];
+	g._players = [];
 	g._gameGraphics = null ; 
 	g._updateTime = 15 ; 
 	g._frame ;
@@ -26,6 +26,7 @@
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
 		this._frame = 0 ; 
+		this._players = [];
 		this._shipsList = [];
 		this._dockedShipsList = [];
 		this._killedShipsList = [];
@@ -42,14 +43,6 @@
 		backgroundGame3 = new Background("void/nebulalayer.png", 25);
 		this._camera = new phobos.Camera();
 		this._frame = 0 ;
-		for (var j = 0 ; j < 0 ; j++) {
-			g._tilesMap[j] = new Tile({
-				id:1,
-				x:Math.random() * 2500,
-				y:Math.random() * 2500,
-				src:"iso-02-04.png",
-			});
-		}
 		this._gameGraphics = new GameGraphics();
 	}
 
@@ -156,6 +149,17 @@
 
 // public methods:
 
+	/* Tick & updates */ 
+	g.graphicsTick = function() {
+		this._gameGraphics.tick();
+		this._camera.tick();
+		renderCanvas();
+		backgroundGame.tick();
+		backgroundGame2.tick();
+		backgroundGame3.tick();
+		ui.tick();
+	}
+
 	g.tick = function () {
 	    this.diffT(); 
 	    this.objectsTick();
@@ -168,6 +172,10 @@
 		if (Math.random() < 0.01) console.log("FPS : " + 1 / this.dt);
 	    this.lastframetime = t;
 	}
+
+	/** 
+	Player management 
+	*/
 
 	g.playerAttack = function(playerId, targetId) {
 		var player = this.getShipsList()[playerId];
@@ -191,6 +199,7 @@
 
 	g.playerJoin = function(playerData, isMainPlayer) {
 		this._shipsList[playerData.id] = new phobos.Ship(playerData);
+		this._players[playerData.id] = this._shipsList[playerData.id];
 
 		if (isMainPlayer) {
 			this.setPlayerId(playerData.id);
@@ -198,6 +207,10 @@
 		}
 		return this._shipsList[playerData.id];
 	}
+
+
+
+	/* Getters and setters, various */
 
 	g.setPlayerId = function(playerId) {
 		this.playerId = playerId ; 
@@ -209,67 +222,6 @@
 
 	g.setFrame = function(newFrame) {
 		this._frame= newFrame;
-	}
-
-	g.graphicsTick = function() {
-		this._gameGraphics.tick();
-		this._camera.tick();
-		renderCanvas();
-		backgroundGame.tick();
-		backgroundGame2.tick();
-		backgroundGame3.tick();
-		ui.tick();
-	}
-
-	g.getSharedData = function() {
-		var sharedData = { 
-			tiles: {},
-			killedShips: {}, 
-			dockedShips: {}, 
-			ships:{}, 
-			objects:{},
-			destroyedObjects:{},
-		};
-		for (key in this._shipsList) {
-			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
-				if (this._shipsList[key].index == this._shipsList[key].id) {
-					sharedData.ships[key] = this._shipsList[key].shared ;
-				}
-			}
-		}
-
-		for (key in this._dockedShipsList) {
-			if (String((key)) === key && this._dockedShipsList.hasOwnProperty(key)) {
-				if (this._dockedShipsList[key].index == this._dockedShipsList[key].id) {
-					sharedData.dockedShips[key] = this._dockedShipsList[key].shared ;
-				}
-			}
-		}
-
-		for (key in this._objectsList) {
-			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
-				if (this._objectsList[key].index == this._objectsList[key].id) {
-					sharedData.objects[key] = this._objectsList[key].shared ;
-				}
-			}
-		}
-
-		for (key in this._destroyedObjectsList) {
-			if (String((key)) === key && this._destroyedObjectsList.hasOwnProperty(key)) {
-				if (this._destroyedObjectsList[key].index == this._destroyedObjectsList[key].id) {
-					sharedData.destroyedObjects[key] = this._destroyedObjectsList[key].shared ;
-				}
-			}
-		}
-
-		for (key in this._tilesList) {
-			if (String((key)) === key && this._tilesList.hasOwnProperty(key)) {
-				if (this._tilesList[key].index == this._tilesList[key].id) {
-					sharedData.tiles[key] = this._tilesList[key].shared ;
-				}
-			}
-		}
-		return sharedData;
 	}
 
 	g.getPlayerShip = function() {
@@ -329,15 +281,9 @@
 				}
 			}
 		}
-
-		// g._station1.tick();
-		// g._station2.tick();
-		// this._shipsList[3].moveTo({x:-150,y:-200});
-		// for (var k = 0 ; k < g._tilesMap.length ; k++) {
-		// 	g._tilesMap[k].tick();
-		// }
-		// if (Math.random() < 0.01) console.clear();
 	}
+
+	/** 	Change objects status */
 
 	g.switchObjectToCargo = function(player, collectable) {
 		collectable.hide();
@@ -362,6 +308,61 @@
 		// this._shipsList.remove(1, 2);
 
 	}
+
+
+	/** Share & net data */
+
+	g.getSharedData = function() {
+		var sharedData = { 
+			tiles: {},
+			killedShips: {}, 
+			dockedShips: {}, 
+			ships:{}, 
+			objects:{},
+			destroyedObjects:{},
+		};
+		for (key in this._shipsList) {
+			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
+				if (this._shipsList[key].index == this._shipsList[key].id) {
+					sharedData.ships[key] = this._shipsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._dockedShipsList) {
+			if (String((key)) === key && this._dockedShipsList.hasOwnProperty(key)) {
+				if (this._dockedShipsList[key].index == this._dockedShipsList[key].id) {
+					sharedData.dockedShips[key] = this._dockedShipsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._objectsList) {
+			if (String((key)) === key && this._objectsList.hasOwnProperty(key)) {
+				if (this._objectsList[key].index == this._objectsList[key].id) {
+					sharedData.objects[key] = this._objectsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._destroyedObjectsList) {
+			if (String((key)) === key && this._destroyedObjectsList.hasOwnProperty(key)) {
+				if (this._destroyedObjectsList[key].index == this._destroyedObjectsList[key].id) {
+					sharedData.destroyedObjects[key] = this._destroyedObjectsList[key].shared ;
+				}
+			}
+		}
+
+		for (key in this._tilesList) {
+			if (String((key)) === key && this._tilesList.hasOwnProperty(key)) {
+				if (this._tilesList[key].index == this._tilesList[key].id) {
+					sharedData.tiles[key] = this._tilesList[key].shared ;
+				}
+			}
+		}
+		return sharedData;
+	}
+
 
 	phobos.Game = Game;
 

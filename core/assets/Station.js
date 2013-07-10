@@ -36,7 +36,7 @@ this.phobos = this.phobos || {};
 		this.shared = { 
 			id: params.id,
 			index: params.id,
-			position: {x: params.position.x, y: params.position.y },
+			position: {x: params.position.x, y: params.position.y, z:params.position.z },
 			type:"Station",
 			actions: ["dock"],
 			dimensions: params.dimensions,
