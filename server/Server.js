@@ -188,7 +188,6 @@ s.messages = [];
 		this.universe.stopUpdate();
 	}
 	s.loadSectorPlayers = function(socket, sector) {
-		
 		var sectorPlayers = this.universe.getShipsList() ; 
 		socket.emit('sectorPlayersLoaded', sectorPlayers);
 	}
