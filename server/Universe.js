@@ -32,6 +32,9 @@
 		this._killedShipsList = [];
 	}
 
+	/**
+	Change objects status */
+
 	phobos.Universe = Universe;
 
 }());

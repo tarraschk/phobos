@@ -1,4 +1,8 @@
+/**
 
+Server is the main entry of the game, once app.js has done it's job (loading assets and sockets). 
+It initializes the game and manages the sockets entries. 
+*/
 phobos = this.phobos || {};
 
 
@@ -23,34 +27,6 @@ s.messages = [];
 // constructor:
 
 	s.initialize = function () { 
-		this.show_help = false;             //Whether or not to draw the help text
-	    this.naive_approach = false;        //Whether or not to use the naive approach
-	    this.show_server_pos = false;       //Whether or not to show the server position
-	    this.show_dest_pos = false;         //Whether or not to show the interpolation goal
-	    this.client_predict = true;         //Whether or not the client is predicting input
-	    this.input_seq = 0;                 //When predicting client inputs, we store the last input as a sequence number
-	    this.client_smoothing = true;       //Whether or not the client side prediction tries to smooth things out
-	    this.client_smooth = 25;            //amount of smoothing to apply to client update dest
-
-	    this.net_latency = 0.001;           //the latency between the client and the server (ping/2)
-	    this.net_ping = 0.001;              //The round trip time from here to the server,and back
-	    this.lastPingTime = 0.0;        //The time we last sent a ping
-	    this.fakeLag = 0;                //If we are simulating lag, this applies only to the input client (not others)
-	    this.fake_lag_time = 0;
-
-	    this.net_offset = 100;              //100 ms latency between server and client interpolation for other clients
-	    this.buffer_size = 2;               //The size of the server history to keep for rewinding/interpolating.
-	    this.target_time = 0.01;            //the time where we want to be in the server timeline
-	    this.oldest_tick = 0.01;            //the last time tick we have available in the buffer
-
-	    this.client_time = 0.01;            //Our local 'clock' based on server time - client interpolation(net_offset).
-	    this.server_time = 0.01;            //The time the server reported it was at, last we heard from it
-	    
-	    this.dt = 0.016;                    //The time that the last frame took to run
-	    this.fps = 0;                       //The current instantaneous fps (1/this.dt)
-	    this.fps_avg_count = 0;             //The number of samples we have taken for fps_avg
-	    this.fps_avg = 0;                   //The current average fps displayed in the debug UI
-	    this.fps_avg_acc = 0;    
 
 	    this.sectors = {sector1: []};
 
@@ -78,9 +54,9 @@ s.messages = [];
 		sector = {
 			objects:[
 
-			{id:500,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
-			{id:400,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
-			{id:300,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
+			{id:500,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 10}, weight:10, dimensions: { width:218, height:181 } },
+			{id:400,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 130}, weight:10, dimensions: { width:218, height:181 } },
+			{id:300,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 530}, weight:10, dimensions: { width:218, height:181 } },
 			{id:200,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
 			{id:100,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
 			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1},life: 150000, dimensions: { width:218, height:181 } },
@@ -153,7 +129,7 @@ s.messages = [];
 				height:620,
 				destination: {x:null, y:null},
 				limitSpeed: 1.5,
-				acceleration: 0.06 , 
+				acceleration: 0.06, 
 				limitRotation:0,
 				currentSpeed: 0 , 
 				rotationSpeed: 3,

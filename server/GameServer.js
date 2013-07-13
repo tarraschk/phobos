@@ -1,3 +1,9 @@
+/**
+
+GameServer generates the game's universe based on the database
+Starts the game's update (and stops it)
+
+*/
 (function () {
 
 	function Game() {
