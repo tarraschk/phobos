@@ -19,7 +19,6 @@
 			this.mongoose.connect(this.connectionString);
 			console.log("CONNEXION SUCCESS");
 		}
-
 		
 	// public methods:
 	phobos.DBHandler = DBHandler;
