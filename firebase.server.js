@@ -5,7 +5,7 @@ var phobosAlpha = new Firebase('https://phobosalpha.firebaseio.com/');
 
 function startGameUpdate() {
 	setInterval(function(){
-		phobosAlpha.set( server.getExport() );
+		phobosAlpha.set( server.export() );
 
 	}.bind(this), 500);
 }

@@ -28,9 +28,6 @@ s.messages = [];
 
 	s.initialize = function () { 
 
-	    this.sectors = {sector1: []};
-
-
 	}
 
 	
@@ -42,15 +39,15 @@ s.messages = [];
 
 
 	s.emitSocket = function(message, messageData) {
-		if (this.socketManager)
-			this.socketManager.emit(message, messageData);
+		if (this._socketManager)
+			this._socketManager.emit(message, messageData);
 		else return -1; 
 	}
 
 	s.broadcastToAllSocket = function(message, messageData) {
-		if (this.socketManager) {
-			this.socketManager.emit(message, messageData);
-			this.socketManager.broadcast.emit(message, messageData);
+		if (this._socketManager) {
+			this._socketManager.emit(message, messageData);
+			this._socketManager.broadcast.emit(message, messageData);
 		}
 		else return -1; 
 	}
@@ -58,7 +55,7 @@ s.messages = [];
 	// Message management
 
 	s.pushMessage = function(client, message) {
-		this.messages.push({message:message, client:client}); 
+		this._messages.push({message:message, client:client}); 
 	}
 
 	// Game generator
@@ -182,11 +179,11 @@ s.messages = [];
 
 
 	s.addUser = function(user) {
-		this.users[user.id] = user ; 
+		this._users[user.id] = user ; 
 	}
 
 	s.removeUser = function(user) {
-		this.users[user.id] = null ; 
+		this._users[user.id] = null ; 
 	}
 
 	s.playerLogin = function(loginData) {
@@ -214,7 +211,7 @@ s.messages = [];
 
 
 	s.getPlayerData = function(playerId) {
-		this.playerCount++ ; 
+		this._playerCount++ ; 
 		return ({ 
 			id: utils.generateId() ,
 			destination: {x:null, y:null},
@@ -232,7 +229,7 @@ s.messages = [];
 			status:"space",
 			position: {x: Math.random() * 500, y: Math.random() * 500, z:1, rotation:0 }, 
 			cargo: {capacity:500, content:[]},
-			name: "testeur" + this.playerCount, 
+			name: "testeur" + this._playerCount, 
 		})
 	}
 
@@ -268,7 +265,7 @@ s.messages = [];
 		return (sharedData);
 	}
 
-	s.getExport = function() {
+	s.export = function() {
 		var sharedData = this.getGame().getSharedData();
 		var users = this.getUsers();
 		return (
@@ -291,7 +288,7 @@ s.messages = [];
 	//Setters and getters
 
 	s.setSocketsManager = function(newSocketsManager) {
-		this.socketManager = newSocketsManager; 
+		this._socketManager = newSocketsManager; 
 	}
 
 	s.setGame = function(game) {
@@ -299,7 +296,7 @@ s.messages = [];
 	}
 
 	s.getUsers = function() {
-		return this.users;
+		return this._users;
 	}
 
 	s.getGame = function() {
