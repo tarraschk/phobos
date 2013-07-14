@@ -525,7 +525,7 @@ this.phobos = this.phobos || {};
 					frames: {width: 294, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
 					// width, height & registration point of each sprite
 					animations: {    
-						walk: [0, 71, "walk"]
+						walk: [0, 70, "walk"]
 					}
 				});
 				that.index = shipData.id; 
