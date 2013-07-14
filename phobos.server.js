@@ -2,8 +2,8 @@ utils = new phobos.Utils();
 
 server = new phobos.Server();
 
-server.generateUniverse(1);
-server.startUniverse();
+server.generateGame(1);
+server.startGame();
 
 
 io.sockets.on('connection', function(client) {

@@ -42,15 +42,6 @@ Starts the game's update (and stops it)
 	}
 
 	/* DATA ENTRY TO SPECIFY !!! */
-	g.initGraphics = function() {
-		resize();
-		backgroundGame = new Background("void/far7plagiat.png");
-		backgroundGame2 = new Background("void/asteroidlayer.png", 15);
-		backgroundGame3 = new Background("void/nebulalayer.png", 25);
-		this._camera = new phobos.Camera();
-		this._frame = 0 ;
-		this._gameGraphics = new GameGraphics();
-	}
 
 	g.loadSector = function(sector, shared) {
 		console.log(sector);

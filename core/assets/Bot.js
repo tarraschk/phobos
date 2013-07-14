@@ -350,8 +350,8 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (key in this.local.env.getShipsList()) {
-			if (String((key)) === key && this.local.env.getShipsList().hasOwnProperty(key)) {
+		for (key in this.local.env.getGame().getShipsList()) {
+			if (String((key)) === key && this.local.env.getGame().getShipsList().hasOwnProperty(key)) {
 				if (utils.distance(this.local.env.getShipsList()[key].shared, this.shared) < minDistance && this.local.env.getGame()._shipsList[key].shared != this.shared) {
 					minDistance = utils.distance(this.local.env.getGame()._shipsList[key].shared, this.shared);
 					closeEnnemyKey = key;
