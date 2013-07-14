@@ -96,36 +96,16 @@
 			}
 		}
 	}
-	g.loadObjects = function(objects) {
-		for (var k = 0 ; k < objects.length ; k++) {
-			switch(objects[k].type) {
-				case "Station":
-					this._objectsList[objects[k].id] = new phobos.Station(objects[k]);
-				break;
-				case "Bot":
-					this._objectsList[objects[k].id] = new phobos.Bot(objects[k]);
-				break;
-				case "Collectable":
-					this._objectsList[objects[k].id] = new phobos.Collectable(objects[k]);
-				break;
-			}
-		}
-	}
 	// g.loadObjects = function(objects) {
 	// }
 
 	g.loadTiles = function(tiles) {
-		console.log("INIT TILES");
-		console.log(tiles);
-
 		for (key in tiles) {
 			if (String((key)) === key && tiles.hasOwnProperty(key)) {
 			console.log("For" + key);
 			this._tilesList[tiles[key].id] = new phobos.Tile(tiles[key]);
 			}
 		}
-		console.log("TILES LIST");
-		console.log(this._tilesList);
 	}
 
 	g.startUpdate = function() {
