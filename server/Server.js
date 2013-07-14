@@ -171,7 +171,7 @@ s.messages = [];
 			game.tiles[ll] = {	id:ll,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-05-03.png",};
 		}
 		var generatedGame = new phobos.Game(universeToken);
-		generatedGame.loadSector(game); 
+		generatedGame.loadSector(1, game); 
 		this.setGame(generatedGame); 
 	}
 

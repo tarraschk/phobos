@@ -24,7 +24,7 @@ jQuery(document).ready(function($) {
 	})
 
 	socket.on('sectorLoaded', function(sector){
-		client.getGame().loadSector(sector); 
+		client.getGame().loadSector(1, sector); 
 	});
 
 	socket.on('playerMove', function(move){

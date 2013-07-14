@@ -49,10 +49,6 @@ phobos = this.phobos || {};
 		socket.emit('loadSector', player);
 	}
 
-	c.loadSector = function(sector) {
-		this.game.loadSector(sector, true); 
-	}
-
 
 	c.loginToServer = function() {
 		socket.emit('login', {name: this.playerId });

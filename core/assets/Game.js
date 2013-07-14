@@ -46,18 +46,13 @@
 		this._gameGraphics = new GameGraphics();
 	}
 
-	g.loadSector = function(sector, shared) {
-		console.log(sector);
-
+	g.loadSector = function(sectorId, sector) {
 		var sectorShips = sector.ships ; 
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
 		this.initObjects();
 		this.initTiles(); 
-		if (shared)
-			this.loadSharedObjects(sectorObjects);
-		else 
-			this.loadObjects(sectorObjects);
+		this.loadSharedObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
 
 		this.loadSectorPlayers(sectorShips);
