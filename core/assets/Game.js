@@ -8,7 +8,7 @@
 	g._started = false;
 	g._engine = null;
 	g._playerShip = null;
-	g._sectors = [];
+	g._universe = [];
 	g._objectsList = [] ; 
 	g._tilesList = [] ;
 	g._dockedShipsList = [] ; 
@@ -46,24 +46,25 @@
 		this._gameGraphics = new GameGraphics();
 	}
 
+	g.sectorInitialize = function(sectorId) {
+		this.getUniverse()[sectorId] = {
+			objects:[],
+			tiles:[],
+			ships:[],
+			dockedShips:[],
+			destroyedObjects:[],
+			killedShips:[],
+		}
+	}
+
 	g.loadSector = function(sectorId, sector) {
 		var sectorShips = sector.ships ; 
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
-		this.initObjects();
-		this.initTiles(); 
+		this.sectorInitialize(sectorId);
 		this.loadSharedObjects(sectorObjects);
 		this.loadTiles(sectorTiles); 
-
 		this.loadSectorPlayers(sectorShips);
-	}
-
-	g.initObjects = function() {
-		this._objectsList = [] ; 
-	}
-
-	g.initTiles = function() {
-		this._tilesList = [] ; 
 	}
 
 	g.loadSectorPlayers = function(playersData) {
@@ -229,6 +230,10 @@
 
 	g.getMainPlayerStatus = function() {
 		return this._playerShip.getStatus();
+	}
+
+	g.getUniverse = function() {
+		return this._universe;
 	}
 
 	g.objectsTick = function() {
