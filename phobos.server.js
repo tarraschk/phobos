@@ -25,8 +25,7 @@ io.sockets.on('connection', function(client) {
 
 
 	client.on('playerMove', function(data){
-		console.log("MOOOVE TO !");
-		server.playerMove(data.player, data);
+		server.getGame().getShipsList()[data.player].moveTo(data);
   		client.broadcast.emit('playerMove', data);
   		client.emit('playerMove', data);
 	});

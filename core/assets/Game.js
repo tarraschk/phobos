@@ -17,7 +17,7 @@
 	g._shipsList = [];
 	g._players = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 15 ; 
+	g._updateTime = 150 ; 
 	g._frame ;
 
 // constructor:
@@ -26,6 +26,7 @@
 	/* DATA ENTRY TO SPECIFY !!! */
 	g.initialize = function () {
 		this._frame = 0 ; 
+		this._universe = [];
 		this._players = [];
 		this._shipsList = [];
 		this._dockedShipsList = [];
@@ -62,7 +63,7 @@
 		var sectorObjects = sector.objects;
 		var sectorTiles = sector.tiles ;
 		this.sectorInitialize(sectorId);
-		this.loadSharedObjects(sectorObjects);
+		this.loadSharedObjects(sectorId, sectorObjects);
 		this.loadTiles(sectorTiles); 
 		this.loadSectorPlayers(sectorShips);
 	}
@@ -80,18 +81,21 @@
 		}
 	}
 
-	g.loadSharedObjects = function(objects) {
+	g.loadSharedObjects = function(sectorId, objects) {
 		for (key in objects) {
 			if (String((key)) === key && objects.hasOwnProperty(key)) {
 				switch(objects[key].type) {
 					case "Station":
 						this._objectsList[objects[key].id] = new phobos.Station(objects[key]);
+						this.getUniverse()[sectorId].objects[objects[key].id] = new phobos.Station(objects[key]);
 					break;
 					case "Bot":
 						this._objectsList[objects[key].id] = new phobos.Bot(objects[key]);
+						this.getUniverse()[sectorId].objects[objects[key].id] = new phobos.Bot(objects[key]);
 					break;
 					case "Collectable":
 						this._objectsList[objects[key].id] = new phobos.Collectable(objects[key]);
+						this.getUniverse()[sectorId].objects[objects[key].id] = new phobos.Collectable(objects[key]);
 					break;
 				}
 			}
@@ -238,6 +242,24 @@
 
 	g.objectsTick = function() {
 		allowMoveClick = true ;  
+
+		for (key in this.getUniverse()) {
+			if (String((key)) === key && this.getUniverse().hasOwnProperty(key)) {
+				console.log("universe tick");
+				console.log(this.getUniverse()[key]);
+				for (keyUniverse in this.getUniverse()[key].objects) {
+					console.log("objects");
+					console.log(this.getUniverse()[key].objects);
+					// if (String((keyUniverse)) === keyUniverse) {
+					// 		console.log("TICKING");
+					// 		console.log(this.getUniverse()[key].objects[keyUniverse]);
+					// 		this.getUniverse()[key].objects[keyUniverse].tick();
+						
+					// }
+				}
+			}
+		}
+
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
 				if (this._shipsList[key].index == this._shipsList[key].id) {
