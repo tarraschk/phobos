@@ -152,7 +152,6 @@
 	Player management 
 	*/
 
-
 	g.playerAttack = function(playerId, targetId) {
 		var player = this.getShipsList()[playerId];
 		var target = this.getObjectsList()[targetId]; //To do attack another player !
