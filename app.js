@@ -31,8 +31,8 @@ function loadGameUtils() {
    response.end();
  }
 
-  server = true;
-   firebaseRecover = false;
+server = true;
+firebaseRecover = false;
 var http = require('http'),
   gameport = 8080,
   coreDir = "core",
