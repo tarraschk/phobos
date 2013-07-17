@@ -254,7 +254,6 @@
 					// 		console.log("TICKING");
 					// 		console.log(this.getUniverse()[key].objects[keyUniverse]);
 					// 		this.getUniverse()[key].objects[keyUniverse].tick();
-						
 					// }
 				}
 			}
