@@ -242,22 +242,24 @@
 
 	g.objectsTick = function() {
 		allowMoveClick = true ;  
-
-		for (key in this.getUniverse()) {
-			if (String((key)) === key && this.getUniverse().hasOwnProperty(key)) {
-				console.log("universe tick");
-				console.log(this.getUniverse()[key]);
-				for (keyUniverse in this.getUniverse()[key].objects) {
-					console.log("objects");
-					console.log(this.getUniverse()[key].objects);
-					// if (String((keyUniverse)) === keyUniverse) {
-					// 		console.log("TICKING");
-					// 		console.log(this.getUniverse()[key].objects[keyUniverse]);
-					// 		this.getUniverse()[key].objects[keyUniverse].tick();
-					// }
-				}
-			}
+		for (var uniId = 0 ; uniId < this.getUniverse().length ; uniId++) {
+			console.log(this.getUniverse()[uniId]);
 		}
+		// for (key in this.getUniverse()) {
+		// 	if (String((key)) === key && this.getUniverse().hasOwnProperty(key)) {
+		// 		console.log("universe tick");
+		// 		console.log(this.getUniverse()[key]);
+		// 		for (keyUniverse in this.getUniverse()[key].objects) {
+		// 			console.log("objects");
+		// 			console.log(this.getUniverse()[key].objects);
+		// 			// if (String((keyUniverse)) === keyUniverse) {
+		// 			// 		console.log("TICKING");
+		// 			// 		console.log(this.getUniverse()[key].objects[keyUniverse]);
+		// 			// 		this.getUniverse()[key].objects[keyUniverse].tick();
+		// 			// }
+		// 		}
+		// 	}
+		// }
 
 		for (key in this._shipsList) {
 			if (String((key)) === key && this._shipsList.hasOwnProperty(key)) {
