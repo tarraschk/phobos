@@ -244,7 +244,7 @@
 		allowMoveClick = true ;  
 		for (var uniId = 0 ; uniId < this.getUniverse().length ; uniId++) {
 			console.log(this.getUniverse()[uniId]);
-			for (keyUniverse in this.getUniverse()[key].objects) {
+			for (keyUniverse in this.getUniverse()[uniId].objects) {
 				console.log("objects");
 				console.log(this.getUniverse()[key].objects);
 				if (String((keyUniverse)) === keyUniverse) {
