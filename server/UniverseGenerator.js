@@ -11,25 +11,52 @@
 
 		ug.initialize = function () { 
 		}
-		ug.generateSector = function(token) {
+
+		ug.vonNeumanNumber = function(token, digits) {
+			var ite1 = parseInt("651" + token + "245");
+			var ite2 = ite1 * ite1;
+			ite2 = (ite2.toString());
+			var ite3 = ite2.substr(ite2.length / 2 - 2, 4);
+			ite3 = parseInt(ite3);
+			var ite4 = ite3 * ite3;
+
+
+			ite4 = (ite4.toString());
+			var ite5 = ite4.substr(ite4.length / 2 - 1, digits);
+				console.log(ite5);
+			return (ite5 + 1);
+		}
+		ug.generateSector = function(sectorId, token) {
+			var collectablesNumber = this.vonNeumanNumber(token - 1,2);
+			var botsNumber = this.vonNeumanNumber(token - 2,2);
+			var stationsNumber = this.vonNeumanNumber(token,1);
+			var tilesNumber = this.vonNeumanNumber(token + 1,2);
+
+			//Collectables
+
+			//Stations
+
+			//Bots
+
+
 			var sector = {
 			objects:[
 
-			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 10, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 100,y: 300, z:1, rotation: 10, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:13,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 130, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:12,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 530, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:11,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:10,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
-			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1, sector: 0},life: 150000, dimensions: { width:218, height:181 } },
-			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0, sector: 0},life: 150000, dimensions: { width:218, height:181 } },
+			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 10, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 100,y: 300, z:1, rotation: 10, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:13,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 130, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:12,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 530, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:11,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:10,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30, sector: sectorId}, weight:10, dimensions: { width:218, height:181 } },
+			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1, sector: sectorId},life: 150000, dimensions: { width:218, height:181 } },
+			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0, sector: sectorId},life: 150000, dimensions: { width:218, height:181 } },
 			{
 				id:6, 
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 920,y: 500, z:1, rotation:-90, sector:0},  
-				initPosition: {x: 920,y: 500, z:1, rotation:-90, sector:0},
+				position: {x: 920,y: 500, z:1, rotation:-90, sector: sectorId},  
+				initPosition: {x: 920,y: 500, z:1, rotation:-90, sector: sectorId},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -56,8 +83,8 @@
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 1520,y: 700, z:1, rotation:-90, sector:0},  
-				initPosition: {x: 1520,y: 500, z:1, rotation:-90, sector:0},
+				position: {x: 1520,y: 700, z:1, rotation:-90, sector: sectorId},  
+				initPosition: {x: 1520,y: 500, z:1, rotation:-90, sector: sectorId},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -84,8 +111,8 @@
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 520,y: 200, z:1, rotation:-90, sector:0},  
-				initPosition: {x: -1520,y: 500, z:1, rotation:-90, sector:0},
+				position: {x: 520,y: 200, z:1, rotation:-90, sector: sectorId},  
+				initPosition: {x: -1520,y: 500, z:1, rotation:-90, sector: sectorId},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -109,12 +136,21 @@
 			},
 			],
 			tiles:[
-			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1, sector: 0}, src:"iso-02-04.png",},
+			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1, sector: sectorId}, src:"iso-02-04.png",},
 			]
 		};
-		for (var ll = 0 ; ll < 1; ll++) {
-			sector.tiles[ll] = {	id:ll,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-05-03.png",};
+
+
+		//Tiles 
+		for (var ll = 0 ; ll < tilesNumber; ll++) {
+			var genX = this.vonNeumanNumber(token + ll, 4);
+			var genY = this.vonNeumanNumber(token + ll, 4);
+			sector.tiles[ll] = {	id:ll,position:{x:genX,y:genY, z: 1}, src:"iso-05-03.png",};
 		}
+		
+		// for (var ll = 0 ; ll < 1; ll++) {
+		// 	sector.tiles[ll] = {	id:ll,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-05-03.png",};
+		// }
 		return sector;
 		}
 		
