@@ -15,6 +15,7 @@ function loadCore() {
 		var gameAssetsDir = "./" + coreDir + dirSep + assetsDir + dirSep;
 		var serverAssetsDir = "./" + serverDir + dirSep ;
 		require(serverAssetsDir + "Server.js");
+		require(serverAssetsDir + "UniverseGenerator.js");
 		require(serverAssetsDir + "DBHandler.js");
 		require(gameAssetsDir + "Game.js");
 		require(gameAssetsDir + "Ship.js");
