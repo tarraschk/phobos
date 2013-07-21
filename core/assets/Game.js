@@ -159,9 +159,6 @@
 	}
 
 	g.objectAdd = function(object) {
-		console.log("object added")
-		console.log(object);
-		console.log(object.getSector());
 		var sectorId = object.getSector();
 		this.getUniverse()[sectorId].objects[object.getId()] = object;
 		this.getObjects()[object.getId()] = object;

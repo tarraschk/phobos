@@ -69,7 +69,7 @@ s.messages = [];
 	}
 
 	s.generateGame = function(universeToken) {
-		var sector0 = this.getUniverseGenerator().generateSector(0, 1434);
+		var sector0 = this.getUniverseGenerator().generateSector(0, 11434);
 		var generatedGame = new phobos.Game();
 		generatedGame.loadSector(0, sector0); 
 		this.setGame(generatedGame); 
