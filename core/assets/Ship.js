@@ -24,7 +24,7 @@ this.phobos = this.phobos || {};
 			this.id = params.id;
 			this.shared = {
 				id: params.id,
-				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation},
+				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation, sector: params.position.sector},
 				destination: params.destination,
 				limitSpeed: params.limitSpeed,
 				acceleration:params.acceleration , 
@@ -325,9 +325,9 @@ this.phobos = this.phobos || {};
 		if (this.getHasTarget()) {
 			var targetType = this.getTargetType();
 			if (targetType == "ship") 
-				var currentTarget = this.local.env.getGame().getShipsList()[this.getTargetId()];
+				var currentTarget = this.getSectorShip(this.getTargetId());
 			else if (targetType == "bot" || targetType == "collectable") 
-				var currentTarget = this.local.env.getGame().getObjectsList()[this.getTargetId()];
+				var currentTarget = this.local.env.getGame().getObjects()[this.getTargetId()];
 
 			if (currentTarget) {
 				if (targetType == "bot" || targetType == "ship") { //Attack behavior
@@ -375,67 +375,16 @@ this.phobos = this.phobos || {};
 	s.getCloseEnnemy = function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
-		for (var j = 0 ; j < this.local.env.getGame()._shipsList.length ; j++) {
-			if (utils.distance(this.local.env.getGame()._shipsList[j].shared, this) < minDistance && this.local.env.getGame()._shipsList[j].shared != this) {
-				minDistance = utils.distance(this.local.env.getGame()._shipsList[j].shared, this);
-				closeEnnemyKey = j;
+		for (key in this.getSectorShips()) {
+			if (String((key)) === key && this.getSectorShips().hasOwnProperty(key)) {
+				if (utils.distance(this.getSectorShip(key).shared, this.shared) < minDistance && this.getSectorShip(key).shared != this.shared) {
+					minDistance = utils.distance(this.getSectorShip(key).shared, this.shared);
+					closeEnnemyKey = key;
+				}
 			}
 		}
-		return this.local.env.getGame()._shipsList[closeEnnemyKey];
+		return this.getSectorShip(closeEnnemyKey);
 	}
-
-	s.getWeapons = function() {
-		return this.shared.weapons;
-	}
-
-	s.getShared = function() {
-		return this.shared;
-	}
-
-	s.getEnergy = function() {
-		return this.shared.energy;
-	}
-
-	s.getId = function() {
-		return this.id;
-	}
-
-	s.getPosition = function() {
-		return this.shared.position;
-	}
-
-	s.getTargetId = function() {
-		return this.shared.targetId;
-	}
-	
-	s.getHasTarget = function() {
-		return this.shared.hasTarget;
-	}
-
-	s.getStatus = function() {
-		return this.shared.status;
-	}
-
-	s.getTargetType = function() {
-		return this.shared.targetType;
-	}
-
-	s.getDockingTarget = function() {
-		return this.shared.dockingTarget;
-	}
-
-	s.getPositionDraw = function() {
-		return {x:this.x, y:this.y};
-	}
-
-	s.getCargo = function() {
-		return this.shared.cargo;
-	}
-
-	s.getRotationSpeed = function() {
-		return this.shared.rotationSpeed;
-	}
-
 	s.isPlayerShip = function() {
 		return (!server && client.getGame().getPlayerShip().id == this.id);
 	}
@@ -539,6 +488,71 @@ this.phobos = this.phobos || {};
 				cPlayground.update();//Create a Shape DisplayObject.
 			}
 		}
+	}
+
+
+	s.getWeapons = function() {
+		return this.shared.weapons;
+	}
+
+	s.getShared = function() {
+		return this.shared;
+	}
+
+	s.getEnergy = function() {
+		return this.shared.energy;
+	}
+
+	s.getId = function() {
+		return this.id;
+	}
+
+	s.getPosition = function() {
+		return this.shared.position;
+	}
+
+	s.getTargetId = function() {
+		return this.shared.targetId;
+	}
+	
+	s.getHasTarget = function() {
+		return this.shared.hasTarget;
+	}
+
+	s.getStatus = function() {
+		return this.shared.status;
+	}
+
+	s.getTargetType = function() {
+		return this.shared.targetType;
+	}
+
+	s.getDockingTarget = function() {
+		return this.shared.dockingTarget;
+	}
+
+	s.getSectorShip = function(shipId) {
+		return this.getSectorShips()[shipId];
+	}
+
+	s.getSectorShips = function() {
+		return this.local.env.getGame().getUniverse[this.getSector()].ships;
+	}
+
+	s.getSector = function() {
+		return this.getPosition().sector;
+	}
+	
+	s.getPositionDraw = function() {
+		return {x:this.x, y:this.y};
+	}
+
+	s.getCargo = function() {
+		return this.shared.cargo;
+	}
+
+	s.getRotationSpeed = function() {
+		return this.shared.rotationSpeed;
 	}
 
 

@@ -10,21 +10,24 @@ jQuery(document).ready(function($) {
 	client.createServerLoop(); 
 	ui = new UI();
 	
+	//TODO : CENTRALIZE MESSAGES
+
+	socket.on('message', function(data){
+		client.getMessageDispatcher().onMessage(message, data);
+	});
+
 	socket.on('loggedIn', function(data){
 		client.mainPlayerLogged(data); 
 		client.setGameFrame(data.frame); 
 	});
 
-	socket.on('sectorPlayersLoaded', function(shipsList){
-		client.loadSectorPlayers(shipsList); 
-	});
 
 	socket.on('setBotBehavior', function(data) {
-		client.setBotBehavior(data.newBehavior, data.bot, data.data);
+		client.getGame().getObjects()[data.bot.id].setBotBehavior(data.newBehavior, data.data);
 	})
 
 	socket.on('sectorLoaded', function(sector){
-		client.getGame().loadSector(1, sector); 
+		client.getGame().loadSector(0, sector); 
 	});
 
 	socket.on('playerMove', function(move){

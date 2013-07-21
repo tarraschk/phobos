@@ -57,8 +57,8 @@ phobos = this.phobos || {};
 	// General methods 
 	
 	c.onPlayerMove = function(playerMoveData) {
-		if (this.game._shipsList[playerMoveData.player])
-			this.game._shipsList[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
+		if (this.getGame().getPlayers()[playerMoveData.player])
+			this.getGame().getPlayers()[playerMoveData.player].moveTo({x:playerMoveData.x, y:playerMoveData.y});
 	}
 
 	c.onPlayerCollects = function(collect) {
@@ -70,15 +70,15 @@ phobos = this.phobos || {};
 	}
 
 	c.onPlayerDock = function(dock) {
-		this.getGame().getShipsList()[dock.player.id].dockTo(dock.station);
+		this.getGame().getPlayers()[dock.player.id].dockTo(dock.station);
 	}
 
 	/* A player joined the game.
 	This player IS the current client's player. */
 	c.mainPlayerLogged = function(playerData)  {
+		this.getGame().sectorInitialize(playerData.position.sector); //Sector of player has to be inizialized to an empty sector. It will be loaded by socket loadSector
 		this.setPlayerId(playerData.id); 
 		this.playerJoinGame(playerData, true); 
-		// this.getGame().getCamera().centerOn(this.getGame().getPlayerShip().x, this.getGame().getPlayerShip().y);
 	}
 
 	/* A player joined the game.
@@ -195,10 +195,6 @@ phobos = this.phobos || {};
 		this.game.stopUpdate();
 	}
 
-	c.getShipsList = function() {
-		return (this.getGame()._shipsList);
-	}
-
 	c.getGame = function() {
 		return this.game ;
 	}
@@ -243,8 +239,8 @@ phobos = this.phobos || {};
 			if (String((key)) === key && servShips.hasOwnProperty(key)) {
 				if (servShips[key]) {
 					if (servShips[key].index == servShips[key].id) {
-						this.diffShip(servShips[key], this.getGame().getShipsList()[key], frameServer, frameClient);
-						this.getGame().getShipsList()[key].shared.position = servShips[key].shared.position;
+						this.diffShip(servShips[key], this.getGame().getPlayers()[key], frameServer, frameClient);
+						this.getGame().getPlayers()[key].shared.position = servShips[key].shared.position;
 					}
 				}
 			}

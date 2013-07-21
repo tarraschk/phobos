@@ -24,7 +24,8 @@ this.phobos = this.phobos || {};
 		this.shared = { 
 			id: params.id,
 			index: params.id,
-			position: {x: params.position.x, y: params.position.y, z: params.position.z, rotation: params.position.rotation },
+			position: {x: params.position.x, y: params.position.y, z: params.position.z, rotation: params.position.rotation,
+			sector: params.position.sector,  },
 			type:"Collectable",
 			name: params.name,
 			weight:params.weight,
@@ -62,9 +63,6 @@ this.phobos = this.phobos || {};
 		this.y = renderCoo.y;
 	}
 
-	c.getPosition = function() {
-		return this.shared.position;
-	}
 
 	c.tick = function () {
 		this.shared.position.rotation = this.shared.position.rotation + 1.5;
@@ -114,6 +112,19 @@ this.phobos = this.phobos || {};
 	c.getShared = function() {
 		return this.shared;
 	}
+
+	c.getId = function() {
+		return this.id; 
+	}
+
+	c.getPosition = function() {
+		return this.shared.position;
+	}
+
+	c.getSector = function() {
+		return this.getPosition().sector;
+	}
+
 	phobos.Collectable = Collectable;
 
 }());

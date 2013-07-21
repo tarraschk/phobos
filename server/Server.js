@@ -71,20 +71,21 @@ s.messages = [];
 		var game = {
 			objects:[
 
-			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 10}, weight:10, dimensions: { width:218, height:181 } },
-			{id:13,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 130}, weight:10, dimensions: { width:218, height:181 } },
-			{id:12,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 530}, weight:10, dimensions: { width:218, height:181 } },
-			{id:11,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
-			{id:10,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30}, weight:10, dimensions: { width:218, height:181 } },
-			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1},life: 150000, dimensions: { width:218, height:181 } },
-			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0},life: 150000, dimensions: { width:218, height:181 } },
+			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 500,y: 600, z:1, rotation: 10, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
+			{id:14,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 100,y: 300, z:1, rotation: 10, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
+			{id:13,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 600, z:1, rotation: 130, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
+			{id:12,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 800,y: 100, z:1, rotation: 530, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
+			{id:11,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 1500,y: 1000, z:1, rotation: 30, sector: 0}, weight:10, dimensions: { width:218, height:181 } },
+			{id:10,type:'Collectable', image: { src: 'Asteroid.png' },name: 'Minerai 1',position: {x: 200,y: 1600, z:1, rotation: 30, sector: 1}, weight:10, dimensions: { width:218, height:181 } },
+			{id:0,type:'Station', image: { src: 'Anna Cruiser.png' },name: 'Station spatiale internationale',position: {x: 1500,y: 600, z:1, sector: 0},life: 150000, dimensions: { width:218, height:181 } },
+			{id:1, type:'Station', image: { src: 'stationIso.png' },name: 'Station spatiale internationale',position: {x: 500,y: 500, z:1, rotation:0, sector: 0},life: 150000, dimensions: { width:218, height:181 } },
 			{
 				id:6, 
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 920,y: 500, z:1, rotation:-90},  
-				initPosition: {x: 920,y: 500, z:1, rotation:-90},
+				position: {x: 920,y: 500, z:1, rotation:-90, sector:0},  
+				initPosition: {x: 920,y: 500, z:1, rotation:-90, sector:0},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -111,8 +112,8 @@ s.messages = [];
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 1520,y: 700, z:1, rotation:-90},  
-				initPosition: {x: 1520,y: 500, z:1, rotation:-90},
+				position: {x: 1520,y: 700, z:1, rotation:-90, sector:0},  
+				initPosition: {x: 1520,y: 500, z:1, rotation:-90, sector:0},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -139,8 +140,8 @@ s.messages = [];
 				type:'Bot', 
 				src: 'Anna Cruiser.png',
 				name: 'Station spatiale internationale',
-				position: {x: 520,y: 200, z:1, rotation:-90},  
-				initPosition: {x: -1520,y: 500, z:1, rotation:-90},
+				position: {x: 520,y: 200, z:1, rotation:-90, sector:0},  
+				initPosition: {x: -1520,y: 500, z:1, rotation:-90, sector:0},
 				life: 150000, 
 				width:1032, 
 				height:620,
@@ -164,14 +165,14 @@ s.messages = [];
 			},
 			],
 			tiles:[
-			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-02-04.png",},
+			{	id:1,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1, sector: 0}, src:"iso-02-04.png",},
 			]
 		};
 		for (var ll = 0 ; ll < 1; ll++) {
 			game.tiles[ll] = {	id:ll,position:{x:Math.random() * 2500,y:Math.random() * 2500, z: 1}, src:"iso-05-03.png",};
 		}
 		var generatedGame = new phobos.Game(universeToken);
-		generatedGame.loadSector(1, game); 
+		generatedGame.loadSector(0, game); 
 		this.setGame(generatedGame); 
 	}
 
@@ -227,8 +228,8 @@ s.messages = [];
 			targetType: null,
 			targetId: null,
 			status:"space",
-			position: {x: Math.random() * 500, y: Math.random() * 500, z:1, rotation:0 }, 
-			cargo: {capacity:500, content:[]},
+			position: {x: Math.random() * 500, y: Math.random() * 500, z:1, rotation:0, sector:0 }, 
+			cargo: {capacity:600, content:[]},
 			name: "testeur" + this._playerCount, 
 		})
 	}
@@ -252,21 +253,19 @@ s.messages = [];
 	s.getSyncDataSector = function(sector) {
 		//Now only one sector. 
 		//this.getGame().getSector(sector);
-		var sector = this.getGame();
-		var shipsList = sector.getShipsList();
-		var objectsList = sector.getObjectsList();
+		var sector = this.getSectorExport(sector);
 
-		return {ships: shipsList, objects: objectsList};
+		return sector;
 	}
 
 
 	s.getSectorExport = function(sector) {
-		var sharedData = this.getGame().getSharedData(); //TO DO : ONLY FOR A SECTOR
+		var sharedData = this.getGame().exportSector(sector); //TO DO : ONLY FOR A SECTOR
 		return (sharedData);
 	}
 
-	s.export = function() {
-		var sharedData = this.getGame().getSharedData();
+	s.export = function(sector) {
+		var sharedData = this.getGame().exportSector(sector);
 		var users = this.getUsers();
 		return (
 		{
@@ -278,11 +277,6 @@ s.messages = [];
 					users: users
 			}
 		});
-	}
-
-
-	s.playerMove = function(playerId, moveData) {
-		this._game._shipsList[playerId].moveTo(moveData); 
 	}
 
 	//Setters and getters

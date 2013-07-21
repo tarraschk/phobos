@@ -23,9 +23,12 @@ io.sockets.on('connection', function(client) {
 
 	/* Player actions in the game */
 
+	client.on('command', function(data){
+		server.getMessageDispatcher().onMessage(data);
+	});
 
 	client.on('playerMove', function(data){
-		server.getGame().getShipsList()[data.player].moveTo(data);
+		server.getGame().getPlayers()[data.player].moveTo(data);
   		client.broadcast.emit('playerMove', data);
   		client.emit('playerMove', data);
 	});
@@ -41,11 +44,9 @@ io.sockets.on('connection', function(client) {
 	});
 
 	client.on('playerDockTo', function(data){
-		console.log("DOCK TO !");
-		console.log(data);
 		var playerDocking = data.player;
 		var station = data.station;
-		server.getGame().getShipsList()[playerDocking.id].dockTo(station);
+		server.getGame().getPlayers()[playerDocking.id].dockTo(station);
 		// server.playerMove(data.player, data);
   		client.broadcast.emit('playerDockTo', data);
   		client.emit('playerDockTo', data);
@@ -63,7 +64,7 @@ io.sockets.on('connection', function(client) {
 	});
 	client.on('loadSector', function() {
 		console.log(":: Loading sector :: "); 
-		server.loadSector(this); 
+		server.loadSector(this, 0); 
 	});
 	client.on('playerLogin', function(user) {
 

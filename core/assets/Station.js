@@ -36,7 +36,7 @@ this.phobos = this.phobos || {};
 		this.shared = { 
 			id: params.id,
 			index: params.id,
-			position: {x: params.position.x, y: params.position.y, z:params.position.z },
+			position: {x: params.position.x, y: params.position.y, z:params.position.z, sector: params.position.sector, },
 			type:"Station",
 			actions: ["dock"],
 			dimensions: params.dimensions,
@@ -100,6 +100,19 @@ this.phobos = this.phobos || {};
 			}
 		}
 	}
+
+	s.getPosition = function() {
+		return this.getShared().position;
+	}
+
+	s.getSector = function() {
+		return this.getPosition().sector; 
+	}
+
+	s.getId = function() {
+		return this.id; 
+	}
+
 	s.getShared = function() {
 		return this.shared;
 	}
