@@ -59,7 +59,8 @@ this.phobos = this.phobos || {};
 		},
 
 		draw: function() {
-			console.log(x + " ; " + y);
+			console.log("DRAW");
+			console.log(this.x + " ; " + this.y);
 		},
 
 	});
@@ -67,58 +68,34 @@ this.phobos = this.phobos || {};
 
 	phobos.SpaceObject = SpaceObject;
 
-// 	Weapon = function(owner, weaponId){
-// 		this.initialize(owner, weaponId);
-// 	}
+	var Ship = Class.create(SpaceObject, {
+		initialize: function($super, params) {
+			$super(params);
+			this.name = params.name
+		},
 
-// 	var w = Weapon.prototype ;
+		tick: function($super) {
+			$super();
+			console.log("I AM A SHIP !");
+			this.x += 5; 
+		},
 
-// // static public properties:
-// 	Weapon.path = 'img/objects/stations/';
-	
-// // public properties:
-// 	w._power = null // dommages que la station peut causer quand elle attaque;
-// 	w._id = null;
-// 	w._weaponId = null ; 
-// 	w._range = 350 ; 
-// 	w._ready = false;
-// 	w._cooldown = null;
-// // constructor:
-// 	w.initialize = function (weaponId) {
-// 		this._id = utils.generateId();
-// 		this._power = 20;
-// 		this._weaponId = weaponId ;
-// 		this._cooldown = new phobos.Cooldown();
-// 	}
+	});
 
-// // public methods:
-// 	w.tick = function (event) {
-// 		this._cooldown.try();
-// 		this.setReady(this._cooldown._ready);
-// 		// if (Math.random() < 0.05) this._ready = true;
-// 		// else this._ready = false ; 
-// 	}
 
-// 	w.doShoot = function(target, shooterPos) {
-// 		if (!server)
-// 			client.getGame()._gameGraphics.drawLaser(shooterPos, target, this._weaponId);
-// 		this._ready = false ; 
-// 		this._cooldown.start();
-// 	}
-	
-// 	w.getRange = function() {
-// 		return this._range ; 
-// 	}
+	phobos.SpaceObject = SpaceObject;
+	phobos.Ship = Ship;
 
-// 	w.isReady = function() {
-// 		return this._ready;
-// 	}
-
-// 	w.setReady = function (newReady) {
-// 		this._ready = newReady; 
-// 	}
 
 }());
 
 
-var larme = new phobos.SpaceObject(5); 
+var larme = new phobos.SpaceObject({x:-50, y:50}); 
+var larme2 = new phobos.SpaceObject({x:-150, y:200}); 
+var ship = new phobos.Ship({x:-250000, y:300}); 
+
+larme.tick();
+larme.tick();
+larme.tick();
+larme2.tick();
+ship.tick();
