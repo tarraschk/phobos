@@ -1,96 +1,89 @@
 
 this.phobos = this.phobos || {};
 
+
 (function () {
 
-	var Sh = function(params){
-		this.initialize(params);
-	}
-	if (server) var s = Sh.prototype ;
-	else var s = Sh.prototype = new _.BitmapAnimation();
+	var Ship = Class.create(phobos.SpaceObject, {
 
 // static public properties:
-	Sh.path = 'img/ship/';
+	
 
-// public properties:
-	s.id ;
-	s.shared = {};
-	s.local = {
-		env: null,
-	}
 // constructor:
-	s.initialize = function (params) {
-		if (params) {
-			this.id = params.id;
-			this.shared = {
-				id: params.id,
-				position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation, sector: params.position.sector},
-				destination: params.destination,
-				limitSpeed: params.limitSpeed,
-				acceleration:params.acceleration , 
-				limitRotation:params.limitRotation,
-				weapons: new phobos.Weapon(params.weapons),
-				currentSpeed: params.currentSpeed , 
-				rotationSpeed: params.rotationSpeed,
-				hasDestination: params.hasDestination,
-				name: params.name,
-				hasTarget: params.hasTarget , 
-				energy: params.energy,
-				targetType: params.targetType,
-				targetId: params.targetId,
-				cargo: params.cargo,
-				status:"space",
-			}
-			if (server) { 
-				this.local.env = server;
-				// this.local = {
-				// 	env: server,
-				// }
-			}
-			else { 
-				this.local = {
-					env: client,
-					isPlayerShip: false,
-					diffDrawCooForCamera: {x: 0, y:0},
-					drawCoo : {x:null, y: null},
-				}
-
-				if (this.isPlayerShip) {
-					this.local.isPlayerShip = true;;
-				}
-			}
-			this.load(params);
+	initialize: function ($super, params) {
+		this.local = {};
+		if (server) { 
+			// this.local.env = server;
+			// this.local = {
+			// 	env: server,
+			// }
 		}
-	}
+		else { 
+			this.local = {
+				env: client,
+				isPlayerShip: false,
+				diffDrawCooForCamera: {x: 0, y:0},
+				drawCoo : {x:null, y: null},
+			}
+
+			if (this.isPlayerShip) {
+				this.local.isPlayerShip = true;;
+			}
+		}
+
+		$super(params);
+
+		this.shared = {
+			id: params.id,
+			position: {x:params.position.x, y:params.position.y, z:params.position.z, rotation: params.position.rotation, sector: params.position.sector},
+			destination: params.destination,
+			limitSpeed: params.limitSpeed,
+			acceleration:params.acceleration , 
+			limitRotation:params.limitRotation,
+			weapons: new phobos.Weapon(params.weapons),
+			currentSpeed: params.currentSpeed , 
+			rotationSpeed: params.rotationSpeed,
+			hasDestination: params.hasDestination,
+			name: params.name,
+			hasTarget: params.hasTarget , 
+			energy: params.energy,
+			targetType: params.targetType,
+			targetId: params.targetId,
+			cargo: params.cargo,
+			status:"space",
+		}
+		console.log("loaded ship");
+		console.log(this);
+	},
 
 // public methods:
 
-	s.moveTo = function (destination) {
+	moveTo: function (destination) {
 		if (this.shared.status != "docked") {
 			this.setHasTarget(false);
 			this.cancelDock() ; 
 			this.setDestination({x:destination.x, y:destination.y});
 		}
-	}
+	},
 
-	s.dockTo = function(dockStation) {
+	dockTo: function(dockStation) {
 		var newDestination = {
 			x: dockStation.position.x + dockStation.dimensions.width / 2, 
 			y: dockStation.position.y + dockStation.dimensions.height / 2
 		}
 		this.moveTo(newDestination);
 		this.shared.dockingTarget = dockStation;
-	}
+	},
 
-	s.cancelDock = function() {
+	cancelDock: function() {
 		this.shared.dockingTarget = null;
-	}
+	},
 
-	s.rotate = function (rotation) {
+	rotate: function (rotation) {
 		this.shared.position.rotation += rotation;
-	}
+	},
 
-	s.throttleBrake = function (speed) {
+	throttleBrake: function (speed) {
 		if (speed < 0) 
 		{
 			//Brake
@@ -101,19 +94,19 @@ this.phobos = this.phobos || {};
 			//Throttle
 			this.shared.currentSpeed = ((this.shared.currentSpeed + speed > this.shared.limitSpeed) ? this.shared.limitSpeed : this.shared.currentSpeed + speed) ; 
 		}
-	}
+	},
 
-	s.stop = function () {
+	stop: function () {
 		this.shared.currentSpeed = 0 ; 
 		this.shared.destination.x = this.shared.position.x ; 
 		this.shared.destination.y = this.shared.position.y;
-	}
+	},
 
-	s.setLimitSpeed = function (newLimitSpeed) {
+	setLimitSpeed: function (newLimitSpeed) {
 		this.shared.limitSpeed = newLimitSpeed ; 
-	}
+	},
 
-	s.setDestination = function (newDestination) { 
+	setDestination: function (newDestination) { 
 		if (newDestination.x != this.shared.position.x && newDestination.y != this.shared.position.y) {
 			this.shared.destination.x = newDestination.x;
 			this.shared.destination.y = newDestination.y;
@@ -128,35 +121,35 @@ this.phobos = this.phobos || {};
 			this.setHasDestination(true); 
 
 		}
-	}
+	},
 
-	s.setHasDestination = function (newSetHasDestination) {
+	setHasDestination: function (newSetHasDestination) {
 		this.shared.hasDestination = newSetHasDestination; 
-	}
+	},
 
-	s.setRotationSpeed = function (newRotationSpeed) {
+	setRotationSpeed: function (newRotationSpeed) {
 		this.shared.rotationSpeed = newRotationSpeed;
-	}
+	},
 
-	s.setName = function (newName) {
+	setName: function (newName) {
 		this.name = newName;
-	}
+	},
 
-	s.setMapCoords = function(newMapCoo){
+	setMapCoords: function(newMapCoo){
 		this.shared.position.x = newMapCoo.x;
 		this.shared.position.y = newMapCoo.y;
-	}
+	},
 
-	s.setTargetType = function(newTargetType) {
+	setTargetType: function(newTargetType) {
 		this.shared.targetType = newTargetType;
-	}
+	},
 
-	s.getDiffDestinationPosition = function(destination) {
+	getDiffDestinationPosition: function(destination) {
 		if (!destination) destination = this.shared.destination ; 
 		return ({dX : (destination.x - this.shared.position.x), dY : (destination.y - this.shared.position.y), dRotation: (destination.rotation % 360 - this.shared.position.rotation % 360)});
-	}
+	},
 
-	s.getDiffAngle = function(diffPosDest) {
+	getDiffAngle: function(diffPosDest) {
 		var dX = diffPosDest.dX;
 		var dY = diffPosDest.dY;
 		var diffAngle ; 
@@ -166,9 +159,9 @@ this.phobos = this.phobos || {};
 		else if (dX <= 0) 
 			diffAngle = offset - Math.asin(dY / Math.sqrt((dX * dX + dY * dY))) * (180 / Math.PI);
 		return diffAngle;
-	}
+	},
 
-	s.rotateToDestination = function(diffPosDest) {
+	rotateToDestination: function(diffPosDest) {
 		if (diffPosDest.dRotation > 0) {
 			if (Math.abs(diffPosDest.dRotation) > 180) {
 				this.rotate(-this.shared.rotationSpeed);
@@ -181,13 +174,13 @@ this.phobos = this.phobos || {};
 			}
 			else this.rotate(-this.shared.rotationSpeed);
 		}
-	}
+	},
 
-	s.idleBehavior = function() {
+	idleBehavior: function() {
 		this.shared.currentSpeed = 0 ; 
-	}
+	},
 
-	s.moveToDestinationMovement = function() {
+	moveToDestinationMovement: function() {
 		var diffPosDest = this.getDiffDestinationPosition();
 		if (Math.abs(diffPosDest.dX) != 0 && Math.abs(diffPosDest.dY) != 0) {
 			this.shared.destination.rotation = this.getDiffAngle(diffPosDest); 
@@ -209,28 +202,28 @@ this.phobos = this.phobos || {};
 		if (Math.abs(diffPosDest.dX) < 5 && Math.abs(diffPosDest.dY) < 5 && Math.abs(diffPosDest.dRotation) == 0) {
 			this.stop() ; 
 		}
-	}
+	},
 
 
-	s.setHasTarget = function(newHasTarget) {
+	setHasTarget: function(newHasTarget) {
 		this.shared.hasTarget = newHasTarget;
-	}
-	s.setTargetId = function(newTargetId) {
+	},
+	setTargetId: function(newTargetId) {
 		this.shared.targetId = newTargetId;
-	}
+	},
 
-	s.setEnergy = function(newEnergy) {
+	setEnergy: function(newEnergy) {
 		this.shared.energy = newEnergy;
-	}
+	},
 
-	s.die = function() {
+	die: function() {
 		this.shared.position.z = -1;
 		this.local.env.getGame().switchPlayerToKilled(this);
 		this.visible = false;
 		return -1;
-	}
+	},
 
-	s.receiveDamage = function (power) {
+	receiveDamage: function (power) {
 		this.setEnergy(this.shared.energy - power);
 		if (this.isPlayerShip()) {
 			if (!this.local.env.getGame().getCamera().getVibration() && Math.random() < 0.5)
@@ -240,23 +233,23 @@ this.phobos = this.phobos || {};
 			return this.die(); 
 		}
 		else return this.energy;
-	}
+	},
 
-	s.lookAt = function (coo) {
+	lookAt: function (coo) {
 		var diffPosDest = this.getDiffDestinationPosition({ x:coo.x, y:coo.y}); 
 		var destRotation = this.getDiffAngle(diffPosDest); 
 		this.setDestination({ x:this.shared.position.x, y:this.shared.position.y, rotation: destRotation } );
-	}
+	},
 
-	s.shootAt = function(target, weapon) {
+	shootAt: function(target, weapon) {
 		weapon.doShoot(target, this.getPositionDraw());
 		var attackResult = target.receiveDamage(weapon._power);
 
 
 		return attackResult;
-	}
+	},
 
-	s.dockingMovement = function() {
+	dockingMovement: function() {
 		var dockPosition = {
 			position: {
 			x: this.shared.dockingTarget.position.x + this.shared.dockingTarget.dimensions.width / 2, 
@@ -266,9 +259,9 @@ this.phobos = this.phobos || {};
 		if (utils.distance(dockPosition, this.getShared()) < 100) {
 			this.doDock();
 		}
-	}
+	},
 
-	s.doDock = function() {
+	doDock: function() {
 		this.shared.position.z = 5//this.shared.dockingTarget._mapZ;
 		this.shared.status = "docked" ; 
 		this.local.env.getGame().switchPlayerToStation(this);
@@ -279,9 +272,9 @@ this.phobos = this.phobos || {};
 			if (this.local.env.getGame().getPlayerShip().getId() == this.getId()) 
 				allowMoveClick = false ; 
 		}
-	}
+	},
 
-	s.attackBehavior = function(target) {
+	attackBehavior: function(target) {
 		var targetRange = utils.distance(target, this);
 		if (targetRange <= this.shared.weapons.getRange()) {
 			this.lookAt({x:target.getPosition().x, y:target.getPosition().y} );
@@ -298,15 +291,15 @@ this.phobos = this.phobos || {};
 		else {
 			this.setDestination({ x:target.getPosition().x, y:target.getPosition().y} );
 		}
-	}
+	},
 
-	s.collect = function(collectable) {
+	collect: function(collectable) {
 		this.getCargo().capacity -= collectable.shared.weight;
 		this.local.env.getGame().switchObjectToCargo(this.getShared(), collectable);
 		this.getCargo().content[collectable.id] = collectable.getShared();
-	}
+	},
 
-	s.collectBehavior = function(collectable) {
+	collectBehavior: function(collectable) {
 		var targetRange = utils.distance(collectable, this);
 		if (targetRange <= 100) {
 			this.lookAt({x:collectable.getPosition().x, y:collectable.getPosition().y} );
@@ -319,9 +312,9 @@ this.phobos = this.phobos || {};
 		else {
 			this.setDestination({ x:collectable.getPosition().x, y:collectable.getPosition().y} );
 		}
-	}
+	},
 
-	s.behavior = function () {
+	behavior: function () {
 		if (this.getHasTarget()) {
 			var targetType = this.getTargetType();
 			if (targetType == "ship") 
@@ -347,13 +340,13 @@ this.phobos = this.phobos || {};
 		else {
 			this.idleBehavior() ; 
 		}
-	}
+	},
 
-	s.weaponsTick = function() {
+	weaponsTick: function() {
 		this.getWeapons().tick();
-	}
+	},
 
-	s.tickMovement = function () {
+	tickMovement: function () {
 		//Throttle. 
 		//s.position.rotation += 1 ;
 		if (this.getPosition().rotation >= 180) this.getPosition().rotation = -180 + this.getPosition().rotation % 180 ;
@@ -361,18 +354,18 @@ this.phobos = this.phobos || {};
 		//s.position.rotation = s.position.rotation % 360 ; 
 		this.getPosition().x += Math.sin((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
 		this.getPosition().y += Math.cos((this.getPosition().rotation)*(Math.PI/-180)) * this.shared.currentSpeed;
-	}
+	},
 
-	s.rotationFrame = function() {
+	rotationFrame: function() {
 		// this.gotoAndPlay("walk");
 		if (this.getPosition().rotation % 360 > 0) 
 			this.currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
 			this.currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
 
-	}
+	},
 
-	s.getCloseEnnemy = function() {
+	getCloseEnnemy: function() {
 		var minDistance = 999999999999999;
 		var closeEnnemyKey = null;
 		for (key in this.getSectorShips()) {
@@ -384,12 +377,12 @@ this.phobos = this.phobos || {};
 			}
 		}
 		return this.getSectorShip(closeEnnemyKey);
-	}
-	s.isPlayerShip = function() {
+	},
+	isPlayerShip: function() {
 		return (!server && client.getGame().getPlayerShip().id == this.id);
-	}
+	},
 
-	s.drawRender = function () {
+	drawRender: function () {
 		this.rotationFrame();
 
 		if (this.local.env.getGame().getCamera().getCenteredOnPlayer())
@@ -423,13 +416,13 @@ this.phobos = this.phobos || {};
 
 		// this.x = renderCoo.x;
 		// this.y = renderCoo.y;
-	}
+	},
 
 	/**
 	*	Returns data for this object that is shared within the whole network. 
 	*	Use this to send this object via a socket or to the database. 
 	*/
-	s.getExport = function() {
+	getExport: function() {
 		return ({
 			id: params.id,
 			position: this.position,
@@ -448,113 +441,116 @@ this.phobos = this.phobos || {};
 			targetId: this.targetId,
 			status:this.status,
 		})
-	}
+	},
 
-	s.tick = function (event) {
+	tick: function (event) {
 		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		if (!server)
 			this.drawRender();
-	}
+	},
 
-	s.load = function(shipData){
-		this.index = shipData.id; 
-		if (!server) {
-			var imgShip = new Image(); 
+	// load: function(shipData){
+	// 	this.index = shipData.id; 
+	// 	if (!server) {
+	// 		var imgShip = new Image(); 
 
-			shipData.src  = "Hercule/SpriteHercules.png";
+	// 		shipData.src  = "Hercule/SpriteHercules.png";
 
-			imgShip.src = Sh.path + shipData.src;
-			var that = this;
-			imgShip.onload = function() {
-				var shipSpriteSheet = new _.SpriteSheet({
-					// image to use
-					images: [this], 
-					frames: {width: 294, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
-					// width, height & registration point of each sprite
-					animations: {    
-						walk: [0, 70, "walk"]
-					}
-				});
-				that.index = shipData.id; 
-				//that.image = this;
-				that.spriteSheet = shipSpriteSheet;
-				that.gotoAndStop("walk");
-				that.scaleX = 0.45;
-				that.scaleY = 0.45; 
-				that.name = shipData.name; 
-				cPlayground.addChild(that);
-				cPlayground.update();//Create a Shape DisplayObject.
-			}
-		}
-	}
+	// 		imgShip.src = Sh.path + shipData.src;
+	// 		var that = this;
+	// 		imgShip.onload: function() {
+	// 			var shipSpriteSheet = new _.SpriteSheet({
+	// 				// image to use
+	// 				images: [this], 
+	// 				frames: {width: 294, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
+	// 				// width, height & registration point of each sprite
+	// 				animations: {    
+	// 					walk: [0, 70, "walk"]
+	// 				}
+	// 			});
+	// 			that.index = shipData.id; 
+	// 			//that.image = this;
+	// 			that.spriteSheet = shipSpriteSheet;
+	// 			that.gotoAndStop("walk");
+	// 			that.scaleX = 0.45;
+	// 			that.scaleY = 0.45; 
+	// 			that.name = shipData.name; 
+	// 			cPlayground.addChild(that);
+	// 			cPlayground.update();//Create a Shape DisplayObject.
+	// 		}
+	// 	}
+	// }
 
 
-	s.getWeapons = function() {
+	getWeapons: function() {
 		return this.shared.weapons;
-	}
+	},
 
-	s.getShared = function() {
+	getShared: function() {
 		return this.shared;
-	}
+	},
 
-	s.getEnergy = function() {
+	getEnergy: function() {
 		return this.shared.energy;
-	}
+	},
 
-	s.getId = function() {
+	getId: function() {
 		return this.id;
-	}
+	},
 
-	s.getPosition = function() {
+	getPosition: function() {
 		return this.shared.position;
-	}
+	},
 
-	s.getTargetId = function() {
+	getTargetId: function() {
 		return this.shared.targetId;
-	}
+	},
 	
-	s.getHasTarget = function() {
+	getHasTarget: function() {
 		return this.shared.hasTarget;
-	}
+	},
 
-	s.getStatus = function() {
+	getStatus: function() {
 		return this.shared.status;
-	}
+	},
 
-	s.getTargetType = function() {
+	getTargetType: function() {
 		return this.shared.targetType;
-	}
+	},
 
-	s.getDockingTarget = function() {
+	getDockingTarget: function() {
 		return this.shared.dockingTarget;
-	}
+	},
 
-	s.getSectorShip = function(shipId) {
+	getSectorShip: function(shipId) {
 		return this.getSectorShips()[shipId];
-	}
+	},
 
-	s.getSectorShips = function() {
+	getSectorShips: function() {
 		return this.local.env.getGame().getUniverse[this.getSector()].ships;
-	}
+	},
 
-	s.getSector = function() {
+	getSector: function() {
 		return this.getPosition().sector;
-	}
+	},
 	
-	s.getPositionDraw = function() {
+	getPositionDraw: function() {
 		return {x:this.x, y:this.y};
-	}
+	},
 
-	s.getCargo = function() {
+	getCargo: function() {
 		return this.shared.cargo;
-	}
+	},
 
-	s.getRotationSpeed = function() {
+	getRotationSpeed: function() {
 		return this.shared.rotationSpeed;
-	}
+	},
 
+	});
+	phobos.Ship = Ship;
 
-    phobos.Ship = Sh
 }());
+
+

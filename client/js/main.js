@@ -8,6 +8,7 @@ jQuery(document).ready(function($) {
 	client.startGame();
 	client.createPingTimer(); 
 	client.createServerLoop(); 
+	new phobos.Ship(); 
 	ui = new UI();
 	
 	//TODO : CENTRALIZE MESSAGES

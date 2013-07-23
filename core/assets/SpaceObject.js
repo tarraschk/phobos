@@ -45,9 +45,6 @@ this.phobos = this.phobos || {};
 
 	rotationFrame: function() {
 		// this.gotoAndPlay("walk");
-		console.log("rotation frame");
-		console.log(this.getPosition().rotation);
-		console.log(this.getSprite().currentAnimationFrame);
 		if (this.getPosition().rotation % 360 > 0) 
 			this.getSprite().currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
@@ -94,8 +91,6 @@ this.phobos = this.phobos || {};
 		imgSprite.src = this.path+src; 
 		imgSprite.onload = function() {
 
-			console.log("SPRRIIIITE SHEET");
-			console.log(spritesheet);
 			var spriteSheet = new _.SpriteSheet({ images: [imgSprite], frames: spritesheet.frames, animations: spritesheet.animations});
 			//that.image = this;
 			objSprite.scaleX = 0.5;
