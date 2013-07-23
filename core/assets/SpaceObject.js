@@ -22,8 +22,18 @@ this.phobos = this.phobos || {};
 			sector: params.position.sector,
 		}
 		if (!server) {
-			this.sprite = new _.Bitmap();
-			this.load(params.image.src);
+			if (params.image.animation) {
+				console.log("load animation !!");
+				console.log(params.image);
+				this.sprite = new _.BitmapAnimation();
+				this.sprite.isAnimation = true; 
+				this.loadAnimation(params.image.src, params.image.spritesheet);
+			}
+			else {
+				this.sprite = new _.Bitmap()
+				this.sprite.isAnimation = false; 
+				this.load(params.image.src);
+			}
 		}
 	},
 
@@ -32,7 +42,23 @@ this.phobos = this.phobos || {};
 		if (!server) this.drawRender();
 	},
 
+
+	rotationFrame: function() {
+		// this.gotoAndPlay("walk");
+		if (this.getPosition().rotation % 360 > 0) 
+			this.getSprite().currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
+		else
+			this.getSprite().currentAnimationFrame = Math.abs((Math.round((this.getPosition().rotation % 360) / 5)));
+
+	},
+
+	drawAnimation: function() {
+		this.rotationFrame();
+	},
+
 	drawRender: function() {
+		if (this.getisAnimation()) 
+			this.drawAnimation();
 		var renderCoo = utils.absoluteToStd({x:this.getPosition().x,y:this.getPosition().x}, client.getGame().getCamera().getPosition());
 		this.sprite.x = renderCoo.x;
 		this.sprite.y = renderCoo.y;
@@ -58,6 +84,41 @@ this.phobos = this.phobos || {};
 		}
 	},
 
+
+	loadAnimation: function(src, spritesheet){
+		var imgSprite = new Image(); 
+		var objSprite = this.sprite
+		imgSprite.src = this.path+src; 
+		imgSprite.onload = function() {
+
+			console.log("SPRRIIIITE SHEET");
+			console.log(spritesheet);
+			var spriteSheet = new _.SpriteSheet({ images: [imgSprite], frames: spritesheet.frames, animations: spritesheet.animations});
+			//that.image = this;
+			objSprite.scaleX = 0.5;
+			objSprite.scaleY = 0.5;
+			objSprite.spriteSheet = spriteSheet;
+			objSprite.gotoAndStop("walk");
+
+			objSprite.addEventListener("mouseover", function(e) {
+				ui.showEntityInfos(objSprite);
+			});
+			objSprite.addEventListener("mouseout", function(e) {
+				ui.hideEntityInfos(objSprite);
+			});
+			objSprite.addEventListener("click", function(e){
+				client.inputPlayer("mouse1Object",{ click:e, targObject: objSprite})
+			});
+			console.log("ADD ANIMATION")
+			console.log(objSprite);
+			cPlayground.addChild(objSprite);
+		}
+	},
+
+	hide: function() {
+		this.getSprite().visible = false;
+	},
+
 	/**
 	*	Returns data for this object that is shared within the whole network. 
 	*	Use this to send this object via a socket or to the database. 
@@ -71,6 +132,9 @@ this.phobos = this.phobos || {};
 		})
 	},
 
+	getSprite: function() {
+		return this.sprite; 
+	},
 
 	getPosition: function() {
 		return this._position;
@@ -82,6 +146,10 @@ this.phobos = this.phobos || {};
 
 	getId: function() {
 		return this.id; 
+	},
+
+	getisAnimation: function() {
+		return this.getSprite().isAnimation;
 	},
 
 	manageClick: function(){

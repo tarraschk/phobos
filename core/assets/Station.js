@@ -36,9 +36,9 @@ this.phobos = this.phobos || {};
 	},
 
 // public methods:
-	tick: function () {
-		this.shared.position.x = this.shared.position.x + 0.01;
-		if (!server) this.drawRender();
+	tick: function ($super) {
+		this.getShared().position.x = this.getShared().position.x + 0.01;
+		$super();
 	},
 
 
