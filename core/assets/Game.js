@@ -222,7 +222,6 @@
 					this.getUniverse()[uniId].ships[keyUniverse].tick();
 				}
 			}
-			console.log( this.getUniverse()[uniId].tiles);
 			for (keyUniverse in this.getUniverse()[uniId].tiles) {
 				if (String((keyUniverse)) === keyUniverse && this.getUniverse()[uniId].tiles[keyUniverse] && this.getUniverse()[uniId].tiles.hasOwnProperty(keyUniverse)) {
 					//Verify object (fucking javascript)

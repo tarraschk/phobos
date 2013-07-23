@@ -10,6 +10,8 @@ this.phobos = this.phobos || {};
 
 // constructor:
 	initialize: function (params) {
+		console.log("load space object");
+		console.log(params);
 		this.id = params.id;
 		this.index = params.id;
 		this.shared = {}; // To erase !
@@ -21,46 +23,38 @@ this.phobos = this.phobos || {};
 		}
 		if (!server) {
 			this.sprite = new _.Bitmap();
-			this.path = "img/";
-			this.load(params.src);
+			this.load(params.image.src);
 		}
 	},
 
 // public methods:
 	tick: function (event) {
-		console.log("im ticking");
-		// this.x = this.shared.position.x - game._camera.x();
-		// this.y = this.shared.position.y - game._camera.y();
-		if(this._type == 1)
-			this.rotate();
 		if (!server) this.drawRender();
 	},
 
 	drawRender: function() {
-		var renderCoo = utils.absoluteToStd({x:this.getPosition().x,y:this.getPosition().x.y}, client.getGame().getCamera().getPosition());
+		var renderCoo = utils.absoluteToStd({x:this.getPosition().x,y:this.getPosition().x}, client.getGame().getCamera().getPosition());
 		this.sprite.x = renderCoo.x;
 		this.sprite.y = renderCoo.y;
 	},
 
-	rotate: function(angle){
-
-	},
 
 	load: function(src){
-		this.sprite.image = new Image();
-		this.sprite.image.src = this.path+src; 
-
-		this.sprite.image.onload = function() {
-			this.sprite.addEventListener("mouseover", function(e) {
-				debug('over '+that._name);
+		var imgSprite = new Image(); 
+		var objSprite = this.sprite
+		imgSprite.src = this.path+src; 
+		imgSprite.onload = function() {
+			objSprite.image = imgSprite
+			objSprite.addEventListener("mouseover", function(e) {
+				ui.showEntityInfos(objSprite);
 			});
-			this.sprite.addEventListener("mouseout", function(e) {
-				debug('out of '+that._name);
+			objSprite.addEventListener("mouseout", function(e) {
+				ui.hideEntityInfos(objSprite);
 			});
-			this.sprite.addEventListener("click", function(e){
-				that.manageClick();
+			objSprite.addEventListener("click", function(e){
+				client.inputPlayer("mouse1Object",{ click:e, targObject: objSprite})
 			});
-			cPlayground.addChild(this.sprite);
+			cPlayground.addChild(objSprite);
 		}
 	},
 
@@ -75,6 +69,19 @@ this.phobos = this.phobos || {};
 			type: this._type,
 			actions: this._actions,
 		})
+	},
+
+
+	getPosition: function() {
+		return this._position;
+	},
+
+	getSector: function() {
+		return this.getPosition().sector; 
+	},
+
+	getId: function() {
+		return this.id; 
 	},
 
 	manageClick: function(){

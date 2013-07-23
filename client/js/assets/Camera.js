@@ -124,6 +124,10 @@ phobos = this.phobos || {};
 		return this._vibration;
 	}
 
+	Camera.prototype.getPosition = function() {
+		return this._position; 
+	}
+
 	Camera.prototype.getCenteredOnPlayer = function() {
 		return this._centeredOnPlayer; 
 	}
