@@ -42,7 +42,7 @@ this.phobos = this.phobos || {};
 // public methods:
 
 	tick: function($super) {
-		this.shared.position.rotation = this.shared.position.rotation + 1.5;
+		this.getPosition().rotation = this.getPosition().rotation + 1.5;
 		$super();
 	},
 

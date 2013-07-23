@@ -14,11 +14,11 @@ this.phobos = this.phobos || {};
 		console.log(params);
 		this.id = params.id;
 		this.index = params.id;
-		this.shared = {}; // To erase !
 		this._position = {
 			x: params.position.x,
 			y: params.position.y,
 			z: params.position.z,
+			rotation: params.position.rotation,
 			sector: params.position.sector,
 		}
 		if (!server) {
@@ -45,6 +45,9 @@ this.phobos = this.phobos || {};
 
 	rotationFrame: function() {
 		// this.gotoAndPlay("walk");
+		console.log("rotation frame");
+		console.log(this.getPosition().rotation);
+		console.log(this.getSprite().currentAnimationFrame);
 		if (this.getPosition().rotation % 360 > 0) 
 			this.getSprite().currentAnimationFrame = Math.abs((Math.round(((360 - this.getPosition().rotation ) % 360) / 5)));
 		else
