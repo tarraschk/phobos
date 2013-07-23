@@ -1,26 +1,21 @@
 
 (function () {
 
-	function DBHandler() {
-		this.initialize();
-	}
-
-	var db = DBHandler.prototype ;
-
-	db.mongoose = require('mongoose');
-	db.connectionString = "mongodb://localhost/test";
+	var DBHandler = Class.create({
 
 	// constructor:
 
-		db.initialize = function () { 
+		initialize: function () { 
+			this._mongoose = require('mongoose');
+			this._connectionString = "mongodb://localhost/test";
 			this.connect();
-		}
-		db.connect = function() {
+		},
+		connect: function() {
 			this.mongoose.connect(this.connectionString);
 			console.log("CONNEXION SUCCESS");
-		}
+		},
 		
+	});
 	// public methods:
 	phobos.DBHandler = DBHandler;
-
 }());

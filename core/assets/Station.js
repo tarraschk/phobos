@@ -60,7 +60,6 @@ this.phobos = this.phobos || {};
 		this._mapY = params.y;
 	}
 	s.drawRender = function() {
-		console.log("tick");
 		var renderCoo = utils.absoluteToStd({x:this.shared.position.x,y:this.shared.position.y}, this.local.env.getGame().getCamera()._position);
 		this.x = renderCoo.x;
 		this.y = renderCoo.y;

@@ -7,29 +7,24 @@ phobos = this.phobos || {};
 
 
 (function () {
+	var Server = Class.create({
 
-	function Server() {
-		this.initialize();
-	}
-	var s = Server.prototype ;
-
-s._fake_latency = 0;
-s._local_time = 0;
-s._dt = new Date().getTime();
-s._dte = new Date().getTime();
-s._game ; 
-s._playerCount = -1 ; 
-s._users = []; 
-s._socketManager ;
-s._universeGenerator ;
-
-    //a local queue of messages we delay if faking latency
-s.messages = [];
 // constructor:
 
-	s.initialize = function () { 
+	initialize: function () { 
 		this._universeGenerator = new phobos.UniverseGenerator();
-	}
+		this._fake_latency = 0;
+		this._local_time = 0;
+		this._dt = new Date().getTime();
+		this._dte = new Date().getTime();
+		this._game ; 
+		this._playerCount = -1 ; 
+		this._users = []; 
+		this._socketManager ;
+    //a local queue of messages we delay if faking latency
+		this._messages = [];
+		this._universeGenerator ;
+	},
 
 	
 // public methods:
@@ -39,56 +34,56 @@ s.messages = [];
 	//Socket management
 
 
-	s.emitSocket = function(message, messageData) {
+	emitSocket: function(message, messageData) {
 		if (this._socketManager)
 			this._socketManager.emit(message, messageData);
 		else return -1; 
-	}
+	},
 
-	s.broadcastToAllSocket = function(message, messageData) {
+	broadcastToAllSocket: function(message, messageData) {
 		if (this._socketManager) {
 			this._socketManager.emit(message, messageData);
 			this._socketManager.broadcast.emit(message, messageData);
 		}
 		else return -1; 
-	}
+	},
 
 	// Message management
 
-	s.pushMessage = function(client, message) {
+	pushMessage: function(client, message) {
 		this._messages.push({message:message, client:client}); 
-	}
+	},
 
 	// Game generator
 
-	s.startGame = function(universe) {
+	startGame: function(universe) {
 		this._game.startUpdate();
-	}
-	s.endGame = function(universe) {
+	},
+	endGame: function(universe) {
 		this._game.stopUpdate();
-	}
+	},
 
-	s.generateGame = function(universeToken) {
+	generateGame: function(universeToken) {
 		var sector0 = this.getUniverseGenerator().generateSector(0, 11434);
 		var sector1 = this.getUniverseGenerator().generateSector(1, 134);
 		var generatedGame = new phobos.Game();
 		generatedGame.loadSector(0, sector0); 
 		generatedGame.loadSector(1, sector1); 
 		this.setGame(generatedGame); 
-	}
+	},
 
 	//Player management
 
 
-	s.addUser = function(user) {
+	addUser: function(user) {
 		this._users[user.id] = user ; 
-	}
+	},
 
-	s.removeUser = function(user) {
+	removeUser: function(user) {
 		this._users[user.id] = null ; 
-	}
+	},
 
-	s.playerLogin = function(loginData) {
+	playerLogin: function(loginData) {
 		var credentials = loginData.loginData;
 		var socketData = loginData.socket ; 
 		if (1) { // login check
@@ -97,22 +92,22 @@ s.messages = [];
 			this.addUser(shipData); 
 			return (this.playerJoinsGame(shipData, socketData)); 
 		}
-	}
+	},
 
-	s.playerJoinsGame = function(shipData, socketData){
+	playerJoinsGame: function(shipData, socketData){
 		if (this._game.playerJoin(shipData, false))
 			return shipData;
 		else return -1; 
-	};
+	},
 
 	//Misc
 
-	s.log = function(log) {
+	log: function(log) {
 		console.log(log);
-	}
+	},
 
 
-	s.getPlayerData = function(playerId) {
+	getPlayerData: function(playerId) {
 		this._playerCount++ ; 
 		return ({ 
 			id: utils.generateId() ,
@@ -133,39 +128,39 @@ s.messages = [];
 			cargo: {capacity:600, content:[]},
 			name: "testeur" + this._playerCount, 
 		})
-	}
+	},
 
-	s.loadSectorPlayers = function(socket, sector) {
+	loadSectorPlayers: function(socket, sector) {
 		var sectorPlayers = this._game.getShipsList() ; 
 		socket.emit('sectorPlayersLoaded', sectorPlayers);
-	}
+	},
 
-	s.loadSector = function(socket, sector) {
+	loadSector: function(socket, sector) {
 		// var sectorTiles = this._game.getTilesList() ; 
 		// var sectorObjects = this._game.getObjectsList() ; 
 		// sector = {objects: sectorObjects, tiles: sectorTiles}; 
 		// console.log(this.sectors.sector1); 
 		socket.emit('sectorLoaded', this.getSectorExport(sector));
-	}
+	},
 
 
 
 
-	s.getSyncDataSector = function(sector) {
+	getSyncDataSector: function(sector) {
 		//Now only one sector. 
 		//this.getGame().getSector(sector);
 		var sector = this.getSectorExport(sector);
 
 		return sector;
-	}
+	},
 
 
-	s.getSectorExport = function(sector) {
+	getSectorExport: function(sector) {
 		var sharedData = this.getGame().exportSector(sector); //TO DO : ONLY FOR A SECTOR
 		return (sharedData);
-	}
+	},
 
-	s.export = function(sector) {
+	export: function(sector) {
 		var sharedData = this.getGame().exportSector(sector);
 		var users = this.getUsers();
 		return (
@@ -178,34 +173,34 @@ s.messages = [];
 					users: users
 			}
 		});
-	}
+	},
 
 	//Setters and getters
 
-	s.setSocketsManager = function(newSocketsManager) {
+	setSocketsManager: function(newSocketsManager) {
 		this._socketManager = newSocketsManager; 
-	}
+	},
 
-	s.getUniverseGenerator = function() {
+	getUniverseGenerator: function() {
 		return this._universeGenerator;
-	}
+	},
 
-	s.setGame = function(game) {
+	setGame: function(game) {
 		this._game = game ; 
-	}
+	},
 
-	s.getUsers = function() {
+	getUsers: function() {
 		return this._users;
-	}
+	},
 
-	s.getGame = function() {
+	getGame: function() {
 		return this._game; 
-	}
+	},
 
-	s.getGameFrame = function() {
+	getGameFrame: function() {
 		return this.getGame().getFrame();
-	}
-
+	},
+});
 	phobos.Server = Server;
 
 }());

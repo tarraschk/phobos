@@ -11,6 +11,7 @@ var gameport = 8080,
 	firebaseRecover = false;
 	http = require('http'),
 	gameLoader = require('./loader.js'),
+	prototype = require('prototype'),
 	
 httpServer = http.createServer(function(request, response) {
 	response.write('Phobos server launched');
