@@ -76,7 +76,24 @@ this.phobos = this.phobos || {};
 
 		tick: function($super) {
 			$super();
-			console.log("I AM A SHIP !");
+			console.log("I AM A SHIP " + this.name);
+			this.x += 5; 
+		},
+
+	});
+
+	var Bot = Class.create(Ship, {
+		initialize: function($super, params) {
+			$super(params);
+			this.IA = params.IA;
+			this.name = params.name;
+			console.log("bot initialized")
+		},
+
+		tick: function($super) {
+			console.log("bot");
+			$super();
+			console.log("I AM A BOT !" + this.IA);
 			this.x += 5; 
 		},
 
@@ -85,6 +102,7 @@ this.phobos = this.phobos || {};
 
 	phobos.SpaceObject = SpaceObject;
 	phobos.Ship = Ship;
+	phobos.Bot = Bot;
 
 
 }());
@@ -92,10 +110,12 @@ this.phobos = this.phobos || {};
 
 var larme = new phobos.SpaceObject({x:-50, y:50}); 
 var larme2 = new phobos.SpaceObject({x:-150, y:200}); 
-var ship = new phobos.Ship({x:-250000, y:300}); 
+var ship = new phobos.Ship({x:-250000, y:300, name:"tristan"}); 
+var bot = new phobos.Bot({x:-6551250000, y:300, name:"lebot", IA:"caca"}); 
 
 larme.tick();
 larme.tick();
 larme.tick();
 larme2.tick();
 ship.tick();
+bot.tick();
