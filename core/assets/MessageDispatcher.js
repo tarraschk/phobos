@@ -3,26 +3,20 @@ this.phobos = this.phobos || {};
 
 (function () {
 
-	MessageDispatcher = function(){
-		this.initialize();
-	}
+	var MessageDispatcher = Class.create({
 
-	var md = MessageDispatcher.prototype ;
+	// constructor:
 
-// static public properties:
-	
-// public properties:
-
-// constructor:
-	md.initialize = function () {
+		initialize: function () {
 	}
 
 // public methods:
 
-	md.push(message) {
+	push: function(message) {
 		
 	}
-
-	phobos.Weapon = Weapon;
-
+		
+	});
+	// public methods:
+	phobos.MessageDispatcher = MessageDispatcher;
 }());

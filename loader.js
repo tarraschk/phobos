@@ -18,6 +18,7 @@ function loadCore() {
 		require(serverAssetsDir + "UniverseGenerator.js");
 		require(serverAssetsDir + "DBHandler.js");
 		require(gameAssetsDir + "Game.js");
+		require(gameAssetsDir + "SpaceObject.js");
 		require(gameAssetsDir + "Ship.js");
 		require(gameAssetsDir + "Bot.js");
 		require(gameAssetsDir + "Collectable.js");
