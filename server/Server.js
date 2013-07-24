@@ -124,6 +124,14 @@ phobos = this.phobos || {};
 			targetType: null,
 			targetId: null,
 			status:"space",
+			image: { 
+				src: 'Hercule/SpriteHercules.png', 
+				animation: true, 
+				spritesheet: { 
+					frames: {width: 294, height: 266, regX: 293 / 2, regY: 266 / 2, vX:0.5, currentAnimationFrame: 15}, 
+					animations: { walk: [0, 70, "walk"] },
+				}, 
+			},
 			position: {x: Math.random() * 500, y: Math.random() * 500, z:1, rotation:0, sector:0 }, 
 			cargo: {capacity:600, content:[]},
 			name: "testeur" + this._playerCount, 

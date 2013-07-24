@@ -146,12 +146,20 @@
 
 
 	g.playerJoin = function(playerData, isMainPlayer) {
+		console.log("join1");
 		var sector = playerData.position.sector;
-		var ship = new phobos.Ship(playerData); 
+		console.log("join1");
+		var ship = new phobos.Ship(playerData);
+		console.log("join1");
 		this.getUniverse()[sector].ships[playerData.id] = ship;
 		this._players[playerData.id] = ship;
 
+		console.log("is main player");
+		console.log(isMainPlayer);
+
 		if (isMainPlayer) {
+			console.log("main player")
+			console.log(playerData);
 			this.setPlayerId(playerData.id);
 			this.setPlayerShip(ship); 
 		}

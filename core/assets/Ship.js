@@ -24,6 +24,7 @@ this.phobos = this.phobos || {};
 				diffDrawCooForCamera: {x: 0, y:0},
 				drawCoo : {x:null, y: null},
 			}
+			this.path = "img/ship/";
 
 			if (this.isPlayerShip) {
 				this.local.isPlayerShip = true;;
@@ -44,12 +45,19 @@ this.phobos = this.phobos || {};
 			rotationSpeed: params.rotationSpeed,
 			hasDestination: params.hasDestination,
 			name: params.name,
+			image: params.image,
 			hasTarget: params.hasTarget , 
 			energy: params.energy,
 			targetType: params.targetType,
 			targetId: params.targetId,
 			cargo: params.cargo,
 			status:"space",
+			image: {
+				animation: params.image.animation,
+				src:params.image.src,
+				dim:500 ,//To do,
+				spritesheet: params.image.spritesheet,
+			},
 		}
 		console.log("loaded ship");
 		console.log(this);
@@ -442,12 +450,11 @@ this.phobos = this.phobos || {};
 		})
 	},
 
-	tick: function (event) {
+	tick: function ($super, event) {
+		$super(); 
 		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
-		if (!server)
-			this.drawRender();
 	},
 
 	// load: function(shipData){
