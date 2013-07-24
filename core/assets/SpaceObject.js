@@ -39,6 +39,8 @@ this.phobos = this.phobos || {};
 
 // public methods:
 	tick: function (event) {
+		console.log("tick space obj" + this.id);
+		console.log(server);
 		if (!server) this.drawRender();
 	},
 
@@ -57,6 +59,8 @@ this.phobos = this.phobos || {};
 	},
 
 	drawRender: function() {
+		console.log(this);
+		console.log(this.getisAnimation());
 		if (this.getisAnimation()) 
 			this.drawAnimation();
 		var renderCoo = utils.absoluteToStd({x:this.getPosition().x,y:this.getPosition().x}, client.getGame().getCamera().getPosition());
@@ -108,6 +112,8 @@ this.phobos = this.phobos || {};
 				client.inputPlayer("mouse1Object",{ click:e, targObject: objSprite})
 			});
 			console.log("ADD ANIMATION")
+			objSprite.x = 5;
+			objSprite.y = 5;
 			console.log(objSprite);
 			cPlayground.addChild(objSprite);
 		}

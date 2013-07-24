@@ -18,7 +18,7 @@
 	g._players = [];
 	g._objects = [];
 	g._gameGraphics = null ; 
-	g._updateTime = 15 ; 
+	g._updateTime = 250 ; 
 	g._frame ;
 
 // constructor:

@@ -451,6 +451,7 @@ this.phobos = this.phobos || {};
 	},
 
 	tick: function ($super, event) {
+		console.log("tick ship" + this.id);
 		$super(); 
 		this.shared.weapons.tick() ; 
 		this.behavior();
