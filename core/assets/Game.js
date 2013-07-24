@@ -74,6 +74,7 @@
 
 	g.loadSharedObjects = function(sectorId, objects) {
 		var theNewObject = null ; 
+		console.log(phobos);
 		for (key in objects) {
 			if (String((key)) === key && objects.hasOwnProperty(key)) {
 				switch(objects[key].type) {
@@ -147,7 +148,6 @@
 	g.playerJoin = function(playerData, isMainPlayer) {
 		var sector = playerData.position.sector;
 		var ship = new phobos.Ship(playerData); 
-		// this._shipsList[playerData.id] = ship;
 		this.getUniverse()[sector].ships[playerData.id] = ship;
 		this._players[playerData.id] = ship;
 

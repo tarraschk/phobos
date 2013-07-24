@@ -1,4 +1,3 @@
-
 this.phobos = this.phobos || {};
 
 
@@ -7,7 +6,7 @@ this.phobos = this.phobos || {};
 	var Ship = Class.create(phobos.SpaceObject, {
 
 // static public properties:
-	
+
 
 // constructor:
 	initialize: function ($super, params) {
@@ -507,7 +506,7 @@ this.phobos = this.phobos || {};
 	getTargetId: function() {
 		return this.shared.targetId;
 	},
-	
+
 	getHasTarget: function() {
 		return this.shared.hasTarget;
 	},
@@ -535,7 +534,7 @@ this.phobos = this.phobos || {};
 	getSector: function() {
 		return this.getPosition().sector;
 	},
-	
+
 	getPositionDraw: function() {
 		return {x:this.x, y:this.y};
 	},
@@ -552,5 +551,3 @@ this.phobos = this.phobos || {};
 	phobos.Ship = Ship;
 
 }());
-
-

@@ -1,4 +1,3 @@
-
 this.phobos = this.phobos || {};
 
 
@@ -7,7 +6,7 @@ this.phobos = this.phobos || {};
 	var Tile = Class.create(phobos.SpaceObject, {
 
 // static public properties:
-	
+
 
 // constructor:
 	initialize: function ($super, params) {
