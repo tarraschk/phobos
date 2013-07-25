@@ -19,6 +19,7 @@ this.phobos = this.phobos || {};
 			// }
 		}
 		else { 
+			this.path = "img/ship/";
 			this.local = {
 				env: client,
 				isPlayerShip: false,
@@ -51,6 +52,12 @@ this.phobos = this.phobos || {};
 			targetId: params.targetId,
 			cargo: params.cargo,
 			status:"space",
+			image: {
+				animation: params.image.animation,
+				src:params.image.src,
+				dim:500 ,//To do,
+				spritesheet: params.image.spritesheet,
+			}
 		}
 		console.log("loaded ship");
 		console.log(this);
@@ -382,8 +389,8 @@ this.phobos = this.phobos || {};
 		return (!server && client.getGame().getPlayerShip().id == this.id);
 	},
 
-	drawRender: function () {
-		this.rotationFrame();
+	drawRender: function ($super) {
+
 
 		if (this.local.env.getGame().getCamera().getCenteredOnPlayer())
 		{
@@ -392,17 +399,16 @@ this.phobos = this.phobos || {};
 			this.local.drawCoo.x = renderCoo.x;
 			this.local.drawCoo.y = renderCoo.y;
 
-			this.x = renderCoo.x;
-			this.y = renderCoo.y;
+			this.getSprite().x = renderCoo.x;
+			this.getSprite().y = renderCoo.y;
 
-			this.x -= this.local.env.getGame().getCamera()._position.x;
-			this.y -= this.local.env.getGame().getCamera()._position.y;	
+			this.getSprite().x -= this.local.env.getGame().getCamera()._position.x;
+			this.getSprite().y -= this.local.env.getGame().getCamera()._position.y;	
 		}
 		else {
 			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
 
-			this.x = renderCoo.x;
-			this.y = renderCoo.y;
+		$super();
 
 		}
 		// if (this.isPlayerShip()) {
@@ -443,12 +449,11 @@ this.phobos = this.phobos || {};
 		})
 	},
 
-	tick: function (event) {
+	tick: function ($super) {
 		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
-		if (!server)
-			this.drawRender();
+		($super)();
 	},
 
 	// load: function(shipData){
@@ -552,5 +557,3 @@ this.phobos = this.phobos || {};
 	phobos.Ship = Ship;
 
 }());
-
-
