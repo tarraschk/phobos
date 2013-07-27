@@ -18,6 +18,7 @@ this.phobos = this.phobos || {};
 			// }
 		}
 		else { 
+			this.path = "img/ship/";
 			this.local = {
 				env: client,
 				isPlayerShip: false,
@@ -57,7 +58,11 @@ this.phobos = this.phobos || {};
 				src:params.image.src,
 				dim:500 ,//To do,
 				spritesheet: params.image.spritesheet,
+<<<<<<< HEAD
 			},
+=======
+			}
+>>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f
 		}
 		console.log("loaded ship");
 		console.log(this);
@@ -389,8 +394,8 @@ this.phobos = this.phobos || {};
 		return (!server && client.getGame().getPlayerShip().id == this.id);
 	},
 
-	drawRender: function () {
-		this.rotationFrame();
+	drawRender: function ($super) {
+
 
 		if (this.local.env.getGame().getCamera().getCenteredOnPlayer())
 		{
@@ -399,17 +404,16 @@ this.phobos = this.phobos || {};
 			this.local.drawCoo.x = renderCoo.x;
 			this.local.drawCoo.y = renderCoo.y;
 
-			this.x = renderCoo.x;
-			this.y = renderCoo.y;
+			this.getSprite().x = renderCoo.x;
+			this.getSprite().y = renderCoo.y;
 
-			this.x -= this.local.env.getGame().getCamera()._position.x;
-			this.y -= this.local.env.getGame().getCamera()._position.y;	
+			this.getSprite().x -= this.local.env.getGame().getCamera()._position.x;
+			this.getSprite().y -= this.local.env.getGame().getCamera()._position.y;	
 		}
 		else {
 			var renderCoo = utils.absoluteToStd(this.shared.position, this.local.env.getGame().getCamera()._position);
 
-			this.x = renderCoo.x;
-			this.y = renderCoo.y;
+		$super();
 
 		}
 		// if (this.isPlayerShip()) {
@@ -450,12 +454,20 @@ this.phobos = this.phobos || {};
 		})
 	},
 
+<<<<<<< HEAD
 	tick: function ($super, event) {
 		console.log("tick ship" + this.id);
 		$super(); 
 		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
+=======
+	tick: function ($super) {
+		this.shared.weapons.tick() ; 
+		this.behavior();
+		this.tickMovement(); 
+		($super)();
+>>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f
 	},
 
 	// load: function(shipData){
@@ -558,4 +570,8 @@ this.phobos = this.phobos || {};
 	});
 	phobos.Ship = Ship;
 
+<<<<<<< HEAD
 }());
+=======
+}());
+>>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f

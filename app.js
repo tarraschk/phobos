@@ -1,4 +1,3 @@
-
 function upload(response, postData) {
 	console.log("Le gestionnaire 'upload' est appelé.");
 	response.writeHead(200, {"Content-Type": "text/plain"});
@@ -25,3 +24,4 @@ gameLoader.loadCore();
 
 require("./phobos.server.js");
 require("./firebase.server.js");
+

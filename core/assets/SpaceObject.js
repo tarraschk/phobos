@@ -1,5 +1,12 @@
 this.phobos = this.phobos || {};
 
+/**
+ * SpaceObject.js
+ * /!\ DO NOT INSTANTIATE /!\
+ * Abstract space object 
+ * Implemented, it's a object with an image that will be used in space. (ie station, ship, collectable...)
+ * 
+*/
 
 (function () {
 
