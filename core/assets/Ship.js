@@ -58,11 +58,7 @@ this.phobos = this.phobos || {};
 				src:params.image.src,
 				dim:500 ,//To do,
 				spritesheet: params.image.spritesheet,
-<<<<<<< HEAD
 			},
-=======
-			}
->>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f
 		}
 		console.log("loaded ship");
 		console.log(this);
@@ -454,20 +450,11 @@ this.phobos = this.phobos || {};
 		})
 	},
 
-<<<<<<< HEAD
-	tick: function ($super, event) {
-		console.log("tick ship" + this.id);
-		$super(); 
-		this.shared.weapons.tick() ; 
-		this.behavior();
-		this.tickMovement(); 
-=======
 	tick: function ($super) {
 		this.shared.weapons.tick() ; 
 		this.behavior();
 		this.tickMovement(); 
 		($super)();
->>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f
 	},
 
 	// load: function(shipData){
@@ -570,8 +557,4 @@ this.phobos = this.phobos || {};
 	});
 	phobos.Ship = Ship;
 
-<<<<<<< HEAD
 }());
-=======
-}());
->>>>>>> 9629c0574c04fa805565767d463fa80d68166e6f
