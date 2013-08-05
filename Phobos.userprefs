@@ -2,8 +2,9 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Behaviors\botBehavior.cs">
     <Files>
-      <File FileName="Assets\Scripts\Behaviors\Propulsors.cs" Line="76" Column="68" />
-      <File FileName="Assets\Scripts\Behaviors\botBehavior.cs" Line="31" Column="19" />
+      <File FileName="Assets\Scripts\Behaviors\Propulsors.cs" Line="12" Column="40" />
+      <File FileName="Assets\Scripts\Behaviors\turrets.cs" Line="7" Column="27" />
+      <File FileName="Assets\Scripts\Behaviors\botBehavior.cs" Line="56" Column="3" />
       <File FileName="Assets\Scripts\Controls\MousePoint.cs" Line="29" Column="45" />
       <File FileName="Assets\Scripts\Behaviors\moveToBehavior.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Camera\UniverseCamera.cs" Line="29" Column="18" />
