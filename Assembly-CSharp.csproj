@@ -44,13 +44,23 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Behaviors\Destructible.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\Laser.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Propulsors.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\SimpleRotation.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\Turrets.cs" />
      <Compile Include="Assets\Scripts\Behaviors\botBehavior.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\moveTo.cs" />
      <Compile Include="Assets\Scripts\Behaviors\moveToBehavior.cs" />
-     <Compile Include="Assets\Scripts\Behaviors\turrets.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\projectile.cs" />
      <Compile Include="Assets\Scripts\Camera\UniverseCamera.cs" />
+     <Compile Include="Assets\Scripts\Components\Turret.cs" />
      <Compile Include="Assets\Scripts\Controls\MousePoint.cs" />
+     <Compile Include="Assets\Scripts\GUI\ObjectLabel.cs" />
      <Compile Include="Assets\Scripts\Global\Universe.cs" />
+     <Compile Include="Assets\Scripts\MainMenu\lightEffect.cs" />
+     <Compile Include="Assets\Scripts\MainMenu\rotation.cs" />
+     <Compile Include="Assets\Scripts\MainMenu\shipRotation.cs" />
      <None Include="Assets\Standard Assets\Projectors\Guidelines.txt" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Particle Shaders\Mobile Multiply Culled.shader" />
      <None Include="Assets\Standard Assets (Mobile)\Shaders\Miscellaneous Shaders\Mobile Background.shader" />
