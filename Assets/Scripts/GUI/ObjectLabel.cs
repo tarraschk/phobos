@@ -22,7 +22,7 @@ Transform camTransform;
         cam = cameraToUse;
     camTransform = cam.transform;
 	}
- 
+
  
     void Update()
     {
