@@ -9,7 +9,7 @@ public class Propulsors : MonoBehaviour {
 	public float rotationSpeed = 5.5f;
 	public Transform position;
 	
-    private Transform targetPos = null;
+    public Transform targetPos = null;
 	private GameObject target = null;
 	
     void Start() {
@@ -33,6 +33,10 @@ public class Propulsors : MonoBehaviour {
 	public void unsetTargetPos() 
 	{
 		this.targetPos = null; 	
+	}
+	
+	public Transform getTargetPos() {
+		return this.targetPos;	
 	}
 	
 	private void physicsUpdate() {	
@@ -71,34 +75,6 @@ public class Propulsors : MonoBehaviour {
 		this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * this.rotationSpeed);
 	}
 	
-	//Unused
-	private void moveToDestinationMovement() {
-		Transform diffPosDest = this.getDiffDestinationPosition(targetPos);
-		if (Mathf.Abs(diffPosDest.position.x) != 0 && Mathf.Abs(diffPosDest.position.y) != 0) {
-			//target.rotation.eulerAngles.y = 5;//this.getDiffAngle(diffPosDest); 
-		} 
-		if (Mathf.Abs(diffPosDest.rotation.eulerAngles.z) > this.rotationSpeed) {
-			this.rotateToDestination(diffPosDest);
-			if (Mathf.Abs(diffPosDest.position.x) < 250 && Mathf.Abs(diffPosDest.position.y) < 250) //If target is very close, we brake.
-				this.throttleBrake(-this.acceleration) ; 
-			else 
-				this.throttleBrake(this.acceleration); 
-		}
-		else {
-			if (this.speed < this.limitSpeed)
-			{
-				this.throttleBrake(this.acceleration) ; 
-			}
-			//this.transform.rotation.eulerAngles.z = this.target.eulerAngles.z ;
-		}
-		if (Mathf.Abs(diffPosDest.position.x) < 5 && Mathf.Abs(diffPosDest.position.x) < 5 ) {
-			this.stop() ; 
-		}
-	}
-	
-	private double getDiffAngle(Transform diffPos) {
-		return 5;
-	}
 	
 	private void rotateToDestination(Transform diffPosDest) {
 		if (diffPosDest.rotation.eulerAngles.z > 0) {
@@ -132,9 +108,5 @@ public class Propulsors : MonoBehaviour {
 		transform.Rotate(10 * Vector3.up * Time.deltaTime);
 	}
 	
-	private Transform getDiffDestinationPosition(Transform destination) {
-		return destination;
-		//return (Transform((destination.position.x - this.transform.position.x), (destination.position.y - this.transform.position.y), (destination.rotation.z % 360 - this.transform.rotation.z % 360)));
-	}
 	
 }

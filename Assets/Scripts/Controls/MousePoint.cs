@@ -25,8 +25,10 @@ public class MousePoint : MonoBehaviour {
 					
 					
 				    var target = GameObject.Find("Player");
-					Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
-					prop.setTargetPos(TargetObj.transform);
+					if (target) {
+						Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
+						prop.setTargetPos(TargetObj.transform);
+					}
 				    /*target.transform.LookAt(TargetObj.transform);
 					
 					
