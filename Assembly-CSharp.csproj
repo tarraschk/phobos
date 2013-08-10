@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Behaviors\Collectable.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Destructible.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Laser.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Propulsors.cs" />
