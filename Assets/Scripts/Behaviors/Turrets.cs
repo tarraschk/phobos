@@ -43,5 +43,28 @@ public class Turrets : MonoBehaviour {
 	public void setTarget(GameObject newTarget) {
 		this.target = newTarget;	
 		this.theWeapon.setTarget(newTarget);
+		if (this.isPlayer()) {
+			this.setGUIAttackTarget(newTarget);
+		}
+	}
+	
+	public void attack (GameObject target) {
+		this.setTarget(target);	
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		prop.setTargetPos(target.transform);
+	}
+	
+	public bool isPlayer() {
+		return this.tag == "Player"; 	
+	}
+	
+	private void setGUIAttackTarget(GameObject newTarget) {
+		var GUIContainer = GameObject.FindGameObjectWithTag("GUIContainer");
+		if (GUIContainer) {
+			var attackTargetGUI = GUIContainer.transform.FindChild("AttackTarget");
+			LabelPositioning labelPos = (LabelPositioning) attackTargetGUI.GetComponent(typeof(LabelPositioning));
+			labelPos.target = newTarget.transform;
+			labelPos.enableTexture();
+		}
 	}
 }

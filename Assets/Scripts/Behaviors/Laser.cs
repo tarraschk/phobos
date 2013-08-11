@@ -6,6 +6,7 @@ using System.Collections;
 public class Laser : MonoBehaviour {
 
 	public GameObject Target ; 
+	public GameObject attacker ; 
 	public float speed = 50f;  
 	public int power = 25; 
 	public double energy = 10f ; 
@@ -23,7 +24,7 @@ public class Laser : MonoBehaviour {
 		if (collision.gameObject.name == Target.name) {
 			this.laserDestroy();
 			Destructible destr = (Destructible) Target.GetComponent(typeof(Destructible));
-			destr.receiveDamage(this.power);
+			destr.receiveDamage(this.power, this.attacker);
 		
 			
 		}
@@ -31,6 +32,10 @@ public class Laser : MonoBehaviour {
 	
 	public void setTarget(GameObject newTarget) {
 		this.Target = newTarget;	
+	}
+	
+	public void setAttacker(GameObject newAttacker) {
+		this.attacker = newAttacker; 	
 	}
 	
 	private void energyUpdate() {

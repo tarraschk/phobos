@@ -41,6 +41,7 @@ public class Turret : MonoBehaviour {
 		moveScript.startMarker = this.transform;
 		moveScript.endMarker = this.target.transform;
 		laserScript.setTarget(this.target);
+		laserScript.setAttacker(gameObject);
 	}
 	
 	public void setReady(bool newReady) {

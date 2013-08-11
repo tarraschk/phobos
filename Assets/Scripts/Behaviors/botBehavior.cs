@@ -32,6 +32,13 @@ public class botBehavior : MonoBehaviour {
 		this.initPosition = newTransform;
 	}
 	
+	public void isUnderAttackBy(GameObject attacker) {
+		Debug.Log ("I am un der attac !");
+		if (this.AI == AITypes.idle || this.AI == AITypes.returnToPos) {
+			this.setAttackOn (attacker);
+		}
+	}
+	
 	void AIBehavior() {
 		switch(this.AI) {
 			
@@ -61,14 +68,15 @@ public class botBehavior : MonoBehaviour {
 			var remainingDistance = Vector3.Distance(univPlayers[i].transform.position, this.transform.position);
 			if (remainingDistance < this.targetAttackRange) 
 			{
-				Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
-				Turrets turrets = (Turrets) this.GetComponent(typeof(Turrets));
-				
-				turrets.setTarget(univPlayers[i]);
-				prop.setTargetPos(univPlayers[i].transform);	
-				this.setAI(AITypes.attack);
+				this.setAttackOn (univPlayers[i]);
 			}
 		}
+	}
+	
+	private void setAttackOn(GameObject target) {
+		Turrets turrets = (Turrets) this.GetComponent(typeof(Turrets));
+		turrets.attack(target); 
+		this.setAI(AITypes.attack);
 	}
 	
 	private void attackBehavior() {
