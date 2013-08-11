@@ -21,6 +21,8 @@ public class Laser : MonoBehaviour {
 		
 	}
 	void OnTriggerEnter(Collider collision) {
+		Debug.Log(Target.name);
+		Debug.Log(collision.gameObject.name);
 		if (collision.gameObject.name == Target.name) {
 			this.laserDestroy();
 			Destructible destr = (Destructible) Target.GetComponent(typeof(Destructible));

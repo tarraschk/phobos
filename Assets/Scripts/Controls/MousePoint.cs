@@ -22,13 +22,13 @@ public class MousePoint : MonoBehaviour {
 				{
 					GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
 					TargetObj.name = "targetInstanciated";
-					
-					
+					TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
 				    var target = GameObject.Find("Player");
 					if (target) {
 						Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
 						prop.setTargetPos(TargetObj.transform);
 					}
+					
 				    /*target.transform.LookAt(TargetObj.transform);
 					
 					

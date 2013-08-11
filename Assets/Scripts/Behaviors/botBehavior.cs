@@ -33,7 +33,6 @@ public class botBehavior : MonoBehaviour {
 	}
 	
 	public void isUnderAttackBy(GameObject attacker) {
-		Debug.Log ("I am un der attac !");
 		if (this.AI == AITypes.idle || this.AI == AITypes.returnToPos) {
 			this.setAttackOn (attacker);
 		}
