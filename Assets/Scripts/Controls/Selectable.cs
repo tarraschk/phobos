@@ -18,7 +18,7 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseEnter() {
 		var model = transform.FindChild(MODEL);
-		model.renderer.material.color = Color.red;
+		model.renderer.material.color = Color.yellow;
 	}
 	
 	void OnMouseExit() {
@@ -28,7 +28,6 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseDown() {
 		//this.availableActions = new string[3]{"attack", "collectable", "dock"}; 
-		Debug.Log (this.availableActions[0]);
 		this.doAction(this.availableActions[0]);
 	}
 	
@@ -39,11 +38,12 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 			switch (action) {
 				case ATTACK: 
 					Turrets turr = (Turrets) player.GetComponent(typeof(Turrets));
-					turr.setTarget(target);
+					turr.attack(target);
 				break;
 					
 				case COLLECT:
-					
+					Cargohold cargoPlayer = (Cargohold) player.GetComponent(typeof(Cargohold));
+					cargoPlayer.addObjectAtCargo(target); 
 				break;
 					
 				case DOCK :

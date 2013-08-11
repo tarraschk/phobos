@@ -7,23 +7,20 @@ public class Propulsors : MonoBehaviour {
 	public float acceleration = 1.0f;
 	public float limitSpeed = 5.0f;
 	public float rotationSpeed = 5.5f;
-	public Transform position;
 	
     public Transform targetPos = null;
-	private GameObject target = null;
 	
     void Start() {
     }
     void Update() {
 		physicsUpdate(); 
-		//rigidbody.AddForce(transform.forward * speed, ForceMode.VelocityChange);
-		//rigidbody.velocity = transform.forward * speed;
     }
 	
 	public bool isHasTargetPos()
 	{
 		return (this.targetPos != null);
 	}
+	
 	
 	public void setTargetPos(Transform newTargetPos) 
 	{

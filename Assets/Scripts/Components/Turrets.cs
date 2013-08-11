@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 //Turret required, turrets is the turret manager
+//Propulsors required 
+
 [RequireComponent (typeof (Turret))]
 
 public class Turrets : MonoBehaviour {
@@ -49,9 +51,12 @@ public class Turrets : MonoBehaviour {
 	}
 	
 	public void attack (GameObject target) {
-		this.setTarget(target);	
+		Debug.Log ("ATTAAACK");
+		//var attackPosition =  Vector3.Lerp(this.transform.position, target.transform.position, 0.2f);
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
-		prop.setTargetPos(target.transform);
+		prop.setTargetPos(target.transform); //TODO CALCULATE RIGHT POSITION, SO THAT IT DOESNT GO ALL THE WAY
+		//prop.setTarget(target);
+		this.setTarget(target);	
 	}
 	
 	public bool isPlayer() {
