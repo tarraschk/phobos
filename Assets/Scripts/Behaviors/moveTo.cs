@@ -16,7 +16,12 @@ public class moveTo : MonoBehaviour {
     void Update() {
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = distCovered / journeyLength;
-        transform.position = Vector3.Lerp(startMarker.position, endMarker.position, fracJourney);
-		transform.LookAt(endMarker);
+		if (endMarker == null || startMarker == null) {
+			Destroy (gameObject);
+		}
+		else {
+	        transform.position = Vector3.Lerp(startMarker.position, endMarker.position, fracJourney);
+			transform.LookAt(endMarker);
+		}
     }
 }

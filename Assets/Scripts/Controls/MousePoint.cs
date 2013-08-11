@@ -18,7 +18,7 @@ public class MousePoint : MonoBehaviour {
 		if (Physics.Raycast(ray, out hit, raycastLength)) {
 			if (hit.collider.name == "TerrainMain")
 			{
-				if (Input.GetMouseButton(1)) 
+				if (Input.GetMouseButton(1) || Input.GetMouseButton(2)) 
 				{
 					GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
 					TargetObj.name = "targetInstanciated";

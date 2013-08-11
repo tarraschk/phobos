@@ -15,7 +15,7 @@ public class Laser : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		this.energyUpdate ();
-		if (this.energy <= 0 ) 
+		if (this.energy <= 0 || this.Target == null) 
 			this.laserDestroy(); 
 		
 	}

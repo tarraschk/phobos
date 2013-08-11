@@ -16,7 +16,6 @@ public class Turrets : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		this.theWeapon = (Turret) gameObject.AddComponent("Turret");
-		this.setTarget(GameObject.Find("Bot"));
 	}
 	
 	// Update is called once per frame
@@ -35,10 +34,6 @@ public class Turrets : MonoBehaviour {
 		foreach (Turret t in this.turrets2) {
 			Debug.Log (t);
 		}*/
-	}
-	
-	private void fireWith() {
-			
 	}
 	
 	public bool hasTarget() {

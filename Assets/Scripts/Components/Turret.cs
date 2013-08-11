@@ -16,7 +16,6 @@ public class Turret : MonoBehaviour {
 	private GameObject projectile ;
 	
 	void Start() {
-		Debug.Log ("TURRET");
 	}
 	
 	void Update () {
@@ -35,7 +34,6 @@ public class Turret : MonoBehaviour {
 	public void fire() {
 		this.setReady (false);
 		this.lastCooldown = Time.time;
-		Debug.Log("Feu !");
 		GameObject projectile = (GameObject) Instantiate(Resources.Load ("Prefabs/Weapons/Projectile/Laser1"), this.transform.position, this.transform.rotation) ; 
 
 		moveTo moveScript = projectile.GetComponent<moveTo>();
@@ -54,9 +52,13 @@ public class Turret : MonoBehaviour {
 	}
 	
 	public bool isCanFire() {
-		if (this.range >= Vector3.Distance(this.transform.position, target.transform.position) && this.isReady ()) {
-			return true; 	
+		if (target != null) {
+			if (this.range >= Vector3.Distance(this.transform.position, target.transform.position) && this.isReady ()) {
+				return true; 	
+			}
+			else return false; 
 		}
+		
 		else return false; 
 	}
 	
