@@ -25,14 +25,19 @@ public class ShipController : MonoBehaviour {
 	}
 	
 	private void collectBehavior() {
+		GameObject currentShip = gameObject; 
+		Transform cargoBay = transform.FindChild(Phobos.Vars.CARGOBAY); 
 		if (this.target != null) {
 			
 			var remainingDistance = Vector3.Distance(this.target.transform.position, this.transform.position);
 			if (remainingDistance < Phobos.Vars.COLLECT_DISTANCE) {
 				Cargohold cargoPlayer = (Cargohold) this.GetComponent(typeof(Cargohold));
 				Collectable collectableTarg = (Collectable) target.GetComponent(typeof(Collectable));
-				if (cargoPlayer.addObjectAtCargo(target)) 
-					collectableTarg.isCollected(); 
+				if (cargoPlayer.addObjectAtCargo(target)) {
+					collectableTarg.isCollected(cargoBay); 
+					this.setBehavior (BehaviorTypes.idle);
+					this.unsetTarget(); 
+				}
 			}
 		}
 		else {

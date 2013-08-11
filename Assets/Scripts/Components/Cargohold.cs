@@ -9,7 +9,8 @@ public class Cargohold : MonoBehaviour {
 	
 	public bool addObjectAtCargo(GameObject item) {
 		Collectable collect = (Collectable) item.GetComponent(typeof(Collectable));
-		if (this.capacity + collect.size <= this.capacityMax) {
+		
+		if (this.capacity + collect.size <= this.capacityMax && !collect.inCargo) {
 			this.capacity += collect.size;
 			this.cargoContent.Add(item); 	
 			return true; 

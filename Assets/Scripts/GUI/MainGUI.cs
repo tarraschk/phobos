@@ -11,6 +11,11 @@ public class MainGUI : MonoBehaviour {
 		if (GUI.Button (new Rect (10,10,150,100), "Health : " + destr.energy)) {
 			print ("You clicked the button!");
 		}
-		GUI.Button (new Rect (10,570,250,100), "Cargo : " + cargo.capacity + " / " + cargo.capacityMax);
+		string cargoNames = ""; 
+		var cargoHold = cargo.getCargoContent(); 
+		foreach (GameObject j in cargoHold) {
+			cargoNames += j.name + "\n"; 
+		}
+		GUI.Button (new Rect (10,270,250,100), "Cargo : " + cargo.capacity + " / " + cargo.capacityMax +"\n" + cargoNames);
 	}
 }
