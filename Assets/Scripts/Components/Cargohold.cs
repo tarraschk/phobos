@@ -7,13 +7,14 @@ public class Cargohold : MonoBehaviour {
 	public int capacityMax = 500; 
 	public int capacity = 0;
 	
-	void Update () {
-	
-	}
-	
-	public void addObjectAtCargo(GameObject item) {
-		this.cargoContent.Add(item); 	
-		Debug.Log (this.cargoContent[0]);
+	public bool addObjectAtCargo(GameObject item) {
+		Collectable collect = (Collectable) item.GetComponent(typeof(Collectable));
+		if (this.capacity + collect.size <= this.capacityMax) {
+			this.capacity += collect.size;
+			this.cargoContent.Add(item); 	
+			return true; 
+		}
+		else return false; 
 	}
 	
 	public ArrayList getCargoContent() {

@@ -7,8 +7,10 @@ public class MainGUI : MonoBehaviour {
 		GUI.backgroundColor = Color.green;
 		var pl = GameObject.Find("Player");
 		Destructible destr = (Destructible) pl.GetComponent(typeof(Destructible));
+		Cargohold cargo = (Cargohold) pl.GetComponent(typeof(Cargohold));
 		if (GUI.Button (new Rect (10,10,150,100), "Health : " + destr.energy)) {
 			print ("You clicked the button!");
 		}
+		GUI.Button (new Rect (10,570,250,100), "Cargo : " + cargo.capacity + " / " + cargo.capacityMax);
 	}
 }

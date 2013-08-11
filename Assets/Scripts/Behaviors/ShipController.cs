@@ -31,9 +31,8 @@ public class ShipController : MonoBehaviour {
 			if (remainingDistance < Phobos.Vars.COLLECT_DISTANCE) {
 				Cargohold cargoPlayer = (Cargohold) this.GetComponent(typeof(Cargohold));
 				Collectable collectableTarg = (Collectable) target.GetComponent(typeof(Collectable));
-				cargoPlayer.addObjectAtCargo(target); 
-				
-				collectableTarg.isCollected(); 
+				if (cargoPlayer.addObjectAtCargo(target)) 
+					collectableTarg.isCollected(); 
 			}
 		}
 		else {
