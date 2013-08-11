@@ -4,7 +4,7 @@ using System.Collections;
 
 public class Selectable : MonoBehaviour {
 	
-public static readonly string MODEL = "Model";
+	public static readonly string MODEL = "Model";
 	
 	public const string ATTACK = "attack";
 	public const string COLLECT = "collect";
@@ -42,8 +42,11 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 				break;
 					
 				case COLLECT:
-					Cargohold cargoPlayer = (Cargohold) player.GetComponent(typeof(Cargohold));
-					cargoPlayer.addObjectAtCargo(target); 
+					ShipController shipController = (ShipController) player.GetComponent(typeof(ShipController));
+					Propulsors prop = (Propulsors) player.GetComponent(typeof(Propulsors));
+					shipController.setBehavior(BehaviorTypes.collecting); 
+					shipController.setTarget(target); 
+					prop.setTargetPos(target.transform);
 				break;
 					
 				case DOCK :

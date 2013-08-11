@@ -25,6 +25,9 @@ public class MousePoint : MonoBehaviour {
 					TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
 				    var target = GameObject.Find("Player");
 					if (target) {
+						ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
+						shipController.setBehavior(BehaviorTypes.moving); 
+						shipController.unsetTarget(); 
 						Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
 						prop.setTargetPos(TargetObj.transform);
 					}
