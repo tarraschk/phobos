@@ -53,7 +53,13 @@ public class ShipController : MonoBehaviour {
 		this.target = null; 
 	}
 	
-	public void setBehavior(BehaviorTypes newBehavior) {	
+	public void setBehavior(BehaviorTypes newBehavior) {
+		switch (newBehavior) {
+			case BehaviorTypes.idle:
+				Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+				prop.stop ();
+			break; 
+		}
 		this.behavior = newBehavior; 
 	}
 	

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class MainGUI : MonoBehaviour {
-
+	
 	void OnGUI () {
 		GUI.backgroundColor = Color.green;
 		var pl = GameObject.Find("Player");

@@ -36,6 +36,11 @@ public class Propulsors : MonoBehaviour {
 		return this.targetPos;	
 	}
 	
+	public void stop() {
+		this.unsetTargetPos();
+		this.speed = 0; 
+	}
+	
 	private void physicsUpdate() {	
 		if (this.isHasTargetPos())
 			this.moveBehavior();
@@ -90,11 +95,6 @@ public class Propulsors : MonoBehaviour {
 	
 	private void throttleBrake(float acceleration) {
 		this.speed = this.speed + acceleration; 
-	}
-	
-	private void stop() {
-		this.unsetTargetPos();
-		this.speed = 0; 
 	}
 	
 	private bool isAccelerationPossible() {
