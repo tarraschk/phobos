@@ -20,7 +20,6 @@ public class collectablesSpawnPoint : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (transform.position);
 		this.cooldown.Update(); 
 		if (this.canSpawn ()) {
 			this.spawnCollectable(); 
@@ -30,13 +29,11 @@ public class collectablesSpawnPoint : MonoBehaviour {
 	
 	public void spawnCollectable() {
 		var current = gameObject; 
-		Debug.Log ("Spawn");
 		this.collectableCount++; 
 		GameObject spawned = (GameObject) Instantiate(this.collectable) ;
 		spawned.transform.parent = current.transform; 
 		spawned.transform.localScale = this.randomScale (0.5f, 1.0f); 
 		spawned.transform.localPosition = this.spawnPosition();
-		Debug.Log (spawned.transform.position);  
 	}
 	
 	public Vector3 randomScale(float min, float max) {

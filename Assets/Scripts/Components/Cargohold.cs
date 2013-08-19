@@ -4,6 +4,7 @@ using System.Collections;
 public class Cargohold : MonoBehaviour {
 	
 	public ArrayList cargoContent = new ArrayList(); 
+	public Hashtable cargoOrdered = new Hashtable(); 
 	public int capacityMax = 500; 
 	public int capacity = 0;
 	
@@ -12,7 +13,7 @@ public class Cargohold : MonoBehaviour {
 		
 		if (this.capacity + collect.size <= this.capacityMax && !collect.inCargo) {
 			this.capacity += collect.size;
-			this.cargoContent.Add(item); 	
+			this.addItemToCargo(item, collect);
 			return true; 
 		}
 		else return false; 
@@ -20,5 +21,20 @@ public class Cargohold : MonoBehaviour {
 	
 	public ArrayList getCargoContent() {
 		return this.cargoContent; 	
+	}
+	
+	private void addItemToCargo(GameObject item, Collectable itemCollectScript) {
+		this.cargoContent.Add(item); 
+		if (this.cargoOrdered.ContainsKey(itemCollectScript.prefab)) {
+			Debug.Log("Has it"); 
+			//this.cargoOrdered[itemCollectScript.prefab] += itemCollectScript.quantity; 
+		}
+		else {
+			Debug.Log("Add"); 
+			this.cargoOrdered.Add(itemCollectScript.prefab, itemCollectScript.quantity); 
+		}
+		
+		/*foreach (GameObject entry in this.cargoOrdered)
+    		Debug.Log (entry.name);*/
 	}
 }

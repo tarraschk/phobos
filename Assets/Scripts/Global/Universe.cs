@@ -2,11 +2,19 @@ using UnityEngine;
 using System.Collections;
 
 public static class Universe  {
+	
 	/** 
 	 * get all Players (objects with tag player), as an array, of this scene. 
 	 * */
 	public static GameObject[] getPlayers() {
 		return (GameObject.FindGameObjectsWithTag(Phobos.Vars.PLAYER_TAG));	
+	}
+	
+	/** 
+	 * get all Players (objects with tag player), as an array, of this scene. 
+	 * */
+	public static GameObject getPlayer() {
+		return (GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG));	
 	}
 	
 	/**
