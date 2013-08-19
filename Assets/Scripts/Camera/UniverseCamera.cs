@@ -8,7 +8,12 @@ using System.Collections;
 * */
 
 public class UniverseCamera : MonoBehaviour {
-
+	
+	public GameObject followObject ; 
+	public int cameraHeight = 40 ; 
+	public int cameraOffsetX = -75 ; 
+	public int cameraOffsetY = -50 ; 
+	
 	//Box limits
 	public struct UniverseLimit {
 		public int leftLimit;
@@ -21,11 +26,15 @@ public class UniverseCamera : MonoBehaviour {
 	public static UniverseLimit mouseScrollLimits = new UniverseLimit();
 	public static UniverseCamera Instance;
 	
+	
 	private float cameraMoveSpeed = 300f;
 	private float shiftBonus = 45f;
 	private float mouseBoundary = 25f;
 	
-	// Update is called once per frame
+	void Start() {
+		this.followObject = GameObject.FindGameObjectWithTag("Player"); 	
+	}
+	
 	void Update () {
 		if (isCameraInput()) {
 			Vector3 cameraDesiredMove = getDesiredTranslation();
@@ -33,6 +42,9 @@ public class UniverseCamera : MonoBehaviour {
 			{
 				this.transform.Translate (cameraDesiredMove);	
 			}
+		}
+		if (followObject != null) {
+			this.centerOnTarget(); 
 		}
 	}
 	
@@ -78,5 +90,12 @@ public class UniverseCamera : MonoBehaviour {
 		if (Input.GetKey (KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey (KeyCode.RightArrow)) 
 			return true; 
 		else return false;
+	}
+	
+	private void centerOnTarget() {
+		if (followObject.transform != null) {
+			var follow = new Vector3(followObject.transform.position.x + cameraOffsetX, cameraHeight, followObject.transform.position.z + cameraOffsetY); 
+			this.transform.position = follow ; 	
+		}
 	}
 }
