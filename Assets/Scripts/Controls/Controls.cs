@@ -28,18 +28,19 @@ public class Controls : MonoBehaviour {
 	 * Manages the mouse controls, moving the Player	 
 	**/
 	public void mousePoint(controlTypes mouseControlType) {
-		Debug.Log ("Mouse point"); 
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
-		if (Physics.Raycast(ray, out hit, raycastLength)) {
-			
-			switch (mouseControlType) {
-				case controlTypes.moving: 
-					this.moveMousePoint(hit); 
-				break;	
-				case controlTypes.building:
-					this.moveBuildingPoing(hit); 
-				
-				break; 
+		if (Physics.Raycast(ray, out hit, raycastLength, Phobos.Vars.TERRAIN_LAYER)) {
+			if (hit.collider.name == "TerrainMain")
+			{
+				switch (mouseControlType) {
+					case controlTypes.moving: 
+						this.moveMousePoint(hit); 
+					break;	
+					case controlTypes.building:
+						this.moveBuildingPoing(hit); 
+					
+					break; 
+				}
 			}
 		}
 		Debug.DrawRay(ray.origin, ray.direction * raycastLength, Color.yellow);
@@ -56,37 +57,38 @@ public class Controls : MonoBehaviour {
 	}
 	
 	private void moveBuildingPoing(RaycastHit hit) {
-		Debug.Log ("Building point");
-		GameObject buildingPoint = GameObject.FindGameObjectWithTag("BuildingPreview") ; //TO INSTANTIATE BY PLAYER
-		if (buildingPoint) {
-			buildingPoint.transform.position = hit.point; 	
+		GameObject buildingPoint = GameObject.FindGameObjectWithTag(Phobos.Vars.BUILDING_PREVIEW) ; //TO INSTANTIATE BY PLAYER
+		if (buildingPoint) { 
+			if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
+			{	
+				Build buildObj = (Build) buildingPoint.transform.GetComponent(typeof(Build)); 
+				buildObj.build(); 
+			}
+			buildingPoint.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 		}
 	}
 	
 	private void moveMousePoint(RaycastHit hit) {
-		if (hit.collider.name == "TerrainMain")
+		if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
 		{
-			if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
-			{
-				GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
-				TargetObj.name = "targetInstanciated";
-				TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
-			    var target = GameObject.Find("Player");
-				if (target) {
-					ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
-					shipController.setBehavior(BehaviorTypes.moving); 
-					shipController.unsetTarget(); 
-					Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
-					prop.setTargetPos(TargetObj.transform);
-				}
-				
-			    /*target.transform.LookAt(TargetObj.transform);
-				
-				
-				var rotation = Quaternion.LookRotation(TargetObj.transform.position - target.transform.position);
-				target.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * damping);*/
-				
+			GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
+			TargetObj.name = "targetInstanciated";
+			TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
+		    var target = GameObject.Find("Player");
+			if (target) {
+				ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
+				shipController.setBehavior(BehaviorTypes.moving); 
+				shipController.unsetTarget(); 
+				Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
+				prop.setTargetPos(TargetObj.transform);
 			}
-		}	
+			
+		    /*target.transform.LookAt(TargetObj.transform);
+			
+			
+			var rotation = Quaternion.LookRotation(TargetObj.transform.position - target.transform.position);
+			target.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * damping);*/
+			
+		}
 	}
 }
