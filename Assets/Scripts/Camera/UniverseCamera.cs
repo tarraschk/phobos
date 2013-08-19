@@ -33,7 +33,7 @@ public class UniverseCamera : MonoBehaviour {
 	private float mouseBoundary = 25f;
 	
 	void Start() {
-		this.followObject = GameObject.FindGameObjectWithTag("Player"); 	
+		this.followObject = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG); 	
 	}
 	
 	void Update () {

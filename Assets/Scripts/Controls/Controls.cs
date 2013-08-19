@@ -12,16 +12,17 @@ public class Controls : MonoBehaviour {
 	public controlTypes currentControlType = controlTypes.moving; 
 	
 	void Update () {
-		switch (this.currentControlType) {
+		/*switch (this.currentControlType) {
 			case controlTypes.moving: 
 				this.mousePoint(this.currentControlType); 
-				this.keyboardInput(); 
 			break; 
 			
 			case controlTypes.building: 
 				this.mousePoint(this.currentControlType); 
 			break; 
-		}
+		}*/
+		this.mousePoint(this.currentControlType); 
+		this.keyboardInput(); 
 	}
 	
 	/**
@@ -48,23 +49,53 @@ public class Controls : MonoBehaviour {
 	
 	public void keyboardInput() {
 		if (Input.GetKeyDown (KeyCode.B)) {
-			this.setControlType(controlTypes.building); 
+			this.switchControlType(controlTypes.moving, controlTypes.building); 
 		}
 	}
 	
 	public void setControlType(controlTypes newControlType) {
+		if (newControlType != controlTypes.building) {
+			this.clearBuildingType(); 
+		}
+		if (newControlType != controlTypes.moving) {	
+			this.clearMovingType();
+		}
+		if (newControlType == controlTypes.moving) {
+			this.setMovingType(); 	
+		}
 		this.currentControlType = newControlType; 	
+	}
+	
+	public void switchControlType(controlTypes type1, controlTypes type2) {
+		if (this.currentControlType == type1) {
+			this.setControlType(type2); 
+		}
+		else if (this.currentControlType == type2) {
+			this.setControlType(type1); 
+		}
+	}
+	
+	private void clearBuildingType() {
+		Universe.clearAllBuildingPreview(); 
+	}
+	
+	private void clearMovingType() {
+		Universe.switchCameraFollow(false); 
+	}
+	
+	private void setMovingType() {
+		Universe.switchCameraFollow(true); 
 	}
 	
 	private void moveBuildingPoing(RaycastHit hit) {
 		GameObject buildingPoint = GameObject.FindGameObjectWithTag(Phobos.Vars.BUILDING_PREVIEW) ; //TO INSTANTIATE BY PLAYER
 		if (buildingPoint) { 
+			buildingPoint.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 			if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
 			{	
 				Build buildObj = (Build) buildingPoint.transform.GetComponent(typeof(Build)); 
-				buildObj.build(); 
+				buildObj.build(buildingPoint.transform.position, buildingPoint.transform.rotation); 
 			}
-			buildingPoint.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 		}
 	}
 	
@@ -74,7 +105,7 @@ public class Controls : MonoBehaviour {
 			GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
 			TargetObj.name = "targetInstanciated";
 			TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
-		    var target = GameObject.Find("Player");
+		    var target = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG);
 			if (target) {
 				ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
 				shipController.setBehavior(BehaviorTypes.moving); 
@@ -82,13 +113,6 @@ public class Controls : MonoBehaviour {
 				Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
 				prop.setTargetPos(TargetObj.transform);
 			}
-			
-		    /*target.transform.LookAt(TargetObj.transform);
-			
-			
-			var rotation = Quaternion.LookRotation(TargetObj.transform.position - target.transform.position);
-			target.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * damping);*/
-			
 		}
 	}
 }

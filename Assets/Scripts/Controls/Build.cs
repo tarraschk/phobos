@@ -8,6 +8,8 @@ public class Build : MonoBehaviour {
 	public bool isBuilding = true ; 
 	public bool canBuildHere = true; 
 	
+	public GameObject prefabBuild ; 
+	
 	private int i = 0; 
 	
 	void Update () {
@@ -23,9 +25,10 @@ public class Build : MonoBehaviour {
 		}	
 	}
 	
-	public void build() {
+	public void build(Vector3 buildPosition, Quaternion buildRotation) {
 		if (this.checkCollisions()) {
 			Debug.Log ("BUILDED");	
+			GameObject builded = (GameObject) Instantiate(this.prefabBuild, buildPosition, buildRotation) ; 
 		}
 	}
 	
@@ -39,18 +42,13 @@ public class Build : MonoBehaviour {
 	}
 	
 	void OnTriggerEnter(Collider collision) {
-		i++; 
-		Debug.Log (collision.gameObject.name);
-		Debug.Log (gameObject.tag);
 		if (collision.gameObject.tag != gameObject.tag && !this.isCollisionTerrain(collision)) {
-			Debug.Log ("Enter" + i );
 			this.canBuildHere = false; 
 			
 		}
 	}
 	
 	void OnTriggerExit(Collider collision) {
-		Debug.Log ("Exit");	
 		if (collision.gameObject.tag != gameObject.tag) 	
 			this.canBuildHere = true; 
 	}

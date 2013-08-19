@@ -58,10 +58,7 @@ public class botBehavior : MonoBehaviour {
 	}
 	
 	private void idleBehavior() {
-		var foundUni = GameObject.Find("Universe");
-		
-		Universe univ = (Universe) foundUni.GetComponent(typeof(Universe));
-		var univPlayers = univ.getPlayers();
+		var univPlayers = Universe.getPlayers(); 
 		for (var i = 0 ; i < univPlayers.Length ; i++) {
 			
 			var remainingDistance = Vector3.Distance(univPlayers[i].transform.position, this.transform.position);

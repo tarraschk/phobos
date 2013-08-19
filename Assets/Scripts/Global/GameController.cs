@@ -1,10 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Phobos {
+public static class GameController {
 	
-}
-
-public class GameController : MonoBehaviour {
-
+	
 }
