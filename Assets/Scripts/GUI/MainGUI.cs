@@ -25,9 +25,13 @@ public class MainGUI : MonoBehaviour {
 		}
 		string cargoNames = ""; 
 		var cargoHold = TargetCargo.getCargoContent(); 
-		foreach (GameObject j in cargoHold) {
-			cargoNames += j.name + "\n"; 
+		foreach (Transform trans in cargoHold.transform) {
+			Collectable collectItem = (Collectable) trans.GetComponent(typeof(Collectable));
+			cargoNames += collectItem.quantity + " x " + trans.name + "\n"; 
 		}
+		/*foreach (Transform j in cargoHold) {
+			cargoNames += j.name + "\n"; 
+		}*/
 		GUI.Button (new Rect (10,270,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
 	}
 }

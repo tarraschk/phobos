@@ -31,6 +31,7 @@ public class collectablesSpawnPoint : MonoBehaviour {
 		var current = gameObject; 
 		this.collectableCount++; 
 		GameObject spawned = (GameObject) Instantiate(this.collectable) ;
+		spawned.name = this.collectable.name; 
 		spawned.transform.parent = current.transform; 
 		spawned.transform.localScale = this.randomScale (0.5f, 1.0f); 
 		spawned.transform.localPosition = this.spawnPosition();

@@ -10,12 +10,13 @@ public class Collectable : MonoBehaviour {
 	public bool inCargo = false; 
 	public GameObject prefab ; 
 	
-	public void isCollected(Transform collector) {
+	public void isCollected(Transform collector, bool destroy) {
 		this.inCargo = true; 
 		this.transform.parent = collector;
 		Transform model = this.transform.FindChild(Phobos.Vars.MODEL); 
 		model.renderer.enabled = false; 
-		//Destroy (gameObject);
+		if (destroy)
+			Destroy (gameObject);
 	}
 	
 }
