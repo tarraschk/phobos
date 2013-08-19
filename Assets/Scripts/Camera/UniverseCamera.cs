@@ -10,6 +10,7 @@ using System.Collections;
 public class UniverseCamera : MonoBehaviour {
 	
 	public GameObject followObject ; 
+	public bool followingObject = false; 
 	public int cameraHeight = 40 ; 
 	public int cameraOffsetX = -75 ; 
 	public int cameraOffsetY = -50 ; 
@@ -43,7 +44,7 @@ public class UniverseCamera : MonoBehaviour {
 				this.transform.Translate (cameraDesiredMove);	
 			}
 		}
-		if (followObject != null) {
+		if (followObject != null && followingObject) {
 			this.centerOnTarget(); 
 		}
 	}
