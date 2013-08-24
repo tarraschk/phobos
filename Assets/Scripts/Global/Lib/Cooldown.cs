@@ -3,7 +3,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Cooldown {
-	public float cooldown = .25f;
+	
+	public float cooldown = 0.25f;
 	public bool ready = true;
 	private float currentCooldown ;
 	private float lastCooldown ; 

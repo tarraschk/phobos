@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 //Turret required, turrets is the turret manager
-//Propulsors required 
+//Propulsors required (TODO)
 
 [RequireComponent (typeof (Turret))]
 
@@ -20,7 +20,9 @@ public class Turrets : MonoBehaviour {
 		this.theWeapon = (Turret) gameObject.AddComponent("Turret");
 	}
 	
-	// Update is called once per frame
+	/**
+	 * Main Update
+	 */
 	void Update () {
 		if (this.hasTarget()) {
 			this.hasTargetBehavior();
