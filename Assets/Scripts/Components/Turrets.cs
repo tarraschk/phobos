@@ -51,11 +51,8 @@ public class Turrets : MonoBehaviour {
 	}
 	
 	public void attack (Transform target) {
-		Debug.Log ("ATTAAACK");
-		//var attackPosition =  Vector3.Lerp(this.transform.position, target.transform.position, 0.2f);
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		prop.setTargetPos(target.position); //TODO CALCULATE RIGHT POSITION, SO THAT IT DOESNT GO ALL THE WAY
-		//prop.setTarget(target);
 		this.setTarget(target);	
 	}
 	

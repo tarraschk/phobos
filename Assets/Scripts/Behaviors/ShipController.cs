@@ -96,7 +96,6 @@ public class ShipController : MonoBehaviour {
 	 * Adds input stack for the networking 
 	 * */
 	private void addNetInput(string command, Vector3 data) {
-		Debug.Log ("Input addded " + command);
 		PlayerNetscript netScript = (PlayerNetscript) this.GetComponent(typeof(PlayerNetscript));
 		switch (command) {
 			case Phobos.Commands.MOVE_TO:
@@ -109,7 +108,6 @@ public class ShipController : MonoBehaviour {
 	 * Adds input stack for the networking 
 	 * */
 	private void addNetInput(string command, Transform data) {
-		Debug.Log ("Input added " + command);
 		PlayerNetscript netScript = (PlayerNetscript) this.GetComponent(typeof(PlayerNetscript));
 		switch (command) {
 			case Phobos.Commands.ATTACK:

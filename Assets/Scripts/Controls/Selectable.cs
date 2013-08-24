@@ -17,7 +17,6 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	}
 	
 	void OnMouseEnter() {
-		Debug.Log ("COUCOU");
 		var model = transform.FindChild(MODEL);
 		model.renderer.material.color = Color.yellow;
 	}
@@ -29,7 +28,6 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseDown() {
 		//this.availableActions = new string[3]{"attack", "collectable", "dock"}; 
-		Debug.Log ("DO IT");
 		this.doAction(this.availableActions[0]);
 	}
 	

@@ -31,16 +31,13 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	
     public void SetPlayer(PhotonPlayer player)
     {
-		Debug.Log ("SET PLAYER" + player);
         owner = player;
         if (player == PhotonNetwork.player)
         {
             //Hey thats us! We can control this player: enable this script (this enables Update());
             enabled = true;
-			Debug.Log ("enable");
         }
 		else {
-			Debug.Log ("Disable");
 			enabled = false ;
 			stackActive = false ; 
 		}
@@ -62,21 +59,21 @@ public class PlayerNetscript : Photon.MonoBehaviour {
     }
 	
 	private void treatDataEntry(Phobos.dataEntry entry) {
-		Debug.Log ("TRAITE ENTRY" + entry.dataCommand);
+		PhotonView viewScript = null ; 
+		if (entry.dataCommand != Phobos.Commands.MOVE_TO) {
+			viewScript = (PhotonView) entry.dataTransform.GetComponent(typeof(PhotonView));
+		}
 		switch(entry.dataCommand) {
 			case Phobos.Commands.MOVE_TO:
-				Debug.Log ("Sending RPC");
                 photonView.RPC("netMoveTo", PhotonTargets.Others, entry.dataVector);
 			break ;
 			
 			case Phobos.Commands.ATTACK:
-				Debug.Log ("Sending RPC");
-                photonView.RPC("netAttack", PhotonTargets.Others, entry.dataTransform.GetInstanceID());
+                photonView.RPC("netAttack", PhotonTargets.Others, viewScript.viewID);
 			break ;
 			
 			case Phobos.Commands.COLLECT:
-				Debug.Log ("Sending RPC");
-                photonView.RPC("netCollect", PhotonTargets.Others, entry.dataTransform.GetInstanceID());
+                photonView.RPC("netCollect", PhotonTargets.Others, viewScript.viewID);
 			break ;
 		}
 		this.stackActive = false ;
@@ -90,14 +87,12 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	}
 	
 	public void sendNetAttack(Transform target) {
-		Debug.Log ("Net attack ");
 		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.ATTACK, target.transform, target.transform.position); 
 		netStack.Push(newNetEntry); 
 		this.stackActive = true ; 
 	}
 	
 	public void sendNetCollect(Transform target) {
-		Debug.Log ("Net collect ");
 		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.COLLECT, target.transform, target.transform.position); 
 		netStack.Push(newNetEntry); 
 		this.stackActive = true ; 
@@ -106,21 +101,32 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	[RPC]
     void netMoveTo(Vector3 destination)
     {
-		Debug.Log ("Net move to " + destination);
 		ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
 		shipController.moveTo(destination); 
     }
 	
 	[RPC]
-    void netAttack(int target)
+    void netAttack(int targetID)
     {
-		Debug.Log ("RECEIVED Attack " + target);
+		var currentUniverse = Universe.findUniverse(); 
+		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
+		if (dataScript.netObjects.ContainsKey(targetID)) {
+			Transform target = (Transform) dataScript.netObjects[targetID]; 
+			ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
+			shipController.attack(target); 
+		}
     }
 	
 	[RPC]
-    void netCollect(int target)
+    void netCollect(int targetID)
     {
-		Debug.Log ("RECEIVED Collect " + target);
+		var currentUniverse = Universe.findUniverse(); 
+		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
+		if (dataScript.netObjects.ContainsKey(targetID)) {
+			Transform target = (Transform) dataScript.netObjects[targetID]; 
+			ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
+			shipController.collect(target); 
+		}
     }
 	
     [RPC]

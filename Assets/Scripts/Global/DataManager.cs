@@ -20,10 +20,9 @@ public class DataManager : Photon.MonoBehaviour
 
     public Transform playerPrefab;
     public Transform botPrefab;
+	public Hashtable netObjects = new Hashtable();
 
-    private List<PlayerInfo4> playerList = new List<PlayerInfo4>();
-	private Hashtable objects = new Hashtable(); 
-	
+    private List<PlayerInfo4> playerList = new List<PlayerInfo4>(); 
     private PlayerInfo4 localPlayerInfo;
 	
 	/**
@@ -59,10 +58,13 @@ public class DataManager : Photon.MonoBehaviour
         GameObject theGO = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Vector3 pos = theGO.transform.position;
         Quaternion rot = theGO.transform.rotation;
-        Transform newObject =Instantiate(botPrefab, pos, rot) as Transform;
-        Transform newObject2 =Instantiate(botPrefab, pos, rot) as Transform;
-		this.objects.Add(newObject.GetInstanceID(), newObject); 
-		this.objects.Add(newObject2.GetInstanceID(), newObject2); 
+		
+        int id1 = PhotonNetwork.AllocateViewID();
+        int id2 = PhotonNetwork.AllocateViewID();
+		
+		
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, pos, rot, id1);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, pos, rot, id2);
 		
 	}
 	
@@ -72,7 +74,6 @@ public class DataManager : Photon.MonoBehaviour
 	 */
     void SpawnLocalPlayer()
     {
-        Debug.Log("SpawnLocalPlayer ");
 
         //Get random spawnpoint
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
@@ -84,7 +85,7 @@ public class DataManager : Photon.MonoBehaviour
         int id1 = PhotonNetwork.AllocateViewID();
         
         photonView.RPC("AddPlayer", PhotonTargets.AllBuffered, PhotonNetwork.player);
-        photonView.RPC("SpawnOnNetwork", PhotonTargets.AllBuffered, pos, rot, id1, PhotonNetwork.player);
+        photonView.RPC("SpawnPlOnNetwork", PhotonTargets.AllBuffered, pos, rot, id1, PhotonNetwork.player);
     }
 	
 
@@ -99,7 +100,6 @@ public class DataManager : Photon.MonoBehaviour
     [RPC]
     void AddPlayer(PhotonPlayer networkPlayer)
     {
-        Debug.Log("AddPlayer " + networkPlayer );
         if (GetPlayer(networkPlayer) != null)
         {
             Debug.LogError("AddPlayer: Player already exists!");
@@ -119,9 +119,10 @@ public class DataManager : Photon.MonoBehaviour
 	
 	/**
 	 * Spawn a player's gameobject to the game
+	 * Also used when a new player joins the game and has to load players that are already there
 	 */
 	[RPC]
-    void SpawnOnNetwork(Vector3 pos, Quaternion rot, int id1, PhotonPlayer np)
+    void SpawnPlOnNetwork(Vector3 pos, Quaternion rot, int id1, PhotonPlayer np)
     {
         Transform newPlayer = Instantiate(playerPrefab, pos, rot) as Transform;
 		newPlayer.name = "Player#"+id1; 
@@ -149,6 +150,24 @@ public class DataManager : Photon.MonoBehaviour
         //PLAYERSCRIPT tmp = newPlayer.GetComponent<PLAYERSCRIPT>();
         //tmp.SetPlayer(pNode.networkPlayer);
     }
+	
+	
+	/**
+	 * Spawn an object to the game
+	 */
+	[RPC]
+    void SpawnObjOnNetwork(Vector3 pos, Quaternion rot, int id1)
+    {
+		
+        Transform newObject =Instantiate(botPrefab, pos, rot) as Transform;
+		
+        SetPhotonViewIDs(newObject.gameObject, id1);
+		
+		this.netObjects.Add(id1, newObject); 
+		
+    }
+	
+	
 
 	/**
 	 * Player disconnected
@@ -156,7 +175,6 @@ public class DataManager : Photon.MonoBehaviour
 	 */
     void RemovePlayer(PhotonPlayer networkPlayer)
     {
-        Debug.Log("RemovePlayer " + networkPlayer);
         PlayerInfo4 thePlayer = GetPlayer(networkPlayer);
 
         if (thePlayer.transform)
