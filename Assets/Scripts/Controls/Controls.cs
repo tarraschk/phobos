@@ -1,32 +1,29 @@
 using UnityEngine;
 using System.Collections;
-
+/**
+ * Manages the inputs from the mouse and the keyboard. 
+ * Sends commands to the shipController of the current player. 
+ * */
 public class Controls : MonoBehaviour {
-
+	
+	public Transform player ; 
 	RaycastHit hit;
 	public enum controlTypes{moving, building};
-	private float raycastLength = 5000; 
 	
-	public int  damping = 6;
-	public GameObject mouseTarget; 
 	public controlTypes currentControlType = controlTypes.moving; 
 	
+	
+	private float raycastLength = 5000; 
+	
 	void Update () {
-		/*switch (this.currentControlType) {
-			case controlTypes.moving: 
-				this.mousePoint(this.currentControlType); 
-			break; 
-			
-			case controlTypes.building: 
-				this.mousePoint(this.currentControlType); 
-			break; 
-		}*/
-		this.mousePoint(this.currentControlType); 
-		this.keyboardInput(); 
+		if (this.hasPlayer() ) {
+			this.mousePoint(this.currentControlType); 
+			this.keyboardInput();
+		}
 	}
 	
 	/**
-	 * Manages the mouse controls, moving the Player	 
+	 * Manages the mouse controls, depending on the current mouse controltype	 
 	**/
 	public void mousePoint(controlTypes mouseControlType) {
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); 
@@ -47,10 +44,26 @@ public class Controls : MonoBehaviour {
 		Debug.DrawRay(ray.origin, ray.direction * raycastLength, Color.yellow);
 	}
 	
+	/**
+	 * Manages the keyboards input	 
+	**/
+	
 	public void keyboardInput() {
 		if (Input.GetKeyDown (KeyCode.B)) {
 			this.switchControlType(controlTypes.moving, controlTypes.building); 
 		}
+	}
+	
+	/**
+	 * Sets the current player controlled.
+	 *
+	 * */
+	public void setPlayer(Transform newPlayer) {
+		this.player = newPlayer ; 	
+	}
+	
+	public bool hasPlayer() {
+		return (this.player != null) ; 	
 	}
 	
 	public void setControlType(controlTypes newControlType) {
@@ -102,16 +115,11 @@ public class Controls : MonoBehaviour {
 	private void moveMousePoint(RaycastHit hit) {
 		if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
 		{
-			GameObject TargetObj = Instantiate(mouseTarget, hit.point, Quaternion.identity) as GameObject; 
-			TargetObj.name = "targetInstanciated";
-			TargetObj.transform.parent = GameObject.Find ("EmptyObjects").transform; 
-		    var target = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG);
+			Vector3 destination = hit.point; 
+		    var target = this.player ; 
 			if (target) {
 				ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
-				shipController.setBehavior(BehaviorTypes.moving); 
-				shipController.unsetTarget(); 
-				Propulsors prop = (Propulsors) target.GetComponent(typeof(Propulsors));
-				prop.setTargetPos(TargetObj.transform);
+				shipController.moveTo(destination); 
 			}
 		}
 	}

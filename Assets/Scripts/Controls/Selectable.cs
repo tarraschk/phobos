@@ -17,6 +17,7 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	}
 	
 	void OnMouseEnter() {
+		Debug.Log ("COUCOU");
 		var model = transform.FindChild(MODEL);
 		model.renderer.material.color = Color.yellow;
 	}
@@ -28,25 +29,24 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseDown() {
 		//this.availableActions = new string[3]{"attack", "collectable", "dock"}; 
+		Debug.Log ("DO IT");
 		this.doAction(this.availableActions[0]);
 	}
 	
 	private void doAction(string action) {
-		var target = gameObject; 
-		var player = GameObject.Find("Player");
+		var univ = Universe.findUniverse(); 
+		Universe univScript = (Universe) univ.GetComponent(typeof(Universe));
+		var target = gameObject; //The target is the current selected object
+		var player = univScript.getPlayer(); // TODO 
+		ShipController shipController = (ShipController) player.GetComponent(typeof(ShipController));
 		if (player) {
 			switch (action) {
 				case ATTACK: 
-					Turrets turr = (Turrets) player.GetComponent(typeof(Turrets));
-					turr.attack(target);
+					shipController.attackNet(target.transform); 
 				break;
 					
 				case COLLECT:
-					ShipController shipController = (ShipController) player.GetComponent(typeof(ShipController));
-					Propulsors prop = (Propulsors) player.GetComponent(typeof(Propulsors));
-					shipController.setBehavior(BehaviorTypes.collecting); 
-					shipController.setTarget(target); 
-					prop.setTargetPos(target.transform);
+					shipController.collectNet(target.transform); 
 				break;
 					
 				case DOCK :

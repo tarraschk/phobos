@@ -8,7 +8,8 @@ public class Propulsors : MonoBehaviour {
 	public float limitSpeed = 5.0f;
 	public float rotationSpeed = 5.5f;
 	
-    public Transform targetPos = null;
+    public Vector3 targetPos ;
+	public bool useTargetPos = false ; 
 	
     void Start() {
     }
@@ -18,21 +19,23 @@ public class Propulsors : MonoBehaviour {
 	
 	public bool isHasTargetPos()
 	{
-		return (this.targetPos != null);
+		return (this.useTargetPos);
 	}
 	
 	
-	public void setTargetPos(Transform newTargetPos) 
+	public void setTargetPos(Vector3 newTargetPos) 
 	{
+		this.useTargetPos = true ; 
 		this.targetPos = newTargetPos;	
 	}
 	
 	public void unsetTargetPos() 
 	{
-		this.targetPos = null; 	
+		this.useTargetPos = false ; 
+		//this.targetPos = Vector3.zero; 	
 	}
 	
-	public Transform getTargetPos() {
+	public Vector3 getTargetPos() {
 		return this.targetPos;	
 	}
 	
@@ -54,7 +57,7 @@ public class Propulsors : MonoBehaviour {
 	
 	private void moveBehavior() {
 		lookAtTarget();
-		var remainingDistance = Vector3.Distance(targetPos.transform.position, this.transform.position);
+		var remainingDistance = Vector3.Distance(targetPos, this.transform.position);
 	    //this.transform.LookAt(this.target.transform);
 		if (remainingDistance < 5)
 			this.stop();
@@ -73,7 +76,7 @@ public class Propulsors : MonoBehaviour {
 	}
 	
 	private void lookAtTarget() {
-		var rotation = Quaternion.LookRotation(targetPos.transform.position - this.transform.position);
+		var rotation = Quaternion.LookRotation(targetPos - this.transform.position);
 		this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * this.rotationSpeed);
 	}
 	

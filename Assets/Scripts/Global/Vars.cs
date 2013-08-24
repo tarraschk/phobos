@@ -9,6 +9,7 @@ namespace Phobos
 		public static string BUILDING_PREVIEW = "BuildingPreview";
 		public static string MAIN_CAMERA_TAG = "MainCamera";
 		public static string PLAYER_TAG = "Player";
+		public static string UNIVERSE_TAG = "Universe";
 		public static string CAMERA_CONTAINER = "CameraContainer";
 		public static int TERRAIN_LAYER = 1 ;//<< 8 ; 
 		
@@ -17,6 +18,13 @@ namespace Phobos
 		public static string MODEL = "Model"; 
 		public static string CARGOBAY = "Cargo"; 
 		
+	}
+	
+	public class Commands 
+	{
+		public const string MOVE_TO = "MoveTo"; 	
+		public const string COLLECT = "Collect"; 	
+		public const string ATTACK = "Attack"; 	
 	}
 }
 

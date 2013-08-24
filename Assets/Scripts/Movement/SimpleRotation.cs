@@ -10,6 +10,6 @@ public class SimpleRotation : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.transform.Rotate(-1*Vector3.up * Time.deltaTime * 10);
+		this.transform.Rotate(-1*Vector3.up * Time.deltaTime * 1);
 	}
 }

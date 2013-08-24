@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public static class Universe  {
+public class Universe : MonoBehaviour  {
 	
 	/** 
 	 * get all Players (objects with tag player), as an array, of this scene. 
@@ -10,11 +10,19 @@ public static class Universe  {
 		return (GameObject.FindGameObjectsWithTag(Phobos.Vars.PLAYER_TAG));	
 	}
 	
+	public static GameObject findUniverse() {
+		return  GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG); 	
+	}
+	
 	/** 
-	 * get all Players (objects with tag player), as an array, of this scene. 
+	 * get the current player we can control. 
 	 * */
-	public static GameObject getPlayer() {
-		return (GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG));	
+	public Transform getPlayer() {
+		Controls controlScript = (Controls) this.GetComponent(typeof(Controls));
+		if (controlScript.player) 
+			return controlScript.player; 
+		else return null ; 
+		//return (GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG));	
 	}
 	
 	/**

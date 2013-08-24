@@ -8,7 +8,7 @@ public class Cargohold : MonoBehaviour {
 	public int capacityMax = 500; 
 	public int capacity = 0;
 	
-	public bool addObjectAtCargo(GameObject item, Transform cargoContainer) {
+	public bool addObjectAtCargo(Transform item, Transform cargoContainer) {
 		Collectable collect = (Collectable) item.GetComponent(typeof(Collectable));
 		
 		if (this.capacity + collect.size <= this.capacityMax && !collect.inCargo) {
@@ -35,7 +35,7 @@ public class Cargohold : MonoBehaviour {
 		return cargoResult; */	
 	}
 	
-	private void addItemToCargo(GameObject item, Collectable itemCollectScript, Transform cargoContainer) {
+	private void addItemToCargo(Transform item, Collectable itemCollectScript, Transform cargoContainer) {
 		Collectable collectItem = (Collectable) item.GetComponent(typeof(Collectable));
 		
 		if (this.containerHasItem(cargoContainer, item)) {
@@ -52,11 +52,11 @@ public class Cargohold : MonoBehaviour {
 		
 	}
 	
-	private Transform containerFindItemSlot(Transform cargoContainer, GameObject item) {
+	private Transform containerFindItemSlot(Transform cargoContainer, Transform item) {
 		return cargoContainer.FindChild(item.name); 
 	}
 		
-	private bool containerHasItem(Transform cargoContainer, GameObject item) {
+	private bool containerHasItem(Transform cargoContainer, Transform item) {
 		var cargoItem = cargoContainer.FindChild(item.name); 
 		if (cargoItem) {
 			Collectable collect = (Collectable) cargoItem.GetComponent(typeof(Collectable));

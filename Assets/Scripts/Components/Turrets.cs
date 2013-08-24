@@ -8,7 +8,7 @@ using System.Collections;
 
 public class Turrets : MonoBehaviour {
 	
-	public GameObject target = null;
+	public Transform target = null;
 	
 	public ArrayList turrets;
 	public Turret[] turrets2;
@@ -42,7 +42,7 @@ public class Turrets : MonoBehaviour {
 		return (this.target != null); 	
 	}
 	
-	public void setTarget(GameObject newTarget) {
+	public void setTarget(Transform newTarget) {
 		this.target = newTarget;	
 		this.theWeapon.setTarget(newTarget);
 		if (this.isPlayer()) {
@@ -50,11 +50,11 @@ public class Turrets : MonoBehaviour {
 		}
 	}
 	
-	public void attack (GameObject target) {
+	public void attack (Transform target) {
 		Debug.Log ("ATTAAACK");
 		//var attackPosition =  Vector3.Lerp(this.transform.position, target.transform.position, 0.2f);
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
-		prop.setTargetPos(target.transform); //TODO CALCULATE RIGHT POSITION, SO THAT IT DOESNT GO ALL THE WAY
+		prop.setTargetPos(target.position); //TODO CALCULATE RIGHT POSITION, SO THAT IT DOESNT GO ALL THE WAY
 		//prop.setTarget(target);
 		this.setTarget(target);	
 	}
@@ -63,7 +63,7 @@ public class Turrets : MonoBehaviour {
 		return this.tag == "Player"; 	
 	}
 	
-	private void setGUIAttackTarget(GameObject newTarget) {
+	private void setGUIAttackTarget(Transform newTarget) {
 		var GUIContainer = GameObject.FindGameObjectWithTag("GUIContainer");
 		if (GUIContainer) {
 			var attackTargetGUI = GUIContainer.transform.FindChild("AttackTarget");

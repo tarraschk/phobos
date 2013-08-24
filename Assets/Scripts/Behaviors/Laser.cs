@@ -5,7 +5,7 @@ using System.Collections;
 
 public class Laser : MonoBehaviour {
 
-	public GameObject Target ; 
+	public Transform Target ; 
 	public GameObject attacker ; 
 	public float speed = 50f;  
 	public int power = 25; 
@@ -30,7 +30,7 @@ public class Laser : MonoBehaviour {
 		}
     }
 	
-	public void setTarget(GameObject newTarget) {
+	public void setTarget(Transform newTarget) {
 		this.Target = newTarget;	
 	}
 	

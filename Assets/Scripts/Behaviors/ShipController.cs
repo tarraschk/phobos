@@ -8,7 +8,7 @@ using System.Collections;
 
 public class ShipController : MonoBehaviour {
 	
-	public GameObject target ; 
+	public Transform target ; 
 	public BehaviorTypes behavior = BehaviorTypes.idle; 
 	void Update () {
 		switch (this.behavior) {
@@ -44,7 +44,37 @@ public class ShipController : MonoBehaviour {
 		}
 	}
 	
-	public void setTarget(GameObject newTarget) {
+	public void moveTo(Vector3 destination) {
+		this.addNetInput(Phobos.Commands.MOVE_TO, destination); 
+		this.setBehavior(BehaviorTypes.moving); 
+		this.unsetTarget(); 
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		prop.setTargetPos(destination);
+	}
+	
+	public void attackNet(Transform target) {
+		this.addNetInput(Phobos.Commands.ATTACK, target); 
+		this.attack (target);
+	}
+	
+	public void attack(Transform target) {
+		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
+		turr.attack(target);	
+	}
+	
+	public void collectNet(Transform target) {
+		this.addNetInput(Phobos.Commands.COLLECT, target); 
+		this.collect (target);
+	}
+	
+	public void collect(Transform target) {
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		this.setBehavior(BehaviorTypes.collecting); 
+		this.setTarget(target); 
+		prop.setTargetPos(target.transform.position);	
+	}
+	
+	public void setTarget(Transform newTarget) {
 		this.target =  newTarget; 
 	}
 	
@@ -60,6 +90,43 @@ public class ShipController : MonoBehaviour {
 			break; 
 		}
 		this.behavior = newBehavior; 
+	}
+	
+	/**
+	 * Adds input stack for the networking 
+	 * */
+	private void addNetInput(string command, Vector3 data) {
+		Debug.Log ("Input addded " + command);
+		PlayerNetscript netScript = (PlayerNetscript) this.GetComponent(typeof(PlayerNetscript));
+		switch (command) {
+			case Phobos.Commands.MOVE_TO:
+				netScript.sendNetMoveTo(data); 
+			break; 
+		}
+	}
+	
+	/**
+	 * Adds input stack for the networking 
+	 * */
+	private void addNetInput(string command, Transform data) {
+		Debug.Log ("Input added " + command);
+		PlayerNetscript netScript = (PlayerNetscript) this.GetComponent(typeof(PlayerNetscript));
+		switch (command) {
+			case Phobos.Commands.ATTACK:
+				netScript.sendNetAttack(data);  
+			break; 
+			
+			case Phobos.Commands.COLLECT:
+				netScript.sendNetCollect(data);  
+			break; 
+		}
+	}
+	
+	/**
+	 * Adds input stack for the networking 
+	 * */
+	private void addNetInput(string command) {
+		
 	}
 	
 }

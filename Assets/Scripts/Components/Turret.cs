@@ -8,7 +8,7 @@ public class Turret : MonoBehaviour {
 	public int power = 50;
 	public int range = 100 ; 
 	public string wName = "Electrifier";
-	public GameObject target = null;
+	public Transform target = null;
 	
 	public bool ready = true;
 	private float currentCooldown ;
@@ -40,7 +40,7 @@ public class Turret : MonoBehaviour {
 		Laser laserScript = projectile.GetComponent<Laser>();
 		moveScript.startMarker = this.transform;
 		moveScript.endMarker = this.target.transform;
-		laserScript.setTarget(this.target);
+		laserScript.setTarget(this.target.transform);
 		laserScript.setAttacker(gameObject);
 	}
 	
@@ -48,7 +48,7 @@ public class Turret : MonoBehaviour {
 		this.ready = newReady;	
 	}
 	
-	public void setTarget(GameObject newTarget) {
+	public void setTarget(Transform newTarget) {
 		this.target = (newTarget);	
 	}
 	

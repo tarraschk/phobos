@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RandomRotation : MonoBehaviour {
 	
-	public int rotationSpeed = 50; 
+	public int rotationSpeed = 1; 
 	
 	void Update () {
         transform.Rotate(Vector3.right * Time.deltaTime * this.rotationSpeed);
