@@ -26,7 +26,7 @@ Transform camTransform;
  
     void Update()
     {
- 		/*if (this.target != null) {
+ 		if (this.target != null) {
 	        if (clampToScreen)
 	        {
 	            Vector3 relativePosition = camTransform.InverseTransformPoint(target.position);
@@ -44,14 +44,14 @@ Transform camTransform;
 		}
 		else {
 			this.disableTexture(); 
-		}*/
+		}
     }
 	
 	public void enableTexture() {
-		guiTexture.enabled = true;  
+		//guiTexture.enabled = true;  
 	}
 	
 	public void disableTexture() {
-		guiTexture.enabled = false;  
+		//guiTexture.enabled = false;  
 	}
 }

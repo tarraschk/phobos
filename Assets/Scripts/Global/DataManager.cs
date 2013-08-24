@@ -142,7 +142,7 @@ public class DataManager : Photon.MonoBehaviour
 			//If it's local player, we own it. We can control it and send RPCs with it
             localPlayerInfo = pNode;
 			Controls controlScript = (Controls) this.GetComponent(typeof(Controls));
-			controlScript.setPlayer(newPlayer); 
+			controlScript.setPlayer(newPlayer);
         } 
 		
 		

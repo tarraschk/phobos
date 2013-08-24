@@ -3,24 +3,35 @@ using System.Collections;
 
 public class MainGUI : MonoBehaviour {
 	
-	public GameObject GUITarget ; 
+	public Transform GUITarget ; 
+	public bool active = false ; 
+	
 	public Destructible TargetDestr ; 
 	public Cargohold TargetCargo ; 
 	
 	void Start() {
-		/*this.GUITarget = Universe.getPlayer (); 
+		//this.GUITarget = GameController.getPlayer (); 
 		TargetDestr = (Destructible) this.GUITarget.GetComponent(typeof(Destructible));
-		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	*/
+		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	
 	}
 	
 	void OnGUI () {
-		GUI.backgroundColor = Color.green;
-		this.inventory(); 
-		
+		if (active) {
+			GUI.backgroundColor = Color.green;
+			this.inventory(); 
+		}
+	}
+	
+	public void setGUITarget(Transform newPlayer) {
+		this.GUITarget = newPlayer; 
+	}
+	
+	public void setActive(bool newActive) {
+		this.active = newActive ; 
 	}
 	
 	private void inventory() {
-		/*if (GUI.Button (new Rect (10,10,150,100), "Health : " + TargetDestr.energy)) {
+		if (GUI.Button (new Rect (10,10,150,100), "Health : " + TargetDestr.energy)) {
 			print ("You clicked the button!");
 		}
 		string cargoNames = ""; 
@@ -29,9 +40,9 @@ public class MainGUI : MonoBehaviour {
 			Collectable collectItem = (Collectable) trans.GetComponent(typeof(Collectable));
 			cargoNames += collectItem.quantity + " x " + trans.name + "\n"; 
 		}
-		/*foreach (Transform j in cargoHold) {
+		foreach (Transform j in cargoHold) {
 			cargoNames += j.name + "\n"; 
 		}
-		GUI.Button (new Rect (10,270,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);*/
+		GUI.Button (new Rect (10,270,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
 	}
 }

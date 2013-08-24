@@ -9,7 +9,7 @@ using System.Collections;
 
 public class UniverseCamera : MonoBehaviour {
 	
-	public GameObject followObject ; 
+	public Transform followObject ; 
 	public bool followingObject = false; 
 	public int cameraHeight = 40 ; 
 	public int cameraOffsetX = -75 ; 
@@ -32,10 +32,6 @@ public class UniverseCamera : MonoBehaviour {
 	private float shiftBonus = 45f;
 	private float mouseBoundary = 25f;
 	
-	void Start() {
-		this.followObject = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG); 	
-	}
-	
 	void Update () {
 		if (isCameraInput()) {
 			Vector3 cameraDesiredMove = getDesiredTranslation();
@@ -47,6 +43,10 @@ public class UniverseCamera : MonoBehaviour {
 		if (followObject != null && followingObject) {
 			this.centerOnTarget(); 
 		}
+	}
+	
+	public void setFollowObject(Transform newFollowObject) {
+		this.followObject = newFollowObject ; 
 	}
 	
 	public bool isDesiredPositionOverBoundaries(Vector3 desiredMove)
@@ -94,8 +94,8 @@ public class UniverseCamera : MonoBehaviour {
 	}
 	
 	private void centerOnTarget() {
-		if (followObject.transform != null) {
-			var follow = new Vector3(followObject.transform.position.x + cameraOffsetX, cameraHeight, followObject.transform.position.z + cameraOffsetY); 
+		if (followObject != null) {
+			var follow = new Vector3(followObject.position.x + cameraOffsetX, cameraHeight, followObject.position.z + cameraOffsetY); 
 			this.transform.position = follow ; 	
 		}
 	}

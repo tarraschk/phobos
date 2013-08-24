@@ -59,7 +59,11 @@ public class Controls : MonoBehaviour {
 	 *
 	 * */
 	public void setPlayer(Transform newPlayer) {
-		this.player = newPlayer ; 	
+		this.player = newPlayer ; 
+		//Set the camera for this player. 	
+		var cameraContainer = GameController.getCameraContainer(); 
+		UniverseCamera cms = (UniverseCamera) cameraContainer.GetComponent(typeof(UniverseCamera));
+		cms.setFollowObject(newPlayer); 
 	}
 	
 	public bool hasPlayer() {

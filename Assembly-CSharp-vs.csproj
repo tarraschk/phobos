@@ -237,9 +237,9 @@
      <Compile Include="Assets\Scripts\GUI\MainGUI.cs" />
      <Compile Include="Assets\Scripts\Global\DBHandler.cs" />
      <Compile Include="Assets\Scripts\Global\DataManager.cs" />
+     <Compile Include="Assets\Scripts\Global\GameController.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Cooldown.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Stack.cs" />
-     <Compile Include="Assets\Scripts\Global\Universe.cs" />
      <Compile Include="Assets\Scripts\Global\Vars.cs" />
      <Compile Include="Assets\Scripts\MainMenu\lightEffect.cs" />
      <Compile Include="Assets\Scripts\MainMenu\rotation.cs" />
