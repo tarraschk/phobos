@@ -108,7 +108,7 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	[RPC]
     void netAttack(int targetID)
     {
-		var currentUniverse = Universe.findUniverse(); 
+		var currentUniverse = GameController.findUniverse(); 
 		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
 		if (dataScript.netObjects.ContainsKey(targetID)) {
 			Transform target = (Transform) dataScript.netObjects[targetID]; 
@@ -120,7 +120,7 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	[RPC]
     void netCollect(int targetID)
     {
-		var currentUniverse = Universe.findUniverse(); 
+		var currentUniverse = GameController.findUniverse(); 
 		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
 		if (dataScript.netObjects.ContainsKey(targetID)) {
 			Transform target = (Transform) dataScript.netObjects[targetID]; 

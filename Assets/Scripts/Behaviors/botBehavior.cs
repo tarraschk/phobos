@@ -58,7 +58,7 @@ public class botBehavior : MonoBehaviour {
 	}
 	
 	private void idleBehavior() {
-		var univPlayers = Universe.getPlayers(); 
+		var univPlayers = GameController.getPlayers(); 
 		for (var i = 0 ; i < univPlayers.Length ; i++) {
 			
 			var remainingDistance = Vector3.Distance(univPlayers[i].transform.position, this.transform.position);

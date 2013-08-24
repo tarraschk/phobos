@@ -89,15 +89,15 @@ public class Controls : MonoBehaviour {
 	}
 	
 	private void clearBuildingType() {
-		Universe.clearAllBuildingPreview(); 
+		GameController.clearAllBuildingPreview(); 
 	}
 	
 	private void clearMovingType() {
-		Universe.switchCameraFollow(false); 
+		GameController.switchCameraFollow(false); 
 	}
 	
 	private void setMovingType() {
-		Universe.switchCameraFollow(true); 
+		GameController.switchCameraFollow(true); 
 	}
 	
 	private void moveBuildingPoing(RaycastHit hit) {

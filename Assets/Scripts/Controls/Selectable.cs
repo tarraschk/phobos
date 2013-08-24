@@ -32,8 +32,8 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	}
 	
 	private void doAction(string action) {
-		var univ = Universe.findUniverse(); 
-		Universe univScript = (Universe) univ.GetComponent(typeof(Universe));
+		var univ = GameController.findUniverse(); 
+		GameController univScript = (GameController) univ.GetComponent(typeof(GameController));
 		var target = gameObject; //The target is the current selected object
 		var player = univScript.getPlayer(); // TODO 
 		ShipController shipController = (ShipController) player.GetComponent(typeof(ShipController));
