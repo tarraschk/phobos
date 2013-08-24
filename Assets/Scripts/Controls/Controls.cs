@@ -64,6 +64,12 @@ public class Controls : MonoBehaviour {
 		var cameraContainer = GameController.getCameraContainer(); 
 		UniverseCamera cms = (UniverseCamera) cameraContainer.GetComponent(typeof(UniverseCamera));
 		cms.setFollowObject(newPlayer); 
+		
+		//And set the GUI for this player too 
+		var GUIContainer = GameController.getGUIContainer(); 
+		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
+		GUIScript.setGUITarget(newPlayer); 
+		GUIScript.setActive(true); 
 	}
 	
 	public bool hasPlayer() {

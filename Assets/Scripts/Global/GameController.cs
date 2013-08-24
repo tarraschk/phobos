@@ -41,6 +41,10 @@ public class GameController : MonoBehaviour  {
 		return mainCamera;
 	}
 	
+	public static GameObject getGUIContainer() {
+		return  GameObject.FindGameObjectWithTag(Phobos.Vars.GUI_CONTAINER); 	
+	}
+	
 	public static GameObject getCameraContainer() {
 		return GameObject.FindGameObjectWithTag(Phobos.Vars.CAMERA_CONTAINER);
 	}

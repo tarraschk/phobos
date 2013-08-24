@@ -10,9 +10,6 @@ public class MainGUI : MonoBehaviour {
 	public Cargohold TargetCargo ; 
 	
 	void Start() {
-		//this.GUITarget = GameController.getPlayer (); 
-		TargetDestr = (Destructible) this.GUITarget.GetComponent(typeof(Destructible));
-		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	
 	}
 	
 	void OnGUI () {
@@ -23,7 +20,9 @@ public class MainGUI : MonoBehaviour {
 	}
 	
 	public void setGUITarget(Transform newPlayer) {
-		this.GUITarget = newPlayer; 
+		this.GUITarget = newPlayer;
+		TargetDestr = (Destructible) this.GUITarget.GetComponent(typeof(Destructible));
+		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	 
 	}
 	
 	public void setActive(bool newActive) {
