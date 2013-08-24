@@ -71,12 +71,12 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			
 			case Phobos.Commands.ATTACK:
 				Debug.Log ("Sending RPC");
-                photonView.RPC("netAttack", PhotonTargets.Others, entry.dataTransform);
+                photonView.RPC("netAttack", PhotonTargets.Others, entry.dataTransform.GetInstanceID());
 			break ;
 			
 			case Phobos.Commands.COLLECT:
 				Debug.Log ("Sending RPC");
-                photonView.RPC("netCollect", PhotonTargets.Others, entry.dataTransform);
+                photonView.RPC("netCollect", PhotonTargets.Others, entry.dataTransform.GetInstanceID());
 			break ;
 		}
 		this.stackActive = false ;
@@ -112,15 +112,15 @@ public class PlayerNetscript : Photon.MonoBehaviour {
     }
 	
 	[RPC]
-    void netAttack(GameObject target)
+    void netAttack(int target)
     {
-		Debug.Log ("RECEIVED Attack " + target.name);
+		Debug.Log ("RECEIVED Attack " + target);
     }
 	
 	[RPC]
-    void netCollect(GameObject target)
+    void netCollect(int target)
     {
-		Debug.Log ("RECEIVED Attack " + target.name);
+		Debug.Log ("RECEIVED Collect " + target);
     }
 	
     [RPC]

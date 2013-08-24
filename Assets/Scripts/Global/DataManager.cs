@@ -16,10 +16,14 @@ public class DataManager : Photon.MonoBehaviour
     }
 
     public static DataManager DM;
+	public DBHandler DBH ; 
 
     public Transform playerPrefab;
+    public Transform botPrefab;
 
     private List<PlayerInfo4> playerList = new List<PlayerInfo4>();
+	private Hashtable objects = new Hashtable(); 
+	
     private PlayerInfo4 localPlayerInfo;
 	
 	/**
@@ -38,8 +42,29 @@ public class DataManager : Photon.MonoBehaviour
     
     void OnJoinedRoom()
     {
+		if (PhotonNetwork.isMasterClient) {
+			//We have to spawn the local data in the scene. 
+			SpawnSceneData(); 
+		}
         SpawnLocalPlayer();        
     }
+	
+	/**
+	 * Spawn the objects in this scene. 
+	 * Used by master 
+	 * */
+	void SpawnSceneData()
+	{
+        GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
+        GameObject theGO = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Vector3 pos = theGO.transform.position;
+        Quaternion rot = theGO.transform.rotation;
+        Transform newObject =Instantiate(botPrefab, pos, rot) as Transform;
+        Transform newObject2 =Instantiate(botPrefab, pos, rot) as Transform;
+		this.objects.Add(newObject.GetInstanceID(), newObject); 
+		this.objects.Add(newObject2.GetInstanceID(), newObject2); 
+		
+	}
 	
 	/**
 	 * We spawn a player prefab on a spawn location
