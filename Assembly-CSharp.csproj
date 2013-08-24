@@ -150,6 +150,7 @@
      <Compile Include="Assets\Scripts\Controls\Selectable.cs" />
      <Compile Include="Assets\Scripts\GUI\LabelPositioning.cs" />
      <Compile Include="Assets\Scripts\GUI\MainGUI.cs" />
+     <Compile Include="Assets\Scripts\Global\DBHandler.cs" />
      <Compile Include="Assets\Scripts\Global\DataManager.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Cooldown.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Stack.cs" />
@@ -457,6 +458,9 @@
      <None Include="Assets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphere.shader" />
  <Reference Include="Photon3Unity3D">
  <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
+ </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>Assets\SimpleJSON\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
