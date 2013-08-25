@@ -74,7 +74,7 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			break ;
 			
 			case Phobos.Commands.COLLECT:
-                photonView.RPC("netCollect", PhotonTargets.Others, viewScript.viewID);
+                //photonView.RPC("netCollect", PhotonTargets.Others, viewScript.viewID);
 			break ;
 		}
 		this.stackActive = false ;
