@@ -9,12 +9,14 @@ public class MainGUI : MonoBehaviour {
 	public Destructible TargetDestr ; 
 	public Cargohold TargetCargo ; 
 	
+	public Texture inventorySlot ; 
+	
 	void Start() {
 	}
 	
 	void OnGUI () {
 		if (active) {
-			GUI.backgroundColor = Color.green;
+			GUI.backgroundColor = Color.red;
 			this.inventory(); 
 		}
 	}
@@ -30,9 +32,10 @@ public class MainGUI : MonoBehaviour {
 	}
 	
 	private void inventory() {
-		//if (GUI.Button (new Rect (10,10,150,100), "Health : " + TargetDestr.energy)) {
-			//print ("You clicked the button!");
-		//}
+		if (!this.inventorySlot) {
+			Debug.LogError("Missing inventory texture.");
+			return; 
+		}
 		string cargoNames = ""; 
 		var cargoHold = TargetCargo.getCargoContent(); 
 		foreach (Transform trans in cargoHold.transform) {
@@ -42,6 +45,9 @@ public class MainGUI : MonoBehaviour {
 		foreach (Transform j in cargoHold) {
 			cargoNames += j.name + "\n"; 
 		}
+		GUI.Box (new Rect (10,Screen.height - 50,100,30), "Health : " + TargetDestr.energy);
+		GUI.Label (new Rect (Screen.width - 120,110,64,64), inventorySlot);
+		GUI.Box (new Rect (Screen.width - 150,75,100,30), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax);
 		//GUI.Button (new Rect (10,170,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
 	}
 }
