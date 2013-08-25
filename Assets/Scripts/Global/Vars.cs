@@ -1,6 +1,6 @@
 using System;
 
-public enum BehaviorTypes{idle, collecting, moving};
+public enum BehaviorTypes{idle, collecting, moving, docking};
 
 namespace Phobos
 {
@@ -18,9 +18,13 @@ namespace Phobos
 		
 		public static string TERRAIN_NAME = "TerrainMain"; 
 		public static int COLLECT_DISTANCE = 10; 
+		public static int WARP_DISTANCE = 20; 
 		public static string MODEL = "Model"; 
 		public static string CARGOBAY = "Cargo"; 
 		
+	}
+	public enum dockType {
+		station, warp	
 	}
 	
 	public class Commands 
@@ -28,6 +32,7 @@ namespace Phobos
 		public const string MOVE_TO = "MoveTo"; 	
 		public const string COLLECT = "Collect"; 	
 		public const string ATTACK = "Attack"; 	
+		public const string DOCK = "Dock"; 	
 	}
 }
 

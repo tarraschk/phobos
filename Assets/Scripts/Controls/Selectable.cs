@@ -29,6 +29,8 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	}
 	
 	void OnMouseDown() {
+		Debug.Log ("trying");
+		Debug.Log (availableActions[0]);
 		//this.availableActions = new string[3]{"attack", "collectable", "dock"}; 
 		this.doAction(this.availableActions[0]);
 	}
@@ -50,7 +52,8 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 				break;
 					
 				case DOCK :
-				
+					Debug.Log ("Dock to ");
+					shipController.dockOwn(target.transform); 
 				break;
 			}
 		}
@@ -68,6 +71,7 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 			j++;
 		}
 		if (this.GetComponent("Dockable")) {
+			Debug.Log ("dockable init");
 			objectActions[j] = DOCK;	
 			j++;
 		}

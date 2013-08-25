@@ -17,11 +17,41 @@ public class ShipController : MonoBehaviour {
 			break;
 			case BehaviorTypes.collecting: 
 				this.collectBehavior();
-			break;
+			break; 
+			case BehaviorTypes.docking: 
+				this.dockBehavior(); 
+			break ; 
 			case BehaviorTypes.moving:
 			
+			break;
+		}
+	}
+	
+	private void dockBehavior() {
+		GameObject currentShip = gameObject; 
+		if (this.target != null) {
+			var remainingDistance = Vector3.Distance(this.target.transform.position, this.transform.position);
+			if (remainingDistance < Phobos.Vars.WARP_DISTANCE) {
+				Dockable dockData = (Dockable) target.GetComponent(typeof(Dockable));
+				this.dockTo (dockData);
+			}
+			
+		}
+		
+	}
+	
+	private void dockTo(Dockable dockData) {
+		switch(dockData.type) {
+			case Phobos.dockType.station:
+			break; 
+			case Phobos.dockType.warp:
+				this.warpTo(dockData.warpDestination); 
 			break; 
 		}
+	}
+	
+	private void warpTo(string sectorName) {
+		GameController.switchSector(sectorName); 	
 	}
 	
 	private void collectBehavior() {
@@ -80,6 +110,18 @@ public class ShipController : MonoBehaviour {
 	public void collect(Transform target) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		this.setBehavior(BehaviorTypes.collecting); 
+		this.setTarget(target); 
+		prop.setTargetPos(target.transform.position);	
+	}
+	
+	public void dockOwn(Transform target) {
+		this.addNetInput(Phobos.Commands.DOCK, target); 
+		this.dock (target);	
+	}
+	
+	public void dock(Transform target) {
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		this.setBehavior(BehaviorTypes.docking); 
 		this.setTarget(target); 
 		prop.setTargetPos(target.transform.position);	
 	}

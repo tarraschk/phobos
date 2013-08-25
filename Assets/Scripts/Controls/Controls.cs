@@ -49,14 +49,6 @@ public class Controls : MonoBehaviour {
 	**/
 	
 	public void keyboardInput() {
-		if (Input.GetKeyDown (KeyCode.U)) {
-			if (Application.loadedLevelName == "NetworkSandbox") 
-				GameController.switchSector("NetworkSandbox2"); 
-				
-			else  {
-				GameController.switchSector("NetworkSandbox"); 	
-			}
-		}
 		
 		if (Input.GetKeyDown (KeyCode.B)) {
 			this.switchControlType(controlTypes.moving, controlTypes.building); 

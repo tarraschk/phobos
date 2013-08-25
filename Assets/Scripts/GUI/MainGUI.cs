@@ -30,9 +30,9 @@ public class MainGUI : MonoBehaviour {
 	}
 	
 	private void inventory() {
-		if (GUI.Button (new Rect (10,10,150,100), "Health : " + TargetDestr.energy)) {
-			print ("You clicked the button!");
-		}
+		//if (GUI.Button (new Rect (10,10,150,100), "Health : " + TargetDestr.energy)) {
+			//print ("You clicked the button!");
+		//}
 		string cargoNames = ""; 
 		var cargoHold = TargetCargo.getCargoContent(); 
 		foreach (Transform trans in cargoHold.transform) {
@@ -42,6 +42,6 @@ public class MainGUI : MonoBehaviour {
 		foreach (Transform j in cargoHold) {
 			cargoNames += j.name + "\n"; 
 		}
-		GUI.Button (new Rect (10,270,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
+		//GUI.Button (new Rect (10,170,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
 	}
 }
