@@ -68,6 +68,12 @@ public class DataManager : Photon.MonoBehaviour
 		
 	}
 	
+	public void addBuildingToScene(string building, Vector3 pos, Quaternion rot) {
+        int id = PhotonNetwork.AllocateViewID();
+		Debug.Log ("Building name " + building);
+        photonView.RPC("SpawnBuildingOnNetwork", PhotonTargets.AllBuffered, building, pos, rot, id);
+	}
+	
 	/**
 	 * We spawn a player prefab on a spawn location
 	 * And most importantly, we send the message to the network
@@ -170,6 +176,18 @@ public class DataManager : Photon.MonoBehaviour
 		
     }
 	
+	[RPC]
+    void SpawnBuildingOnNetwork(string building, Vector3 pos, Quaternion rot, int id)
+    {
+        GameObject newBuilding = (GameObject) PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Building/"+building, pos, rot, 0, null) ;
+		newBuilding.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
+		newBuilding.name = "Building#"+id; 
+		
+        SetPhotonViewIDs(newBuilding.gameObject, id);
+		
+		this.netObjects.Add(id, newBuilding); 
+		
+    }
 	
 
 	/**

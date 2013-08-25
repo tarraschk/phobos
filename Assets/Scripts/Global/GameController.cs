@@ -54,6 +54,24 @@ public class GameController : MonoBehaviour  {
 		}
 	}
 	
+	public static void createBuildingPreview(string buildingPrefab) {
+		Vector3 pos = new Vector3(0, 0, 0);
+		Quaternion rot = new Quaternion(0, 0, 0, 0); 
+		GameObject buildPreview = (GameObject) Instantiate(Resources.Load ("Prefabs/Objects/BuildingPreview/" + buildingPrefab), pos, rot); 
+		buildPreview.tag = Phobos.Vars.BUILDING_PREVIEW;
+		buildPreview.name = buildingPrefab; 
+	}	
+	
+	public static Controls getControls() {
+		var Universe = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG);
+		return ((Controls) Universe.GetComponent(typeof(Controls)));
+	}
+	
+	public static DataManager getDataManager() {
+		var Universe = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG);
+		return ((DataManager) Universe.GetComponent(typeof(DataManager)));
+	}
+	
 	public static GameObject getMainCamera() {
 		var mainCamera = GameObject.FindGameObjectWithTag(Phobos.Vars.MAIN_CAMERA_TAG);
 		return mainCamera;

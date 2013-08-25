@@ -208,6 +208,7 @@
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TimeKeeper.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Collectable.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Destructible.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\Dockable.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Laser.cs" />
      <Compile Include="Assets\Scripts\Behaviors\ShipController.cs" />
      <Compile Include="Assets\Scripts\Behaviors\botBehavior.cs" />
@@ -215,6 +216,7 @@
      <Compile Include="Assets\Scripts\Camera\UniverseCamera.cs" />
      <Compile Include="Assets\Scripts\Components\Cargohold.cs" />
      <Compile Include="Assets\Scripts\Components\Propulsors.cs" />
+     <Compile Include="Assets\Scripts\Components\ThrusterParticle.cs" />
      <Compile Include="Assets\Scripts\Components\Turret.cs" />
      <Compile Include="Assets\Scripts\Components\Turrets.cs" />
      <Compile Include="Assets\Scripts\Controls\Build.cs" />
@@ -234,6 +236,7 @@
      <Compile Include="Assets\Scripts\MainMenu\shipRotation.cs" />
      <Compile Include="Assets\Scripts\Movement\RandomRotation.cs" />
      <Compile Include="Assets\Scripts\Movement\SimpleRotation.cs" />
+     <Compile Include="Assets\Scripts\Movement\SimpleTranslation.cs" />
      <Compile Include="Assets\Scripts\Movement\moveTo.cs" />
      <Compile Include="Assets\Scripts\Movement\moveToBehavior.cs" />
      <Compile Include="Assets\Scripts\Photon Network\ConnectAuto.cs" />

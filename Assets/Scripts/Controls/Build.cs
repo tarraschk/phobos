@@ -28,7 +28,8 @@ public class Build : MonoBehaviour {
 	public void build(Vector3 buildPosition, Quaternion buildRotation) {
 		if (this.checkCollisions()) {
 			Debug.Log ("BUILDED");	
-			GameObject builded = (GameObject) Instantiate(this.prefabBuild, buildPosition, buildRotation) ; 
+			GameController.getDataManager().addBuildingToScene(this.name, buildPosition, buildRotation); 
+			//GameObject builded = (GameObject) Instantiate(this.prefabBuild, buildPosition, buildRotation) ; 
 		}
 	}
 	

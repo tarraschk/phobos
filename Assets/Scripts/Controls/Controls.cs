@@ -51,7 +51,7 @@ public class Controls : MonoBehaviour {
 	public void keyboardInput() {
 		
 		if (Input.GetKeyDown (KeyCode.B)) {
-			this.switchControlType(controlTypes.moving, controlTypes.building); 
+			this.switchBuildingControls(); 
 		}
 	}
 	
@@ -87,6 +87,13 @@ public class Controls : MonoBehaviour {
 		else if (this.currentControlType == type2) {
 			this.setControlType(type1); 
 		}
+	}
+	
+	public void switchBuildingControls() {
+		var GUIContainer = GameController.getGUIContainer(); 
+		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
+		GUIScript.toggleShowBuildMenu(); 
+		this.switchControlType(controlTypes.moving, controlTypes.building); 
 	}
 	
 	private void clearBuildingType() {
