@@ -20,13 +20,25 @@ Transform camTransform;
         cam = Camera.main;
     else
         cam = cameraToUse;
+		
     camTransform = cam.transform;
+		
+		//Get the name of the ship 
+		if (this.target != null) {
+			if (guiText) {
+				var ship = this.transform.parent; 
+				PhotonView PV = (PhotonView) ship.GetComponent(typeof(PhotonView)); 
+				var shipName = "Player " + PV.viewID; 
+				guiText.text = shipName; 		
+			}
+		}
 	}
 
  
     void Update()
     {
  		if (this.target != null) {
+			
 	        if (clampToScreen)
 	        {
 	            Vector3 relativePosition = camTransform.InverseTransformPoint(target.position);
@@ -48,10 +60,16 @@ Transform camTransform;
     }
 	
 	public void enableTexture() {
-		//guiTexture.enabled = true;  
+		if (guiTexture) 
+			guiTexture.enabled = true;  
+		if (guiText) 
+			guiText.enabled = true ; 
 	}
 	
 	public void disableTexture() {
-		//guiTexture.enabled = false;  
+		if (guiTexture) 
+			guiTexture.enabled = false;  
+		if (guiText) 
+			guiText.enabled = false ; 
 	}
 }

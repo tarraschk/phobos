@@ -40,11 +40,11 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 		if (player) {
 			switch (action) {
 				case ATTACK: 
-					shipController.attackNet(target.transform); 
+					shipController.attackOwn(target.transform); 
 				break;
 					
 				case COLLECT:
-					shipController.collectNet(target.transform); 
+					shipController.collectOwn(target.transform); 
 				break;
 					
 				case DOCK :

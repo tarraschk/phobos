@@ -49,6 +49,15 @@ public class Controls : MonoBehaviour {
 	**/
 	
 	public void keyboardInput() {
+		if (Input.GetKeyDown (KeyCode.U)) {
+			if (Application.loadedLevelName == "NetworkSandbox") 
+				GameController.switchSector("NetworkSandbox2"); 
+				
+			else  {
+				GameController.switchSector("NetworkSandbox"); 	
+			}
+		}
+		
 		if (Input.GetKeyDown (KeyCode.B)) {
 			this.switchControlType(controlTypes.moving, controlTypes.building); 
 		}
@@ -60,16 +69,6 @@ public class Controls : MonoBehaviour {
 	 * */
 	public void setPlayer(Transform newPlayer) {
 		this.player = newPlayer ; 
-		//Set the camera for this player. 	
-		var cameraContainer = GameController.getCameraContainer(); 
-		UniverseCamera cms = (UniverseCamera) cameraContainer.GetComponent(typeof(UniverseCamera));
-		cms.setFollowObject(newPlayer); 
-		
-		//And set the GUI for this player too 
-		var GUIContainer = GameController.getGUIContainer(); 
-		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
-		GUIScript.setGUITarget(newPlayer); 
-		GUIScript.setActive(true); 
 	}
 	
 	public bool hasPlayer() {

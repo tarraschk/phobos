@@ -69,6 +69,7 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			break ;
 			
 			case Phobos.Commands.ATTACK:
+				Debug.Log ("ATTACKKKK RPC" + viewScript.viewID);
                 photonView.RPC("netAttack", PhotonTargets.Others, viewScript.viewID);
 			break ;
 			
@@ -108,8 +109,10 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	[RPC]
     void netAttack(int targetID)
     {
+		Debug.Log ("Net ATTAAACK" + targetID);
 		var currentUniverse = GameController.findUniverse(); 
 		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
+		Debug.Log (dataScript.netObjects[targetID]);
 		if (dataScript.netObjects.ContainsKey(targetID)) {
 			Transform target = (Transform) dataScript.netObjects[targetID]; 
 			ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));

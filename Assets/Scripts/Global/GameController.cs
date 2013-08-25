@@ -21,8 +21,26 @@ public class GameController : MonoBehaviour  {
 		Controls controlScript = (Controls) this.GetComponent(typeof(Controls));
 		if (controlScript.player) 
 			return controlScript.player; 
-		else return null ; 
-		//return (GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYER_TAG));	
+		else return null ; 	
+	}
+	/**
+	 * Sets the current player of the world
+	 * We can control that one !
+	 */
+	public void setPlayer(Transform newPlayer) {
+		Controls controlsScr = (Controls) this.GetComponent(typeof(Controls));
+		controlsScr.setPlayer(newPlayer); 
+		
+		//Set the camera for this player. 	
+		var cameraContainer = this.getCameraContainer(); 
+		UniverseCamera cms = (UniverseCamera) cameraContainer.GetComponent(typeof(UniverseCamera));
+		cms.setFollowObject(newPlayer); 
+		
+		//And set the GUI for this player too 
+		var GUIContainer = this.getGUIContainer(); 
+		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
+		GUIScript.setGUITarget(newPlayer); 
+		GUIScript.setActive(true); 
 	}
 	
 	/**
@@ -56,4 +74,10 @@ public class GameController : MonoBehaviour  {
 			univCam.followingObject = newFollow ; 
 		}
 	}
+	
+	public static void switchSector(string newSector) {
+		string newRoomName = "TestRoom" + newSector;
+		PhotonNetwork.LeaveRoom(); 
+		Application.LoadLevel(newSector); 
+	}	
 }

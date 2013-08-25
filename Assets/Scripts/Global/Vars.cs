@@ -10,6 +10,8 @@ namespace Phobos
 		public static string MAIN_CAMERA_TAG = "MainCamera";
 		public static string PLAYER_TAG = "Player";
 		public static string UNIVERSE_TAG = "Universe";
+		public static string PLAYERS_TAG = "Players";
+		public static string OBJECTS_TAG = "Objects";
 		public static string CAMERA_CONTAINER = "CameraContainer";
 		public static string GUI_CONTAINER = "GUIContainer";
 		public static int TERRAIN_LAYER = 1 ;//<< 8 ; 

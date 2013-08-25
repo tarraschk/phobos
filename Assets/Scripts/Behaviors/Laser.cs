@@ -15,10 +15,11 @@ public class Laser : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		this.energyUpdate ();
-		if (this.energy <= 0 || this.Target == null) 
-			this.laserDestroy(); 
-		
+		if (Target != null) {
+			this.energyUpdate ();
+			if (this.energy <= 0 || this.Target == null) 
+				this.laserDestroy(); 
+		}
 	}
 	void OnTriggerEnter(Collider collision) {
 		if (collision.gameObject.name == Target.name) {

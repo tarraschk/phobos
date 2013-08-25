@@ -47,9 +47,6 @@ public class Turrets : MonoBehaviour {
 	public void setTarget(Transform newTarget) {
 		this.target = newTarget;	
 		this.theWeapon.setTarget(newTarget);
-		if (this.isPlayer()) {
-			this.setGUIAttackTarget(newTarget);
-		}
 	}
 	
 	public void attack (Transform target) {
@@ -62,13 +59,5 @@ public class Turrets : MonoBehaviour {
 		return this.tag == "Player"; 	
 	}
 	
-	private void setGUIAttackTarget(Transform newTarget) {
-		var GUIContainer = GameObject.FindGameObjectWithTag("GUIContainer");
-		if (GUIContainer) {
-			var attackTargetGUI = GUIContainer.transform.FindChild("AttackTarget");
-			LabelPositioning labelPos = (LabelPositioning) attackTargetGUI.GetComponent(typeof(LabelPositioning));
-			labelPos.target = newTarget.transform;
-			labelPos.enableTexture();
-		}
-	}
+	
 }

@@ -52,17 +52,27 @@ public class ShipController : MonoBehaviour {
 		prop.setTargetPos(destination);
 	}
 	
-	public void attackNet(Transform target) {
+	/*
+	 * Uses attack script when WE are the controller of this ship.
+	 * Implies the net input and the GUI modifications. 
+	 */
+	public void attackOwn(Transform target) {
+		this.addGUIInput(Phobos.Commands.ATTACK, target); 
 		this.addNetInput(Phobos.Commands.ATTACK, target); 
 		this.attack (target);
 	}
 	
+	//Order the ship to attack the target. 
 	public void attack(Transform target) {
 		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
 		turr.attack(target);	
 	}
 	
-	public void collectNet(Transform target) {
+	/*
+	 * Uses collect script when WE are the controller of this ship.
+	 * Implies the net input and the GUI modifications. 
+	 */
+	public void collectOwn(Transform target) {
 		this.addNetInput(Phobos.Commands.COLLECT, target); 
 		this.collect (target);
 	}
@@ -125,6 +135,19 @@ public class ShipController : MonoBehaviour {
 	 * */
 	private void addNetInput(string command) {
 		
+	}
+	
+	/**
+	 * Affects the GUI with new command
+	 * */
+	private void addGUIInput(string command, Transform data) {
+		var GUIContainer = GameObject.FindGameObjectWithTag("GUIContainer");
+		if (GUIContainer) {
+			var attackTargetGUI = GUIContainer.transform.FindChild("AttackTarget");
+			LabelPositioning labelPos = (LabelPositioning) attackTargetGUI.GetComponent(typeof(LabelPositioning));
+			labelPos.target = data;
+			labelPos.enableTexture();
+		}
 	}
 	
 }

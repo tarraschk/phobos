@@ -15,8 +15,17 @@ public class ConnectAuto : MonoBehaviour {
 
     void Awake()
     {
-        PhotonNetwork.ConnectUsingSettings("1.0");
+        if (PhotonNetwork.connectionState == ConnectionState.Disconnected)
+        {
+        	PhotonNetwork.ConnectUsingSettings("1.0");
+		}
+		else {
+        	StartCoroutine(JoinOrCreateRoom());	
+		}
     }
+	
+	void OnLevelWasLoaded(int level) {
+	}
 	
 	void OnConnectedToPhoton()
     {

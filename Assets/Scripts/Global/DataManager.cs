@@ -126,6 +126,7 @@ public class DataManager : Photon.MonoBehaviour
     {
         Transform newPlayer = Instantiate(playerPrefab, pos, rot) as Transform;
 		newPlayer.name = "Player#"+id1; 
+		newPlayer.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYERS_TAG).transform; 
         //Set transform
         PlayerInfo4 pNode = GetPlayer(np);
         pNode.transform = newPlayer;
@@ -141,8 +142,8 @@ public class DataManager : Photon.MonoBehaviour
         {
 			//If it's local player, we own it. We can control it and send RPCs with it
             localPlayerInfo = pNode;
-			Controls controlScript = (Controls) this.GetComponent(typeof(Controls));
-			controlScript.setPlayer(newPlayer);
+			GameController GC = (GameController) this.GetComponent(typeof(GameController));
+			GC.setPlayer(newPlayer);
         } 
 		
 		
@@ -160,6 +161,8 @@ public class DataManager : Photon.MonoBehaviour
     {
 		
         Transform newObject =Instantiate(botPrefab, pos, rot) as Transform;
+		newObject.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
+		newObject.name = "Bot#"+id1; 
 		
         SetPhotonViewIDs(newObject.gameObject, id1);
 		
