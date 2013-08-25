@@ -18,12 +18,14 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseEnter() {
 		var model = transform.FindChild(MODEL);
-		model.renderer.material.color = Color.yellow;
+		if (model != null) 
+			model.renderer.material.color = Color.yellow;
 	}
 	
 	void OnMouseExit() {
 		var model = transform.FindChild(MODEL);
-		model.renderer.material.color = Color.white;
+		if (model != null) 
+			model.renderer.material.color = Color.white;
 	}
 	
 	void OnMouseDown() {
