@@ -63,8 +63,8 @@ public class DataManager : Photon.MonoBehaviour
         int id2 = PhotonNetwork.AllocateViewID();
 		
 		
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, pos, rot, id1);
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, pos, rot, id2);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.MasterClient, pos, rot, id1);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.MasterClient, pos, rot, id2);
 		
 	}
 	
@@ -165,14 +165,24 @@ public class DataManager : Photon.MonoBehaviour
 	[RPC]
     void SpawnObjOnNetwork(Vector3 pos, Quaternion rot, int id1)
     {
-		
-        Transform newObject =Instantiate(botPrefab, pos, rot) as Transform;
-		newObject.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
+		GameObject newObject =null ; 
+		//if (PhotonNetwork.isMasterClient)
+		//{
+			newObject = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Bots/Bot", pos, rot, 0, null) as GameObject;
+		//}
+        //GameObject newObject = PhotonNetwork.Instantiate("Prefabs/Objects/Bots/Bot", pos, rot, 0) as GameObject;
+		//newObject.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
 		newObject.name = "Bot#"+id1; 
 		
-        SetPhotonViewIDs(newObject.gameObject, id1);
 		
-		this.netObjects.Add(id1, newObject); 
+		PhotonView PV = (PhotonView) newObject.GetComponent(typeof(PhotonView));
+		Debug.Log ("THE CREATED VIEW ID "+ PV.viewID); 
+        //SetPhotonViewIDs(newObject.gameObject, id1);
+		if (!PhotonNetwork.isMasterClient)
+		{
+			Debug.Log ("NOT THE MASTER BUT THE CREATED VIEW ID "+ PV.viewID); 
+		}
+		this.netObjects.Add(PV.viewID, newObject.transform); 
 		
     }
 	
@@ -185,10 +195,9 @@ public class DataManager : Photon.MonoBehaviour
 		
         SetPhotonViewIDs(newBuilding.gameObject, id);
 		
-		this.netObjects.Add(id, newBuilding); 
+		this.netObjects.Add(id, newBuilding.transform); 
 		
     }
-	
 
 	/**
 	 * Player disconnected
@@ -224,7 +233,7 @@ public class DataManager : Photon.MonoBehaviour
 
     //When a PhotonView instantiates it has viewID=0 and is unusable.
     //We need to assign the right viewID -on all players(!)- for it to work
-    void SetPhotonViewIDs(GameObject go, int id1)
+    public void SetPhotonViewIDs(GameObject go, int id1)
     {
         PhotonView[] nViews = go.GetComponentsInChildren<PhotonView>();
         nViews[0].viewID = id1;

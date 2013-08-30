@@ -63,6 +63,9 @@ public class ConnectAuto : MonoBehaviour {
                 GUILayout.Label("Connection status: Connected");
                 if (PhotonNetwork.room != null)
                 {
+					if (PhotonNetwork.isMasterClient) {
+						GUILayout.Label("You are the Master");
+					}
                     GUILayout.Label("Room: " + PhotonNetwork.room.name);
                     GUILayout.Label("Players: " + PhotonNetwork.room.playerCount + "/" + PhotonNetwork.room.maxPlayers);
 

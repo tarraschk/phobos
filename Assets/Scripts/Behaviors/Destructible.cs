@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class Destructible : MonoBehaviour {
+public class Destructible : Photon.MonoBehaviour {
 
 	public int energy = 500 ; 
 	
@@ -22,7 +22,10 @@ public class Destructible : MonoBehaviour {
 	
 	public void destroy() {
 		GameObject explosion = (GameObject) Instantiate(Resources.Load ("Prefabs/FX/explosion"), this.transform.position, this.transform.rotation) ; 
-		Destroy (gameObject);
+	
+		if (PhotonNetwork.isMasterClient) {
+			PhotonNetwork.Destroy(gameObject);
+		}
 	}
 	
 	private void AIReact(GameObject attacker) {
