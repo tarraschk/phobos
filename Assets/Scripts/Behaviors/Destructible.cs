@@ -4,6 +4,7 @@ using System.Collections;
 public class Destructible : Photon.MonoBehaviour {
 
 	public int energy = 500 ; 
+	public int level = 1 ; 
 	
 	public void receiveDamage(int power, GameObject attacker) {
 		if (this.tag == "AI")
@@ -13,6 +14,8 @@ public class Destructible : Photon.MonoBehaviour {
 		this.setEnergy(this.energy - power); 
 		if (this.energy <= 0) {
 			this.destroy() ; 	
+			Level levelScript = (Level) attacker.GetComponent(typeof(Level));
+			levelScript.doGainXP(this.level * 25) ; 
 		}
 	}
 	

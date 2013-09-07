@@ -54,9 +54,9 @@ public class Cargohold : MonoBehaviour {
 	 */
 	private void addItemToCargo(Transform item, Collectable itemCollectScript, Transform cargoContainer) {
 		Collectable collectItem = (Collectable) item.GetComponent(typeof(Collectable));
-		
-		if (this.containerHasItem(cargoContainer, item)) {
-			Transform itemSlot = containerFindItemSlot(cargoContainer, item) ; 
+		int collectItemId = collectItem.id ; 
+		if (this.containerHasItem(cargoContainer, item, collectItemId)) {
+			Transform itemSlot = containerFindItemSlot(cargoContainer, collectItemId) ; 
 			Collectable itemSlotCollect = (Collectable) itemSlot.GetComponent(typeof(Collectable));
 			itemSlotCollect.quantity += collectItem.quantity; 
 			collectItem.isCollected(cargoContainer, true); 
@@ -72,16 +72,32 @@ public class Cargohold : MonoBehaviour {
 	/**
 	 * Finds an item in the cargo hold
 	 */
-	private Transform containerFindItemSlot(Transform cargoContainer, Transform item) {
-		return cargoContainer.FindChild(item.name); 
+	private Transform containerFindItemSlot(Transform cargoContainer, int itemId) {
+		foreach (Transform child in cargoContainer.transform)
+		{
+			Collectable collect = (Collectable) child.GetComponent(typeof(Collectable));
+			if (collect.id == itemId) 
+				return child.transform ; 
+		}
+		return null ; 
 	}
 		
 	/**
 	 * Checks if we have an Item type in our cargo hold. 
-	 * Uses object.getType()
+	 * Uses the id of the collectable script
 	 */
-	private bool containerHasItem(Transform cargoContainer, Transform item) {
-		var cargoItem = cargoContainer.FindChild(item.name); 
+	private bool containerHasItem(Transform cargoContainer, Transform item, int itemId) {
+		//var cargoItem = cargoContainer.FindChild(item.name); 
+		
+		foreach (Transform child in cargoContainer.transform)
+		{
+			Collectable collect = (Collectable) child.GetComponent(typeof(Collectable));
+			if (collect.id == itemId) 
+				return true ; 
+		}
+		return false ; 
+		/*
+		
 		if (cargoItem) {
 			Collectable collect = (Collectable) cargoItem.GetComponent(typeof(Collectable));
 			Collectable collectItem = (Collectable) item.GetComponent(typeof(Collectable));
@@ -90,6 +106,6 @@ public class Cargohold : MonoBehaviour {
 			else 
 				return false; 
 		}
-		else return false; 
+		else return false; */
 	}
 }

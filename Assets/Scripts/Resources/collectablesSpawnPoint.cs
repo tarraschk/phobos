@@ -17,7 +17,10 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 	void Awake() {
 		this.enabled = false ;	
 	}
-	// Use this for initialization
+	
+	/**
+	 * Room joined : activate or not. 
+	 */
 	void OnJoinedRoom () {
         //We're connected!
 		if (PhotonNetwork.isMasterClient)
@@ -49,11 +52,6 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 	public void spawnCollectable() {
 		var current = gameObject; 
 		this.collectableCount++; 
-		/*GameObject spawned = (GameObject) Instantiate(this.collectable) ;
-		spawned.name = this.collectable.name; 
-		spawned.transform.parent = current.transform; 
-		spawned.transform.localScale = this.randomScale (0.5f, 1.0f); 
-		spawned.transform.localPosition = this.spawnPosition();*/
 		
 		Vector3 pos = this.spawnPosition(); 
 		Quaternion rot = this.transform.rotation; 
@@ -61,11 +59,6 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 		Debug.Log ("SEND RPC");
 		DataManager dataScript = GameController.getDataManager();
 		dataScript.addObjectToScene("Resources/Crystal", pos, rot, ObjectsSpawnTypes.collectable); 
-	}
-	
-	public Vector3 randomScale(float min, float max) {
-		float result = Random.Range(min, max); 
-		return new Vector3(result, result, result); 
 	}
 	
 	public Vector3 spawnPosition() {

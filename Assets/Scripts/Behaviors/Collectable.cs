@@ -2,7 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 public class Collectable : MonoBehaviour {
-
+	
+	public int id ; 
 	public int size = 10; 
 	public int quantity = 1; 
 	public Texture icon ; 
