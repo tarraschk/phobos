@@ -18,6 +18,11 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 	
 	public bool stackActive = false ; 
 	
+	/**
+	 * Spawn data manager
+	 * 
+	 */
+	
 	void Awake()
     {
         if (PhotonNetwork.isNonMasterClientInRoom)
@@ -29,6 +34,10 @@ public class PlayerNetscript : Photon.MonoBehaviour {
         }
     }
 	
+	/**
+	 * Set if we are the player or not. 
+	 * Enable the update if we are the player. 
+	 */
     public void SetPlayer(PhotonPlayer player)
     {
         owner = player;

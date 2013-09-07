@@ -11,15 +11,24 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 	public GameObject collectable;
 	public bool isReady = false; 
 	
+	/**
+	 * Wait for the game to join room to activate this. 
+	 */
+	void Awake() {
+		this.enabled = false ;	
+	}
 	// Use this for initialization
-	void Awake () {
+	void OnJoinedRoom () {
         //We're connected!
-		if (!PhotonNetwork.isMasterClient)
+		if (PhotonNetwork.isMasterClient)
         {
 			Debug.Log ("IS MASTER");
 			this.enabled = true ; 
 		}
-		else this.enabled = false ; 
+		else{
+			Debug.Log ("IS NOT MASTER");
+			this.enabled = false ; 
+		}
 		this.cooldown = new Cooldown(this.cdTime, false);
 		this.collectable = (GameObject) Resources.Load ("Prefabs/Objects/Resources/Crystal"); 
 	}
@@ -50,7 +59,8 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 		Quaternion rot = this.transform.rotation; 
         int id = PhotonNetwork.AllocateViewID();
 		Debug.Log ("SEND RPC");
-        photonView.RPC("SpawnCrystalOnNetwork", PhotonTargets.AllBuffered, "Crystal", spawnPosition(), rot, id);
+		DataManager dataScript = GameController.getDataManager();
+		dataScript.addObjectToScene("Resources/Crystal", pos, rot, ObjectsSpawnTypes.collectable); 
 	}
 	
 	public Vector3 randomScale(float min, float max) {
@@ -63,29 +73,29 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 		float minY = 0 - this.size; 
 		float maxX = 0 + this.size; 
 		float maxY = 0 + this.size; 
-		return new Vector3(Random.Range(minX, maxX), 0, Random.Range(minY, maxY));
+		return new Vector3(this.transform.position.x + Random.Range(minX, maxX), 0, this.transform.position.z + Random.Range(minY, maxY));
 	}
 	
 	public bool canSpawn() {
 		return (this.cooldown.isReady() && this.collectableCount < this.collectableMax); 	
 	}
 	
-	[RPC]
 	void SpawnCrystalOnNetwork(string crystal, Vector3 pos, Quaternion rot, int id) {
 		Debug.Log ("SPAWN CRYSTAL");
+		
 		//GameObject newCrysta = (GameObject) PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Resources/"+crystal, pos, rot, 0, null) ;
-		GameObject newCrysta = PhotonNetwork.Instantiate("Prefabs/Objects/Resources/"+crystal, Vector3.zero, rot, 0) as GameObject;
-		newCrysta.transform.parent = gameObject.transform;
+		/*GameObject newCrysta = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Resources/"+crystal, pos, rot, 0, null) as GameObject;
+		//newCrysta.transform.parent = gameObject.transform;
 		newCrysta.transform.localPosition = pos;   //GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
-		newCrysta.name = "Crystal#"+id; 
+		//newCrysta.name = "Crystal#"+id; 
 		
 		var currentUniverse = GameController.findUniverse(); 
 		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
 		
 		dataScript.SetPhotonViewIDs(newCrysta, id);
 		
-		dataScript.netObjects.Add(id, newCrysta.transform); 
-		Debug.Log ("id " + id + "  contains " + dataScript.netObjects[id]);
+		//dataScript.netObjects.Add(id, newCrysta.transform); 
+		//Debug.Log ("id " + id + "  contains " + dataScript.netObjects[id]);*/
 	}
 	
 }

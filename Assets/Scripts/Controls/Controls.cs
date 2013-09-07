@@ -114,8 +114,12 @@ public class Controls : MonoBehaviour {
 			buildingPoint.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
 			if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
 			{	
-				Build buildObj = (Build) buildingPoint.transform.GetComponent(typeof(Build)); 
-				buildObj.build(buildingPoint.transform.position, buildingPoint.transform.rotation); 
+				
+			    var target = this.player ; 
+				if (target) {
+					ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
+					shipController.tryBuild(buildingPoint.transform); 
+				}
 			}
 		}
 	}

@@ -168,7 +168,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\Ring.cginc" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\PlanetSurface.cginc" />
-     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
+     <None Include="Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.xml" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\Variant.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterNormalDetail.shader" />
@@ -181,7 +181,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\VariantOuterScatteringRingShadow.shader" />
-     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
+     <None Include="Assets\Photon Unity Networking\PhotonNetwork\library\release_history.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\GasGiant\Variant.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterNormalPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterSpecular.shader" />
@@ -281,7 +281,7 @@
  <HintPath>Assets\Photon Unity Networking\Editor\PhotonNetwork\Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
+ <HintPath>Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>

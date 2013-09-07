@@ -54,6 +54,7 @@ public class DataManager : Photon.MonoBehaviour
 	 * */
 	void SpawnSceneData()
 	{
+		Debug.Log("IS MASTER SCENE DATA"); 
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
         GameObject theGO = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Vector3 pos = theGO.transform.position;
@@ -63,9 +64,15 @@ public class DataManager : Photon.MonoBehaviour
         int id2 = PhotonNetwork.AllocateViewID();
 		
 		
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.MasterClient, pos, rot, id1);
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.MasterClient, pos, rot, id2);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, "Bots/Bot", pos, rot, id1, ObjectsSpawnTypes.bot);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, "Bots/Bot", pos, rot, id2, ObjectsSpawnTypes.bot);
 		
+	}
+	
+	public void addObjectToScene(string obj, Vector3 pos, Quaternion rot, ObjectsSpawnTypes spawnType) {
+        int id = PhotonNetwork.AllocateViewID();
+		Debug.Log ("Object name " + obj);
+        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, obj, pos, rot, id, spawnType);
 	}
 	
 	public void addBuildingToScene(string building, Vector3 pos, Quaternion rot) {
@@ -163,26 +170,13 @@ public class DataManager : Photon.MonoBehaviour
 	 * Spawn an object to the game
 	 */
 	[RPC]
-    void SpawnObjOnNetwork(Vector3 pos, Quaternion rot, int id1)
+    void SpawnObjOnNetwork(string prefab, Vector3 pos, Quaternion rot, int id1, ObjectsSpawnTypes spawnType)
     {
 		GameObject newObject =null ; 
-		//if (PhotonNetwork.isMasterClient)
-		//{
-			newObject = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Bots/Bot", pos, rot, 0, null) as GameObject;
-		//}
-        //GameObject newObject = PhotonNetwork.Instantiate("Prefabs/Objects/Bots/Bot", pos, rot, 0) as GameObject;
-		//newObject.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG).transform; 
-		newObject.name = "Bot#"+id1; 
-		
+		object[] data =null ; 
+		newObject = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/" + prefab, pos, rot, 0, data ) as GameObject;
 		
 		PhotonView PV = (PhotonView) newObject.GetComponent(typeof(PhotonView));
-		Debug.Log ("THE CREATED VIEW ID "+ PV.viewID); 
-        //SetPhotonViewIDs(newObject.gameObject, id1);
-		if (!PhotonNetwork.isMasterClient)
-		{
-			Debug.Log ("NOT THE MASTER BUT THE CREATED VIEW ID "+ PV.viewID); 
-		}
-		this.netObjects.Add(PV.viewID, newObject.transform); 
 		
     }
 	

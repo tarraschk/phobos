@@ -175,25 +175,25 @@
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\Monstergame\Resources\Scripts\myThirdPersonController.cs" />
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\NetworkCharacter.cs" />
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\RandomMatchmaker.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\FriendInfo.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\LoadbalancingPeer.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\NetworkingPeer.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonClasses.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonHandler.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonNetSimSettingsGui.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonNetwork.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonPlayer.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonStatsGui.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonStatsTracker.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PhotonView.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\PingCloudRegions.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Room.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RoomInfo.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\RpcIndexComponent.cs" />
-     <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\ServerSettings.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\CustomTypes.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\Enums.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\Extensions.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\FriendInfo.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\LoadbalancingPeer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\NetworkingPeer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonClasses.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonHandler.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonNetSimSettingsGui.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonNetwork.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonPlayer.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonStatsGui.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonStatsTracker.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PhotonView.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\PingCloudRegions.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\Room.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\RoomInfo.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\RpcIndexComponent.cs" />
+     <Compile Include="Assets\Photon Unity Networking\PhotonNetwork\ServerSettings.cs" />
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ConnectAndJoinRandom.cs" />
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\InputToEvent.cs" />
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\ManualPhotonViewAllocator.cs" />
@@ -210,7 +210,6 @@
      <Compile Include="Assets\Scripts\Behaviors\Destructible.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Dockable.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Laser.cs" />
-     <Compile Include="Assets\Scripts\Behaviors\ShipController.cs" />
      <Compile Include="Assets\Scripts\Behaviors\botBehavior.cs" />
      <Compile Include="Assets\Scripts\Behaviors\projectile.cs" />
      <Compile Include="Assets\Scripts\Camera\UniverseCamera.cs" />
@@ -230,6 +229,7 @@
      <Compile Include="Assets\Scripts\Global\GameController.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Cooldown.cs" />
      <Compile Include="Assets\Scripts\Global\Lib\Stack.cs" />
+     <Compile Include="Assets\Scripts\Global\ShipController.cs" />
      <Compile Include="Assets\Scripts\Global\Vars.cs" />
      <Compile Include="Assets\Scripts\MainMenu\lightEffect.cs" />
      <Compile Include="Assets\Scripts\MainMenu\rotation.cs" />
@@ -241,6 +241,7 @@
      <Compile Include="Assets\Scripts\Movement\moveToBehavior.cs" />
      <Compile Include="Assets\Scripts\Photon Network\ConnectAuto.cs" />
      <Compile Include="Assets\Scripts\Photon Network\InputStack.cs" />
+     <Compile Include="Assets\Scripts\Photon Network\ObjectNetscript.cs" />
      <Compile Include="Assets\Scripts\Photon Network\PlayerNetscript.cs" />
      <Compile Include="Assets\Scripts\Photon Network\PlayerSpawn.cs" />
      <Compile Include="Assets\Scripts\Resources\collectablesSpawnPoint.cs" />
@@ -320,7 +321,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\Ring.cginc" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\PlanetSurface.cginc" />
-     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.xml" />
+     <None Include="Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.xml" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\Variant.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterNormalDetail.shader" />
@@ -333,7 +334,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\VariantOuterScatteringRingShadow.shader" />
-     <None Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\release_history.txt" />
+     <None Include="Assets\Photon Unity Networking\PhotonNetwork\library\release_history.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\GasGiant\Variant.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterNormalPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterSpecular.shader" />
@@ -430,7 +431,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Thruster\BasicFlame.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphere.shader" />
  <Reference Include="Photon3Unity3D">
- <HintPath>Assets\Photon Unity Networking\Plugins\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
+ <HintPath>Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

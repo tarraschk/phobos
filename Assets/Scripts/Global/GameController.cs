@@ -1,6 +1,11 @@
 using UnityEngine;
 using System.Collections;
-
+/**
+ * 
+ * The GameController is used for all accessions / get functions
+ * To access the content of the game. Most  important functions
+ * can be used as static methods. 
+*/
 public class GameController : MonoBehaviour  {
 	
 	/** 

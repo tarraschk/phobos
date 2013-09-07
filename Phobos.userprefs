@@ -1,40 +1,12 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Global\GameController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Photon Network\ObjectNetscript.cs">
     <Files>
-      <File FileName="Assets\Scripts\GUI\MainGUI.cs" Line="85" Column="56" />
-      <File FileName="Assets\Scripts\Photon Network\PlayerNetscript.cs" Line="129" Column="68" />
-      <File FileName="Assets\Scripts\Controls\Controls.cs" Line="113" Column="24" />
-      <File FileName="Assets\Scripts\Global\GameController.cs" Line="62" Column="39" />
-      <File FileName="Assets\Scripts\Components\Turret.cs" Line="49" Column="104" />
-      <File FileName="Assets\Scripts\GUI\LabelPositioning.cs" Line="31" Column="1" />
-      <File FileName="Assets\Scripts\Global\DataManager.cs" Line="185" Column="3" />
-      <File FileName="Assets\Scripts\Controls\Build.cs" Line="32" Column="6" />
+      <File FileName="Assets\Scripts\Photon Network\ObjectNetscript.cs" Line="55" Column="2" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Photon Unity Networking" expanded="True">
-                <Node name="Plugins" expanded="True">
-                  <Node name="PhotonNetwork" expanded="True" />
-                </Node>
-              </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="Behaviors" expanded="True" />
-                <Node name="Components" expanded="True" />
-                <Node name="Controls" expanded="True" />
-                <Node name="Global" expanded="True">
-                  <Node name="GameController.cs" selected="True" />
-                </Node>
-                <Node name="GUI" expanded="True" />
-                <Node name="Movement" expanded="True" />
-                <Node name="Photon Network" expanded="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
+        <State expanded="True" selected="True" />
       </Pad>
       <Pad Id="ClassPad">
         <State expanded="True" selected="True" />
