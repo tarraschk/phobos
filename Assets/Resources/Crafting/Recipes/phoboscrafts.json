@@ -1,0 +1,14 @@
+{
+  "recipes" : {
+    "buildings" : {
+      "cruiser" : {
+        "crystal" : 5
+      }
+    },
+    "equipment" : {
+      "electrifier" : {
+        "crystal" : 50
+      }
+    }
+  }
+}

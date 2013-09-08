@@ -7,6 +7,12 @@ using System.Collections;
  * can be used as static methods. 
 */
 public class GameController : MonoBehaviour  {
+	/**
+	 * Load game misc data (TO MOVE ??)
+	 */
+	public void Awake() {
+		new RecipesImport(); 
+	}
 	
 	/** 
 	 * get all Players (objects with tag player), as an array, of this scene. 
