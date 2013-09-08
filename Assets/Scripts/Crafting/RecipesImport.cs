@@ -15,13 +15,10 @@ public class RecipesImport : MonoBehaviour {
 	 * Constructor, executed at loading section. 
 	 */
 	public RecipesImport() {
-		Debug.Log ("Instantiate");
 		this.readRecipeJSON(); 
 		//string JSONData = (string) Resources.Load(this.recipesLocation);
 		var recipesData = JSON.Parse (this.recipeText); 
-		Debug.Log(recipesData); 
 		string test = (recipesData["recipes"]["buildings"]["cruiser"]["crystal"]);
-		Debug.Log (test);
 	}
 	
 	/**
@@ -31,7 +28,6 @@ public class RecipesImport : MonoBehaviour {
 	public void readRecipeJSON() {
 		var SR = new StreamReader(this.recipesLocation); 
 		this.recipeText = SR.ReadToEnd(); 
-		Debug.Log(this.recipeText); 
 		SR.Close();
 	}
 }

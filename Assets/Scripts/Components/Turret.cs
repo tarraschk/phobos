@@ -80,7 +80,9 @@ public class Turret : MonoBehaviour {
 	}
 	
 	public bool checkTargetInRange() {
-		return (this.range >= Vector3.Distance(this.transform.position, target.transform.position)); 
+		if (target != null) 
+			return (this.range >= Vector3.Distance(this.transform.position, target.transform.position)); 
+		else return false ;
 	}
 	
 	public bool isReady() {
