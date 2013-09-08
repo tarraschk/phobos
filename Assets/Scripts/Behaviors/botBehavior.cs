@@ -12,7 +12,7 @@ public class botBehavior : MonoBehaviour {
 	
 	public enum AITypes{idle, attack, returnToPos};
 	
-	private AITypes AI = AITypes.idle;
+	public AITypes AI = AITypes.idle;
 	private Transform initPosition  ;
 	private float targetAttackRange = 50f; 
 	private float targetReturnIdleRange = 150f; 
@@ -61,7 +61,7 @@ public class botBehavior : MonoBehaviour {
 		var univPlayers = GameController.getPlayers(); 
 		for (var i = 0 ; i < univPlayers.Length ; i++) {
 			
-			var remainingDistance = Vector3.Distance(univPlayers[i].transform.position, this.transform.position);
+			float remainingDistance = Vector3.Distance(univPlayers[i].transform.position, this.transform.position);
 			if (remainingDistance < this.targetAttackRange) 
 			{
 				this.setAttackOn (univPlayers[i].transform);
@@ -70,35 +70,25 @@ public class botBehavior : MonoBehaviour {
 	}
 	
 	private void setAttackOn(Transform target) {
-		Turrets turrets = (Turrets) this.GetComponent(typeof(Turrets));
-		turrets.attack(target); 
+		ShipController SC = (ShipController) this.GetComponent(typeof(ShipController));
+		SC.attack(target) ;
 		this.setAI(AITypes.attack);
 	}
 	
 	private void attackBehavior() {
+		ShipController SC = (ShipController) this.GetComponent(typeof(ShipController));
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		Turrets turrets = (Turrets) this.GetComponent(typeof(Turrets));
-		var currentTarget = prop.getTargetPos();
-		var that = this;
-		if (currentTarget != Vector3.zero) {
-			var remainingDistance = Vector3.Distance(currentTarget, this.transform.position);
+		Transform currentTarget = turrets.getTarget();
+		var botObject = this.gameObject;
+		if (currentTarget.position != Vector3.zero) {
+			float remainingDistance = Vector3.Distance(currentTarget.position, botObject.transform.position);
 			if (remainingDistance >= this.targetReturnIdleRange) 
 			{
-				prop.setTargetPos(this.initPosition.transform.position);
+				SC.moveTo(this.initPosition.transform.position);
+				turrets.unsetTarget(); 
 				this.setAI (AITypes.returnToPos);
 			}
-			
-				/*if (this.shared.hasTarget) {
-						var currentTarget = this.getSectorShip(this.shared.targetId);
-						if (currentTarget) {
-							var targetRange = utils.distance(currentTarget.shared, this.shared);
-							if (targetRange >= this.shared.AIStopRange || !utils.isSameZ(currentTarget,this)) {
-								if (server) this.setBotBehavior("backToPosition");
-							}
-						}
-						else this.setBotBehavior("backToPosition");
-					}
-					else this.setAI("backToPositionTrigger");*/
 		}
 		else this.setAI (AITypes.returnToPos);
 	}

@@ -44,9 +44,17 @@ public class Turrets : MonoBehaviour {
 		return (this.target != null); 	
 	}
 	
+	public void unsetTarget() {
+		this.target = null ; 	
+	}
+	
 	public void setTarget(Transform newTarget) {
 		this.target = newTarget;	
 		this.theWeapon.setTarget(newTarget);
+	}
+	
+	public Transform getTarget() {
+		return this.target; 	
 	}
 	
 	public void attack (Transform target) {
@@ -57,6 +65,15 @@ public class Turrets : MonoBehaviour {
 	
 	public bool isPlayer() {
 		return this.tag == "Player"; 	
+	}
+	
+	public int getMaximumRange() {
+		return this.theWeapon.range ; 	
+	}
+	
+	public bool getAllWeaponsInRange() {
+		//foreach;  @TODO
+		return (theWeapon.checkTargetInRange());
 	}
 	
 	

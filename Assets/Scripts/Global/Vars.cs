@@ -1,6 +1,6 @@
 using System;
 
-public enum BehaviorTypes{idle, collecting, moving, docking};
+public enum BehaviorTypes{idle, collecting, moving, docking, attacking};
 public enum ObjectsSpawnTypes{bot, collectable}; 
 
 namespace Phobos

@@ -25,11 +25,9 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
         //We're connected!
 		if (PhotonNetwork.isMasterClient)
         {
-			Debug.Log ("IS MASTER");
 			this.enabled = true ; 
 		}
 		else{
-			Debug.Log ("IS NOT MASTER");
 			this.enabled = false ; 
 		}
 		this.cooldown = new Cooldown(this.cdTime, false);
@@ -56,7 +54,6 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 		Vector3 pos = this.spawnPosition(); 
 		Quaternion rot = this.transform.rotation; 
         int id = PhotonNetwork.AllocateViewID();
-		Debug.Log ("SEND RPC");
 		DataManager dataScript = GameController.getDataManager();
 		dataScript.addObjectToScene("Resources/Crystal", pos, rot, ObjectsSpawnTypes.collectable); 
 	}
@@ -74,7 +71,6 @@ public class collectablesSpawnPoint : Photon.MonoBehaviour {
 	}
 	
 	void SpawnCrystalOnNetwork(string crystal, Vector3 pos, Quaternion rot, int id) {
-		Debug.Log ("SPAWN CRYSTAL");
 		
 		//GameObject newCrysta = (GameObject) PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Resources/"+crystal, pos, rot, 0, null) ;
 		/*GameObject newCrysta = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/Resources/"+crystal, pos, rot, 0, null) as GameObject;

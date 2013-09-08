@@ -24,6 +24,10 @@ public class ShipController : MonoBehaviour {
 			case BehaviorTypes.moving:
 			
 			break;
+			
+			case BehaviorTypes.attacking:
+				this.attackBehavior(); 
+			break; 
 		}
 	}
 	
@@ -40,14 +44,38 @@ public class ShipController : MonoBehaviour {
 		
 	}
 	
+	/**
+	 * Attack ! 
+	 */
+	private void attackBehavior() {
+		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
+		int maximumRange = turr.getMaximumRange(); 
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		Transform currentTarget = turr.getTarget(); 
+		if (turr.getAllWeaponsInRange()) {
+			prop.stop ();
+			prop.lookAt(currentTarget.transform.position); 
+		}
+		else {
+			this.propulsorsGoTo(currentTarget.transform.position); 	
+		}
+	}
+	
+	
 	private void dockTo(Dockable dockData) {
 		switch(dockData.type) {
 			case Phobos.dockType.station:
+				this.dockToStation(); 
 			break; 
 			case Phobos.dockType.warp:
 				this.warpTo(dockData.warpDestination); 
 			break; 
 		}
+	}
+	
+	private void dockToStation() {
+		
+			
 	}
 	
 	private void warpTo(string sectorName) {
@@ -74,10 +102,19 @@ public class ShipController : MonoBehaviour {
 		}
 	}
 	
-	public void moveTo(Vector3 destination) {
+	
+	public void moveToOwn(Vector3 destination) {
 		this.addNetInput(Phobos.Commands.MOVE_TO, destination); 
+		this.moveTo(destination); 
+	}
+	
+	public void moveTo(Vector3 destination) {
 		this.setBehavior(BehaviorTypes.moving); 
 		this.unsetTarget(); 
+		this.propulsorsGoTo(destination); 
+	}
+	
+	private void propulsorsGoTo(Vector3 destination) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		prop.setTargetPos(destination);
 	}
@@ -94,6 +131,7 @@ public class ShipController : MonoBehaviour {
 	
 	//Order the ship to attack the target. 
 	public void attack(Transform target) {
+		this.setBehavior(BehaviorTypes.attacking); 
 		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
 		turr.attack(target);	
 	}

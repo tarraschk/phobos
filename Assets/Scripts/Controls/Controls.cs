@@ -131,7 +131,7 @@ public class Controls : MonoBehaviour {
 		    var target = this.player ; 
 			if (target) {
 				ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
-				shipController.moveTo(destination); 
+				shipController.moveToOwn(destination); 
 			}
 		}
 	}

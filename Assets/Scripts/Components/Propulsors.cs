@@ -117,13 +117,17 @@ public class Propulsors : MonoBehaviour {
 		transform.position += transform.forward * this.speed * Time.deltaTime;
 	}
 	
+	public void lookAt(Vector3 targetLook) {
+		var rotation = Quaternion.LookRotation(targetLook - this.transform.position);
+		this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * this.rotationSpeed);
+	}
+	
 	/**
 	 * Turns the ship towards the current target position
 	 * Requires a target position (this.targetPos); 
 	 */
 	private void lookAtTarget() {
-		var rotation = Quaternion.LookRotation(this.targetPos - this.transform.position);
-		this.transform.rotation = Quaternion.Slerp(this.transform.rotation, rotation, Time.deltaTime * this.rotationSpeed);
+		this.lookAt(this.targetPos); 
 	}
 	
 	/**

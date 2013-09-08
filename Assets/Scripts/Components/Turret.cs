@@ -12,7 +12,7 @@ public class Turret : MonoBehaviour {
 	public int power = 50;
 	
 	//How long can the turret shoot ? 
-	public int range = 100 ; 
+	public int range = 40 ; 
 	
 	//The display name
 	public string wName = "Electrifier";
@@ -70,13 +70,17 @@ public class Turret : MonoBehaviour {
 	 */
 	public bool isCanFire() {
 		if (target != null) {
-			if (this.range >= Vector3.Distance(this.transform.position, target.transform.position) && this.isReady ()) {
+			if (this.checkTargetInRange() && this.isReady ()) {
 				return true; 	
 			}
 			else return false; 
 		}
 		
 		else return false; 
+	}
+	
+	public bool checkTargetInRange() {
+		return (this.range >= Vector3.Distance(this.transform.position, target.transform.position)); 
 	}
 	
 	public bool isReady() {

@@ -54,7 +54,6 @@ public class DataManager : Photon.MonoBehaviour
 	 * */
 	void SpawnSceneData()
 	{
-		Debug.Log("IS MASTER SCENE DATA"); 
         GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Spawnpoint");
         GameObject theGO = spawnPoints[Random.Range(0, spawnPoints.Length)];
         Vector3 pos = theGO.transform.position;
@@ -71,13 +70,11 @@ public class DataManager : Photon.MonoBehaviour
 	
 	public void addObjectToScene(string obj, Vector3 pos, Quaternion rot, ObjectsSpawnTypes spawnType) {
         int id = PhotonNetwork.AllocateViewID();
-		Debug.Log ("Object name " + obj);
         photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, obj, pos, rot, id, spawnType);
 	}
 	
 	public void addBuildingToScene(string building, Vector3 pos, Quaternion rot) {
         int id = PhotonNetwork.AllocateViewID();
-		Debug.Log ("Building name " + building);
         photonView.RPC("SpawnBuildingOnNetwork", PhotonTargets.AllBuffered, building, pos, rot, id);
 	}
 	

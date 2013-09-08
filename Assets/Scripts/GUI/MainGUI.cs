@@ -8,6 +8,7 @@ public class MainGUI : MonoBehaviour {
 	
 	public Destructible TargetDestr ; 
 	public Cargohold TargetCargo ; 
+	public PlayerStats TargetStats ; 
 	
 	public Texture inventorySlot ; 
 	
@@ -20,6 +21,7 @@ public class MainGUI : MonoBehaviour {
 		if (active) {
 			GUI.backgroundColor = Color.cyan;
 			this.inventory(); 
+			this.playerStats(); 
 			if (this.showBuildMenu) {
 				this.buildMenu();	
 			}
@@ -38,10 +40,17 @@ public class MainGUI : MonoBehaviour {
 		this.GUITarget = newPlayer;
 		TargetDestr = (Destructible) this.GUITarget.GetComponent(typeof(Destructible));
 		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	 
+		TargetStats = (PlayerStats) this.GUITarget.GetComponent(typeof(PlayerStats));	 
 	}
 	
 	public void setActive(bool newActive) {
 		this.active = newActive ; 
+	}
+	
+	private void playerStats() {
+		GUI.Box (new Rect (10,Screen.height - 100,100,30), "Health : " + TargetDestr.energy);
+		GUI.Box (new Rect (10,Screen.height - 70,150,30), "Level " + TargetStats.level + " (" +TargetStats.currentXP +" / " + TargetStats.requiredXP +")");
+		GUI.Box (new Rect (10,Screen.height - 50,100,30), "$" + TargetStats.money);
 	}
 	
 	private void inventory() {
@@ -60,11 +69,10 @@ public class MainGUI : MonoBehaviour {
 		foreach (Transform j in cargoHold) {
 			cargoNames += j.name + "\n"; 
 		}
-		if (GUI.Button (new Rect (10,Screen.height - 100,100,30), "Build")) {
+		if (GUI.Button (new Rect (10,Screen.height - 200,100,30), "Build")) {
 			Debug.Log ("BUILD");
 			this.buildButtonDown(); 
 		}
-		GUI.Box (new Rect (10,Screen.height - 50,100,30), "Health : " + TargetDestr.energy);
 		GUI.Box (new Rect (Screen.width - 150,75,100,30), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax);
 		//GUI.Button (new Rect (10,170,250,100), "Cargo : " + TargetCargo.capacity + " / " + TargetCargo.capacityMax +"\n" + cargoNames);
 	}

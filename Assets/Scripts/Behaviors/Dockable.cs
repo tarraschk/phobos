@@ -12,17 +12,14 @@ using System.Collections;
 public class Dockable : MonoBehaviour {
 	
 	public Phobos.dockType type ; 
+	public bool isWarp = false ; 
 	public string warpDestination = null ; 
 	
 	void Start () {
-		if (warpDestination != null) 
+		if (isWarp) 
 			warpInit() ; //This dockable is a warp hole / gate
 		else 
 			stationInit() ; //This dockable is a station
-	}
-	
-	void Update () {
-	
 	}
 	
 	private void warpInit() {

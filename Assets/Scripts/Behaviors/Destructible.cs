@@ -14,8 +14,9 @@ public class Destructible : Photon.MonoBehaviour {
 		this.setEnergy(this.energy - power); 
 		if (this.energy <= 0) {
 			this.destroy() ; 	
-			Level levelScript = (Level) attacker.GetComponent(typeof(Level));
+			PlayerStats levelScript = (PlayerStats) attacker.GetComponent(typeof(PlayerStats));
 			levelScript.doGainXP(this.level * 25) ; 
+			levelScript.doGainMoney(this.level * 15) ; 
 		}
 	}
 	
