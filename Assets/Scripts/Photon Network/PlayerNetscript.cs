@@ -84,6 +84,10 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			case Phobos.Commands.COLLECT:
                 photonView.RPC("netCollect", PhotonTargets.Others, viewScript.viewID);
 			break ;
+			
+			case Phobos.Commands.DOCK:
+                photonView.RPC("netDock", PhotonTargets.Others, viewScript.viewID);
+			break ;	
 		}
 		this.stackActive = false ;
 	}
@@ -136,6 +140,19 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
 			shipController.collect(target); 
 		}
+    }
+	
+	[RPC]
+    void netDock(int targetID)
+    {
+		var currentUniverse = GameController.findUniverse(); 
+		DataManager dataScript = (DataManager) currentUniverse.GetComponent(typeof(DataManager));
+		if (dataScript.netObjects.ContainsKey(targetID)) {
+			Transform target = (Transform) dataScript.netObjects[targetID]; 
+			ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
+			shipController.dock(target); 
+			
+		}	
     }
 	
     [RPC]

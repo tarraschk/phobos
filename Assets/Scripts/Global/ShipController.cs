@@ -31,6 +31,21 @@ public class ShipController : MonoBehaviour {
 		}
 	}
 	
+	
+	public void dockOwn(Transform target) {
+		this.addNetInput(Phobos.Commands.DOCK, target); 
+		this.dock (target);	
+	}
+	
+	
+	public void dock(Transform target) {
+		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
+		this.setBehavior(BehaviorTypes.docking); 
+		this.setTarget(target); 
+		prop.setTargetPos(target.transform.position);	
+	}
+	
+	
 	private void dockBehavior() {
 		GameObject currentShip = gameObject; 
 		if (this.target != null) {
@@ -42,6 +57,24 @@ public class ShipController : MonoBehaviour {
 			
 		}
 		
+	}
+	
+	private void dockTo(Dockable dockData) {
+		switch(dockData.type) {
+			case Phobos.dockType.station:
+				this.dockToStation(); 
+			break; 
+			case Phobos.dockType.warp:
+				this.warpTo(dockData.warpDestination); 
+			break; 
+		}
+	}
+	
+	private void dockToStation() {
+		
+		Transform dockingBay = target.transform.FindChild (Phobos.Vars.DOCKINGBAY); 
+		gameObject.transform.parent = dockingBay ; 
+		this.disableAndHide(); 
 	}
 	
 	/**
@@ -59,23 +92,6 @@ public class ShipController : MonoBehaviour {
 		else {
 			this.propulsorsGoTo(currentTarget.transform.position); 	
 		}
-	}
-	
-	
-	private void dockTo(Dockable dockData) {
-		switch(dockData.type) {
-			case Phobos.dockType.station:
-				this.dockToStation(); 
-			break; 
-			case Phobos.dockType.warp:
-				this.warpTo(dockData.warpDestination); 
-			break; 
-		}
-	}
-	
-	private void dockToStation() {
-		
-			
 	}
 	
 	private void warpTo(string sectorName) {
@@ -119,6 +135,10 @@ public class ShipController : MonoBehaviour {
 		prop.setTargetPos(destination);
 	}
 	
+	private void disableAndHide() {
+		gameObject.SetActive(false);	
+	}
+	
 	/*
 	 * Uses attack script when WE are the controller of this ship.
 	 * Implies the net input and the GUI modifications. 
@@ -148,18 +168,6 @@ public class ShipController : MonoBehaviour {
 	public void collect(Transform target) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		this.setBehavior(BehaviorTypes.collecting); 
-		this.setTarget(target); 
-		prop.setTargetPos(target.transform.position);	
-	}
-	
-	public void dockOwn(Transform target) {
-		this.addNetInput(Phobos.Commands.DOCK, target); 
-		this.dock (target);	
-	}
-	
-	public void dock(Transform target) {
-		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
-		this.setBehavior(BehaviorTypes.docking); 
 		this.setTarget(target); 
 		prop.setTargetPos(target.transform.position);	
 	}

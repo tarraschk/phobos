@@ -21,6 +21,7 @@ namespace Phobos
 		public static int COLLECT_DISTANCE = 10; 
 		public static int WARP_DISTANCE = 20; 
 		public static string MODEL = "Model"; 
+		public static string DOCKINGBAY = "DockingBay"; 
 		public static string CARGOBAY = "Cargo"; 
 		
 	}

@@ -210,6 +210,7 @@
      <Compile Include="Assets\Scripts\Behaviors\Destructible.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Dockable.cs" />
      <Compile Include="Assets\Scripts\Behaviors\Laser.cs" />
+     <Compile Include="Assets\Scripts\Behaviors\PlayerStats.cs" />
      <Compile Include="Assets\Scripts\Behaviors\botBehavior.cs" />
      <Compile Include="Assets\Scripts\Behaviors\projectile.cs" />
      <Compile Include="Assets\Scripts\Camera\UniverseCamera.cs" />

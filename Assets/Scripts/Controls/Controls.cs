@@ -67,6 +67,10 @@ public class Controls : MonoBehaviour {
 		return (this.player != null) ; 	
 	}
 	
+	/**
+	 * Sets the current control set
+	 * to something different 
+	 * */
 	public void setControlType(controlTypes newControlType) {
 		if (newControlType != controlTypes.building) {
 			this.clearBuildingType(); 
