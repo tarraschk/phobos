@@ -44,6 +44,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ExternalAssets\Plugins\SimpleJSON\JSON Tests\UnityScript\Test_UnityScript.js" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Character Controllers\Sources\Scripts\CharacterMotor.js" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Character Controllers\Sources\Scripts\FPSInputController.js" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Character Controllers\Sources\Scripts\PlatformInputController.js" />
@@ -54,6 +55,7 @@
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\Camera Scripts\SmoothFollow.js" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\Camera Scripts\SmoothLookAt.js" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\General Scripts\DragRigidbody.js" />
+     <Compile Include="Assets\JSON Tests\UnityScript\Test_UnityScript.js" />
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\Monstergame\Resources\Scripts\CharacterCamera.js" />
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\Monstergame\Resources\Scripts\CharacterControl.js" />
      <Compile Include="Assets\Photon Unity Networking\MarcoPolo-Tutorial\Monstergame\Resources\Scripts\CollisionParticleEffect.js" />
@@ -198,6 +200,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\AsteroidRing.cginc" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantStretchedLitScattering.shader" />
+     <None Include="Assets\ExternalAssets\Plugins\SimpleJSON\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalSpecularRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantSpecularRingShadow.shader" />
@@ -214,6 +217,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\VariantOuterScatteringPlanetShadow.shader" />
+     <None Include="Assets\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantScattering.shader" />
@@ -235,6 +239,13 @@
  <Reference Include="Photon3Unity3D">
  <HintPath>Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{183E148A-7418-54A5-0B20-DCB7EE9CC858}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

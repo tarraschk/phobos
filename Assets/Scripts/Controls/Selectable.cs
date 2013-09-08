@@ -37,20 +37,20 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 		GameController univScript = (GameController) univ.GetComponent(typeof(GameController));
 		var target = gameObject; //The target is the current selected object
 		var player = univScript.getPlayer(); // TODO 
+		Controls shipControls = (Controls) GameController.getControls(); 
 		ShipController shipController = (ShipController) player.GetComponent(typeof(ShipController));
 		if (player) {
 			switch (action) {
 				case ATTACK: 
-					shipController.attackOwn(target.transform); 
+					shipControls.attackTarget(target.transform); 
 				break;
 					
 				case COLLECT:
-					shipController.collectOwn(target.transform); 
+					shipControls.collectTarget(target.transform); 
 				break;
 					
 				case DOCK :
-					Debug.Log ("Dock to ");
-					shipController.dockOwn(target.transform); 
+					shipControls.dockTo(target.transform); 
 				break;
 			}
 		}

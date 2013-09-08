@@ -44,6 +44,8 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ExternalAssets\Plugins\SimpleJSON\JSON Tests\CSharp\Test_CSharp.cs" />
+     <Compile Include="Assets\ExternalAssets\Plugins\SimpleJSON\Plugins\SimpleJSON.cs" />
      <Compile Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Examples\Scripts\Player\SGT_2DSpaceshipController.cs" />
      <Compile Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Examples\Scripts\Player\SGT_3DSpaceshipController.cs" />
      <Compile Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Examples\Scripts\Player\SGT_CameraDrag.cs" />
@@ -151,6 +153,7 @@
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\General Scripts\ActivateTrigger.cs" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\Utility Scripts\CombineChildren.cs" />
      <Compile Include="Assets\ExternalAssets\Standard Assets\Scripts\Utility Scripts\MeshCombineUtility.cs" />
+     <Compile Include="Assets\JSON Tests\CSharp\Test_CSharp.cs" />
      <Compile Include="Assets\Photon Unity Networking\DemoBoxes\OnAwakePhysicsSettings.cs" />
      <Compile Include="Assets\Photon Unity Networking\DemoBoxes\TestChangeScene.cs" />
      <Compile Include="Assets\Photon Unity Networking\DemoBoxes\TestGuiInstantiate.cs" />
@@ -222,6 +225,7 @@
      <Compile Include="Assets\Scripts\Controls\Build.cs" />
      <Compile Include="Assets\Scripts\Controls\Controls.cs" />
      <Compile Include="Assets\Scripts\Controls\Selectable.cs" />
+     <Compile Include="Assets\Scripts\Crafting\RecipesImport.cs" />
      <Compile Include="Assets\Scripts\GUI\GUIInput.cs" />
      <Compile Include="Assets\Scripts\GUI\LabelPositioning.cs" />
      <Compile Include="Assets\Scripts\GUI\MainGUI.cs" />
@@ -397,6 +401,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\AsteroidRing.cginc" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantStretchedLitScattering.shader" />
+     <None Include="Assets\ExternalAssets\Plugins\SimpleJSON\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalSpecularRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantSpecularRingShadow.shader" />
@@ -413,6 +418,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\VariantOuterScatteringPlanetShadow.shader" />
+     <None Include="Assets\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantScattering.shader" />
@@ -434,6 +440,13 @@
  <Reference Include="Photon3Unity3D">
  <HintPath>Assets\Photon Unity Networking\PhotonNetwork\library\Photon3Unity3D.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{183E148A-7418-54A5-0B20-DCB7EE9CC858}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -243,6 +243,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\CGInclude\AsteroidRing.cginc" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantStretchedLitScattering.shader" />
+     <None Include="Assets\ExternalAssets\Plugins\SimpleJSON\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereNormalSpecularRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantSpecularRingShadow.shader" />
@@ -259,6 +260,7 @@
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantAtmosphereOuterSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadowDetail.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetAtmosphere\VariantOuterScatteringPlanetShadow.shader" />
+     <None Include="Assets\JSON Tests\TroubleShoot.txt" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantRingShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\PlanetSurface\VariantNormalSpecularPlanetShadow.shader" />
      <None Include="Assets\ExternalAssets\SpaceGraphicsToolkit\Required\Shaders\Resources\Ring\VariantScattering.shader" />
@@ -286,8 +288,13 @@
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:\Program Files (x86)\Unity\Editor\Data\Managed\UnityEditor.Graphs.dll</HintPath>
  </Reference>
+ <Reference Include="ICSharpCode.SharpZipLib">
+ <HintPath>Assets\Plugins\ICSharpCode.SharpZipLib.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
+      <Project>{183E148A-7418-54A5-0B20-DCB7EE9CC858}</Project>      <Name>Assembly-CSharp-firstpass</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-CSharp.csproj">
       <Project>{3D524D31-8A60-AB17-8DAF-5E0E7EBC4FF9}</Project>      <Name>Assembly-CSharp</Name>    </ProjectReference>
     <ProjectReference Include="Assembly-UnityScript.unityproj">

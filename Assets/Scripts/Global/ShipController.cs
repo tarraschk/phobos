@@ -45,7 +45,21 @@ public class ShipController : MonoBehaviour {
 		prop.setTargetPos(target.transform.position);	
 	}
 	
+	/**
+	 * When docked to a station, undock the ship to it.  
+	 */
+	public void undock() {
+		Debug.Log ("TRY UNDOCK") ;
+		Controls playerControls = GameController.getControls(); 
+		Transform PlayersList = (Transform) GameController.getPlayerContainer().transform; 
+		gameObject.transform.parent = PlayersList ; 
+		this.enableAndShow();
+		playerControls.switchDockingControls(); 
+	}
 	
+	/**
+	 * Every frame executed when ship is commanded to dock a warp or station. 
+	 */
 	private void dockBehavior() {
 		GameObject currentShip = gameObject; 
 		if (this.target != null) {
@@ -59,6 +73,9 @@ public class ShipController : MonoBehaviour {
 		
 	}
 	
+	/**
+	 * Station or warp is in range, we warp or dock to station.  
+	 */
 	private void dockTo(Dockable dockData) {
 		switch(dockData.type) {
 			case Phobos.dockType.station:
@@ -70,11 +87,16 @@ public class ShipController : MonoBehaviour {
 		}
 	}
 	
+	/**
+	 * Station is in range, we dock it. 
+	 */
 	private void dockToStation() {
-		
+		Controls playerControls = GameController.getControls(); 
 		Transform dockingBay = target.transform.FindChild (Phobos.Vars.DOCKINGBAY); 
 		gameObject.transform.parent = dockingBay ; 
-		this.disableAndHide(); 
+		this.disableAndHide();
+		this.setBehavior (BehaviorTypes.idle);
+		playerControls.switchDockingControls(); 
 	}
 	
 	/**
@@ -133,6 +155,11 @@ public class ShipController : MonoBehaviour {
 	private void propulsorsGoTo(Vector3 destination) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		prop.setTargetPos(destination);
+	}
+	
+	private void enableAndShow() {
+		Debug.Log ("Activate");
+		gameObject.SetActive(true);	
 	}
 	
 	private void disableAndHide() {

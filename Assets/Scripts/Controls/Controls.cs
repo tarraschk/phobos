@@ -8,11 +8,11 @@ public class Controls : MonoBehaviour {
 	
 	public Transform player ; 
 	RaycastHit hit;
-	public enum controlTypes{moving, building};
+	public enum controlTypes{moving, building, docked};
 	
 	public controlTypes currentControlType = controlTypes.moving; 
 	
-	
+	private ShipController playerController ; 
 	private float raycastLength = 5000; 
 	
 	void Update () {
@@ -45,9 +45,37 @@ public class Controls : MonoBehaviour {
 	}
 	
 	/**
+	 * Commands the player to attack target.  
+	**/
+	public void attackTarget(Transform target) {
+		playerController.attackOwn(target.transform); 
+	}
+	
+	/**
+	 * Commands the player to collect target.  
+	**/
+	public void collectTarget(Transform target) {
+		playerController.collectOwn(target.transform); 
+	}
+	
+	/**
+	 * Commands the player to dock to target.  
+	**/
+	public void dockTo(Transform target) {
+		playerController.dockOwn(target.transform); 
+	}
+	
+	/**
+	 * Commands the player to undock.  
+	**/
+	public void undock() {
+		playerController.undock(); 
+	}
+	
+	
+	/**
 	 * Manages the keyboards input	 
 	**/
-	
 	public void keyboardInput() {
 		
 		if (Input.GetKeyDown (KeyCode.B)) {
@@ -61,6 +89,7 @@ public class Controls : MonoBehaviour {
 	 * */
 	public void setPlayer(Transform newPlayer) {
 		this.player = newPlayer ; 
+		playerController = (ShipController) newPlayer.GetComponent(typeof(ShipController));
 	}
 	
 	public bool hasPlayer() {
@@ -83,7 +112,9 @@ public class Controls : MonoBehaviour {
 		}
 		this.currentControlType = newControlType; 	
 	}
-	
+	/**
+	 * Switch the current control type from type 1 to type 2
+	 * */
 	public void switchControlType(controlTypes type1, controlTypes type2) {
 		if (this.currentControlType == type1) {
 			this.setControlType(type2); 
@@ -93,6 +124,25 @@ public class Controls : MonoBehaviour {
 		}
 	}
 	
+	
+	/**
+	 * Switch the current controls
+	 * to "docked" controls. 
+	 * Pop the "docked" GUI. 
+	 * Used when a ship is docked to a station. 
+	 * */
+	public void switchDockingControls() {
+		var GUIContainer = GameController.getGUIContainer(); 
+		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
+		GUIScript.toggleShowDockMenu(); 
+		this.switchControlType(controlTypes.moving, controlTypes.docked); 
+	}
+	
+	/**
+	 * Switch the current controls to "building" controls.  
+	 * Pop the "building" GUI. 
+	 * Used when a ship is building stuff. 
+	 * */
 	public void switchBuildingControls() {
 		var GUIContainer = GameController.getGUIContainer(); 
 		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));

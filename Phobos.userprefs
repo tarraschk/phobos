@@ -1,17 +1,28 @@
 ﻿<Properties GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Crafting\RecipesImport.cs">
+    <Files>
+      <File FileName="Assets\Plugins\SimpleJSON\JSON Tests\UnityScript\Test_UnityScript.js" Line="3" Column="1" />
+      <File FileName="Assets\Scripts\Controls\Controls.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GUI\MainGUI.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Global\ShipController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Global\GameController.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Controls\Selectable.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Crafting\RecipesImport.cs" Line="11" Column="2" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
+            <Node name="References" expanded="True" />
             <Node name="Assets" expanded="True">
+              <Node name="Plugins" expanded="True">
+                <Node name="SimpleJSON" expanded="True" />
+              </Node>
               <Node name="Scripts" expanded="True">
-                <Node name="Behaviors" expanded="True">
-                  <Node name="Destructible.cs" selected="True" />
-                </Node>
-                <Node name="Components" expanded="True" />
-                <Node name="Global" expanded="True" />
+                <Node name="Controls" expanded="True" />
+                <Node name="Crafting" expanded="True" />
+                <Node name="Global" selected="True" />
               </Node>
             </Node>
           </Node>

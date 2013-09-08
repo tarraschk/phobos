@@ -15,12 +15,22 @@ public class GameController : MonoBehaviour  {
 		return (GameObject.FindGameObjectsWithTag(Phobos.Vars.PLAYER_TAG));	
 	}
 	
+	/** 
+	 * get the player container, containing all players.  
+	 */
+	public static GameObject getPlayerContainer() {
+		return (GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYERS_TAG));	
+	}
+	
+	/** 
+	 * Find the current universe of this scene. 
+	 */
 	public static GameObject findUniverse() {
 		return  GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG); 	
 	}
 	
 	/** 
-	 * get the current player we can control. 
+	 * get the current player we can control, if there is any. 
 	 * */
 	public Transform getPlayer() {
 		Controls controlScript = (Controls) this.GetComponent(typeof(Controls));

@@ -1,6 +1,8 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2008
 
+Project("{53C20552-E139-43AB-56B3-68F2AACE13E4}") = "Phobos", "Assembly-CSharp-firstpass.csproj", "{183E148A-7418-54A5-0B20-DCB7EE9CC858}"
+EndProject
 Project("{53C20552-E139-43AB-56B3-68F2AACE13E4}") = "Phobos", "Assembly-CSharp.csproj", "{3D524D31-8A60-AB17-8DAF-5E0E7EBC4FF9}"
 EndProject
 Project("{53C20552-E139-43AB-56B3-68F2AACE13E4}") = "Phobos", "Assembly-CSharp-Editor.csproj", "{DB69581E-A061-C9B7-25C3-1AD65A49A454}"
@@ -13,6 +15,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{183E148A-7418-54A5-0B20-DCB7EE9CC858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{183E148A-7418-54A5-0B20-DCB7EE9CC858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{183E148A-7418-54A5-0B20-DCB7EE9CC858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{183E148A-7418-54A5-0B20-DCB7EE9CC858}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3D524D31-8A60-AB17-8DAF-5E0E7EBC4FF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3D524D31-8A60-AB17-8DAF-5E0E7EBC4FF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D524D31-8A60-AB17-8DAF-5E0E7EBC4FF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -29,7 +35,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																																																																																																																																																																														GlobalSection(MonoDevelopProperties) = preSolution
+																																																																																																																																																																																																			GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
