@@ -10,19 +10,16 @@ public class Turrets : MonoBehaviour {
 	
 	public Transform target = null;
 	
-	public ArrayList turrets;
-	public Turret[] turrets2;
+	public ArrayList currentEquipment; //RAW DATA FOR TESTING PURPOSES. MUST BE REPLACED BY A JSON OBJECT THAT IS THE OBJECT REAL WEAPON DATA. 
+	public Turret[] turrets = new Turret[3]{null, null, null}; 
+	public int turretsCount = 3;
 	
 	public Turret theWeapon;
 	
 	// Use this for initialization
 	void Start () {
-		turrets = new ArrayList(); 
-		Turret test1 = (Turret) gameObject.AddComponent("Turret");
-		Turret test2 = (Turret) gameObject.AddComponent("Turret"); 
-		this.theWeapon = (Turret) gameObject.AddComponent("Turret");
-		this.turrets.Add(test1); 
-		this.turrets.Add(test2); 
+		this.initiateTurrets() ; 
+		//this.theWeapon = (Turret) gameObject.AddComponent("Turret");
 	}
 	
 	/**
@@ -34,23 +31,59 @@ public class Turrets : MonoBehaviour {
 		}
 	}
 	
-	private void hasTargetBehavior() {
-		if (this.theWeapon.isCanFire()) 
-		{
-			//this.theWeapon.fire();
+	/**
+	 * Initiate all the turrets, based on the player's ship data. To be changed to something proper. 
+	 */
+	private void initiateTurrets() {
+		
+		GameObject electrifierProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser1") ; 
+		GameObject helloProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser2") ; 
+		GameObject ElectrifierObject = (GameObject) Resources.Load ("Prefabs/Weapons/Turret/Electrifier1") ; 
+		int i = 0; 
+		this.initiateTEST(); // ON LIT EN DUR DES DONNEES, normalement c du JSON envoyé par le serveur pou rce joueur !!
+		foreach (string equip in this.currentEquipment) {
+			Turret newTurret = (Turret) gameObject.AddComponent("Turret");
+			Debug.Log (equip);
+			switch(equip) {
+				case "Electrifier":
+				Debug.Log ("set turret script");
+					newTurret.cooldownTime = 0.28f; 
+					newTurret.wName = "Electrifierrrr"; 
+					newTurret.setProjectile(electrifierProjectile); 
+					newTurret.power = 1; 
+					newTurret.range = 40; 
+				break;
+				
+				case "HelloLaser":
+					newTurret.cooldownTime = 1.28f; 
+					newTurret.wName = "HelloLaser"; 
+					newTurret.setProjectile(helloProjectile); 
+					newTurret.power = 5; 
+					newTurret.range = 60; 
+				break ;
+			}
+			this.turrets[i] = newTurret; 
+			i++;
 		}
+	}
+	
+	private void initiateTEST() {
+		this.currentEquipment = new ArrayList(); 
+		this.currentEquipment.Add("Electrifier"); 
+		this.currentEquipment.Add("Electrifier"); 
+		this.currentEquipment.Add("HelloLaser"); 
+	}
+	
+	/**
+	 * Main Update if we have a target for the turrets. 
+	 */
+	private void hasTargetBehavior() {
 		foreach(Turret t in this.turrets) {
-				Debug.Log (t.isCanFire());
 			if (t.isCanFire()) 
 			{
-				Debug.Log ("FIIIIRE");
 				t.fire();
 			}
 		}
-		/**this.turrets2[0].tryFire();
-		foreach (Turret t in this.turrets2) {
-			Debug.Log (t);
-		}*/
 	}
 	
 	public bool hasTarget() {
@@ -63,10 +96,10 @@ public class Turrets : MonoBehaviour {
 	
 	public void setTarget(Transform newTarget) {
 		this.target = newTarget;
-		foreach(Turret t in this.turrets) {
-			t.setTarget(newTarget); 	
+		foreach (Turret t in this.turrets) {
+			Debug.Log ("SET TURRET 2 " + t);
+			t.setTarget(newTarget);
 		}
-		this.theWeapon.setTarget(newTarget);
 	}
 	
 	public Transform getTarget() {
@@ -84,12 +117,20 @@ public class Turrets : MonoBehaviour {
 	}
 	
 	public int getMaximumRange() {
-		return this.theWeapon.range ; 	
+		int maxRange = 0 ; 
+		foreach(Turret t in this.turrets) {
+			if (t.range < maxRange)
+				maxRange = t.range ; 
+		}
+		return maxRange; 
 	}
 	
 	public bool getAllWeaponsInRange() {
-		//foreach;  @TODO
-		return (theWeapon.checkTargetInRange());
+		foreach(Turret t in this.turrets) {
+			if (!t.checkTargetInRange())
+				return false;	
+		}
+		return true; 
 	}
 	
 	
