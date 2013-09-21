@@ -112,7 +112,8 @@ public class ShipController : MonoBehaviour {
 			prop.lookAt(currentTarget.transform.position); 
 		}
 		else {
-			this.propulsorsGoTo(currentTarget.transform.position); 	
+			if (currentTarget != null) 
+				this.propulsorsGoTo(currentTarget.transform.position); 	
 		}
 	}
 	
@@ -199,9 +200,16 @@ public class ShipController : MonoBehaviour {
 		prop.setTargetPos(target.transform.position);	
 	}
 	
+	/**
+	 * Use object's crafter to check if we can build the object
+	 * Command the build if we can
+	 * */
 	public void tryBuild(Transform buildingPoint) {
+		Crafter crafterObj = (Crafter) this.GetComponent(typeof(Crafter)); 
 		Build buildObj = (Build) buildingPoint.GetComponent(typeof(Build)); 
-		buildObj.build(buildingPoint.position, buildingPoint.rotation); 
+		if (crafterObj.canBuild(buildObj.name)) {
+			crafterObj.build(buildingPoint); 
+		}
 	}
 	
 	

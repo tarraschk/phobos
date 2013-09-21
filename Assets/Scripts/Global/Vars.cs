@@ -22,10 +22,16 @@ namespace Phobos
 		public static int WARP_DISTANCE = 20; 
 		public static string MODEL = "Model"; 
 		public static string DOCKINGBAY = "DockingBay"; 
-		public static string EQUIPMENT_CONTAINER = "EquipmentContainer"; 
+		public static string EQUIPMENT_CONTAINER = "Equipment"; 
 		public static string CARGOBAY = "Cargo"; 
+		public static string RECIPES = "recipes"; 
 		
 	}
+	public class recType {
+		public const string BUILDING = "buildings"; 	
+		public const string EQUIPMENT = "equipment"; 	
+	}
+	
 	public enum dockType {
 		station, warp	
 	}

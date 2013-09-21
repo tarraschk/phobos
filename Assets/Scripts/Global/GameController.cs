@@ -7,11 +7,23 @@ using System.Collections;
  * can be used as static methods. 
 */
 public class GameController : MonoBehaviour  {
+	
+	/**
+	 * This variables are used to control and get the different data mangers of the game. 
+	 * RecipesManager : all data concerning crafting and building
+	 * DataManager : all data concerning current players and net objects
+	 * To be continued...
+	 * */
+	
+	DataManager dataManager ; 
+	RecipesManager recipesManager ; 
+	
 	/**
 	 * Load game misc data (TO MOVE ??)
 	 */
 	public void Awake() {
-		new RecipesImport(); 
+		this.recipesManager = new RecipesManager(); 
+		this.dataManager = GameController.getDataManager(); 
 	}
 	
 	/** 
@@ -33,6 +45,14 @@ public class GameController : MonoBehaviour  {
 	 */
 	public static GameObject findUniverse() {
 		return  GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG); 	
+	}
+	
+	/** 
+	 * Find the current game controller in the scene. 
+	 */
+	public static GameController getUniverseGameController() {
+		var univ = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG); 	
+		return (GameController) univ.GetComponent(typeof(GameController));
 	}
 	
 	/** 
@@ -81,7 +101,11 @@ public class GameController : MonoBehaviour  {
 		GameObject buildPreview = (GameObject) Instantiate(Resources.Load ("Prefabs/Objects/BuildingPreview/" + buildingPrefab), pos, rot); 
 		buildPreview.tag = Phobos.Vars.BUILDING_PREVIEW;
 		buildPreview.name = buildingPrefab; 
-	}	
+	}
+	
+	public RecipesManager getRecipesManager() {
+		return this.recipesManager; 	
+	}
 	
 	public static Controls getControls() {
 		var Universe = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG);

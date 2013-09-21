@@ -7,7 +7,7 @@ public class Laser : MonoBehaviour {
 
 	public Transform Target ; 
 	public GameObject attacker ; 
-	public float speed = 50f;  
+	public float speed = 20f;  
 	public int power = 25; 
 	public double energy = 10f ; 
 	

@@ -27,7 +27,10 @@ public class Turret : MonoBehaviour {
 	public Vector3 laserSpawnPosition ; 
 	
 	//The turret main model and prefab. 
-	public GameObject prefab; 
+	public GameObject turretPrefab; 
+	
+	//The ingame turret model. 
+	public GameObject turretModel; 
 	
 	//The turret's projectile prefab
 	private GameObject projectile ;
@@ -43,7 +46,6 @@ public class Turret : MonoBehaviour {
 	
 	void Start() {
 		cooldown = new Cooldown(this.cooldownTime, false); //Instantiate the cooldown. 
-		this.createTurretModel(); 
 	}
 	
 	/**
@@ -54,6 +56,10 @@ public class Turret : MonoBehaviour {
 		if (this.cooldown.isReady()) {
 			this.setReady(true);
 		}
+		
+		if (this.hasTarget() && this.turretModel != null) {
+			this.turretModel.transform.LookAt(this.target.position); 
+		}
 	}
 	
 	/**
@@ -62,11 +68,12 @@ public class Turret : MonoBehaviour {
 	public void fire() {
 		this.setReady (false);
 		this.cooldown.cooldownTick(); 
-		GameObject projectile = (GameObject) Instantiate(Resources.Load ("Prefabs/Weapons/Projectile/Laser1"), (this.transform.position + new Vector3(-2.5f, -1f, 0.5f)), this.transform.rotation) ; 
+		Vector3 laserStart = (this.transform.position + this.laserSpawnPosition);
+		GameObject projectile = (GameObject) Instantiate(this.projectile, laserStart, this.transform.rotation) ; 
 
 		moveTo moveScript = projectile.GetComponent<moveTo>();
 		Laser laserScript = projectile.GetComponent<Laser>();
-		moveScript.startMarker = this.transform;
+		moveScript.startMarker = projectile.transform;
 			moveScript.endMarker = this.target.transform;
 		laserScript.setTarget(this.target.transform);
 		laserScript.setAttacker(gameObject);
@@ -82,6 +89,27 @@ public class Turret : MonoBehaviour {
 	
 	public void setTarget(Transform newTarget) {
 		this.target = (newTarget);	
+	}
+	
+	public bool hasTarget() {
+		return (this.target != null); 	
+	}
+	
+	public void setTurretPrefab(GameObject newPrefab) {
+		this.turretPrefab = newPrefab; 	
+	}
+	
+	public void instantiateTurretPrefab() {
+		Debug.Log("coucou");
+		Transform EquipmentContainer = gameObject.transform.FindChild(Phobos.Vars.EQUIPMENT_CONTAINER); 
+		Debug.Log (EquipmentContainer);
+		this.turretModel = (GameObject) Instantiate(this.turretPrefab, (this.transform.position + this.laserSpawnPosition), this.turretPrefab.transform.rotation) ;
+		this.turretModel.transform.parent = EquipmentContainer; 
+		Debug.Log (this.turretModel);
+	}
+	
+	public void setLaserSpawnPosition(Vector3 newLaserSpawnPosition) {
+		this.laserSpawnPosition = newLaserSpawnPosition;	
 	}
 	
 	/**
@@ -108,8 +136,5 @@ public class Turret : MonoBehaviour {
 	public bool isReady() {
 		return this.ready;	
 	}
-	
-	private void createTurretModel() {
-			
-	}
+
 }

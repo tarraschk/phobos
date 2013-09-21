@@ -5,7 +5,7 @@ using SimpleJSON;
 
 public class RecipesImport : MonoBehaviour {
 	
-	//public string recipesData ; //Interpreted data, this is the most important attribute : contains all recipes. 
+	public SimpleJSON.JSONClass recipesData ; //Interpreted data, this is the most important attribute : contains all recipes. 
 	
 	public string recipesLocation = "C:/Users/Public/Documents/Unity Projects/Phobos/Assets/Resources/Crafting/Recipes/phoboscrafts.json"; //Location of the recipes file. 
 	
@@ -17,8 +17,9 @@ public class RecipesImport : MonoBehaviour {
 	public RecipesImport() {
 		this.readRecipeJSON(); 
 		//string JSONData = (string) Resources.Load(this.recipesLocation);
-		var recipesData = JSON.Parse (this.recipeText); 
-		string test = (recipesData["recipes"]["buildings"]["cruiser"]["crystal"]);
+		var recipesData2 = JSON.Parse (this.recipeText); 
+		string test = (recipesData2["recipes"]["buildings"]["cruiser"]["crystal"]);
+		this.recipesData = (SimpleJSON.JSONClass) recipesData2; 
 	}
 	
 	/**
@@ -29,5 +30,11 @@ public class RecipesImport : MonoBehaviour {
 		var SR = new StreamReader(this.recipesLocation); 
 		this.recipeText = SR.ReadToEnd(); 
 		SR.Close();
+	}
+	
+	public SimpleJSON.JSONClass getRecipe(string recType, string recName) {
+		if (this.recipesData[Phobos.Vars.RECIPES][recType][recName] != null) 
+			return (SimpleJSON.JSONClass) this.recipesData[Phobos.Vars.RECIPES][recType][recName]; 
+		else return null; 
 	}
 }

@@ -48,21 +48,24 @@ public class Controls : MonoBehaviour {
 	 * Commands the player to attack target.  
 	**/
 	public void attackTarget(Transform target) {
-		playerController.attackOwn(target.transform); 
+		if (this.currentControlType ==  controlTypes.moving)
+			playerController.attackOwn(target.transform); 
 	}
 	
 	/**
 	 * Commands the player to collect target.  
 	**/
 	public void collectTarget(Transform target) {
-		playerController.collectOwn(target.transform); 
+		if (this.currentControlType ==  controlTypes.moving)
+			playerController.collectOwn(target.transform); 
 	}
 	
 	/**
 	 * Commands the player to dock to target.  
 	**/
 	public void dockTo(Transform target) {
-		playerController.dockOwn(target.transform); 
+		if (this.currentControlType ==  controlTypes.moving)
+			playerController.dockOwn(target.transform); 
 	}
 	
 	/**
@@ -90,6 +93,10 @@ public class Controls : MonoBehaviour {
 	public void setPlayer(Transform newPlayer) {
 		this.player = newPlayer ; 
 		playerController = (ShipController) newPlayer.GetComponent(typeof(ShipController));
+	}
+	
+	public Transform getPlayer() {
+		return this.player; 	
 	}
 	
 	public bool hasPlayer() {

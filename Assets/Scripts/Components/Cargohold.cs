@@ -46,6 +46,14 @@ public class Cargohold : MonoBehaviour {
 	}
 	
 	/**
+	 * Returns the cargo bay content but in VARIABLE. 
+	 * Must normaly be the same as content in hierarchy, unless unexpected bugs. 
+	 */
+	public ArrayList getCargoContentVar() {
+		return this.cargoContent; 	
+	}
+	
+	/**
 	 * Moves the collected item to the cargo.
 	 * If we already have such an Item in our cargo hold, we destroy the collected item
 	 * and add it's quantity to the item we already have

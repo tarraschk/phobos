@@ -8,6 +8,7 @@ public class Collectable : MonoBehaviour {
 	public int quantity = 1; 
 	public Texture icon ; 
 	public string type; 
+	public string name ; //TO BE REMOVED AN MOVED TO OBJECT STATS!!!
 	public bool inCargo = false; 
 	public GameObject prefab ; 
 	

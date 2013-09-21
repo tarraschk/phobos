@@ -25,7 +25,7 @@ public class PlayerStats : Photon.MonoBehaviour {
 			this.doLevelUp(); 
 		}
 		
-		this.currentXP += newXP ; 
+		this.currentXP = newXP ; 
 	}
 	
 	public void doGainMoney(int GainMoney) {

@@ -11,8 +11,7 @@ public class Turrets : MonoBehaviour {
 	public Transform target = null;
 	
 	public ArrayList currentEquipment; //RAW DATA FOR TESTING PURPOSES. MUST BE REPLACED BY A JSON OBJECT THAT IS THE OBJECT REAL WEAPON DATA. 
-	public Turret[] turrets = new Turret[3]{null, null, null}; 
-	public int turretsCount = 3;
+	public Turret[] turrets = new Turret[2]{null, null}; 
 	
 	public Turret theWeapon;
 	
@@ -52,6 +51,9 @@ public class Turrets : MonoBehaviour {
 					newTurret.setProjectile(electrifierProjectile); 
 					newTurret.power = 1; 
 					newTurret.range = 40; 
+					newTurret.setTurretPrefab(ElectrifierObject); 
+					newTurret.setLaserSpawnPosition(Phobos.EquipmentPoints.playerShip1.points[i]); 
+					newTurret.instantiateTurretPrefab(); 
 				break;
 				
 				case "HelloLaser":
@@ -59,7 +61,9 @@ public class Turrets : MonoBehaviour {
 					newTurret.wName = "HelloLaser"; 
 					newTurret.setProjectile(helloProjectile); 
 					newTurret.power = 5; 
-					newTurret.range = 60; 
+					newTurret.range = 160; 
+					//ewTurret.turretPrefab = ElectrifierObject; 
+					//newTurret.laserSpawnPosition = Phobos.EquipmentPoints.playerShip1.points[i]; 
 				break ;
 			}
 			this.turrets[i] = newTurret; 

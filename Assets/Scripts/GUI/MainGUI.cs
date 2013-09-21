@@ -6,7 +6,9 @@ public class MainGUI : MonoBehaviour {
 	public Transform GUITarget ; 
 	public bool active = false ; 
 	
+	public GameController gameController ; 
 	public Destructible TargetDestr ; 
+	public Crafter TargetCraft ; 
 	public Cargohold TargetCargo ; 
 	public PlayerStats TargetStats ; 
 	public ShipController TargetController ; 
@@ -52,7 +54,9 @@ public class MainGUI : MonoBehaviour {
 	
 	public void setGUITarget(Transform newPlayer) {
 		this.GUITarget = newPlayer;
+		gameController = (GameController) GameController.getUniverseGameController(); 
 		playerControls = (Controls) GameController.getControls(); 
+		TargetCraft = (Crafter) GameController.getControls().getPlayer().GetComponent(typeof(Crafter)); 
 		TargetController = (ShipController) this.GUITarget.GetComponent(typeof(ShipController));
 		TargetDestr = (Destructible) this.GUITarget.GetComponent(typeof(Destructible));
 		TargetCargo = (Cargohold) this.GUITarget.GetComponent(typeof(Cargohold));	 
@@ -93,13 +97,21 @@ public class MainGUI : MonoBehaviour {
 	}
 	
 	private void buildButtonDown() {
+		
 		GameController.getControls().switchBuildingControls(); 
+	
 	}
 	
 	private void buildMenu() {
+		
 		string building1 = "Cruiser"; 
-		if (GUI.Button (new Rect (Screen.width / 2,Screen.height - 250,100,30), building1)) {
-			this.buildingButtonDown(building1); 
+		
+		var canBuild = TargetCraft.canBuild(building1); 
+		
+		//string costCrystal = costData["Crystal"]; 
+		if (GUI.Button (new Rect (Screen.width / 2,Screen.height - 250,100,30), building1 + "( " + canBuild + ")")) {
+			if (canBuild)
+				this.buildingButtonDown(building1); 
 		}
 	}
 	
