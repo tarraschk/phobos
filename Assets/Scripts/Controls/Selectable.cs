@@ -6,6 +6,7 @@ public class Selectable : MonoBehaviour {
 	
 	public static readonly string MODEL = "Model";
 	
+	
 	public const string ATTACK = "attack";
 	public const string COLLECT = "collect";
 	public const string DOCK = "dock";
@@ -18,18 +19,104 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseEnter() {
 		var model = transform.FindChild(MODEL);
-		if (model != null) 
+		var tooltip = transform.FindChild(Phobos.Vars.TOOLTIP);
+		if (model != null && model.renderer != null) 
 			model.renderer.material.color = Color.yellow;
+		if (tooltip != null) {
+			LabelPositioning tooltipScript = (LabelPositioning) tooltip.GetComponent(typeof(LabelPositioning));	
+			tooltipScript.setTooltipToShow(); 
+		}
 	}
 	
 	void OnMouseExit() {
 		var model = transform.FindChild(MODEL);
-		if (model != null) 
+		var tooltip = transform.FindChild(Phobos.Vars.TOOLTIP);
+		if (model != null && model.renderer != null) 
 			model.renderer.material.color = Color.white;
+		if (tooltip != null) {
+			LabelPositioning tooltipScript = (LabelPositioning) tooltip.GetComponent(typeof(LabelPositioning));	
+			if (!tooltipScript.locked) 
+				tooltipScript.setTooltipToHide(); 
+		}
 	}
 	
 	void OnMouseDown() {
-		this.doAction(this.availableActions[0]);
+		if (Input.GetMouseButton(0)) 
+		{
+			string targetName = this.getTargetName();
+			string targetDescr = this.getTargetDescr(); 
+			GameObject GUIModelObj = (GameObject) GameController.getGUIModel(); 
+			GUIModel GUIM = (GUIModel) GUIModelObj.GetComponent(typeof(GUIModel));	
+			PhotonView PV = (PhotonView) this.GetComponent(typeof(PhotonView));
+			GUIM.removeAllActionsButtons();
+			GUIM.setTargetInfos(targetName, targetDescr); 
+			GUIM.addActionButton(this.availableActions[0], PV.viewID);
+			this.setItemSelected(gameObject.transform); 
+			this.doLockTooltip(); 
+		}
+		else if (Input.GetMouseButton(1)) 
+		{
+			this.doAction(this.availableActions[0]);
+		}
+	}
+	
+	/**
+	 * Sets a new item selected and lock the tooltip to it. 
+	 **/
+	public void setItemSelected(Transform newItemSelected) {
+		Controls GC = GameController.getControls(); 
+		//We first disable the tooltip on the current selected item
+		this.unlockPreviousTooltip(); 
+		
+		this.doLockTooltip(); 
+		GC.itemSelected = newItemSelected; 	
+	}
+	
+	private void unlockPreviousTooltip() {
+		Controls GC = GameController.getControls(); 
+		Transform previousItemSelected = GC.itemSelected;
+		if (previousItemSelected != null) {
+			Selectable PISelect = (Selectable) previousItemSelected.GetComponent(typeof(Selectable));
+			PISelect.doUnlockTooltip();
+		}
+	}
+	
+	private string getTargetName() {
+		PlayerStats PS = (PlayerStats) this.GetComponent(typeof(PlayerStats));
+		if (PS != null)
+			return PS.nick; 
+		ObjectStats OS = (ObjectStats) this.GetComponent(typeof(ObjectStats));
+		if (OS != null)
+			return OS.name; 
+		return "Unnamed"; 
+	}
+	
+	private string getTargetDescr() {
+		PlayerStats PS = (PlayerStats) this.GetComponent(typeof(PlayerStats));
+		if (PS != null)
+			return "Level " + PS.level; 
+		ObjectStats OS = (ObjectStats) this.GetComponent(typeof(ObjectStats));
+		if (OS != null)
+			return OS.descr; 
+		
+		return "-"; 
+	}
+	
+	/**
+	 * Lock the tooltip when item is selected ! 
+	 **/
+	private void doLockTooltip() {
+		Component tooltipGet = GetComponentInChildren(typeof(LabelPositioning)); 
+		LabelPositioning tooltipScript = (LabelPositioning) tooltipGet; 
+		tooltipScript.lockTooltip(); 
+		tooltipScript.setTooltipToShow(); 
+	}
+	
+	private void doUnlockTooltip() {
+		Component tooltipGet = GetComponentInChildren(typeof(LabelPositioning)); 
+		LabelPositioning tooltipScript = (LabelPositioning) tooltipGet; 
+		tooltipScript.unlockTooltip(); 
+		tooltipScript.setTooltipToHide(); 
 	}
 	
 	private void doAction(string action) {

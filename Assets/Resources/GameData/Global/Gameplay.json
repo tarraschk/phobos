@@ -1,0 +1,33 @@
+{
+  "equipment" : {
+    "turrets" : {
+      "sendaimkII" : {
+        "range" : 80,
+        "cooldownTime": 1.25,
+        "fullName" : "Sendaï Furyoso Mk. II",
+        "value" : 45000,
+        "power" : 50
+      }
+    }
+  },
+  "ships" : {
+    "ryo" : {
+      "fullName" : "Sendaï Ryo",
+      "model" : {
+        "prefab" : "ryo"
+      }
+    }
+  },
+  "recipes" : {
+    "buildings" : {
+      "cruiser" : {
+        "crystal" : 5
+      }
+    },
+    "equipment" : {
+      "electrifier" : {
+        "crystal" : 50
+      }
+    }
+  }
+}

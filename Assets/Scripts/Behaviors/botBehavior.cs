@@ -10,9 +10,8 @@ using System.Collections;
 
 public class botBehavior : MonoBehaviour {
 	
-	public enum AITypes{idle, attack, returnToPos};
 	
-	public AITypes AI = AITypes.idle;
+	public Phobos.AITypes AI = Phobos.AITypes.idleAggressive;
 	private Transform initPosition  ;
 	private float targetAttackRange = 50f; 
 	private float targetReturnIdleRange = 150f; 
@@ -33,7 +32,7 @@ public class botBehavior : MonoBehaviour {
 	}
 	
 	public void isUnderAttackBy(GameObject attacker) {
-		if (this.AI == AITypes.idle || this.AI == AITypes.returnToPos) {
+		if (this.AI == Phobos.AITypes.idleAggressive || this.AI == Phobos.AITypes.returnToPos) {
 			this.setAttackOn (attacker.transform);
 		}
 	}
@@ -41,23 +40,23 @@ public class botBehavior : MonoBehaviour {
 	void AIBehavior() {
 		switch(this.AI) {
 			
-			case AITypes.idle:
-				this.idleBehavior();
+			case Phobos.AITypes.idleAggressive:
+				this.idleAggressiveBehavior();
 			break;
 			
-			case AITypes.attack:
+			case Phobos.AITypes.attack:
 				this.attackBehavior();
 			break;
 		
 			
-			case AITypes.returnToPos:
+			case Phobos.AITypes.returnToPos:
 				this.returnToPositionBehavior();
 			break;
 			
 		}
 	}
 	
-	private void idleBehavior() {
+	private void idleAggressiveBehavior() {
 		var univPlayers = GameController.getPlayers(); 
 		for (var i = 0 ; i < univPlayers.Length ; i++) {
 			
@@ -71,8 +70,8 @@ public class botBehavior : MonoBehaviour {
 	
 	private void setAttackOn(Transform target) {
 		ShipController SC = (ShipController) this.GetComponent(typeof(ShipController));
-		SC.attack(target) ;
-		this.setAI(AITypes.attack);
+		if (SC.attack(target)) //If order attack is received and can be executed
+			this.setAI(Phobos.AITypes.attack);
 	}
 	
 	private void attackBehavior() {
@@ -87,17 +86,17 @@ public class botBehavior : MonoBehaviour {
 			{
 				SC.moveTo(this.initPosition.transform.position);
 				turrets.unsetTarget(); 
-				this.setAI (AITypes.returnToPos);
+				this.setAI (Phobos.AITypes.returnToPos);
 			}
 		}
-		else this.setAI (AITypes.returnToPos);
+		else this.setAI (Phobos.AITypes.returnToPos);
 	}
 	
 	private void returnToPositionBehavior() {
-		this.setAI (AITypes.idle);
+		this.setAI (Phobos.AITypes.idleAggressive);
 	}
 	
-	void setAI(AITypes newAI) {
+	void setAI(Phobos.AITypes newAI) {
 		this.AI = newAI;
 	}
 }

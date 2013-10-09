@@ -17,22 +17,26 @@ public class ThrusterParticle : MonoBehaviour {
 	private float thrusterMinSize = 3f; 
 	private float thrusterMinSpeed = 10f; 
 	private Propulsors referencePropulsors ; 
-	
 	void Awake() {
+		this.findAndAllocateThrusters(); 
+	}
+	
+	void Update () {
+		if (this.referencePropulsors != null)
+			thrusterPowerUpdate(); 
+		else this.findAndAllocateThrusters(); 
+	}
+	
+	private void findAndAllocateThrusters() {
 		if (gameObject.transform.parent.parent) {
 			var motherObject = gameObject.transform.parent.parent; 
 			
 			//mother Object must exist and have propulsors
 			referencePropulsors = (Propulsors) motherObject.GetComponent(typeof(Propulsors));
-			if (referencePropulsors)
+			if (referencePropulsors != null)
 				enabled = true ; 
 			else enabled = false ; 
-		}
-	}
-	
-	void Update () {
-		//We assume that referencepropulsors are defined
-		thrusterPowerUpdate(); 
+		}	
 	}
 	
 	private void thrusterPowerUpdate() {

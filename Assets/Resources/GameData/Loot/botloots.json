@@ -1,0 +1,15 @@
+{
+  "levels" : {
+  "1" : {
+      "0": {
+        "prefab": "Prefabs/Objects/Resources/Crystal"
+      },
+      "1": { 
+        "prefab": "Prefabs/Objects/Resources/Stone"
+      },
+      "2": {
+        "prefab": "Prefabs/Objects/Decoration/battle_cruiser_1"
+      }
+    },
+  },
+}

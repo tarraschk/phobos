@@ -49,7 +49,6 @@ public class ShipController : MonoBehaviour {
 	 * When docked to a station, undock the ship to it.  
 	 */
 	public void undock() {
-		Debug.Log ("TRY UNDOCK") ;
 		Controls playerControls = GameController.getControls(); 
 		Transform PlayersList = (Transform) GameController.getPlayerContainer().transform; 
 		gameObject.transform.parent = PlayersList ; 
@@ -170,18 +169,31 @@ public class ShipController : MonoBehaviour {
 	/*
 	 * Uses attack script when WE are the controller of this ship.
 	 * Implies the net input and the GUI modifications. 
+	 * Returns true if order is successful
 	 */
-	public void attackOwn(Transform target) {
-		this.addGUIInput(Phobos.Commands.ATTACK, target); 
-		this.addNetInput(Phobos.Commands.ATTACK, target); 
-		this.attack (target);
+	public bool attackOwn(Transform target) {
+		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
+		if (turr.canAttack()) {
+			this.addGUIInput(Phobos.Commands.ATTACK, target); 
+			this.addNetInput(Phobos.Commands.ATTACK, target); 
+			return this.attack (target);
+		}
+		else Debug.LogWarning("Can't attack without turrets."); 
+		return false; 
 	}
 	
-	//Order the ship to attack the target. 
-	public void attack(Transform target) {
-		this.setBehavior(BehaviorTypes.attacking); 
+	/*
+	 * Order the ship to attack the target. 
+	 * Returns true if order is successful
+	*/
+	public bool attack(Transform target) {
 		Turrets turr = (Turrets) this.GetComponent(typeof(Turrets));
-		turr.attack(target);	
+		if (turr.canAttack()) {
+			this.setBehavior(BehaviorTypes.attacking); 
+			return (turr.attack(target));
+		}
+		else Debug.LogWarning("Can't attack without turrets.");
+		return false; 
 	}
 	
 	/*
@@ -198,6 +210,20 @@ public class ShipController : MonoBehaviour {
 		this.setBehavior(BehaviorTypes.collecting); 
 		this.setTarget(target); 
 		prop.setTargetPos(target.transform.position);	
+	}
+	
+	
+	/*
+	 * Uses collect script when WE are the controller of this ship.
+	 * Implies the net input and the GUI modifications. 
+	 */
+	public void removeEquipmentOwn(int equipmentId) {
+		this.addNetInput(Phobos.Commands.EQUIPMENT_REMOVE); 
+		this.removeEquipment(equipmentId);
+	}
+	
+	public void removeEquipment(int equipmentId) {
+		Turrets prop = (Turrets) this.GetComponent(typeof(Turrets));
 	}
 	
 	/**

@@ -1,0 +1,21 @@
+{
+	"player": {
+		"nick": "Kevin2",
+		"stats": {
+			"level": 1,
+			"currentXP": 0,
+			"requiredXP": 200,
+		}
+	}
+	"ship" : {
+		"model" : {
+			"name": "droneVR1",
+		  	"cargo": 500,
+		  	"energy": 500,
+		  },
+		"equipment" : {
+			"port1": "Electrifier",
+			"port2": "Electrifier",
+		}
+	}
+}

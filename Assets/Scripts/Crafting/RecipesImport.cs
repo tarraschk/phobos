@@ -7,7 +7,7 @@ public class RecipesImport : MonoBehaviour {
 	
 	public SimpleJSON.JSONClass recipesData ; //Interpreted data, this is the most important attribute : contains all recipes. 
 	
-	public string recipesLocation = "C:/Users/Public/Documents/Unity Projects/Phobos/Assets/Resources/Crafting/Recipes/phoboscrafts.json"; //Location of the recipes file. 
+	public string recipesLocation = "C:/Users/Public/Documents/Unity Projects/Phobos/Assets/Resources/GameData/Crafting/Recipes/phoboscrafts.json"; //Location of the recipes file. 
 	
 	private string recipeText ; //Stocks the recipe raw text data, to be interpreted as JSON. 
 	
@@ -32,6 +32,11 @@ public class RecipesImport : MonoBehaviour {
 		SR.Close();
 	}
 	
+	/**
+	 * Get a recype data, based on the recype's type and name
+	 * Data must have been loaded before. 
+	 * Returns null if nothing is found
+	 */
 	public SimpleJSON.JSONClass getRecipe(string recType, string recName) {
 		if (this.recipesData[Phobos.Vars.RECIPES][recType][recName] != null) 
 			return (SimpleJSON.JSONClass) this.recipesData[Phobos.Vars.RECIPES][recType][recName]; 

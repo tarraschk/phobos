@@ -4,6 +4,7 @@ using System.Collections;
 public class Destructible : Photon.MonoBehaviour {
 
 	public int energy = 500 ; 
+	public int energyMax = 500 ; 
 	public int level = 1 ; 
 	
 	public void receiveDamage(int power, GameObject attacker) {
@@ -28,6 +29,11 @@ public class Destructible : Photon.MonoBehaviour {
 		GameObject explosion = (GameObject) Instantiate(Resources.Load ("Prefabs/FX/explosion"), this.transform.position, this.transform.rotation) ; 
 	
 		if (PhotonNetwork.isMasterClient) {
+			ContainLoot CL = (ContainLoot) this.GetComponent(typeof(ContainLoot));
+			if (CL != null) {
+				//Has loot, we spawn it !
+				CL.activateLootSpawn(1); 
+			}
 			PhotonNetwork.Destroy(gameObject);
 		}
 	}

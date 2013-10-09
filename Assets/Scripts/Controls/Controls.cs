@@ -7,9 +7,11 @@ using System.Collections;
 public class Controls : MonoBehaviour {
 	
 	public Transform player ; 
+	public Transform itemSelected ; 
 	RaycastHit hit;
 	public enum controlTypes{moving, building, docked};
 	
+	public bool inGameClickActive = true; 
 	public controlTypes currentControlType = controlTypes.moving; 
 	
 	private ShipController playerController ; 
@@ -186,13 +188,15 @@ public class Controls : MonoBehaviour {
 	}
 	
 	private void moveMousePoint(RaycastHit hit) {
-		if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
-		{
-			Vector3 destination = hit.point; 
-		    var target = this.player ; 
-			if (target) {
-				ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
-				shipController.moveToOwn(destination); 
+		if (this.inGameClickActive) {
+			if (Input.GetMouseButton(1) || Input.GetMouseButton(0)) 
+			{
+				Vector3 destination = hit.point; 
+			    var target = this.player ; 
+				if (target) {
+					ShipController shipController = (ShipController) target.GetComponent(typeof(ShipController));
+					shipController.moveToOwn(destination); 
+				}
 			}
 		}
 	}

@@ -63,9 +63,6 @@ public class DataManager : Photon.MonoBehaviour
         int id2 = PhotonNetwork.AllocateViewID();
 		
 		
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, "Bots/Bot", pos, rot, id1, ObjectsSpawnTypes.bot);
-        photonView.RPC("SpawnObjOnNetwork", PhotonTargets.AllBuffered, "Bots/Bot", pos, rot, id2, ObjectsSpawnTypes.bot);
-		
 	}
 	
 	public void addObjectToScene(string obj, Vector3 pos, Quaternion rot, ObjectsSpawnTypes spawnType) {
@@ -174,6 +171,7 @@ public class DataManager : Photon.MonoBehaviour
 		newObject = PhotonNetwork.InstantiateSceneObject("Prefabs/Objects/" + prefab, pos, rot, 0, data ) as GameObject;
 		
 		PhotonView PV = (PhotonView) newObject.GetComponent(typeof(PhotonView));
+		//this.netObjects.Add(id1, newObject.transform); 
 		
     }
 	
@@ -218,6 +216,47 @@ public class DataManager : Photon.MonoBehaviour
                 return pla;
             }
         }
+        return null;
+    }
+	
+	public GameObject getObjectsContainer() {
+		return GameObject.FindGameObjectWithTag(Phobos.Vars.OBJECTS_TAG); 	
+	}
+	
+	public GameObject getPlayersContainer() {
+		return GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYERS_TAG); 	
+	}
+	
+	/**
+	 * Get a player or object in the current room 
+	 * 
+	 */
+    public Transform getPlayerOrObject(int PhotonID)
+    {
+		GameObject ObjectsList = this.getObjectsContainer(); 
+		GameObject PlList = this.getPlayersContainer(); 
+		PhotonView PV ;
+		
+        foreach (Transform obj in ObjectsList.transform)
+        {
+			Debug.Log (obj);
+			Debug.Log (obj.name);
+            PV = (PhotonView) obj.GetComponent(typeof(PhotonView)); 
+			if (PV != null) {
+				if (PV.viewID == PhotonID)
+					return obj; 
+			}
+        }
+		foreach (Transform pl in PlList.transform)
+        {
+            PV = (PhotonView) pl.GetComponent(typeof(PhotonView)); 
+			if (PV != null) {
+				if (PV.viewID == PhotonID)
+					return pl; 
+			}
+        }
+		
+		
         return null;
     }
     

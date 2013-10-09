@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using SimpleJSON; 
 
 //Turret required, turrets is the turret manager
 //Propulsors required (TODO)
@@ -10,15 +11,16 @@ public class Turrets : MonoBehaviour {
 	
 	public Transform target = null;
 	
-	public ArrayList currentEquipment; //RAW DATA FOR TESTING PURPOSES. MUST BE REPLACED BY A JSON OBJECT THAT IS THE OBJECT REAL WEAPON DATA. 
-	public Turret[] turrets = new Turret[2]{null, null}; 
+	public ArrayList currentEquipment; //Initialized first. Contains only the names and ids of the equipment, not the object. 
 	
-	public Turret theWeapon;
+	//Turrets will be based on current equipment, and will be instanciated after data is read and loaded in currentEquipment. 
+	public Turret[] turrets = new Turret[Phobos.Gameplay.EQUIPMENT_MAX]{null, null,null,null,null,null,null,null,null,null}; 
 	
-	// Use this for initialization
-	void Start () {
+	/**
+	 * Component initiated
+	 */
+	void Awake () {
 		this.initiateTurrets() ; 
-		//this.theWeapon = (Turret) gameObject.AddComponent("Turret");
 	}
 	
 	/**
@@ -29,9 +31,43 @@ public class Turrets : MonoBehaviour {
 			this.hasTargetBehavior();
 		}
 	}
+	/**
+	 * Initiate equipment to initial value. 
+	 * Will be used later by the object initiator. 
+	 */
+	public void initiateEquipment() {
+		this.currentEquipment = new ArrayList();
+		// ON LIT EN DUR DES DONNEES, normalement c du JSON envoyé par le serveur pou rce joueur !!
+	}
 	
 	/**
-	 * Initiate all the turrets, based on the player's ship data. To be changed to something proper. 
+	 * Push a new equipment.
+	 * Used by object initiator to push player's equipment
+	 */
+	public void pushEquipment(string newEquipment) {
+		this.currentEquipment.Add(newEquipment); 
+	}
+	
+	/**
+	 * Remove an equipment by the id 
+	 * in the array currentEquipment
+	 */
+	public void removeEquipment(int equipmentId, string equipmentToRemove/*NOT OBLIGATOIRE */) {
+		string turretName ; 
+		Turret toRemoveTurret = this.turrets[equipmentId] ; 
+		turretName = toRemoveTurret.wName; 
+		toRemoveTurret.removeTurret(); 
+		turrets[equipmentId] = null ; 
+		this.currentEquipment.Remove(turretName);  
+	}
+	
+	/**
+	 * @TODO
+	 * To be changed to something proper. 
+	 * Initiate all the turrets, based on the player's ship data. 
+	 * The ship data has been loaded before 
+	 * and has pushed the equipment data to 
+	 * this.currentEquipment. 
 	 */
 	private void initiateTurrets() {
 		
@@ -39,53 +75,62 @@ public class Turrets : MonoBehaviour {
 		GameObject helloProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser2") ; 
 		GameObject ElectrifierObject = (GameObject) Resources.Load ("Prefabs/Weapons/Turret/Electrifier1") ; 
 		int i = 0; 
-		this.initiateTEST(); // ON LIT EN DUR DES DONNEES, normalement c du JSON envoyé par le serveur pou rce joueur !!
-		foreach (string equip in this.currentEquipment) {
-			Turret newTurret = (Turret) gameObject.AddComponent("Turret");
-			Debug.Log (equip);
-			switch(equip) {
-				case "Electrifier":
-				Debug.Log ("set turret script");
-					newTurret.cooldownTime = 0.28f; 
-					newTurret.wName = "Electrifierrrr"; 
-					newTurret.setProjectile(electrifierProjectile); 
-					newTurret.power = 1; 
-					newTurret.range = 40; 
-					newTurret.setTurretPrefab(ElectrifierObject); 
-					newTurret.setLaserSpawnPosition(Phobos.EquipmentPoints.playerShip1.points[i]); 
-					newTurret.instantiateTurretPrefab(); 
-				break;
-				
-				case "HelloLaser":
-					newTurret.cooldownTime = 1.28f; 
-					newTurret.wName = "HelloLaser"; 
-					newTurret.setProjectile(helloProjectile); 
-					newTurret.power = 5; 
-					newTurret.range = 160; 
-					//ewTurret.turretPrefab = ElectrifierObject; 
-					//newTurret.laserSpawnPosition = Phobos.EquipmentPoints.playerShip1.points[i]; 
-				break ;
-			}
-			this.turrets[i] = newTurret; 
+		foreach (string equipName in this.currentEquipment) {
+			this.addTurret(equipName, i); 
 			i++;
 		}
 	}
 	
-	private void initiateTEST() {
-		this.currentEquipment = new ArrayList(); 
-		this.currentEquipment.Add("Electrifier"); 
-		this.currentEquipment.Add("Electrifier"); 
-		this.currentEquipment.Add("HelloLaser"); 
+	/**
+	 * Sets the proprety of an instantiated turret component. Get the game
+	 * data associated to this turret.
+	 */
+	private void initNewTurret(string turretName, Turret newTurret, int turretId) {
+		GameObject electrifierProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser1") ; 
+		GameObject ElectrifierObject = (GameObject) Resources.Load ("Prefabs/Weapons/Turret/Electrifier1") ; 
+		var gameplayData = GameController.getGameplayData() ; 
+		JSONNode turretJSONData = gameplayData.getTurret(turretName); //We get the game data about the turret
+		Debug.Log(turretJSONData); 
+		newTurret.cooldownTime = gameplayData.getFloatNodeProprety("cooldownTime", turretJSONData);   
+		newTurret.wName = gameplayData.getStringNodeProprety("fullName", turretJSONData);    
+		newTurret.setProjectile(electrifierProjectile); 
+		newTurret.power = gameplayData.getIntNodeProprety("power", turretJSONData) ;
+		newTurret.range = gameplayData.getIntNodeProprety("range", turretJSONData); 
+		newTurret.setTurretPrefab(ElectrifierObject); 
+		newTurret.setLaserSpawnPosition(Phobos.EquipmentPoints.playerShip1.points[turretId]); 
+		newTurret.instantiateTurretPrefab(); 	
+	}
+	
+	private void addTurret(string turretName, int turretId) {
+		/**
+		 * To be deleted when turret data will be in JSON !
+		 **/
+		GameObject electrifierProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser1") ; 
+		GameObject helloProjectile = (GameObject) Resources.Load ("Prefabs/Weapons/Projectile/Laser2") ; 
+		GameObject ElectrifierObject = (GameObject) Resources.Load ("Prefabs/Weapons/Turret/Electrifier1") ; 
+		
+		Turret newTurret = (Turret) gameObject.AddComponent("Turret");
+		this.initNewTurret(turretName, newTurret, turretId); 
+		this.turrets[turretId] = newTurret; 
+	}
+	
+	public bool hasTurrets() {
+		Turret hasTurret = (Turret) this.GetComponent(typeof(Turret));
+		return (hasTurret != null) ; 	
 	}
 	
 	/**
 	 * Main Update if we have a target for the turrets. 
 	 */
 	private void hasTargetBehavior() {
-		foreach(Turret t in this.turrets) {
-			if (t.isCanFire()) 
-			{
-				t.fire();
+		if (this.hasTurrets()) {
+			foreach(Turret t in this.turrets) {
+				if (t != null) {
+					if (t.isCanFire()) 
+					{
+						t.fire();
+					}
+				}
 			}
 		}
 	}
@@ -100,9 +145,11 @@ public class Turrets : MonoBehaviour {
 	
 	public void setTarget(Transform newTarget) {
 		this.target = newTarget;
-		foreach (Turret t in this.turrets) {
-			Debug.Log ("SET TURRET 2 " + t);
-			t.setTarget(newTarget);
+		if (this.hasTurrets()) {
+			foreach (Turret t in this.turrets) {
+				if (t != null) 
+					t.setTarget(newTarget);
+			}
 		}
 	}
 	
@@ -110,10 +157,18 @@ public class Turrets : MonoBehaviour {
 		return this.target; 	
 	}
 	
-	public void attack (Transform target) {
+	/**
+	 * Returns true if attack order is successful 
+	 */
+	public bool attack (Transform target) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		prop.setTargetPos(target.position); //TODO CALCULATE RIGHT POSITION, SO THAT IT DOESNT GO ALL THE WAY
 		this.setTarget(target);	
+		return true; 
+	}
+	
+	public bool canAttack() {
+		return (this.hasTurrets()) ; 	
 	}
 	
 	public bool isPlayer() {
@@ -122,17 +177,21 @@ public class Turrets : MonoBehaviour {
 	
 	public int getMaximumRange() {
 		int maxRange = 0 ; 
-		foreach(Turret t in this.turrets) {
-			if (t.range < maxRange)
-				maxRange = t.range ; 
+		if (this.hasTurrets()) {
+			foreach(Turret t in this.turrets) {
+				if (t != null) 
+					if (t.range < maxRange)
+						maxRange = t.range ; 
+			}
 		}
 		return maxRange; 
 	}
 	
 	public bool getAllWeaponsInRange() {
 		foreach(Turret t in this.turrets) {
-			if (!t.checkTargetInRange())
-				return false;	
+			if (t != null) 
+				if (!t.checkTargetInRange())
+					return false;	
 		}
 		return true; 
 	}

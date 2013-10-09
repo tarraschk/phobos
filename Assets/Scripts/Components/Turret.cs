@@ -79,6 +79,14 @@ public class Turret : MonoBehaviour {
 		laserScript.setAttacker(gameObject);
 	}
 	
+	/**
+	 * Remove this turret from the game. We just remove the model and it's components. 
+	 * Data side is done in ship controller
+	 **/
+	public void removeTurret() {
+		Destroy(this.turretModel); 
+	}
+	
 	public void setProjectile(GameObject newProjectile) {
 		this.projectile = newProjectile; 	
 	}
@@ -100,12 +108,9 @@ public class Turret : MonoBehaviour {
 	}
 	
 	public void instantiateTurretPrefab() {
-		Debug.Log("coucou");
 		Transform EquipmentContainer = gameObject.transform.FindChild(Phobos.Vars.EQUIPMENT_CONTAINER); 
-		Debug.Log (EquipmentContainer);
 		this.turretModel = (GameObject) Instantiate(this.turretPrefab, (this.transform.position + this.laserSpawnPosition), this.turretPrefab.transform.rotation) ;
 		this.turretModel.transform.parent = EquipmentContainer; 
-		Debug.Log (this.turretModel);
 	}
 	
 	public void setLaserSpawnPosition(Vector3 newLaserSpawnPosition) {

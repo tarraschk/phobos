@@ -10,6 +10,7 @@ public float clampBorderSize = 0.05f;  // How much viewport space to leave at th
 public bool useMainCamera = true;   // Use the camera tagged MainCamera
 public Camera cameraToUse ;   // Only use this if useMainCamera is false
 Camera cam ;
+public bool locked = false; 
 Transform thisTransform;
 Transform camTransform;
  
@@ -28,8 +29,8 @@ Transform camTransform;
 			if (guiText) {
 				var ship = this.transform.parent; 
 				PhotonView PV = (PhotonView) ship.GetComponent(typeof(PhotonView)); 
-				var shipName = "Player " + PV.viewID; 
-				guiText.text = shipName; 		
+				var shipName = " " + PV.viewID; 
+				guiText.text += shipName; 		
 			}
 		}
 	}
@@ -38,7 +39,6 @@ Transform camTransform;
     void Update()
     {
  		if (this.target != null) {
-			
 	        if (clampToScreen)
 	        {
 	            Vector3 relativePosition = camTransform.InverseTransformPoint(target.position);
@@ -59,6 +59,22 @@ Transform camTransform;
 		}
     }
 	
+	public void setTooltipToShow() {
+		this.switchTooltipShow(true); 
+	}
+	
+	public void setTooltipToHide() {
+		this.switchTooltipShow(false); 	
+	}
+	
+	public void lockTooltip() {
+		this.locked = true ; 
+	}
+	
+	public void unlockTooltip() {
+		this.locked = false; 	
+	}
+	
 	public void enableTexture() {
 		if (guiTexture) 
 			guiTexture.enabled = true;  
@@ -71,5 +87,14 @@ Transform camTransform;
 			guiTexture.enabled = false;  
 		if (guiText) 
 			guiText.enabled = false ; 
+	}
+	
+	private void switchTooltipShow(bool show) {
+		GUIText TooltipText = (GUIText) this.GetComponent(typeof(GUIText));	
+		GUITexture TooltipTexture = (GUITexture) this.GetComponent(typeof(GUITexture));	
+		if (TooltipText != null) 
+			TooltipText.enabled = show; 
+		if (TooltipTexture != null) 
+			TooltipTexture.enabled = show;  	
 	}
 }

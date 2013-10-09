@@ -1,5 +1,8 @@
 using UnityEngine;
 using System.Collections;
+/**
+ * TODO : classe de création / gestion d'objets pour ne pas répéter les méthodes
+ * comme spawnCollectable! */
 
 public class collectablesSpawnPoint : Photon.MonoBehaviour {
 	

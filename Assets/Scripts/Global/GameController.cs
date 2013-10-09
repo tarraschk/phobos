@@ -17,12 +17,14 @@ public class GameController : MonoBehaviour  {
 	
 	DataManager dataManager ; 
 	RecipesManager recipesManager ; 
+	GameplayData gameplayData ; 
 	
 	/**
 	 * Load game misc data (TO MOVE ??)
 	 */
 	public void Awake() {
 		this.recipesManager = new RecipesManager(); 
+		this.gameplayData = GameController.getGameplayData(); 
 		this.dataManager = GameController.getDataManager(); 
 	}
 	
@@ -55,6 +57,11 @@ public class GameController : MonoBehaviour  {
 		return (GameController) univ.GetComponent(typeof(GameController));
 	}
 	
+	public static SectorData getSectorData() {
+		var univ = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG); 	
+		return (SectorData) univ.GetComponent(typeof(SectorData));
+	}
+	
 	/** 
 	 * get the current player we can control, if there is any. 
 	 * */
@@ -82,6 +89,12 @@ public class GameController : MonoBehaviour  {
 		MainGUI GUIScript = (MainGUI) GUIContainer.GetComponent(typeof(MainGUI));
 		GUIScript.setGUITarget(newPlayer); 
 		GUIScript.setActive(true); 
+		
+		//And set the new GUI for this player too 
+		var GUIModelFind = this.getGUIModel();
+		GUIModel VM = (GUIModel) GUIModelFind.GetComponent(typeof(GUIModel));
+		VM.setGUITarget(newPlayer); 
+		VM.setActive(true);
 	}
 	
 	/**
@@ -117,6 +130,12 @@ public class GameController : MonoBehaviour  {
 		return ((DataManager) Universe.GetComponent(typeof(DataManager)));
 	}
 	
+	
+	public static GameplayData getGameplayData() {
+		var Universe = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG);
+		return ((GameplayData) Universe.GetComponent(typeof(GameplayData)));
+	}
+	
 	public static GameObject getMainCamera() {
 		var mainCamera = GameObject.FindGameObjectWithTag(Phobos.Vars.MAIN_CAMERA_TAG);
 		return mainCamera;
@@ -124,6 +143,10 @@ public class GameController : MonoBehaviour  {
 	
 	public static GameObject getGUIContainer() {
 		return  GameObject.FindGameObjectWithTag(Phobos.Vars.GUI_CONTAINER); 	
+	}
+	
+	public static GameObject getGUIModel() {
+		return GameObject.FindGameObjectWithTag(Phobos.Vars.GUI_MODEL); 	
 	}
 	
 	public static GameObject getCameraContainer() {
