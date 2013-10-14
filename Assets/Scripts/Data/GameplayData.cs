@@ -50,15 +50,19 @@ public class GameplayData : MonoBehaviour {
 	
 	public string getStringNodeProprety(string proprety, JSONNode node) {
 		Debug.Log (node); 
-		if (node[proprety] != null) 
-			return ((string) node[proprety]); 
+		if (node != null) 
+			if (node[proprety] != null) 
+				return ((string) node[proprety]); 
+			else return null ; 
 		else return null ; 
 	}
 	
 	public int getIntNodeProprety (string proprety, JSONNode node) {
 		string temp = this.getStringNodeProprety(proprety, node); 	
-		if (temp != null) 
-			return int.Parse(temp); 
+		if (node != null) 
+			if (temp != null) 
+				return int.Parse(temp); 
+			else return 0; 
 		else return 0; 
 	}
 	

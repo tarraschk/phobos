@@ -131,7 +131,8 @@ public class DataManager : Photon.MonoBehaviour
 	[RPC]
     void SpawnPlOnNetwork(Vector3 pos, Quaternion rot, int id1, PhotonPlayer np)
     {
-        Transform newPlayer = Instantiate(playerPrefab, pos, rot) as Transform;
+        GameObject newPlayerObject = PhotonNetwork.Instantiate("Prefabs/Players/PlayerShip", pos, rot, 0) ;
+		Transform newPlayer = (Transform) newPlayerObject.transform; 
 		newPlayer.name = "Player#"+id1; 
 		newPlayer.transform.parent = GameObject.FindGameObjectWithTag(Phobos.Vars.PLAYERS_TAG).transform; 
         //Set transform
@@ -239,8 +240,6 @@ public class DataManager : Photon.MonoBehaviour
 		
         foreach (Transform obj in ObjectsList.transform)
         {
-			Debug.Log (obj);
-			Debug.Log (obj.name);
             PV = (PhotonView) obj.GetComponent(typeof(PhotonView)); 
 			if (PV != null) {
 				if (PV.viewID == PhotonID)

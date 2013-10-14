@@ -79,17 +79,19 @@ public class botBehavior : MonoBehaviour {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		Turrets turrets = (Turrets) this.GetComponent(typeof(Turrets));
 		Transform currentTarget = turrets.getTarget();
-		var botObject = this.gameObject;
-		if (currentTarget.position != Vector3.zero) {
-			float remainingDistance = Vector3.Distance(currentTarget.position, botObject.transform.position);
-			if (remainingDistance >= this.targetReturnIdleRange) 
-			{
-				SC.moveTo(this.initPosition.transform.position);
-				turrets.unsetTarget(); 
-				this.setAI (Phobos.AITypes.returnToPos);
+			if (currentTarget != null) {
+			var botObject = this.gameObject;
+			if (currentTarget.position != Vector3.zero) {
+				float remainingDistance = Vector3.Distance(currentTarget.position, botObject.transform.position);
+				if (remainingDistance >= this.targetReturnIdleRange) 
+				{
+					SC.moveTo(this.initPosition.transform.position);
+					turrets.unsetTarget(); 
+					this.setAI (Phobos.AITypes.returnToPos);
+				}
 			}
+			else this.setAI (Phobos.AITypes.returnToPos);
 		}
-		else this.setAI (Phobos.AITypes.returnToPos);
 	}
 	
 	private void returnToPositionBehavior() {

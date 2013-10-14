@@ -23,4 +23,8 @@ public class OxygenTank : MonoBehaviour {
 	public bool sectorIsExplored() {
 		return (GameController.getSectorData().isExplored);	
 	}
+	
+	public void restoreOxygen() {
+		this.oxygenLevel = this.oxygenMax ; 	
+	}
 }

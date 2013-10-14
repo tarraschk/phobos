@@ -23,7 +23,7 @@ public class MainGUI : MonoBehaviour {
 	}
 	
 	void OnGUI () {
-		if (active) {
+		/*if (active) {
 			GUI.backgroundColor = Color.cyan;
 			this.inventory(); 
 			this.playerStats(); 
@@ -33,7 +33,7 @@ public class MainGUI : MonoBehaviour {
 			if (this.showDockMenu) {
 				this.dockMenu(); 	
 			}
-		}
+		}*/
 	}
 	
 	/**

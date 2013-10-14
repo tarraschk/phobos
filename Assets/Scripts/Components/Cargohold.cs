@@ -63,6 +63,9 @@ public class Cargohold : MonoBehaviour {
 	private void addItemToCargo(Transform item, Collectable itemCollectScript, Transform cargoContainer) {
 		Collectable collectItem = (Collectable) item.GetComponent(typeof(Collectable));
 		int collectItemId = collectItem.id ; 
+		if (GameController.getCurrentPlayer() == gameObject.transform) {
+			this.addItemToCargoUI(item, itemCollectScript); 	
+		}
 		if (this.containerHasItem(cargoContainer, item, collectItemId)) {
 			Transform itemSlot = containerFindItemSlot(cargoContainer, collectItemId) ; 
 			Collectable itemSlotCollect = (Collectable) itemSlot.GetComponent(typeof(Collectable));
@@ -75,6 +78,16 @@ public class Cargohold : MonoBehaviour {
 			this.cargoContent.Add(item); 
 		}
 		
+	}
+	
+	/**
+	 * Makes the add item to cargo affect the GUI too. 
+	 *
+	 **/
+	private void addItemToCargoUI(Transform item, Collectable itemCollectScript) {
+		GameObject GUIModelObj = (GameObject) GameController.getGUIModel(); 
+		GUIModel GUIM = (GUIModel) GUIModelObj.GetComponent(typeof(GUIModel));	
+		GUIM.addCargoContent(itemCollectScript.name, itemCollectScript.icon, itemCollectScript.quantity, itemCollectScript.id); 
 	}
 	
 	/**

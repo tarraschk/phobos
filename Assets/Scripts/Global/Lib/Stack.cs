@@ -24,11 +24,15 @@ namespace Phobos
 		public string dataCommand ; 
 		public Transform dataTransform ; 
 		public Vector3 dataVector ;
+		public int dataInt; 
+		public string dataString ; 
 		
-		public dataEntry(string newCommand, Transform newTransform, Vector3 newVector) {
+		public dataEntry(string newCommand, Transform newTransform, Vector3 newVector, int newInt, string newString) {
 			this.dataCommand = newCommand ; 
 			this.dataTransform = newTransform;
 			this.dataVector = newVector; 
+			this.dataInt = newInt;
+			this.dataString = newString ;
 		}
 	}
 }

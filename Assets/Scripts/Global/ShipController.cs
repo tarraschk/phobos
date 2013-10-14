@@ -205,6 +205,10 @@ public class ShipController : MonoBehaviour {
 		this.collect (target);
 	}
 	
+	/**
+	 * Order the ship to collect the target.
+	 * Ship will move and collect once it's in range.
+	 * */
 	public void collect(Transform target) {
 		Propulsors prop = (Propulsors) this.GetComponent(typeof(Propulsors));
 		this.setBehavior(BehaviorTypes.collecting); 
@@ -218,12 +222,26 @@ public class ShipController : MonoBehaviour {
 	 * Implies the net input and the GUI modifications. 
 	 */
 	public void removeEquipmentOwn(int equipmentId) {
-		this.addNetInput(Phobos.Commands.EQUIPMENT_REMOVE); 
+		this.addNetInput(Phobos.Commands.EQUIPMENT_REMOVE, equipmentId); 
 		this.removeEquipment(equipmentId);
 	}
 	
 	public void removeEquipment(int equipmentId) {
 		Turrets prop = (Turrets) this.GetComponent(typeof(Turrets));
+		prop.removeEquipment(equipmentId); 
+	}
+	
+	/*
+	 * Restore the O2 (fully) for this ship. 
+	 */
+	public void restoreO2Own() {
+		this.addNetInput(Phobos.Commands.RESTORE_O2); 
+		this.restoreO2();
+	}
+	
+	public void restoreO2() {
+		OxygenTank O2Tank = (OxygenTank) this.GetComponent(typeof(OxygenTank));
+		O2Tank.restoreOxygen() ; 
 	}
 	
 	/**
@@ -290,6 +308,18 @@ public class ShipController : MonoBehaviour {
 	 * */
 	private void addNetInput(string command) {
 		
+	}
+	
+	/**
+	 * Adds input int stack for the networking 
+	 * */
+	private void addNetInput(string command, int data) {
+		PlayerNetscript netScript = (PlayerNetscript) this.GetComponent(typeof(PlayerNetscript));
+		switch (command) {
+			case Phobos.Commands.EQUIPMENT_REMOVE:
+				netScript.sendNetRemoveEquipment(data);  
+			break; 
+		}
 	}
 	
 	/**

@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-
+namespace PhobosGUI {
 public class ActionButton : EZData.Context 
 {
 	public GUIModel LinkToGame ; 
@@ -32,7 +32,65 @@ public class ActionButton : EZData.Context
 	}
 }
 
-public class PhobosUI : EZData.Context
+public class Cargocontent : EZData.Context 
+{
+	public GUIModel LinkToGame ; 
+	
+	#region Property ContentName
+	private readonly EZData.Property<string> _privateContentNameProperty = new EZData.Property<string>();
+	public EZData.Property<string> ContentNameProperty { get { return _privateContentNameProperty; } }
+	public string ContentName
+	{
+	get    { return ContentNameProperty.GetValue();    }
+	set    { ContentNameProperty.SetValue(value); }
+	}
+	#endregion
+	
+	#region Property ContentQuantity
+	private readonly EZData.Property<int> _privateContentQuantityProperty = new EZData.Property<int>();
+	public EZData.Property<int> ContentQuantityProperty { get { return _privateContentQuantityProperty; } }
+	public int ContentQuantity
+	{
+	get    { return ContentQuantityProperty.GetValue();    }
+	set    { ContentQuantityProperty.SetValue(value); }
+	}
+	#endregion
+		
+	#region Property ContentID
+	private readonly EZData.Property<int> _privateContentIDProperty = new EZData.Property<int>();
+	public EZData.Property<int> ContentIDProperty { get { return _privateContentIDProperty; } }
+	public int ContentID
+	{
+	get    { return ContentIDProperty.GetValue();    }
+	set    { ContentIDProperty.SetValue(value); }
+	}
+	#endregion
+		
+	#region Property ContentTexture
+	private readonly EZData.Property<Texture> _privateContentTextureProperty = new EZData.Property<Texture>();
+	public EZData.Property<Texture> ContentTextureProperty { get { return _privateContentTextureProperty; } }
+	public Texture ContentTexture
+	{
+	get    { return ContentTextureProperty.GetValue();    }
+	set    { ContentTextureProperty.SetValue(value); }
+	}
+	#endregion
+		
+	#region Property ContentSpritePath
+	private readonly EZData.Property<string> _privateContentSpritePathProperty = new EZData.Property<string>();
+	public EZData.Property<string> ContentSpritePathProperty { get { return _privateContentSpritePathProperty; } }
+	public string ContentSpritePath
+	{
+	get    { return ContentSpritePathProperty.GetValue();    }
+	set    { ContentSpritePathProperty.SetValue(value); }
+	}
+	#endregion
+		
+	
+}
+
+
+public class UI : EZData.Context
 {
 	#region Property Name
 	private readonly EZData.Property<string> _privateNameProperty = new EZData.Property<string>();
@@ -158,8 +216,14 @@ public class PhobosUI : EZData.Context
 	set    { TargetDescrProperty.SetValue(value); }
 	}
 	#endregion
+	
+	#region Property Cargohold
+	private readonly EZData.Collection<Cargocontent> _privateCargohold = new EZData.Collection<Cargocontent>(false);
+	public EZData.Collection<Cargocontent> Cargohold { get { return _privateCargohold; } }
+	#endregion
 }
-
+	
+}
 public class GUIModel : MonoBehaviour
 {
 	public const string ATTACK = "attack";
@@ -183,11 +247,11 @@ public class GUIModel : MonoBehaviour
 	public bool showDockMenu = false ; 
 	
 	public NguiRootContext View;
-	public PhobosUI Context;
+	public PhobosGUI.UI Context;
 	
 	void Awake()
 	{
-		Context = new PhobosUI();
+		Context = new PhobosGUI.UI();
 		View.SetContext(Context);
 		this.active = false; 
 	}
@@ -274,7 +338,60 @@ public class GUIModel : MonoBehaviour
 	}
 	
 	public void addActionButton(string action, int targetId) {
-		Context.ActionsMenu.Add(new ActionButton{ TargetID=targetId, ActionName = action, LinkToGame = this } );
+		Context.ActionsMenu.Add(new PhobosGUI.ActionButton{ TargetID=targetId, ActionName = action, LinkToGame = this } );
+	}
+	
+	/**
+	 * Add a cargo in the GUI of the cargo
+	 **/
+	public void addCargoContent(string name, Texture icon, int quantity, int id) {	
+		PhobosGUI.Cargocontent alreadyCargoContent = this.getGUICargoContentAlreadyExists(id); 
+		if (alreadyCargoContent != null) {
+			alreadyCargoContent.ContentQuantity += quantity ; 	
+		}
+		else {
+			Context.Cargohold.Add(new PhobosGUI.Cargocontent{ ContentID=id, ContentName=name, ContentQuantity=quantity, ContentTexture=icon, ContentSpritePath=name }) ;	
+		}
+	}
+	
+	/**
+	 * Remove cargo, affect the GUI. If quantity is below or equal to zero, we destroy the prefab. 
+	 * */
+	public void removeCargoContent(int id, int quantity) {
+		PhobosGUI.Cargocontent toRemoveContent = this.getGUICargoContentAlreadyExists(id); 
+		if ((toRemoveContent.ContentQuantity - quantity) <= 0) {
+			int toRemoveArrayID = this.getGUICargoArrayIndex(id); 
+			Context.Cargohold.Remove(toRemoveArrayID); 
+		}
+		else {
+			toRemoveContent.ContentQuantity = toRemoveContent.ContentID - quantity ; 
+		}
+	}
+	
+	/*
+	 * Returns the array index of a GUI element, identified by it's ID.
+	 * Return -1 if it wasn't found.
+	 **/
+	private int getGUICargoArrayIndex(int id) {
+		for (var i = 0 ; i < Context.Cargohold.ItemsCount ; i++) {
+			if (Context.Cargohold.GetItem(i).ContentID == id) {
+				return i ; 
+			}	
+		}
+		return -1 ; 
+	}
+	
+	/**
+	 * Check if in the cargo GUI, we already have this item, 
+	 * based on the item ID. If we do, return it.
+	 * If not, return null */
+	private PhobosGUI.Cargocontent getGUICargoContentAlreadyExists(int id) {
+		for (var i = 0 ; i < Context.Cargohold.ItemsCount ; i++) {
+			if (Context.Cargohold.GetItem(i).ContentID == id) {
+				return Context.Cargohold.GetItem(i); 
+			}
+		}
+		return null ;
 	}
 	
 	public void removeAllActionsButtons() {
@@ -297,11 +414,12 @@ public class GUIModel : MonoBehaviour
 	}
 	
 	public void doAction(string action, int targetID) {
-		Debug.Log (action);
 		var univ = GameController.findUniverse(); 
 		GameController univScript = (GameController) univ.GetComponent(typeof(GameController));
 		DataManager DM = (DataManager) univ.GetComponent(typeof(DataManager));
+		Debug.Log (targetID);
 		Transform target = DM.getPlayerOrObject(targetID); //The target is the current selected object
+		Debug.Log (target);
 		
 		var player = univScript.getPlayer(); // TODO 
 		Controls shipControls = (Controls) GameController.getControls(); 
@@ -324,5 +442,4 @@ public class GUIModel : MonoBehaviour
 		}
 	}
 }
-
 

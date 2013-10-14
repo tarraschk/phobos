@@ -14,10 +14,14 @@ public class Destructible : Photon.MonoBehaviour {
 		}
 		this.setEnergy(this.energy - power); 
 		if (this.energy <= 0) {
-			this.destroy() ; 	
+			this.destroy(false) ; 	
 			PlayerStats levelScript = (PlayerStats) attacker.GetComponent(typeof(PlayerStats));
-			levelScript.doGainXP(this.level * 25) ; 
-			levelScript.doGainMoney(this.level * 15) ; 
+			ShipController attackerController = (ShipController) attacker.GetComponent(typeof(ShipController));
+			attackerController.setBehavior(BehaviorTypes.idle); 
+			if (levelScript != null) {	
+				levelScript.doGainXP(this.level * 25) ; 
+				levelScript.doGainMoney(this.level * 15) ; 
+			}
 		}
 	}
 	
@@ -25,16 +29,22 @@ public class Destructible : Photon.MonoBehaviour {
 		this.energy = newEnergy ; 	
 	}
 	
-	public void destroy() {
+	public void destroy(bool isWreckage) {
 		GameObject explosion = (GameObject) Instantiate(Resources.Load ("Prefabs/FX/explosion"), this.transform.position, this.transform.rotation) ; 
 	
 		if (PhotonNetwork.isMasterClient) {
+			Debug.Log ("i am master and im dead");
 			ContainLoot CL = (ContainLoot) this.GetComponent(typeof(ContainLoot));
 			if (CL != null) {
 				//Has loot, we spawn it !
 				CL.activateLootSpawn(1); 
 			}
+			PhotonNetwork.AllocateViewID(); 
 			PhotonNetwork.Destroy(gameObject);
+		}
+		
+		if (isWreckage) {
+				
 		}
 	}
 	

@@ -17,6 +17,12 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 		this.availableActions = this.getObjectAction();
 	}
 	
+	void OnMouseOver() {
+		if (Input.GetMouseButton(1)) {
+			this.rightClickEvent();
+		}	
+	}
+	
 	void OnMouseEnter() {
 		var model = transform.FindChild(MODEL);
 		var tooltip = transform.FindChild(Phobos.Vars.TOOLTIP);
@@ -42,22 +48,38 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	
 	void OnMouseDown() {
 		if (Input.GetMouseButton(0)) 
-		{
-			string targetName = this.getTargetName();
-			string targetDescr = this.getTargetDescr(); 
-			GameObject GUIModelObj = (GameObject) GameController.getGUIModel(); 
-			GUIModel GUIM = (GUIModel) GUIModelObj.GetComponent(typeof(GUIModel));	
-			PhotonView PV = (PhotonView) this.GetComponent(typeof(PhotonView));
-			GUIM.removeAllActionsButtons();
-			GUIM.setTargetInfos(targetName, targetDescr); 
-			GUIM.addActionButton(this.availableActions[0], PV.viewID);
-			this.setItemSelected(gameObject.transform); 
-			this.doLockTooltip(); 
+		{ 
+			this.leftClickEvent(); 
 		}
-		else if (Input.GetMouseButton(1)) 
-		{
-			this.doAction(this.availableActions[0]);
-		}
+	}
+	
+	
+	/**
+	 * What happens if we left click on it
+	 * 
+	 **/
+	private void leftClickEvent() {
+		string targetName = this.getTargetName();
+		string targetDescr = this.getTargetDescr(); 
+		GameObject GUIModelObj = (GameObject) GameController.getGUIModel(); 
+		GUIModel GUIM = (GUIModel) GUIModelObj.GetComponent(typeof(GUIModel));	
+		PhotonView PV = (PhotonView) this.GetComponent(typeof(PhotonView));
+		GUIM.removeAllActionsButtons();
+		GUIM.setTargetInfos(targetName, targetDescr); 
+		GUIM.addActionButton(this.availableActions[0], PV.viewID);
+		this.setItemSelected(gameObject.transform); 
+		this.doLockTooltip();
+	}
+	
+	/**
+	 * What happen's if we click right on it
+	 **/
+	private void rightClickEvent() {
+		this.leftClickEvent(); 
+		GameObject GUIModelObj = (GameObject) GameController.getGUIModel(); 
+		GUIModel GUIM = (GUIModel) GUIModelObj.GetComponent(typeof(GUIModel));
+		PhotonView PV = (PhotonView) this.GetComponent(typeof(PhotonView));
+		GUIM.doAction(this.availableActions[0], PV.viewID); 
 	}
 	
 	/**
@@ -108,15 +130,19 @@ public string[] availableActions = new string[3]{"attack", "collectable", "dock"
 	private void doLockTooltip() {
 		Component tooltipGet = GetComponentInChildren(typeof(LabelPositioning)); 
 		LabelPositioning tooltipScript = (LabelPositioning) tooltipGet; 
-		tooltipScript.lockTooltip(); 
-		tooltipScript.setTooltipToShow(); 
+		if (tooltipScript != null) {
+			tooltipScript.lockTooltip(); 
+			tooltipScript.setTooltipToShow();
+		}
 	}
 	
 	private void doUnlockTooltip() {
 		Component tooltipGet = GetComponentInChildren(typeof(LabelPositioning)); 
 		LabelPositioning tooltipScript = (LabelPositioning) tooltipGet; 
-		tooltipScript.unlockTooltip(); 
-		tooltipScript.setTooltipToHide(); 
+		if (tooltipScript != null) {
+			tooltipScript.unlockTooltip(); 
+			tooltipScript.setTooltipToHide(); 
+		}
 	}
 	
 	private void doAction(string action) {

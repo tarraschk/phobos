@@ -88,25 +88,36 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			case Phobos.Commands.DOCK:
                 photonView.RPC("netDock", PhotonTargets.Others, viewScript.viewID);
 			break ;	
+			
+			case Phobos.Commands.EQUIPMENT_REMOVE:
+				//Parameter is data int, the id of the equipment
+                photonView.RPC("netEquipmentRemove", PhotonTargets.Others, entry.dataInt);
+			break ; 
 		}
 		this.stackActive = false ;
 	}
 	
 	public void sendNetMoveTo(Vector3 destination) {
-		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.MOVE_TO, null, destination); 
+		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.MOVE_TO, null, destination, 0, ""); 
 		netStack.Push(newNetEntry); 
 		this.testDestination = destination ; 
 		this.stackActive = true ; 
 	}
 	
 	public void sendNetAttack(Transform target) {
-		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.ATTACK, target.transform, target.transform.position); 
+		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.ATTACK, target.transform, target.transform.position, 0, ""); 
+		netStack.Push(newNetEntry); 
+		this.stackActive = true ; 
+	}
+	
+	public void sendNetRemoveEquipment(int equipmentId) {
+		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.EQUIPMENT_REMOVE, null, new Vector3(), equipmentId, ""); 
 		netStack.Push(newNetEntry); 
 		this.stackActive = true ; 
 	}
 	
 	public void sendNetCollect(Transform target) {
-		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.COLLECT, target.transform, target.transform.position); 
+		Phobos.dataEntry newNetEntry = new Phobos.dataEntry(Phobos.Commands.COLLECT, target.transform, target.transform.position, 0, ""); 
 		netStack.Push(newNetEntry); 
 		this.stackActive = true ; 
 	}
@@ -153,6 +164,13 @@ public class PlayerNetscript : Photon.MonoBehaviour {
 			shipController.dock(target); 
 			
 		}	
+    }
+	
+	[RPC]
+    void netEquipmentRemove(int equipmentId)
+    {
+		ShipController shipController = (ShipController) this.GetComponent(typeof(ShipController));
+		shipController.removeEquipment(equipmentId); 
     }
 	
     [RPC]

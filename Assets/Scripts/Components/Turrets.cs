@@ -52,7 +52,7 @@ public class Turrets : MonoBehaviour {
 	 * Remove an equipment by the id 
 	 * in the array currentEquipment
 	 */
-	public void removeEquipment(int equipmentId, string equipmentToRemove/*NOT OBLIGATOIRE */) {
+	public void removeEquipment(int equipmentId) {
 		string turretName ; 
 		Turret toRemoveTurret = this.turrets[equipmentId] ; 
 		turretName = toRemoveTurret.wName; 

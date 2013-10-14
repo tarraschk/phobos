@@ -3,10 +3,13 @@ using System.Collections;
 using SimpleJSON; 
 
 //Initiate's the object with remote data. 
+//Only works with spaceships for the moment. 
 
 public class ObjectInitiator : MonoBehaviour {
 
-	private Phobos.JSONReader dataParser ; 
+	private Phobos.JSONReader dataParser ; //Used to parse the json containing the object data
+	
+	public ObjectsSpawnTypes objSpawnType ; 
 	public bool isPlayerInitiator = false; 
 	public string objectDataLocation = "C:/Users/Public/Documents/Unity Projects/Phobos/Assets/Resources/GameData/Crafting/Recipes/player1.json"; 
 	
@@ -21,18 +24,21 @@ public class ObjectInitiator : MonoBehaviour {
 	
 	//When object is initialized, we consider we have the JSON. 
 	void Awake () {
-		this.initControllers(); 
-		this.dataParser = new Phobos.JSONReader(); 
-		SimpleJSON.JSONClass objectData = this.dataParser.readAndParseJSON(this.objectDataLocation);
-		JSONNode ship = objectData["ship"];
-		JSONNode shipModel = ship["model"];
-		JSONNode shipEquipment = ship["equipment"];
-		if (this.isPlayerInitiator) {
-			JSONNode player = objectData["player"];
-			this.setPlayerStats(player); 
+		if (this.objSpawnType == ObjectsSpawnTypes.bot || this.objSpawnType == ObjectsSpawnTypes.player) {
+			this.initControllers(); 
+			this.dataParser = new Phobos.JSONReader(); 
+			SimpleJSON.JSONClass objectData = this.dataParser.readAndParseJSON(this.objectDataLocation);
+			JSONNode ship = objectData["ship"];
+			JSONNode shipModel = ship["model"];
+			JSONNode shipEquipment = ship["equipment"];
+			if (this.isPlayerInitiator) {
+				//We initiate a player !
+				JSONNode player = objectData["player"];
+				this.setPlayerStats(player); 
+			}
+			this.setShipStats(shipModel); 
+			this.setShipEquipment(shipEquipment); 
 		}
-		this.setShipStats(shipModel); 
-		this.setShipEquipment(shipEquipment); 
 	}
 	
 	private void initControllers() {

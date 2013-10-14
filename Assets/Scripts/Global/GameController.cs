@@ -125,6 +125,13 @@ public class GameController : MonoBehaviour  {
 		return ((Controls) Universe.GetComponent(typeof(Controls)));
 	}
 	
+	/**
+	 * Get the current, controlled player.
+	 * */
+	public static Transform getCurrentPlayer() {
+		return (GameController.getControls().player); 	
+	}
+	
 	public static DataManager getDataManager() {
 		var Universe = GameObject.FindGameObjectWithTag(Phobos.Vars.UNIVERSE_TAG);
 		return ((DataManager) Universe.GetComponent(typeof(DataManager)));

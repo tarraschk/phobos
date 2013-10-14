@@ -1,0 +1,22 @@
+{
+	"player": {
+		"nick": "Kevin2",
+		"stats": {
+			"level": 1,
+			"currentXP": 0,
+			"requiredXP": 200,
+		}
+	}
+	"ship" : {
+		"model" : {
+			"name": "viper",
+		  	"cargo": 500,
+		  	"energy": 50000,
+		  },
+		"equipment" : {
+			"port1": "sendaimkII",
+			"port2": "sendaimkII",
+
+		}
+	}
+}

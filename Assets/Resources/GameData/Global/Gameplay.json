@@ -3,7 +3,7 @@
     "turrets" : {
       "sendaimkII" : {
         "range" : 80,
-        "cooldownTime": 1.25,
+        "cooldownTime": .25,
         "fullName" : "Sendaï Furyoso Mk. II",
         "value" : 45000,
         "power" : 50

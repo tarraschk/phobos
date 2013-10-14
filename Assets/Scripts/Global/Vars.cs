@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public enum BehaviorTypes{idle, collecting, moving, docking, attacking};
-public enum ObjectsSpawnTypes{bot, collectable, decoration}; 
+public enum ObjectsSpawnTypes{player, bot, collectable, decoration, station}; 
 
 namespace Phobos
 {
@@ -85,6 +85,8 @@ namespace Phobos
 		public const string EQUIPMENT_REMOVE = "EquipmentRemove"; 	
 		public const string EQUIPMENT_ADD = "EquipmentAdd"; 	
 		public const string EQUIPMENT_CHANGE = "EquipmentChange"; 	
+		public const string RESTORE_O2 = "RestoreO2";
+		public const string SHIP_CHANGE = "ShipChange"; 
 	}
 }
 
