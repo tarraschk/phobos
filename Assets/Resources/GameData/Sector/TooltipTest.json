@@ -1,0 +1,82 @@
+{
+  "TooltipTest" : {
+    "resources" : {
+      "spawnpoints" : {
+        "spawnpoint1" : {
+          "location" : {
+            "prefab" : "crystal",
+            "spawnpoint" : 3
+          }
+        }
+      }
+    },
+    "objects" : {
+      "bot3" : {
+        "position" : {
+          "y" : 850,
+          "z" : 0,
+          "x" : 950
+        },
+        "prefab" : "Bots/Bot",
+        "spawnpoint" : "bot"
+      },
+      "bot" : {
+        "spawntype" : "bot",
+        "position" : {
+          "y" : 350,
+          "z" : 0,
+          "x" : 280
+        },
+        "prefab" : "Bots/Bot"
+      },
+      "bot2" : {
+        "spawntype" : "bot",
+        "position" : {
+          "z" : 0,
+          "y" : 350,
+          "x" : 254
+        },
+        "prefab" : "Bots/Bot"
+      },
+      "bot4" : {
+        "spawntype" : "bot",
+        "position" : {
+          "z" : 0,
+          "y" : 0,
+          "x" : 0
+        },
+        "prefab" : "Bots/Bot"
+      },
+      "deco1" : {
+        "spawntype" : "decoration",
+        "position" : {
+          "y" : 900,
+          "z" : -110,
+          "x" : 550
+        },
+        "prefab" : "Decoration/Ice World"
+      }
+    },
+    "decoration" : {
+      "type" : "fleet"
+    },
+    "spawnpoints" : {
+      "spawnpoint3" : {
+        "y" : 552,
+        "x" : 450
+      },
+      "spawnpoint2" : {
+        "y" : 852,
+        "x" : 34
+      },
+      "spawnpoint4" : {
+        "y" : 385,
+        "x" : 945
+      },
+      "spawnpoint1" : {
+        "y" : 145,
+        "x" : 150
+      }
+    }
+  }
+}

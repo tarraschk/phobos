@@ -11,4 +11,12 @@ public class HoverScript : MonoBehaviour {
 	}
 	void OnMouseEnter() {
 	}
+	
+	void OnTooltip (bool show)
+	{
+		Debug.Log ("coucou");
+		string t = "caca";
+		UITooltip.ShowText(t);
+		return;
+	}
 }

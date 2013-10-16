@@ -26,9 +26,11 @@ public class Healthbar : MonoBehaviour {
 	}
 	
 	private void updateHealthBar() {
-		float healthNewWidth = ((float) ((float)this.destrComponent.energy / (float) this.destrComponent.energyMax)) * this.healthBarWMax; 
-		this.healthBar.pixelInset = new Rect(this.healthBar.pixelInset.x,this.healthBar.pixelInset.y, healthNewWidth,this.healthBar.pixelInset.height);
-			
-		this.healthBar.pixelInset.Set(-500f,-4654, this.destrComponent.energy, this.healthBar.pixelInset.height); 
+		if (this.destrComponent != null) {
+			float healthNewWidth = ((float) ((float)this.destrComponent.energy / (float) this.destrComponent.energyMax)) * this.healthBarWMax; 
+			this.healthBar.pixelInset = new Rect(this.healthBar.pixelInset.x,this.healthBar.pixelInset.y, healthNewWidth,this.healthBar.pixelInset.height);
+				
+			this.healthBar.pixelInset.Set(-500f,-4654, this.destrComponent.energy, this.healthBar.pixelInset.height); 
+		}
 	}
 }
